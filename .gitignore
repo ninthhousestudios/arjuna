@@ -1,0 +1,38 @@
+# Dart/Flutter
+.dart_tool/
+.packages
+build/
+.flutter-plugins
+.flutter-plugins-dependencies
+pubspec.lock
+
+# Melos
+.melos/
+
+# Generated code
+*.g.dart
+*.freezed.dart
+*.pb.dart
+*.pbgrpc.dart
+*.pbenum.dart
+*.pbjson.dart
+
+# Proto generated
+proto/gen/
+
+# IDE
+.idea/
+*.iml
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# Coverage
+coverage/
