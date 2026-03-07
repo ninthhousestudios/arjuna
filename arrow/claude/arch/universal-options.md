@@ -607,4 +607,8 @@ Vedic calculations don't change at all. The new structure just makes room for ev
 
 3. **Body semantics**: In Vedic, Rahu/Ketu are first-class grahas. In Hellenistic, the nodes are sensitive points, not planets. In Western, Chiron is a centaur with planetary significance. The `Body` enum is shared (SWE positions are positions), but the *meaning* is tradition-specific. This is handled at the analysis layer, not the data layer.
 
-4. **Cards of Truth**: This system is not astronomical — it maps birth dates to playing cards using a fixed mathematical system. It doesn't need SWE at all, just a date. Should it still go through the Arrow pipeline, or be a completely separate module? Leaning toward separate module that happens to live under arrow_calc.
+4. **Cards of Truth**: This system DOES need SWE — the birth card is based on the time of sunrise at the equator corresponding to the native's longitude line, and the system also uses planet placements. It flows through the standard Arrow pipeline like every other tradition. `CardsOfTruthConfig` controls its specific options; arrow_calc/cards/ consumes EphSnapshot like everything else.
+
+5. **Human Design**: Also fundamentally SWE-based. Uses precise planetary positions (especially gate/line placement derived from longitudes). Will be added as another tradition module following the same pattern.
+
+All traditions are fundamentally based on birth time, place, and planetary/stellar positions at that time. The Arrow pipeline (SWE -> EphSnapshot -> derivation -> analysis) serves all of them. No tradition is "outside" the pipeline.

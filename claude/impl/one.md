@@ -1,189 +1,244 @@
-# Implementation Phase One
+# Arjuna Implementation Plan — Unified Timeline
 
 ## Guiding Principle
 
-Build thoroughly, intentionally, methodically from the ground up. Every layer, every step includes logging, error handling, and testing as it is built — not bolted on afterward. This is not "get it working then clean it up." Each piece is complete before the next begins.
+Build thoroughly, intentionally, methodically from the ground up. Every layer, every step includes logging, error handling, and testing as it is built — not bolted on afterward. Each piece is complete before the next begins.
+
+This is the unified view across all five Arjuna components plus Fletch. Each component has its own detailed plan:
+
+| Component | Plan |
+|-----------|------|
+| Arrow | `arrow/claude/impl/one.md` |
+| Quiver | `quiver/claude/impl/one.md` |
+| Nock | `nock/claude/impl/one.md` |
+| Bowyer | `bowyer/claude/impl/one.md` |
+| Fletch | `../fletch/claude/impl/one.md` |
 
 ---
 
-## Arrow — Steps
+## The Dependency Chain
 
-### Step 1: Start arrow_swe
-
-Create the arrow_swe package. This is the foundation everything else rests on. The goal is a complete, tested SWE wrapper that — once built — rarely needs to change.
+Arrow is the foundation. Everything else depends on it at different stages.
 
 ```
-arrow/
-└── packages/ !!! Claude: no packages/ directories like this arjuna/arrow/arrow_swe; arjuna/quiver/embedded for example
-    └── arrow_swe/
-        ├── lib/
-        │   ├── arrow_swe.dart          # barrel export
-        │   └── src/
-        │       ├── swe_config.dart     # every option sweph.dart accepts
-        │       ├── eph_snapshot.dart    # complete output of a single SWE call
-        │       ├── swe_facade.dart     # the public API: calcAll, sunrise, etc.
-        │       └── types/              # PlanetPosition, AscMcPoints, etc.
-        ├── test/
-        └── pubspec.yaml
+Arrow produces output
+  -> Quiver serves it over gRPC
+    -> Nock consumes it as a CLI
+    -> Bowyer inspects it as admin tooling
+  -> Fletch validates it against other engines
 ```
 
-### Step 2: Explore sweph.dart
-
-Before designing SweConfig or EphSnapshot, understand the actual library. This is a spike — write throwaway code to answer real questions.
-
-Questions to answer:
-- What does initialization look like? (`swe_set_ephe_path`, any global setup?)
-- What's the full function surface? (List every function we might call)
-- What inputs does each function require? (flags, mode constants, etc.)
-- What outputs does each function return? (array shapes, special values)
-- What error conditions exist? (invalid dates, missing bodies, bad flags)
-- How does cleanup work? (`swe_close`, resource management?)
-- What ephemeris files are needed and how are they loaded?
-- How does the true/mean node toggle work at the SWE level?
-- How does topocentric vs geocentric work?
-- How are ayanamsas set? (global state? per-call?)
-- What are the actual flag constants for body calculation?
-- How do hypothetical planets (Uranian) work in sweph?
-- What's the fixed star API look like?
-
-Approach:
-```dart
-// throwaway spike — not production code
-import 'package:sweph/sweph.dart';
-
-void main() {
-  // 1. Initialize
-  final swe = Sweph();  // or however it works
-
-  // 2. Try calculating Sun position for a known date
-  //    Compare output to known values from libkala/KalaNG
-
-  // 3. Try houses
-
-  // 4. Try ayanamsa
-
-  // 5. Try sunrise/sunset
-
-  // 6. Note every parameter, every flag, every option
-}
-```
-
-The output of this spike is a complete inventory of sweph.dart's API and the knowledge needed for Step 3.
-
-### Step 3: Design SweConfig from the sweph.dart inventory
-
-After the spike, SweConfig should contain every option that affects SWE output. The goal: one SweConfig + a julian day + a location = one complete EphSnapshot. No ambiguity, no missing parameters, no "oh we also need to set this flag."
-
-SweConfig should be exhaustive so that:
-- EphSnapshot is fully determined by (jd, location, SweConfig)
-- Changing any SweConfig field invalidates the snapshot
-- Once arrow_swe is built and tested, it becomes a stable foundation
-
-EphSnapshot should capture everything SWE returns so downstream code never needs to call SWE. The snapshot IS the complete result.
-
-Then: implement SweConfig, EphSnapshot, and the facade. Test against known-good values from KalaNG and libkala. Include logging (package:logging with Arrow.SweWrapper hierarchy), error types, and thorough tests at every step.
+The critical path is: **Arrow SWE facade -> Quiver chart service -> Nock chart command**. Everything else branches off this spine.
 
 ---
 
-## Quiver — Steps
+## Unified Timeline
 
-### Step 1: Build basic gRPC server
+### Wave 1: Scaffolding (no dependencies)
 
-Set up quiver/server with a minimal Dart gRPC server. This validates the Dart gRPC ecosystem and establishes the communication backbone that Bowyer and Nock will also use.
-
-```
-quiver/
-└── server/
-    ├── lib/
-    │   └── src/
-    │       ├── server.dart              # gRPC server setup, codec registration
-    │       └── services/
-    │           └── health_service.dart   # simple health check RPC
-    ├── bin/
-    │   └── server.dart                  # entry point
-    ├── test/
-    └── pubspec.yaml
-```
-
-Start with a health check service — just enough to prove gRPC works in Dart, JSON codec works, and the server starts/stops cleanly. Include logging and error handling from the start.
-
-```protobuf
-// proto/quiver/health.proto
-service HealthService {
-  rpc Check (Empty) returns (HealthResponse);
-}
-```
-
-This is also where we verify: does Dart gRPC support the JSON codec? How does graceful shutdown work? What does the connection lifecycle look like?
-
-### Step 2: Build quiver/core once Arrow produces output
-
-Once arrow_swe can produce an EphSnapshot, connect Quiver to Arrow:
+All projects scaffold simultaneously. Zero cross-project dependencies.
 
 ```
-quiver/
-├── core/
-│   └── arrow_gateway.dart    # calls Arrow, returns results
-└── server/
-    └── services/
-        └── arrow_service.dart  # gRPC service wrapping the gateway
+Arrow     1A  Monorepo scaffold (melos, 4 packages)
+Quiver    1A  Package scaffold (core, server, embedded)
+Nock      1A  CLI scaffold (entry point, arg parsing)
+Bowyer    1A  Package scaffold (core, web, cli)
+Fletch    --  Package scaffold (core, astro)
 ```
 
-Define the proto contract for chart calculation. Implement the bridge between proto types and Arrow domain types. This gives Nock and Bowyer something real to talk to.
+### Wave 2: Foundation types + gRPC validation (parallel tracks)
+
+Two independent tracks run simultaneously:
+
+**Track A: Arrow types (Sonnet)**
+```
+Arrow     1B  All enums and config types (arrow_options)
+Arrow     1C  Location type
+```
+
+**Track B: gRPC ecosystem validation**
+```
+Quiver    1B  Proto setup (health.proto, code generation)
+Quiver    1C  Health check server (first gRPC server in Dart)
+```
+
+**Track C: Fletch core (independent)**
+```
+Fletch    1   Contracts and types (adapter, schema, tolerance)
+Fletch    2   Diff engine
+Fletch    3   Execution + comparison engine
+```
+
+### Wave 3: SWE exploration + early consumers
+
+**Track A: Arrow SWE (Josh)**
+```
+Arrow     2A  sweph.dart spike (exploratory, throwaway)
+Arrow     2B  EphSnapshot design (from spike findings)
+```
+
+below was originally under Wave 4. obviously, this is asap. we need this to know that
+building this is actually feasible, so this comes first
+Arrow SWE facade produces real output. This is the single most important milestone.
+
+**Track B: Pure Dart derivation (Sonnet — can start during 2A)**
+```
+Arrow     3A  Sign + nakshatra placement (needs only arrow_options)
+Arrow     3B  Varga calculations
+```
+
+**Track C: First consumers of Quiver health check**
+```
+Nock      1B  Connect to Vayu (local mode)
+Nock      1C  Server management commands (start/stop/status)
+Bowyer    1B  Quiver health client
+Bowyer    1C  Status command (CLI)
+Bowyer    1D  Status page (Web)
+```
+
+**Track D: Fletch astro (independent)**
+```
+Fletch    4   Astro schema + tolerances
+Fletch    5   KalaNG adapter (calls existing KalaEngine.Api)
+```
+
+### Wave 4: Arrow goes live — the critical unlock
+
+Arrow SWE facade produces real output. This is the single most important milestone.
+
+```
+Arrow     2C  SWE facade implementation (calcAll -> EphSnapshot)
+```
+
+This unlocks everything:
+
+```
+Quiver    2A  Proto (chart calculation contract)
+Quiver    2B  Arrow gateway (core)
+Quiver    2C  Chart service (server)
+Quiver    2D  Isolate management
+```
+
+Which in turn unlocks:
+
+```
+Nock      2A  Chart command (first real astrology output)
+Nock      2B  Output formatting
+Nock      2C  Chart options
+Bowyer    2A  Debug calc tool
+Fletch    6   Arrow adapter (Arrow becomes a comparison target)
+```
+
+### Wave 5: Arrow core + domain model
+
+```
+Arrow     3C  Rich domain model (Chart, Planet/Graha/Karaka, Cusp)
+Arrow     3D  Dignity + friendship
+Arrow     3E  Chara karakas
+```
+
+### Wave 6: Auth + analysis
+
+**Track A: Authentication**
+```
+Quiver    3A  JWT validation
+Quiver    3B  Vayu (embedded + forwarding)
+Nock      3A  Remote mode + auth (nock login, --remote)
+```
+
+**Track B: Arrow calc (all mostly independent once 3C exists)**
+```
+Arrow     4A  Vimshottari dasha     -> Nock 3C (dasha command)
+Arrow     4B  Aspects
+Arrow     4C  Ashtakavarga
+Arrow     4D  Shadbala              -> Nock 3D (strength command)
+Arrow     4E  Yogas
+Arrow     4F  Jaimini
+Arrow     4G  Avasthas + Tajika
+```
+
+**Track C: Fletch validation**
+```
+Fletch    7   libkala adapter (3-way comparison)
+Fletch    8   Input generators
+```
+
+### Wave 7: KalaBrain + extended features
+
+```
+Quiver    4A  KalaBrain client (direct, no broadhead abstraction)
+Quiver    4B  Request routing
+Nock      3F  Interpret command (--remote, uses KalaBrain)
+Bowyer    4A  KalaBrain monitoring
+```
+
+### Wave 8: Advanced (as needed)
+
+```
+Nock      3B  Varga command
+Nock      3E  Transit command
+Bowyer    3A  Log streaming
+Bowyer    3B  Metrics
+Fletch    9   Consensus + outlier detection
+Fletch    10  Web UI
+```
 
 ---
 
-## Parallel Build — All Five Apps
+## What To Start Immediately
 
-As Arrow and Quiver mature, the other three apps grow alongside them:
+Five things can start right now with zero dependencies:
 
-```
-Phase    Arrow              Quiver             Nock           Bowyer         Fletch
-─────    ─────              ──────             ────           ──────         ──────
-  1      arrow_swe spike    health check       -              -              -
-  2      arrow_swe impl     arrow service      chart cmd      status cmd     -
-  3      arrow_core         -                  more cmds      logs cmd       -
-  4      arrow_calc         broadhead (KB)     interpret cmd  broadheads     engine adapters
-  5      -                  -                  -              -              comparison UI
-```
+1. **Arrow 1A** — scaffold the monorepo
+2. **Quiver 1A** — scaffold packages
+3. **Nock 1A** — scaffold CLI
+4. **Bowyer 1A** — scaffold packages
+5. **Fletch scaffold** — scaffold packages
 
-Each phase: logging, error handling, testing built in. Not deferred.
-
----
-
-## Nock Connection Modes
-
-Nock supports two modes through Vayu:
-
-1. **Local gRPC server (default)** — Nock starts a local Quiver server process, connects via gRPC on localhost. Full Arrow calcs, no auth, no internet. This is the primary development and exploration mode.
-
-2. **In-process via Vayu** — Direct Dart calls through the embedded Vayu library. No server, no gRPC serialization. Vayu handles the Arrow calls directly in the same process. Available because it's built into the architecture.
-
-```dart
-final vayu = args.contains('--embedded')
-    ? Vayu.embedded()    // direct Dart calls, no server
-    : Vayu.local();      // starts local Quiver, connects via gRPC
-
-// same API either way
-final chart = await vayu.calculateChart(birthData);
-```
+After scaffolding:
+- **Arrow 1B** (enums — Sonnet) and **Arrow 2A** (sweph spike — Josh) run in parallel
+- **Quiver 1B-1C** (proto + health server) runs in parallel with Arrow
+- **Fletch 1-3** (core engine) runs in parallel with everything
 
 ---
 
-## Local vs Remote Routing (Vayu)
+## Deferred Decisions
 
-Deferred until we understand actual calc costs. Building and testing Arrow will reveal how long each calculation type takes on-device. The routing criteria will emerge from real performance data, not speculation.
+These are NOT in this plan. They are documented as blueprints for when they become relevant:
 
-What we need to measure:
-- Single chart calc time on mobile
-- Transit search over various date ranges
-- Panchanga generation
-- Batch operations (multiple charts)
-
-This measurement happens naturally as part of building and testing arrow_swe and arrow_core.
+| Decision | Blueprint location | Trigger |
+|----------|-------------------|---------|
+| Multi-tradition (Hellenistic, Western, etc.) | `arrow/claude/arch/universal-options.md` | When tradition #2 is actually being built |
+| Broadhead abstraction | `quiver/claude/arch/future.md` | When external service #2 appears |
+| Caching | - | When real usage data shows repeated calcs |
+| Local/remote routing criteria | - | When Arrow calc performance is measured |
+| Vayu for non-Dart frontends | - | When a non-Flutter frontend is being built |
 
 ---
 
-## Caching
+## Sonnet Session Guide
 
-Most calcs happen on-device — cache may not be necessary. Explore later when there's real usage data showing what Remote Quiver actually handles and whether repeat calculations are common enough to warrant caching infrastructure.
+When starting a session with Sonnet, provide:
+
+1. This unified plan (for context on where things stand)
+2. The detailed plan for the specific component being worked on
+3. The actual code built so far
+4. A clear directive: "We are on Step X. Here's what exists. Build Y."
+
+Keep sessions focused — one step per session. Feed the output of one session as input to the next.
+
+### What Sonnet handles well
+
+- Arrow 1B (enums — large, mechanical, clear source material)
+- Arrow 3A-3E (pure Dart derivation — port from C#/Python)
+- Arrow 4A-4G (analysis — port from C#/Python)
+- Quiver 1A-1C (gRPC scaffold — well-documented patterns)
+- Nock commands (CLI arg parsing + Vayu calls + output formatting)
+- Fletch core (contracts, diff engine — well-defined abstractions)
+
+### What needs Josh
+
+- Arrow 2A (sweph.dart spike — exploratory, needs judgment)
+- Arrow 2B (EphSnapshot design — architectural decision from spike)
+- Proto contract design (what the wire format looks like)
+- Any "source material disagrees" situations

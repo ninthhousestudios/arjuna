@@ -8,7 +8,6 @@ Arjuna is a universal astrological calculation service. It is named for the arch
 |-----------|------|------|------|
 | Calc Engine | **Arrow** | Astrology calculations — pure Dart library, runs on-device and server | Dart |
 | Server | **Quiver** | Arrow's API server, gRPC primary, broadhead proxy, auth | Dart gRPC |
-| Validation | **Fletch** | Cross-engine comparison tool (Arrow vs KalaNG vs KalaC# vs libaditya) | Flutter Web |
 | Admin | **Bowyer** | Quiver management, logs, metrics, debugging | Flutter Web + Dart CLI |
 | CLI | **Nock** | Full CLI astrology app + living API docs for Quiver | Dart CLI |
 | Contracts | **proto/** | Shared .proto files — single source of truth for all gRPC contracts | Protocol Buffers |
@@ -51,7 +50,7 @@ Each layer depends only on the previous. Non-SWE code never calls SWE — it onl
 
 ### Multi-Tradition Support
 
-CalcConfig is modular: a core `Set<Tradition>` plus optional typed configs (VedicConfig, HellenisticConfig, ModernWesternConfig, UranianConfig, PersianConfig, CardsOfTruthConfig). Named presets: `ArrowPresets.ernst`, `.lahiriVedic`, `.hellenistic`, `.modernWestern`, etc.
+CalcConfig is modular: a core `Set<Tradition>` plus optional typed configs (VedicConfig, HellenisticConfig, ModernWesternConfig, UranianConfig, PersianConfig, CardsOfTruthConfig, HumanDesignConfig). Named presets: `ArrowPresets.ernst`, `.lahiriVedic`, `.hellenistic`, `.modernWestern`, etc. All traditions flow through the same Arrow pipeline — every system is fundamentally based on birth time, place, and planetary positions.
 
 ### Domain Model
 
@@ -87,25 +86,42 @@ Supabase Auth issues JWTs. Celestial authenticates once. Quiver validates on eve
 
 All .proto files in `arjuna/proto/`. Single source of truth. Code generated into each consumer package. Managed with buf (linting, breaking change detection, BSR distribution for external consumers like KalaBrain).
 
+## Naming Convention — Sub-packages
+
+Sub-packages within a component use **short directory names**, not prefixed names. The Dart package name (in `pubspec.yaml`) is `{component}_{short}`, but the directory is just `{short}`.
+
+```
+Directory name:    arrow/swe/         (not arrow/arrow_swe/ or arrow/packages/arrow_swe/)
+Package name:      arrow_swe          (in pubspec.yaml, for Dart imports)
+
+Directory name:    quiver/embedded/
+Package name:      quiver_embedded
+```
+
+No `packages/` intermediary directories. The component directory IS the container.
+
 ## Directory Structure
 
 ```
 arjuna/
 ├── arrow/                    ← Calc engine (Dart monorepo)
-│   ├── packages/
-│   │   ├── arrow_options/    ← Enums, config interfaces, ArrowOptions
-│   │   ├── arrow_swe/        ← SWE bindings, EphSnapshot
-│   │   ├── arrow_core/       ← Derivation, rich domain model
-│   │   └── arrow_calc/       ← Analysis (per-tradition subdirs)
+│   ├── options/              ← Enums, config interfaces, ArrowOptions
+│   ├── swe/                  ← SWE bindings, EphSnapshot
+│   ├── core/                 ← Derivation, rich domain model
+│   ├── calc/                 ← Analysis (per-tradition subdirs)
 │   ├── claude/arch/          ← Architecture docs
 │   ├── claude/struct/        ← Structure proposals, type sketches
 │   └── melos.yaml
 ├── quiver/                   ← Server (core/, server/, embedded/)
 ├── proto/                    ← Shared .proto contracts
-├── fletch/                   ← Validation client
 ├── bowyer/                   ← Admin panel (core/, web/, cli/)
 ├── nock/                     ← CLI client
 └── CLAUDE.md
+
+soft/back/fletch/             ← Universal comparison engine (peer to arjuna/, not inside it)
+├── core/                     ← fletch_core: domain-agnostic engine
+├── astro/                    ← fletch_astro: astrology domain package
+└── web/                      ← fletch_web: Flutter Web UI
 ```
 
 ## Key Design Decisions
@@ -137,7 +153,21 @@ arjuna/
 - Arrow isolate pool sizing per Quiver instance
 - KalaBrain priority queue design for LLM requests
 - Aspect and dignity systems: tradition-scoped vs shared engine
-- Cards of Truth: separate from Arrow pipeline or integrated?
+
+## Implementation Guidance
+
+Read the implementation plan before writing code: `arrow/claude/impl/one.md` (Arrow), `../fletch/claude/impl/one.md` (Fletch).
+
+### Rules
+
+- **Read source material before implementing.** Every enum, every calculation has a reference in KalaNG (C#) and/or libkala (Python). Don't invent — port. If the sources disagree, surface the discrepancy rather than silently picking one.
+- **Write tests alongside code.** The test file is created in the same step as the implementation file. Not after.
+- **Log at appropriate levels.** `fine` for per-calculation details, `info` for facade-level operations, `warning` for fallbacks, `severe` for errors. Use `package:logging` with hierarchical names (`Arrow.Swe`, `Arrow.Core`, `Quiver.Server`).
+- **No premature abstraction.** Don't create abstract base classes, registries, or plugin systems until you have two real implementations. See `arrow/claude/arch/future.md` and `quiver/claude/arch/future.md` for rationale.
+- **Multi-tradition is deferred.** Build CalcConfig as flat Vedic config. Don't add HellenisticConfig, UranianConfig, etc. The blueprint is in `arrow/claude/arch/universal-options.md` for when the second tradition arrives.
+- **Broadheads are deferred.** Integrate KalaBrain directly into Quiver. No abstract broadhead contract. See `quiver/claude/arch/future.md`.
+- **Don't add features not in the plan.** No "while I'm here" improvements.
+- **Sub-package directory names are short.** `arrow/swe/` not `arrow/arrow_swe/` or `arrow/packages/arrow_swe/`. No `packages/` intermediary. See Naming Convention section above.
 
 ## Source Material
 
@@ -164,6 +194,6 @@ Arrow is ported from:
 | gRPC with JSON + Dart examples | `quiver/claude/arch/grpc-with-json-includes-dart-examples.md` |
 | Desktop routing | `quiver/claude/arch/desktop.md` |
 | Proto ownership | `proto/claude/arch/proto-arch.md` |
-| Fletch architecture | `fletch/claude/arch/base.md` |
+| Fletch architecture | `../fletch/claude/arch/base.md` |
 | Bowyer architecture | `bowyer/claude/arch/base.md` |
 | Nock architecture | `nock/claude/arch/base.md` |

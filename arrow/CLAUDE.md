@@ -65,6 +65,36 @@ Rich objects that don't own their data. They wrap EphSnapshot + CalcConfig and p
 - **On the object**: things about this body/cusp in isolation (sign, nakshatra, dignity, retrograde, varga placement)
 - **Functions taking the object**: relationships and multi-body analysis (aspects, yogas, dashas, shadbala, ashtakavarga)
 
+## Implementation
+
+The full implementation plan is at `claude/impl/one.md`. Read it before writing code.
+
+### Current status
+
+Pre-implementation. Architecture docs and type sketches exist. No code yet.
+
+### Package structure
+
+```
+arrow/
+├── options/    # arrow_options: enums, SweConfig, CalcConfig, ArrowOptions (freezed)
+├── swe/        # arrow_swe: sweph.dart bindings, EphSnapshot, SweFacade
+├── core/       # arrow_core: signs, nakshatras, vargas, dignities, domain model
+├── calc/       # arrow_calc: dashas, yogas, shadbala, ashtakavarga, jaimini
+└── melos.yaml
+```
+
+Dependency graph (strict one-way): `arrow_options <- arrow_swe <- arrow_core <- arrow_calc`.
+
+### Key rules for Arrow
+
+- **EphSnapshot will be designed from the sweph.dart spike**, not from the existing sketches in `claude/arch/` and `claude/struct/`. Those sketches are starting points but the real API determines the final shape.
+- **CalcConfig is flat Vedic for now.** Don't build the modular multi-tradition version. The blueprint is in `claude/arch/universal-options.md` for later.
+- **Every varga, dignity table, and dasha algorithm has source material** in KalaNG (`soft/back/kala/kalang/Astro/`) and libkala (`soft/back/libkala/`). Read the source before implementing. Cross-reference both.
+- **Test against known values from KalaNG.** `KalaEngine.Api` (`soft/back/kala/kalang-master/KalaEngine.Api`) is a running HTTP API that returns reference chart data. Use it to generate test fixtures.
+- **arrow_core and arrow_calc are pure Dart.** No FFI, no SWE calls. They only see EphSnapshot. If you find yourself importing sweph, you're in the wrong layer.
+- **Rich domain objects are thin.** Planet/Graha/Karaka/Cusp/Chart wrap snapshot data with getters. Complex analysis (dashas, yogas, shadbala) stays as functions in arrow_calc, not methods on Chart.
+
 ## Design Docs
 
 Detailed architecture and type sketches live in `claude/arch/`:
@@ -165,6 +195,8 @@ Key design decisions:
 
 Current VedicConfig fields are identical to the existing flat CalcConfig. All Vedic enums (D10Method, CharaKaraka8th, etc.) unchanged.
 
-Open questions: aspect systems (tradition-scoped vs shared engine), dignity systems (likely tradition-scoped), Cards of Truth (may not need SWE at all).
+Open questions: aspect systems (tradition-scoped vs shared engine), dignity systems (likely tradition-scoped).
+
+Resolved: Cards of Truth DOES need SWE — the birth card is based on equatorial sunrise for the native's longitude, and the system uses planet placements. Human Design is also SWE-based. All traditions flow through the Arrow pipeline.
 
 Wrote `claude/arch/universal-options.md`. Updated `base-arch.md` with cross-reference.
