@@ -1,0 +1,26 @@
+C4Context
+    title System Context — Arrow (Calculation Engine)
+
+    Person(astrologer, "Astrologer", "End user requesting birth charts, dashas, panchanga, and other astrological calculations")
+    Person(developer, "Arjuna Developer", "Integrates Arrow into Quiver, Vayu, Nock, or Bowyer; writes tests and tradition modules")
+
+    System_Boundary(arrow_boundary, "Arrow") {
+        System(arrow, "Arrow", "Pure Dart astrological calculation library. Accepts ArrowOptions, calls Swiss Ephemeris or KalaBrain for raw positions, returns EphSnapshot → Chart → calc results")
+    }
+
+    System_Ext(sweph, "Swiss Ephemeris", "Native C ephemeris library accessed via sweph Dart FFI package. Provides planetary positions, house cusps, ayanamsas, rise/set times")
+    System_Ext(kalabrain, "KalaBrain", "HTTP ephemeris server. Arrow falls back to KalaBrain when local Swiss Ephemeris is unavailable")
+
+    System_Ext(quiver, "Quiver", "Arjuna gRPC server. Runs Arrow in Dart isolates to serve remote chart requests")
+    System_Ext(vayu, "Vayu", "Flutter frontend boundary. Uses Arrow on-device for local chart calculation, or routes to Quiver")
+    System_Ext(nock, "Nock", "Arjuna CLI client. Calls Arrow directly for command-line astrological output")
+    System_Ext(bowyer, "Bowyer", "Arjuna admin tool. Consumes Arrow for debugging, metrics, and chart inspection")
+
+    Rel(developer, arrow, "Develops and integrates")
+    Rel(astrologer, vayu, "Uses via Flutter app or CLI")
+    Rel(vayu, arrow, "Calls on-device")
+    Rel(quiver, arrow, "Calls in isolates")
+    Rel(nock, arrow, "Calls directly")
+    Rel(bowyer, arrow, "Calls for inspection")
+    Rel(arrow, sweph, "Calls via dart:ffi for planetary positions")
+    Rel(arrow, kalabrain, "HTTP fallback when FFI unavailable")

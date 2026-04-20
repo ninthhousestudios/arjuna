@@ -1,0 +1,23 @@
+name: nock
+description: CLI astrology app and living API docs for Quiver.
+version: 0.1.0
+publish_to: none
+
+environment:
+  sdk: ^3.11.0
+
+resolution: workspace
+
+dependencies:
+  quiver_embedded:
+    path: ../quiver/embedded
+  quiver_core:
+    path: ../quiver/core
+  grpc: ^5.0.0
+  protobuf: ^6.0.0
+  args: ^2.6.0
+  logging: ^1.3.0
+
+dev_dependencies:
+  lints: ^6.0.0
+  test: ^1.25.0

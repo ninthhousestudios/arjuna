@@ -1,0 +1,39 @@
+C4Container
+    title Container Diagram — Arrow Calculation Engine
+
+    Person(astrologer, "Astrologer", "End user computing charts via Flutter or CLI")
+    Person(developer, "Developer", "Generates test fixtures")
+
+    System_Boundary(arrow, "Arrow — Pure Dart Calculation Library") {
+        Container(options, "arrow_options", "Dart (freezed)", "Enums, SweConfig, CalcConfig, ArrowOptions, Circle, VargaType, Ayanamsa — zero internal deps")
+        Container(swe, "arrow_swe", "Dart + dart:ffi", "Swiss Ephemeris facade; SweFacade.calcAll() → EphSnapshot; HTTP fallback to KalaBrain; Supabase snapshot cache")
+        Container(core, "arrow_core", "Dart", "Rich domain model: Chart, Planet, Graha, Karaka, Cusp, Sign, Nakshatra, Varga, Longitude, Dignity")
+        Container(calc, "arrow_calc", "Dart", "Derived Vedic calculations: aspects, avasthas (baladi/deeptadi/jagradadi/lajjitaadi), panchanga (tithi/nakshatra/yoga/karana/vara)")
+        Container(tool, "arrow_tool", "Dart CLI", "Test fixture generator: ChartData, Chtk — dev/CI use only")
+    }
+
+    System_Ext(swiss_eph, "Swiss Ephemeris", "Native C library (swisseph dart:ffi binding) — planetary positions, house cusps")
+    System_Ext(kalabrain, "KalaBrain", "HTTP ephemeris API — fallback when local SWE unavailable")
+    System_Ext(supabase, "Supabase", "Postgres/REST cache — stores EphSnapshot to avoid redundant SWE calls")
+    System_Ext(flutter_app, "Flutter App / Quiver gRPC Server", "Consumers — embed arrow_calc (and transitively the full stack) for on-device or server-side chart calculation")
+
+    Rel(astrologer, flutter_app, "Requests chart calculations")
+    Rel(developer, tool, "Runs fixture generator", "Dart CLI")
+
+    Rel(flutter_app, calc, "Imports", "Dart package dep")
+
+    Rel(swe, options, "Imports", "path dep")
+    Rel(core, options, "Imports", "path dep")
+    Rel(core, swe, "Imports", "path dep")
+    Rel(calc, options, "Imports", "path dep")
+    Rel(calc, swe, "Imports", "path dep")
+    Rel(calc, core, "Imports", "path dep")
+    Rel(tool, options, "Imports", "path dep")
+    Rel(tool, swe, "Imports", "path dep")
+
+    Rel(swe, swiss_eph, "FFI calls", "dart:ffi / swisseph ^0.4.4")
+    Rel(tool, swiss_eph, "FFI calls", "swisseph ^0.4.4 direct")
+    Rel(swe, kalabrain, "HTTP fallback", "REST")
+    Rel(swe, supabase, "Cache read/write", "REST / postgres")
+
+    UpdateLayoutConfig($c4ShapeInRow="3", $c4BoundaryInRow="1")

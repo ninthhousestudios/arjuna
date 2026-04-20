@@ -1,0 +1,299 @@
+{
+  "_chart": "amber-flynn",
+  "_source": "libaditya",
+  "baladi": {
+    "Jupiter": "Mrita",
+    "Mars": "Mrita",
+    "Mercury": "Bala",
+    "Moon": "Yuva",
+    "Saturn": "Mrita",
+    "Sun": "Bala",
+    "Venus": "Vriddha"
+  },
+  "bodies_ecliptic": {
+    "Jupiter": {
+      "longitude": 299.08825240623304,
+      "sign": 11
+    },
+    "Ketu": {
+      "longitude": 327.2019464377252,
+      "sign": 12
+    },
+    "Mars": {
+      "longitude": 182.43359786690226,
+      "sign": 8
+    },
+    "Mercury": {
+      "longitude": 153.82034682930063,
+      "sign": 7
+    },
+    "Moon": {
+      "longitude": 255.09560725086277,
+      "sign": 10
+    },
+    "Rahu": {
+      "longitude": 147.2019464377252,
+      "sign": 6
+    },
+    "Saturn": {
+      "longitude": 294.3511112068549,
+      "sign": 11
+    },
+    "Sun": {
+      "longitude": 147.56063654768022,
+      "sign": 6
+    },
+    "Venus": {
+      "longitude": 109.75969247291644,
+      "sign": 5
+    }
+  },
+  "deeptadi": {
+    "Jupiter": "Shanta",
+    "Mars": "Swastha",
+    "Mercury": "Mudita",
+    "Moon": "Mudita",
+    "Saturn": "Swastha",
+    "Sun": "Mudita",
+    "Venus": "Shanta"
+  },
+  "dignities": {
+    "Jupiter": "E",
+    "Ketu": "E",
+    "Mars": "OH",
+    "Mercury": "GF",
+    "Moon": "F",
+    "Rahu": "GF",
+    "Saturn": "OH",
+    "Sun": "F",
+    "Venus": "N"
+  },
+  "fifth_cusp_sign": 2,
+  "jagradadi": {
+    "Jupiter": "Sushupti",
+    "Mars": "Jagrat",
+    "Mercury": "Swapna",
+    "Moon": "Swapna",
+    "Saturn": "Jagrat",
+    "Sun": "Swapna",
+    "Venus": "Sushupti"
+  },
+  "lagna_sign": 9,
+  "lajjitaadi": {
+    "Jupiter": {
+      "delighted": [
+        {
+          "planet": "Sun",
+          "source": "aspect",
+          "strength": 3.0552317171056416
+        },
+        {
+          "planet": "Moon",
+          "source": "aspect",
+          "strength": 6.9963225776851345
+        },
+        {
+          "planet": "Mars",
+          "source": "aspect",
+          "strength": 56.65465453933078
+        }
+      ],
+      "starved": [
+        {
+          "planet": "Mercury",
+          "source": "aspect",
+          "strength": 4.732094423067593
+        },
+        {
+          "planet": "Venus",
+          "source": "aspect",
+          "strength": 55.3357200333417
+        },
+        {
+          "planet": "Saturn",
+          "source": "conjunction",
+          "strength": 60
+        }
+      ]
+    },
+    "Mars": {
+      "delighted": [
+        {
+          "planet": "Sun",
+          "source": "aspect",
+          "strength": 2.4364806596110213
+        },
+        {
+          "planet": "Moon",
+          "source": "aspect",
+          "strength": 6.33100469198024
+        },
+        {
+          "planet": "Jupiter",
+          "source": "aspect",
+          "strength": 54.98198180899617
+        }
+      ],
+      "healthy": [
+        {
+          "source": "sign",
+          "strength": 60
+        }
+      ]
+    },
+    "Mercury": {
+      "delighted": [
+        {
+          "planet": "Venus",
+          "source": "aspect",
+          "strength": 7.0303271781920955
+        },
+        {
+          "lord": "Venus",
+          "source": "sign",
+          "strength": 60
+        }
+      ],
+      "starved": [
+        {
+          "planet": "Moon",
+          "source": "aspect",
+          "strength": 20.637630210781083
+        }
+      ]
+    },
+    "Moon": {
+      "delighted": [
+        {
+          "planet": "Sun",
+          "source": "aspect",
+          "strength": 36.232514648408724
+        },
+        {
+          "planet": "Mercury",
+          "source": "aspect",
+          "strength": 39.36236978921893
+        }
+      ]
+    },
+    "Saturn": {
+      "agitated": [
+        {
+          "planet": "Sun",
+          "source": "aspect",
+          "strength": 3.2095253408253086
+        },
+        {
+          "planet": "Mars",
+          "source": "aspect",
+          "strength": 51.91751333995265
+        }
+      ],
+      "delighted": [
+        {
+          "planet": "Mercury",
+          "source": "aspect",
+          "strength": 9.469235622445723
+        },
+        {
+          "planet": "Jupiter",
+          "source": "conjunction",
+          "strength": 60
+        },
+        {
+          "planet": "Venus",
+          "source": "aspect",
+          "strength": 57.704290633030766
+        }
+      ],
+      "healthy": [
+        {
+          "source": "sign",
+          "strength": 60
+        }
+      ],
+      "starved": [
+        {
+          "planet": "Sun",
+          "source": "aspect",
+          "strength": 3.2095253408253086
+        },
+        {
+          "planet": "Moon",
+          "source": "aspect",
+          "strength": 4.62775197799607
+        },
+        {
+          "planet": "Mars",
+          "source": "aspect",
+          "strength": 51.91751333995265
+        }
+      ]
+    },
+    "Sun": {
+      "agitated": [
+        {
+          "planet": "Saturn",
+          "source": "aspect",
+          "strength": 43.395237329587346
+        }
+      ],
+      "delighted": [
+        {
+          "planet": "Moon",
+          "source": "aspect",
+          "strength": 23.767485351591276
+        },
+        {
+          "planet": "Jupiter",
+          "source": "aspect",
+          "strength": 45.76380792927641
+        }
+      ],
+      "starved": [
+        {
+          "planet": "Venus",
+          "source": "aspect",
+          "strength": 3.9004720373818884
+        },
+        {
+          "planet": "Saturn",
+          "source": "aspect",
+          "strength": 43.395237329587346
+        }
+      ]
+    },
+    "Venus": {
+      "delighted": [
+        {
+          "planet": "Saturn",
+          "source": "aspect",
+          "strength": 50.817162532123064
+        }
+      ],
+      "starved": [
+        {
+          "planet": "Moon",
+          "source": "aspect",
+          "strength": 42.667957388973164
+        },
+        {
+          "lord": "Sun",
+          "source": "sign",
+          "strength": 60
+        }
+      ]
+    }
+  },
+  "retrograde": {
+    "Jupiter": true,
+    "Ketu": false,
+    "Mars": false,
+    "Mercury": false,
+    "Moon": false,
+    "Rahu": false,
+    "Saturn": true,
+    "Sun": false,
+    "Venus": false
+  }
+}

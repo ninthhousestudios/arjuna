@@ -1,0 +1,16 @@
+syntax = "proto3";
+package quiver;
+
+option java_package = "com.arjuna.quiver";
+
+service HealthService {
+  rpc Check (HealthRequest) returns (HealthResponse);
+}
+
+message HealthRequest {}
+
+message HealthResponse {
+  bool healthy = 1;
+  string version = 2;
+  int64 uptime_seconds = 3;
+}

@@ -1,0 +1,110 @@
+syntax = "proto3";
+package arrow;
+
+option java_package = "com.arjuna.arrow";
+
+message Location {
+  double latitude = 1;
+  double longitude = 2;
+  double altitude = 3;
+}
+
+message BodyPosition {
+  double longitude = 1;
+  double latitude = 2;
+  double distance = 3;
+  double speed_longitude = 4;
+  double speed_latitude = 5;
+  double speed_distance = 6;
+}
+
+message AscMcPoints {
+  double ascendant = 1;
+  double mc = 2;
+  double armc = 3;
+  double vertex = 4;
+  double equatorial_ascendant = 5;
+  double co_ascendant_koch = 6;
+  double co_ascendant_munkasey = 7;
+  double polar_ascendant = 8;
+}
+
+message SunTimes {
+  optional double sunrise = 1;
+  optional double sunset = 2;
+}
+
+message PhenoData {
+  double phase_angle = 1;
+  double phase = 2;
+  double elongation = 3;
+  double apparent_diameter = 4;
+  double apparent_magnitude = 5;
+}
+
+enum Body {
+  BODY_UNSPECIFIED = 0;
+  SUN = 1;
+  MOON = 2;
+  MERCURY = 3;
+  VENUS = 4;
+  MARS = 5;
+  JUPITER = 6;
+  SATURN = 7;
+  RAHU = 8;
+  KETU = 9;
+  URANUS = 10;
+  NEPTUNE = 11;
+  PLUTO = 12;
+}
+
+enum Ayanamsa {
+  AYANAMSA_UNSPECIFIED = 0;
+  TROPICAL = 1;
+  LAHIRI = 2;
+  RAMAN = 3;
+  KRISHNAMURTI = 4;
+  FAGAN_BRADLEY = 5;
+  DHRUVA = 6;
+}
+
+enum HouseSystem {
+  HOUSE_SYSTEM_UNSPECIFIED = 0;
+  CAMPANUS = 1;
+  PLACIDUS = 2;
+  KOCH = 3;
+  EQUAL = 4;
+  WHOLE_SIGN = 5;
+  PORPHYRY = 6;
+  REGIOMONTANUS = 7;
+}
+
+enum Circle {
+  CIRCLE_UNSPECIFIED = 0;
+  ADITYA = 1;
+  ZODIAC = 2;
+}
+
+message BodyPositionEntry {
+  Body body = 1;
+  BodyPosition position = 2;
+}
+
+message PhenoDataEntry {
+  Body body = 1;
+  PhenoData pheno = 2;
+}
+
+message EphSnapshot {
+  double jd_ut = 1;
+  Location location = 2;
+  repeated BodyPositionEntry bodies_ecliptic = 3;
+  repeated BodyPositionEntry bodies_equatorial = 4;
+  repeated PhenoDataEntry pheno_data = 5;
+  repeated double cusps = 6;
+  AscMcPoints ascmc = 7;
+  SunTimes sun_times = 8;
+  double ayanamsa_value = 9;
+  repeated BodyPositionEntry bodies_ecliptic_barycentric = 10;
+  repeated BodyPositionEntry bodies_ecliptic_heliocentric = 11;
+}

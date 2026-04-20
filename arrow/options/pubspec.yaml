@@ -1,0 +1,20 @@
+name: arrow_options
+description: Enums, configs, and options for Arrow.
+version: 0.1.0
+publish_to: none
+
+environment:
+  sdk: ^3.11.0
+
+resolution: workspace
+
+dependencies:
+  freezed_annotation: ^3.0.0
+  json_annotation: ^4.11.0
+
+dev_dependencies:
+  build_runner: ^2.4.0
+  freezed: ^3.0.0
+  json_serializable: ^6.9.0
+  lints: ^6.0.0
+  test: ^1.25.0

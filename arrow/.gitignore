@@ -1,0 +1,14 @@
+# AgentOps session artifacts
+.agents/
+
+# Dart
+.dart_tool/
+pubspec.lock
+
+# IDE
+.idea/
+*.iml
+
+# Generated
+*.freezed.dart
+*.g.dart

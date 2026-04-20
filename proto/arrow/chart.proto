@@ -1,0 +1,29 @@
+syntax = "proto3";
+package arrow;
+
+option java_package = "com.arjuna.arrow";
+
+import "arrow/types.proto";
+
+service ChartService {
+  rpc Calculate (CalcRequest) returns (CalcResponse);
+}
+
+message CalcRequest {
+  double jd_ut = 1;
+  Location location = 2;
+
+  optional Ayanamsa sign_ayanamsa = 3;
+  optional HouseSystem house_system = 4;
+  optional bool true_node = 5;
+  optional bool topocentric = 6;
+  repeated Body bodies = 7;
+
+  optional Circle circle = 8;
+  optional Ayanamsa nak_ayanamsa = 9;
+  optional bool nak_equatorial = 10;
+}
+
+message CalcResponse {
+  EphSnapshot snapshot = 1;
+}

@@ -141,14 +141,18 @@ const factory Location({
 
 ## SWE layer
 
-### `SweFacade` — `swe/lib/src/swe_facade.dart:18`
-Synchronous. Construct with a `SwissEph` the caller configured (ephe path if needed). Moshier default needs no `.se1` files.
+### `SweFacade` — `swe/lib/src/swe_facade.dart`
+Synchronous. Constructor calls `setEphePath` / `setJplFile` on the passed
+`SwissEph` when those params are supplied. Omit `ephePath` to let SWE
+fall back to Moshier.
 ```dart
 class SweFacade {
-  SweFacade(SwissEph swe);
+  SweFacade(SwissEph swe, {String? ephePath, String? jplFile});
   EphSnapshot calcAll(double jdUt, Location location, ArrowOptions options);
 }
 ```
+`ephePath` is required for `EphemerisSource.swissEph` precision and for
+fixstar lookups. `jplFile` is required for `EphemerisSource.jplEph`.
 
 ### `EphSnapshot` — `swe/lib/src/eph_snapshot.dart:13`
 Freezed + JSON. Immutable bridge between SWE and non-SWE code.
@@ -229,21 +233,15 @@ bool   isBetween(double long1, double long2);
 ### `Dignity` — `core/lib/src/dignity.dart`
 `DignityType` enum: `exalted, ownSign, moolatrikona, greatFriend, friend, neutral, enemy, greatEnemy, debilitated`. Also `isCombust`.
 
----
-
-## Calc layer
-
-### `Motion` — `calc/lib/src/vedic/motion.dart`
+### Motion & synodic state — `core/lib/src/motion_state.dart`
+Per-body derived state. Reachable as getters on `Planet`; free functions available for raw inputs.
 ```dart
 enum Direction  { direct, stationary, retrograde }
 enum SpeedClass { fast, mean, slow, stationary }
 
-static Direction  direction      (Body body, double speed);   // abs ≤ threshold → stationary
-static SpeedClass classifySpeed  (Body body, double speed);   // bands: 0.8× / 1.2× meanDailyMotion
-```
+Direction  directionOf    (Body body, double speed);   // abs ≤ threshold → stationary
+SpeedClass classifySpeed  (Body body, double speed);   // bands: 0.8× / 1.2× meanDailyMotion
 
-### `Synodic` — `calc/lib/src/vedic/synodic.dart`
-```dart
 enum ElongationCategory {
   conjunction,      // <5°
   nearConjunction,  // 5-20°
@@ -261,8 +259,18 @@ class SynodicState {
   factory SynodicState.from(PhenoData pheno);
 }
 
-static SynodicState? calcSynodic(Planet planet);  // null for Rahu/Ketu
+// On Planet:
+Direction     get direction;
+SpeedClass    get speedClass;
+SynodicState? get synodicState;   // null for Rahu/Ketu
+
+// On Chart:
+Map<Body, SynodicState> get synodicStates;   // sparse — nodes omitted
 ```
+
+---
+
+## Calc layer
 
 ### Avasthas
 ```dart
@@ -323,8 +331,8 @@ import 'package:arrow_core/arrow_core.dart';
 import 'package:arrow_calc/arrow_calc.dart';
 import 'package:swisseph/swisseph.dart';
 
-final swe     = SwissEph();                              // caller configures ephe path if desired
-final facade  = SweFacade(swe);
+final swe     = SwissEph();
+final facade  = SweFacade(swe, ephePath: '/path/to/ephe'); // omit for Moshier-only
 final options = ArrowPresets.lahiriVedic;                // or custom ArrowOptions(...)
 final loc     = Location(latitude: 28.6, longitude: 77.2);
 final jdUt    = /* DateTime → Julian Day UT */;
@@ -346,9 +354,10 @@ snap.cusps[0];
 // Divisional
 chart.varga(VargaType.navamsha).sun.longitude.sign;
 
-// Calc layer
-final dir   = Motion.direction(Body.mercury, sun.position.speedLongitude);
-final syn   = Synodic.calcSynodic(chart.rashi.venus);     // SynodicState?
+// Motion / synodic (on Planet)
+final dir   = chart.rashi.mercury.direction;              // Direction
+final syn   = chart.rashi.venus.synodicState;             // SynodicState?
+final all   = chart.synodicStates;                        // Map<Body, SynodicState>
 ```
 
 ---

@@ -27,7 +27,7 @@ nock/
 
 ### Current status
 
-Pre-implementation. Architecture doc exists. No code yet. Nock depends on Arrow producing output and Quiver serving it.
+Pre-implementation. Architecture docs and implementation plan exist. No code yet.
 
 ### Rules for Nock
 

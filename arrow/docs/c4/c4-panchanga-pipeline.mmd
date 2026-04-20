@@ -1,0 +1,67 @@
+sequenceDiagram
+    title Panchanga Calculation - Data Flow
+
+    participant Caller
+    participant Names as PanchangaNames
+    participant Tithi as Tithi
+    participant Nak as Nakshatra
+    participant Yoga as Yoga
+    participant Karana as Karana
+    participant Vara as Vara
+    participant Next as NextEvent
+
+    Note over Caller: Has sunLon, moonLon (tropical), moonSiderealLon (sidereal), jdUt
+
+    Caller->>Tithi: calcTithi(sunLon, moonLon)
+    Note over Tithi: raw = ((moonLon - sunLon) mod 360) / 12. number = floor(raw) + 1. Tropical lons only - ayanamsa cancels in difference
+    Tithi-->>Caller: Tithi number, degreesElapsed, degreesRemaining
+
+    Caller->>Nak: calcNakshatra(moonSiderealLon)
+    Note over Nak: index = floor(normalized / 13.333). pada = 1-4 within nakshatra. Requires sidereal lon from Ashvini = 0
+    Nak-->>Caller: Nakshatra index, name, pada, elapsed, remaining
+
+    Caller->>Yoga: calcYoga(sunSiderealLon, moonSiderealLon)
+    Note over Yoga: sum = (moon + sun) mod 360. index = floor(sum / 13.333). Requires sidereal lons
+    Yoga-->>Caller: Yoga number, name, elapsed, remaining
+
+    Caller->>Tithi: reuse Tithi result
+    Caller->>Karana: calcKarana(sunLon, moonLon, tithi)
+    Note over Karana: raw = ((moonLon - sunLon) mod 360) / 6. half = 0 or 1 based on tithi remaining. Depends on Tithi already computed
+    Karana-->>Caller: Karana name, half, tithiIndex, elapsed, remaining
+
+    Caller->>Vara: calcVara(jdUt)
+    Note over Vara: index = floor(jdUt + 1.75) mod 7. The +1.75 shift sets vara boundary at 18:00 UT (Yamakoti sunrise)
+    Vara-->>Caller: Vara index, name, abbreviation
+
+    opt Next-event - find transition time
+        Caller->>Next: nextTithi(jd, eclipticStateAt)
+        Note over Next: Newton phase then bisection. Max 40 steps, tolerance 1e-8 days
+        Next->>Tithi: calcTithi at each candidate JD
+        Tithi-->>Next: Tithi
+        Next-->>Caller: boundaryJD + nextTithi
+
+        Caller->>Next: nextKarana(jd, eclipticStateAt)
+        Next->>Tithi: calcTithi at candidate JD
+        Tithi-->>Next: Tithi
+        Next->>Karana: calcKarana with tithi
+        Karana-->>Next: Karana
+        Next-->>Caller: boundaryJD + nextKarana
+
+        Caller->>Next: nextNakshatra(jd, moonSiderealStateAt)
+        Note over Next: Moon-only root finding
+        Next->>Nak: calcNakshatra at candidate JD
+        Nak-->>Next: Nakshatra
+        Next-->>Caller: boundaryJD + nextNakshatra
+
+        Caller->>Next: nextYoga(jd, siderealStateAt)
+        Note over Next: step = yogaRemaining / (sunSpeed + moonSpeed)
+        Next->>Yoga: calcYoga at candidate JD
+        Yoga-->>Next: Yoga
+        Next-->>Caller: boundaryJD + nextYoga
+
+        Caller->>Next: nextVara(jd, sunriseAt)
+        Note over Next: Single call - no iteration. sunriseAt is caller-supplied callback
+        Next->>Vara: calcVara(nextSunriseJD)
+        Vara-->>Next: Vara
+        Next-->>Caller: nextSunriseJD + nextVara
+    end

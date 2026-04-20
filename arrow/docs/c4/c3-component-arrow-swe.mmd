@@ -1,0 +1,38 @@
+C4Component
+    title Components — arrow_swe
+
+    Container_Boundary(swe, "arrow_swe") {
+        Component(facade, "Facade", "SweFacade", "Orchestrates all SWE calls; stateless calcAll() entry point; assembles EphSnapshot from sub-results")
+        Component(flagResolver, "Flag Resolver", "ephemerisFlag()", "Maps EphemerisSource enum to SWE integer flag bits")
+        Component(snapshot, "Snapshot", "EphSnapshot (freezed)", "Top-level immutable aggregate crossing the SWE boundary; the sole public data contract consumed by arrow_core")
+        Component(bodyPos, "Body Position Model", "BodyPosition (freezed)", "6-component phase-space state for a single celestial body: lon/lat/dist + speeds")
+        Component(anglePoints, "Angle Points Model", "AscMcPoints (freezed)", "Eight house-system angle outputs: ASC, MC, ARMC, Vertex, co-ascendants")
+        Component(phenoData, "Solar Phenomena Model", "PhenoData (freezed)", "Optical phenomena per body: phase angle, elongation, apparent diameter, magnitude")
+        Component(sunTimes, "Sun Times Model", "SunTimes (freezed)", "Sunrise and sunset as nullable Julian Day numbers")
+        Component(cardinalPoints, "Cardinal Points Model", "CardinalPoints (freezed)", "Four tropical solar turning-point JDs: equinoxes and solstices")
+        Component(jsonConv, "JSON Serialization Support", "BodyMapConverter, BodyPhenoMapConverter", "Custom JsonConverters for Map<Body,BodyPosition> and Map<Body,PhenoData> fields on EphSnapshot")
+    }
+
+    System_Ext(swisseph, "swisseph.dart", "Dart FFI binding to the Swiss Ephemeris C library (calcUt, housesEx, phenoUt, riseTrans, solCrossUt, etc.)")
+    System_Ext(arrowOptions, "arrow_options", "Enums and config types: Body, EphemerisSource, Ayanamsa, Location, ArrowOptions, SweConfig")
+
+    Rel(facade, swisseph, "Calls", "dart:ffi / swisseph.dart API")
+    Rel(facade, flagResolver, "Uses", "resolves EphemerisSource → SWE flag int")
+    Rel(facade, bodyPos, "Constructs", "_fromCalcResult(), _ketuFrom()")
+    Rel(facade, anglePoints, "Constructs", "_ascMcFromList()")
+    Rel(facade, phenoData, "Constructs", "_safePheno()")
+    Rel(facade, sunTimes, "Constructs", "_calcSunTimes()")
+    Rel(facade, cardinalPoints, "Constructs", "calcCardinalPoints()")
+    Rel(facade, snapshot, "Assembles and returns", "calcAll() → EphSnapshot")
+    Rel(snapshot, bodyPos, "Contains", "bodiesEcliptic, bodiesEquatorial, bodiesEclipticBarycentric, bodiesEclipticHeliocentric")
+    Rel(snapshot, anglePoints, "Contains", "ascmc")
+    Rel(snapshot, phenoData, "Contains", "phenoData")
+    Rel(snapshot, sunTimes, "Contains", "sunTimes")
+    Rel(snapshot, jsonConv, "Uses", "@BodyMapConverter / @BodyPhenoMapConverter annotations")
+    Rel(jsonConv, bodyPos, "Serializes", "BodyPosition.fromJson / toJson")
+    Rel(jsonConv, phenoData, "Serializes", "PhenoData.fromJson / toJson")
+    Rel(facade, arrowOptions, "Reads config from", "ArrowOptions, SweConfig, Body, Ayanamsa")
+    Rel(snapshot, arrowOptions, "References", "Body, Location, ArrowOptions")
+    Rel(flagResolver, arrowOptions, "Reads", "EphemerisSource")
+
+    UpdateLayoutConfig($c4ShapeInRow="3", $c4BoundaryInRow="1")

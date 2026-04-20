@@ -1,5 +1,7 @@
 # Quiver Implementation Plan
 
+> **EARLY VALIDATION: Dart gRPC JSON codec.** The architecture assumes gRPC binary + JSON on the same port via a codec registry. Dart's `grpc` package may not have built-in JSON codec support — this could require custom implementation or a third-party library. Phase 1B (proto setup) MUST verify that JSON codec works with Dart gRPC. If it requires significant custom work, the "same port, two codecs" design may need revision.
+
 ## Guiding Principle
 
 Same as all Arjuna projects: build thoroughly, intentionally, methodically from the ground up. Every layer includes logging, error handling, and testing as it is built.

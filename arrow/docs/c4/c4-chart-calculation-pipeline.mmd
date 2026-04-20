@@ -1,0 +1,87 @@
+sequenceDiagram
+    title Chart Calculation — Data Flow
+
+    participant Caller
+    participant ArrowOptions as arrow_options
+    participant SweFacade as SweFacade (arrow_swe)
+    participant SWE as Swiss Ephemeris (native)
+    participant EphSnapshot as EphSnapshot
+    participant Chart as Chart (arrow_core)
+    participant Varga as Varga / Rashi (arrow_core)
+    participant ArrowCalc as arrow_calc
+
+    Caller->>ArrowOptions: SweConfig(bodies, signAyanamsa, houseSystem, …)
+    ArrowOptions-->>Caller: SweConfig
+    Caller->>ArrowOptions: CalcConfig(circle, nakAyanamsa, traditions, …)
+    ArrowOptions-->>Caller: CalcConfig
+    Caller->>ArrowOptions: ArrowOptions(sweConfig, calcConfig)
+    ArrowOptions-->>Caller: ArrowOptions
+
+    Caller->>SweFacade: calcAll(jdUt, location, options)
+
+    Note over SweFacade: Fail-fast: barycentric + Moshier → ArgumentError
+
+    alt sidereal mode
+        SweFacade->>SWE: setSidMode(signAyanamsa.sweCode)
+    end
+    alt topocentric
+        SweFacade->>SWE: setTopo(lon, lat, alt)
+    end
+
+    loop per body (skip Ketu)
+        SweFacade->>SWE: calcUt(jdUt, sweId, eclipticFlags)
+        SWE-->>SweFacade: CalcResult (lon, lat, dist, speed)
+        SweFacade->>SWE: calcUt(jdUt, sweId, equatorialFlags)
+        SWE-->>SweFacade: CalcResult (equatorial)
+        opt extra frames (bary / helio)
+            SweFacade->>SWE: calcUt(jdUt, sweId, baryFlags | helioFlags)
+            SWE-->>SweFacade: CalcResult
+        end
+    end
+
+    Note over SweFacade: Ketu = Rahu + 180° — no SWE call
+
+    SweFacade->>SWE: housesEx(jdUt, flags, lat, lon, hsys)
+    SWE-->>SweFacade: HouseResult (cusps[1..12], AscMc)
+
+    alt sidereal
+        SweFacade->>SWE: getAyanamsaUt(jdUt)
+        SWE-->>SweFacade: ayanamsaValue (degrees)
+    end
+
+    SweFacade->>SWE: calcSunTimes (rise/set/transit)
+    SWE-->>SweFacade: SunTimes
+
+    SweFacade-->>EphSnapshot: EphSnapshot(jdUt, location, options, bodiesEcliptic, bodiesEquatorial, cusps, ascmc, ayanamsaValue, sunTimes, phenoData, extraFrames)
+
+    EphSnapshot-->>Caller: EphSnapshot
+
+    Note over Caller,Chart: CalcConfig changes → reuse EphSnapshot, new Chart only
+
+    Caller->>Chart: Chart(snapshot, calcConfig)
+    Chart->>Varga: Rashi(snapshot, config) → Varga._init()
+
+    Note over Varga: nakAyanamsa (default: dhruva) independent of signAyanamsa
+
+    loop per body in snapshot
+        Varga->>Varga: Planet(body, snapshot, config, VargaType.rashi)
+    end
+    loop karaka-eligible bodies
+        Varga->>Varga: Karaka(planet)
+    end
+    loop cusps 1-12
+        Varga->>Varga: Cusp(i+1, cusps[i], config)
+    end
+    loop signs 1-12
+        Varga->>Varga: Sign(s, signPlanets, signCusps)
+    end
+    Varga->>Varga: _initNakshatras() → Nakshatra[1..27]
+
+    Varga-->>Chart: Rashi (planets, karakas, cusps, signs, nakshatras)
+
+    Note over Chart: D2..D60 vargas lazy-cached on first Chart.varga(type) call
+
+    Chart-->>Caller: Chart
+
+    Caller->>ArrowCalc: dashas(chart) / yogas(chart) / shadbala(chart) / …
+    ArrowCalc-->>Caller: calculation results

@@ -1,0 +1,16 @@
+name: arrow_tool
+description: Test fixture generation for Arrow.
+version: 0.1.0
+publish_to: none
+
+environment:
+  sdk: ^3.11.0
+
+resolution: workspace
+
+dependencies:
+  arrow_options:
+    path: ../options
+  arrow_swe:
+    path: ../swe
+  swisseph: ^0.4.4

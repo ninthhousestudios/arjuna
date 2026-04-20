@@ -183,8 +183,7 @@ arrow/
     └── arch/
         ├── architecture.md
         ├── base-arch.md
-        ├── domain-model.md
-        └── types-sketch.dart
+        └── domain-model.md
 ```
 
 ---

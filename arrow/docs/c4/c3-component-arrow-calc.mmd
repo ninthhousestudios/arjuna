@@ -1,0 +1,43 @@
+C4Component
+    title Components — arrow_calc
+
+    Container_Boundary(calc, "arrow_calc") {
+
+        Component(aspect, "Aspect", "Dart", "Continuous Parashara drishti strength (0–60) and conjunction detection. Per-planet overrides for Mars, Jupiter, Saturn.")
+
+        Component(baladi, "Baladi Avastha", "Dart", "Age-state of a planet (Bala→Mrita) from sign and in-sign degree. No intra-calc dependencies.")
+
+        Component(jagradadi, "Jagradadi Avastha", "Dart", "Alertness-state (Jagrat/Swapna/Sushupti) derived from DignityType alone.")
+
+        Component(deeptadi, "Deeptadi Avastha", "Dart", "Mood/condition state (Deepta→Khala) using dignity, retrogression, combustion, and aspect-detected malefic contact.")
+
+        Component(lajjitaadi, "Lajjitaadi Avastha", "Dart", "Relational psychological states (delighted→proud) across all karakas. Most complex avastha — accumulates factor lists per state using aspects, conjunctions, sign lords, and dignity.")
+
+        Component(panchanga_core, "Panchanga Core", "Dart", "The five daily limbs: Tithi, Nakshatra, Yoga, Karana, Vara. Pure arithmetic on Sun/Moon longitudes or Julian Day. Karana consumes Tithi internally.")
+
+        Component(panchanga_names, "Panchanga Names", "Dart", "Static lookup tables for nakshatra, tithi-type, karana, yoga, and vara names. Data-only; no computation logic.")
+
+        Component(vedanga_jyotisha, "Vedanga Jyotisha", "Dart", "Single-function ayanamsa conversion: tropical ecliptic → Vedanga Jyotisha sidereal frame. Uses nakshatraSpan constant from Panchanga Core.")
+
+        Component(next_event, "Next-Event Engine", "Dart", "Newton-Raphson + bisection root-finders for the JD boundary of the next tithi, nakshatra, yoga, karana, or vara. Injects ephemeris callbacks via function typedefs.")
+
+    }
+
+    System_Ext(arrow_options, "arrow_options", "Enums and frozen config: Body, DignityType, CalcConfig, VedicConfig, ArrowOptions")
+    System_Ext(arrow_core, "arrow_core", "Rich domain model: Chart, Graha, Karaka, Dignity, Longitude")
+
+    Rel(deeptadi, aspect, "calls strength() / isConjunction() for peedita detection")
+    Rel(lajjitaadi, aspect, "calls strength() / isConjunction() for aspect factors")
+
+    Rel(vedanga_jyotisha, panchanga_core, "imports nakshatraSpan constant")
+    Rel(next_event, panchanga_core, "uses Tithi/Nakshatra/Yoga/Karana/Vara result types; calls calc* via injected lambdas")
+    Rel(panchanga_core, panchanga_names, "looks up names for tithi-type, karana, vara, nakshatra, yoga")
+
+    Rel(aspect, arrow_options, "uses Body enum")
+    Rel(jagradadi, arrow_options, "uses DignityType")
+    Rel(deeptadi, arrow_options, "uses Body, DignityType")
+    Rel(deeptadi, arrow_core, "uses Dignity.isCombust(), DignityType, nature data")
+    Rel(lajjitaadi, arrow_options, "uses Body, DignityType, CalcConfig/VedicConfig")
+    Rel(lajjitaadi, arrow_core, "uses Chart, Graha, Karaka for full chart traversal")
+
+    UpdateLayoutConfig($c4ShapeInRow="3", $c4BoundaryInRow="1")

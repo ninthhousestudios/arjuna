@@ -581,7 +581,7 @@ Since `SweConfig` is a freezed class, `!=` checks structural equality. Any SweCo
 
 ## Migration Path
 
-The current `types-sketch.dart` maps exactly to the `VedicConfig` fields. No calculation logic changes — just reorganization:
+The current flat CalcConfig fields map exactly to the `VedicConfig` fields. No calculation logic changes — just reorganization:
 
 1. Extract current `CalcConfig` fields into `VedicConfig`
 2. Wrap in new `CalcConfig(traditions: {Tradition.vedic}, vedic: VedicConfig(...))`

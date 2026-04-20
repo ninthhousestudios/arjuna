@@ -36,3 +36,9 @@ Thumbs.db
 
 # Coverage
 coverage/
+
+
+# AgentOps session artifacts
+# AgentOps session artifacts
+.agents/
+.agents/

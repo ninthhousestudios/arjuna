@@ -1,0 +1,61 @@
+C4Component
+    title Components — arrow_core
+
+    Container_Boundary(core, "arrow_core") {
+
+        Component(chart, "Chart", "Dart class", "Top-level entry point. Wraps EphSnapshot + CalcConfig, creates Rashi on construction, lazily caches other Vargas, aggregates synodic states.")
+
+        Component(body_hierarchy, "CelestialBody Hierarchy", "Dart classes", "Inheritance chain CelestialBody → Planet → Graha → Karaka + Sun specialisation. Per-body rich wrappers over EphSnapshot positions.")
+
+        Component(varga_chart, "Varga / Divisional Chart", "Dart classes", "Varga assembles Planet/Karaka/Sign/Cusp maps for any divisional frame. Rashi extends Varga with nakshatra grouping.")
+
+        Component(longitude_arith, "Longitude & Varga Arithmetic", "Dart class", "Varga-aware longitude value: applies all 14+ divisional chart algorithms (hora, drekkana, navamsha, …), circle offset, sign/nakshatra/pada derivation.")
+
+        Component(sign_model, "Zodiac Sign Model", "Dart classes", "Sign groups planets+cusps occupying a sign. SignData provides static reference tables: lords, element, quality, gender.")
+
+        Component(nakshatra_model, "Nakshatra Model", "Dart classes", "Nakshatra groups planets in a lunar mansion. NakshatraData provides static reference tables: lord, deity, name.")
+
+        Component(cusp, "House Cusp", "Dart class", "Wraps a house cusp longitude with sign and nakshatra accessors.")
+
+        Component(varga_deities, "Varga Deity Tables", "Dart enum + function", "VargaDeity enum and lookupDeity() function backed by 15 sign-aware deity lookup tables, one per varga type.")
+
+        Component(motion_synodic, "Motion & Synodic State", "Dart enums + classes", "Direction/SpeedClass/ElongationCategory enums, directionOf/classifySpeed functions, SynodicState class, and mean-motion/station-threshold constants.")
+
+        Component(dignity, "Dignity & Combustion", "Dart class", "Static utility: exaltation, debilitation, moolatrikona, own-sign, natural/temporary/compound friendship tables, combustion orb logic.")
+
+        Component(nature, "Planetary Nature", "Dart enum", "Benefic/malefic/neutral classification. Moon is context-sensitive (Shukla/Krishna Paksha); all others are fixed.")
+
+        Component(chara_karaka, "Jaimini Chara Karaka", "Dart enum + class", "Assigns Atmakaraka through Darakaraka roles by sorting Karakas on in-sign longitude.")
+    }
+
+    System_Ext(arrow_swe, "arrow_swe", "EphSnapshot, BodyPosition, PhenoData, Body, SweFacade — raw ephemeris data layer")
+    System_Ext(arrow_options, "arrow_options", "CalcConfig, VargaType, Circle, DignityType, FriendshipLevel, Body — enums and config types")
+
+    Rel(chart, varga_chart, "creates Rashi; lazily creates Varga")
+    Rel(chart, motion_synodic, "reads synodicStates per body")
+
+    Rel(varga_chart, body_hierarchy, "instantiates Planet / Karaka per body")
+    Rel(varga_chart, sign_model, "builds Sign map (planets + cusps per sign)")
+    Rel(varga_chart, nakshatra_model, "builds Nakshatra map (Rashi only)")
+    Rel(varga_chart, cusp, "instantiates Cusp per house")
+
+    Rel(body_hierarchy, longitude_arith, "constructs Longitude for position access")
+    Rel(body_hierarchy, motion_synodic, "Planet reads direction, speed class, SynodicState")
+
+    Rel(longitude_arith, varga_deities, "calls lookupDeity() for every varga algorithm")
+
+    Rel(dignity, sign_model, "uses SignData.lord() for Rahu/Ketu delegation")
+
+    Rel(chara_karaka, body_hierarchy, "sorts and maps Karaka instances")
+
+    Rel(body_hierarchy, arrow_swe, "reads EphSnapshot positions")
+    Rel(varga_chart, arrow_swe, "reads EphSnapshot bodies + cusps")
+    Rel(chart, arrow_swe, "holds EphSnapshot")
+    Rel(motion_synodic, arrow_swe, "reads Body, PhenoData")
+    Rel(body_hierarchy, arrow_options, "uses CalcConfig, VargaType, Body")
+    Rel(longitude_arith, arrow_options, "uses CalcConfig, VargaType, Circle")
+    Rel(dignity, arrow_options, "uses Body, DignityType, FriendshipLevel")
+    Rel(nature, arrow_options, "uses Body")
+    Rel(varga_deities, arrow_options, "uses VargaType")
+
+    UpdateLayoutConfig($c4ShapeInRow="3", $c4BoundaryInRow="1")

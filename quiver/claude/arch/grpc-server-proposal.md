@@ -1,5 +1,7 @@
 # Arrow Server — Backend Communication Architecture
 
+> **HISTORICAL DOCUMENT.** This was the first document explaining the gRPC server concept. The architecture has since evolved — Arrow Server is now called Quiver, and Quiver is the primary server (not KalaBrain). See `base.md` for the current architecture. This document is preserved for reference and context on how the design evolved.
+
 ## Overview
 
 Arrow runs as a **standalone Dart server** alongside KalaBrain. KalaBrain (Python/FastAPI) remains the orchestrator — handling auth, Aditi/LLM, and business logic — but delegates all astrological calculation to Arrow Server over a local network boundary.

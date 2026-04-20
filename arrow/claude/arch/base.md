@@ -46,9 +46,9 @@ Primary public API is a batch `calcAll` that returns an `EphSnapshot`. Edge feat
 
 ## Options Architecture
 
-Two config interfaces, one concrete class:
+Two config types composed into one `ArrowOptions` class (all freezed):
 
-### SweConfig
+### SweConfig (freezed)
 Options that change raw planetary/house positions — changing any of these requires SWE recalculation.
 
 - Zodiac mode for signs (tropical, Lahiri, Raman, ~40 ayanamsas)
@@ -60,52 +60,51 @@ Options that change raw planetary/house positions — changing any of these requ
 - Nakshatra calculation mode (ecliptic, equatorial, dhruva ecliptic)
 - Rise mode (Hindu, center true/apparent, tip true/apparent)
 - Custom ayanamsa (user arc + user epoch)
+- `Set<Body> bodies` — which celestial bodies to calculate (see `BodySets` in `universal-options.md`)
+- `Set<String> fixedStars` — fixed stars to calculate by catalog name
 
-### CalcConfig
-Options that affect derived/analytical calculations but do not require SWE recalculation.
+### CalcConfig (freezed, modular)
+Modular config for derived/analytical calculations. Does not require SWE recalculation.
 
-- **Zodiac circle** (zodiac vs aditya) — shifts sign boundaries by 30°; pure math on longitude, no SWE needed. See `tropical-aditya-distinction.md`.
-- Temporary friendship source (rashi-based vs varga-based)
-- Ashtakavarga method (Parashara vs Varahamihira)
-- Combustion method (contemporary vs Surya Siddhanta)
-- Varga variants:
-  - D10: 3 methods (contemporary, parivritti, reverse for even rashis)
-  - D24: 3 methods (contemporary, parivritti, reverse for even rashis)
-  - D30: 2 methods (element lords, rashi30)
-- Rashi aspect mode (conventional, elemental, quadrantal)
-- Jaimini karakas count (7 or 8)
-- Chara karaka 8th planet (Lagna vs Rahu) — applicable when 8 karakas
-- Aya dasha mirror rule (side vs front)
-- Moon fatal degree source (Phaladeepika vs Saravali)
-- Vara mode (local, Yamakoti, Ujjain)
-- Year length for nakshatra dashas (nakshatra, savana, saura, sidereal, chandra nakshatra, lunar tithi)
-- Year length for rashi dashas (same options)
-- Nakshatra dasha source planet
-- Tajika: Moon as VarshaPati, aspect mode for VarshaPati, candidacy count priority, equal house cusps for sahams
-- D3 to use for Jaimini yogada table
+Core fields:
+- `Set<Tradition> traditions` — which traditions are active
+- Optional typed tradition configs: `VedicConfig?`, `CardsOfTruthConfig?`, `HumanDesignConfig?` (and future configs)
+
+Vedic-specific options (in `VedicConfig`) include: circle, friendship method, ashtakavarga method, combustion method, varga variants (D10/D24/D30), rashi aspect mode, jaimini karakas, dasha year lengths, tajika options, etc. See `universal-options.md` for the full inventory.
 
 ### Composition
 
-One concrete `ArrowOptions` class implements both interfaces. Functions declare which interface they need:
+`ArrowOptions` composes `SweConfig` + `CalcConfig` as fields (not interfaces):
+
+```dart
+@freezed
+class ArrowOptions with _$ArrowOptions {
+  const factory ArrowOptions({
+    required SweConfig sweConfig,
+    required CalcConfig calcConfig,
+  }) = _ArrowOptions;
+}
+```
+
+Functions declare which config they need:
 
 ```dart
 EphSnapshot calcAll(double jd, Location loc, SweConfig config);
-int calcVargaSign(double longitude, int division, CalcConfig config);
+List<DashaPeriod> calcVimshottari(EphSnapshot snap, VedicConfig config);
 ```
 
-The SWE/non-SWE boundary is enforced at the type level: `arrow_swe` only takes `SweConfig`, everything else takes `CalcConfig`. Changing a `CalcConfig` field never triggers SWE recalculation. Changing a `SweConfig` field invalidates the `EphSnapshot`.
+The SWE/non-SWE boundary is enforced at the type level: `arrow_swe` only takes `SweConfig`, tradition-specific functions take their own config type. Changing a `CalcConfig` field never triggers SWE recalculation. Changing a `SweConfig` field invalidates the `EphSnapshot`.
 
-## Universal Options Architecture
+## Universal Options Architecture (Active)
 
-The options system described above covers Vedic astrology (Ernst's system specifically). For the full multi-tradition design — supporting Hellenistic, modern Western, Uranian, Persian, Cards of Truth, and more — see `universal-options.md`. Key changes:
+CalcConfig is modular from the start. Cards of Truth and Human Design both need SWE (Cards uses equatorial sunrise + planet placements; Human Design uses precise planetary positions for gate/line placement), giving us multiple real traditions to validate the design alongside Vedic. See `universal-options.md` for full details. Key structure:
 
 - `SweConfig` gains a `bodies` set (asteroids, hypotheticals, Lilith variants) and `fixedStars`
-- `CalcConfig` becomes modular: a small core + optional typed tradition configs (`VedicConfig`, `HellenisticConfig`, `ModernWesternConfig`, `UranianConfig`, `PersianConfig`, etc.)
+- `CalcConfig` is modular: a small core (`Set<Tradition>`) + optional typed tradition configs (`VedicConfig`, `CardsOfTruthConfig`, `HumanDesignConfig`, and future configs like `HellenisticConfig`, `ModernWesternConfig`, etc.)
 - `ArrowOptions` composes `SweConfig` + `CalcConfig` instead of implementing both as interfaces
-- Named presets (`ArrowPresets.ernst`, `.hellenistic`, `.modernWestern`) replace magic defaults
+- Named presets (`ArrowPresets.ernst`, `.cardsOfTruth`, `.humanDesign`) replace magic defaults
 - `arrow_calc` gets per-tradition subdirectories that are tree-shakeable
-
-The current `CalcConfig` fields map exactly to `VedicConfig`. No calculation logic changes — just reorganization.
+- Functions take exactly the config they need: `calcVimshottari(snap, VedicConfig)`, `calcBirthCard(snap, CardsOfTruthConfig)`
 
 ## Chart Options Patterns
 
@@ -135,7 +134,7 @@ Immutable, serializable data object. Contains:
 - House cusps (12 values)
 - Ascmc points
 - Resolved ayanamsa values (sign and nakshatra)
-- The full `ArrowOptions` that produced it — carries both SweConfig and CalcConfig, so a deserialized snapshot contains everything needed to reconstruct a `Chart`
+- The `SweConfig` that produced it (not full ArrowOptions — CalcConfig is not SWE's concern). Final design will come from the sweph.dart spike (Phase 2A/2B), not these sketches.
 
 This is the bridge between SWE and non-SWE. It can come from:
 1. Local SWE calculation (sweph.dart)

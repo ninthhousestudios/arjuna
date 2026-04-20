@@ -58,8 +58,7 @@ arrow/
 ├── claude/
 │   └── arch/                 # Design docs (already exist)
 │       ├── base-arch.md
-│       ├── domain-model.md
-│       └── types-sketch.dart
+│       └── domain-model.md
 │
 ├── CLAUDE.md                 # Project memory
 ├── melos.yaml                # Monorepo management (or pubspec with path deps)

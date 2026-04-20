@@ -1,0 +1,8 @@
+name: arrow_workspace
+description: Arrow container — sub-packages are the real code.
+publish_to: none
+
+environment:
+  sdk: ^3.11.0
+
+resolution: workspace

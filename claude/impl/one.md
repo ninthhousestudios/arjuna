@@ -41,9 +41,9 @@ All projects scaffold simultaneously. Zero cross-project dependencies.
 ```
 Arrow     1A  Monorepo scaffold (melos, 4 packages)
 Quiver    1A  Package scaffold (core, server, embedded)
-Nock      1A  CLI scaffold (entry point, arg parsing)
 Bowyer    1A  Package scaffold (core, web, cli)
 Fletch    --  Package scaffold (core, astro)
+(Nock     1A  DEFERRED)
 ```
 
 ### Wave 2: Foundation types + gRPC validation (parallel tracks)
@@ -89,11 +89,10 @@ Arrow     3B  Varga calculations
 
 **Track C: First consumers of Quiver health check**
 ```
-Nock      1B  Connect to Vayu (local mode)
-Nock      1C  Server management commands (start/stop/status)
 Bowyer    1B  Quiver health client
 Bowyer    1C  Status command (CLI)
 Bowyer    1D  Status page (Web)
+(Nock     1B-1C  DEFERRED)
 ```
 
 **Track D: Fletch astro (independent)**
@@ -122,11 +121,9 @@ Quiver    2D  Isolate management
 Which in turn unlocks:
 
 ```
-Nock      2A  Chart command (first real astrology output)
-Nock      2B  Output formatting
-Nock      2C  Chart options
 Bowyer    2A  Debug calc tool
 Fletch    6   Arrow adapter (Arrow becomes a comparison target)
+(Nock     2A-2C  DEFERRED)
 ```
 
 ### Wave 5: Arrow core + domain model
@@ -143,15 +140,15 @@ Arrow     3E  Chara karakas
 ```
 Quiver    3A  JWT validation
 Quiver    3B  Vayu (embedded + forwarding)
-Nock      3A  Remote mode + auth (nock login, --remote)
+(Nock     3A  DEFERRED)
 ```
 
 **Track B: Arrow calc (all mostly independent once 3C exists)**
 ```
-Arrow     4A  Vimshottari dasha     -> Nock 3C (dasha command)
+Arrow     4A  Vimshottari dasha
 Arrow     4B  Aspects
 Arrow     4C  Ashtakavarga
-Arrow     4D  Shadbala              -> Nock 3D (strength command)
+Arrow     4D  Shadbala
 Arrow     4E  Yogas
 Arrow     4F  Jaimini
 Arrow     4G  Avasthas + Tajika
@@ -168,19 +165,18 @@ Fletch    8   Input generators
 ```
 Quiver    4A  KalaBrain client (direct, no broadhead abstraction)
 Quiver    4B  Request routing
-Nock      3F  Interpret command (--remote, uses KalaBrain)
 Bowyer    4A  KalaBrain monitoring
+(Nock     3F  DEFERRED)
 ```
 
 ### Wave 8: Advanced (as needed)
 
 ```
-Nock      3B  Varga command
-Nock      3E  Transit command
 Bowyer    3A  Log streaming
 Bowyer    3B  Metrics
 Fletch    9   Consensus + outlier detection
 Fletch    10  Web UI
+(Nock     all remaining  DEFERRED)
 ```
 
 ---
@@ -208,7 +204,7 @@ These are NOT in this plan. They are documented as blueprints for when they beco
 
 | Decision | Blueprint location | Trigger |
 |----------|-------------------|---------|
-| Multi-tradition (Hellenistic, Western, etc.) | `arrow/claude/arch/universal-options.md` | When tradition #2 is actually being built |
+| Additional traditions (Hellenistic, Western, etc.) | `arrow/claude/arch/universal-options.md` | When tradition #4+ is being built (Vedic, Cards of Truth, and Human Design are active) |
 | Broadhead abstraction | `quiver/claude/arch/future.md` | When external service #2 appears |
 | Caching | - | When real usage data shows repeated calcs |
 | Local/remote routing criteria | - | When Arrow calc performance is measured |

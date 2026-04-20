@@ -1,0 +1,22 @@
+name: arjuna_workspace
+publish_to: none
+
+environment:
+  sdk: ^3.11.0
+
+workspace:
+  - arrow
+  - arrow/options
+  - arrow/swe
+  - arrow/core
+  - arrow/calc
+  - arrow/tool
+  - quiver/core
+  - quiver/server
+  - quiver/embedded
+  - nock
+  - bowyer/core
+  - bowyer/cli
+
+dev_dependencies:
+  melos: ^7.5.0

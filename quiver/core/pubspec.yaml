@@ -1,0 +1,25 @@
+name: quiver_core
+description: Shared logic for Quiver — Arrow gateway, models, config.
+version: 0.1.0
+publish_to: none
+
+environment:
+  sdk: ^3.11.0
+
+resolution: workspace
+
+dependencies:
+  arrow_options:
+    path: ../../arrow/options
+  arrow_swe:
+    path: ../../arrow/swe
+  arrow_core:
+    path: ../../arrow/core
+  grpc: ^5.0.0
+  protobuf: ^6.0.0
+  fixnum: ^1.1.0
+  logging: ^1.3.0
+
+dev_dependencies:
+  lints: ^6.0.0
+  test: ^1.25.0

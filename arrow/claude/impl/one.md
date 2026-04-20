@@ -1,5 +1,7 @@
 # Arrow Implementation Plan
 
+> **CRITICAL EARLY VALIDATION: sweph.dart isolate behavior.** The entire Quiver concurrency model assumes each Dart isolate gets its own C library state via FFI. If sweph.dart uses process-global state, concurrent calculations will interfere with each other and the server architecture must be redesigned. Phase 2A (sweph.dart spike) MUST include a test: two concurrent isolates each calling calcAll() with different inputs, verifying results match sequential calls. Document initialization cost and thread safety findings.
+
 ## Guiding Principle
 
 Build thoroughly, intentionally, methodically from the ground up. Every layer, every step includes logging, error handling, and testing AS it is built — not bolted on afterward. Each piece is complete before the next begins.
@@ -11,7 +13,7 @@ Build thoroughly, intentionally, methodically from the ground up. Every layer, e
 - **Logging**: `package:logging` everywhere. Logger hierarchy: `Arrow.Swe`, `Arrow.Core`, `Arrow.Calc`.
 - **Immutability**: `freezed` + `json_serializable` for all data classes. Enums serialize by name.
 - **Testing**: every file gets tests. Not "later" — now.
-- **Multi-tradition**: deferred. Build CalcConfig as a flat Vedic config. The universal options blueprint lives in `arrow/claude/arch/universal-options.md` for when the second tradition arrives.
+- **Multi-tradition**: active from the start. CalcConfig is modular — core `CalcConfig` with `Set<Tradition>` + typed configs (`VedicConfig`, `CardsOfTruthConfig`, `HumanDesignConfig`). Cards of Truth and Human Design both need SWE, giving us real traditions to validate the design. See `arrow/claude/arch/universal-options.md`.
 
 ## Directory Structure
 
@@ -78,7 +80,7 @@ Done when: `melos bootstrap` succeeds, `melos run analyze` passes on all four pa
 
 This is the largest type-definition step. Everything here is pure Dart + freezed. No SWE dependency.
 
-**Enums** (one file each):
+**Shared enums** (SWE-level, tradition-agnostic):
 ```
 options/lib/src/enums/
 ├── ayanamsa.dart              # Ayanamsa enum (~40 values + sweCode getter)
@@ -86,6 +88,13 @@ options/lib/src/enums/
 ├── house_cusp_mode.dart       # HouseCuspMode (start, middle, end)
 ├── nakshatra_calc_mode.dart   # NakshatraCalcMode (ecliptic, equatorial, dhruvaEcliptic)
 ├── rise_mode.dart             # RiseMode (hindu, centerTrue, centerApparent, tipTrue, tipApparent)
+├── body.dart                  # Body enum (sun, moon, ..., pluto — with sweId getter) + BodySets
+└── tradition.dart             # Tradition enum (vedic, cardsOfTruth, humanDesign, ...)
+```
+
+**Vedic-specific enums** (used by VedicConfig):
+```
+options/lib/src/enums/vedic/
 ├── circle.dart                # Circle (zodiac, aditya)
 ├── temp_friendship.dart       # TempFriendshipSource (rashi, varga)
 ├── ashtakavarga_method.dart   # AshtakavargaMethod (parashara, varahamihira)
@@ -99,18 +108,26 @@ options/lib/src/enums/
 ├── moon_fatal_degree.dart     # MoonFatalDegreeSource (phaladeepika, saravali)
 ├── vara_mode.dart             # VaraMode (local, yamaKoti, ujjain)
 ├── year_length.dart           # YearLength (nakshatra, savana, saura, sidereal, chandraNakshatra, lunarTithi)
-├── dasha_source_body.dart     # DashaSourceBody (moon, ...others if any)
-└── body.dart                  # Body enum (sun, moon, ..., pluto — with sweId getter)
+└── dasha_source_body.dart     # DashaSourceBody (moon, ...others if any)
+```
+
+**Cards of Truth enums** (used by CardsOfTruthConfig):
+```
+options/lib/src/enums/cards/
+├── card_deck.dart             # CardDeck (standard52, extended53)
+└── spread_type.dart           # SpreadType (yearly, weekly, lifetime)
 ```
 
 **Config types** (freezed):
 ```
 options/lib/src/
-├── swe_config.dart            # SweConfig (freezed, all SWE-affecting fields)
-├── calc_config.dart           # CalcConfig (freezed, all derived-calc fields — flat Vedic for now)
+├── swe_config.dart            # SweConfig (freezed, all SWE-affecting fields + bodies + fixedStars)
+├── calc_config.dart           # CalcConfig (freezed, core: Set<Tradition> + optional typed configs)
+├── vedic_config.dart          # VedicConfig (freezed, all Vedic-specific fields)
+├── cards_config.dart          # CardsOfTruthConfig (freezed, Cards-specific fields)
 ├── arrow_options.dart         # ArrowOptions (freezed, composes SweConfig + CalcConfig)
 ├── location.dart              # Location (freezed: latitude, longitude, altitude)
-└── presets.dart               # ArrowPresets (static const instances: ernst, lahiriVedic)
+└── presets.dart               # ArrowPresets (static const instances: ernst, cardsOfTruth, ...)
 ```
 
 **Source for enum values**: cross-reference `soft/back/kala/kalang/Astro/` (C#) and `soft/back/libkala/` (Python) to get the complete list for each enum. The `sweCode` / `sweId` getters on Ayanamsa, HouseSystem, and Body must map to the integer constants that sweph.dart uses.
@@ -524,7 +541,7 @@ Steps marked "Sonnet" are well-defined, mechanical, and have clear source materi
 
 - Design EphSnapshot (that comes from the sweph.dart spike — Step 2A/2B)
 - Make architectural decisions about SWE isolation, global state, or threading
-- Add multi-tradition support (deferred — build flat CalcConfig)
+- Add traditions beyond Vedic, Cards of Truth, and Human Design (build those three first)
 - Add features not in the plan (no "while I'm here" improvements)
 - Create abstract base classes or generic frameworks for things that have one implementation
 
