@@ -39,6 +39,5 @@ coverage/
 
 
 # AgentOps session artifacts
-# AgentOps session artifacts
 .agents/
-.agents/
+!.agents/plans/
