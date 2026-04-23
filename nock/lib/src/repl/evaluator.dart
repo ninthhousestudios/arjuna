@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:charts_dart/charts_dart.dart';
 import 'package:quiver_embedded/quiver_embedded.dart';
 
 import 'ast.dart';
@@ -59,6 +62,7 @@ class Evaluator {
       'chart' => await _chartFn(positional, named),
       'config' => await _configFn(named),
       'now' => await _nowFn(named),
+      'read' => await _readFn(positional),
       _ => throw NockError('unknown function: $name'),
     };
   }
@@ -119,8 +123,50 @@ class Evaluator {
     throw NockError('now() requires lat: and lon: arguments');
   }
 
+  Future<NockValue> _readFn(List<Expr> positional) async {
+    if (positional.length != 1) {
+      throw NockError('read() takes 1 argument: file path');
+    }
+    final path = _expectString(await _eval(positional[0]), 'read() path');
+
+    final file = File(path);
+    if (!file.existsSync()) {
+      throw NockError('file not found: "$path"');
+    }
+
+    final ext = path.contains('.') ? '.${path.split('.').last}' : '';
+    const supported = {'.chtk', '.jhd', '.toml'};
+    if (!supported.contains(ext)) {
+      throw NockError(
+          'unsupported format: "$ext" (supported: ${supported.join(", ")})');
+    }
+
+    final ChartData data;
+    try {
+      data = ChartIO.read(path);
+    } on Exception catch (e) {
+      throw NockError('failed to read "$path": $e');
+    }
+
+    final raw = data.utcDateTime;
+    final utcDt = raw.isUtc
+        ? raw
+        : DateTime.utc(
+            raw.year, raw.month, raw.day, raw.hour, raw.minute, raw.second);
+    final location = Location(
+      latitude: data.birthLocation.latitude,
+      longitude: data.birthLocation.longitude,
+    );
+    final options = session.config.toArrowOptions();
+    final chart = session.vayu.calculateChart(utcDt, location, options);
+
+    final nockChart = NockChart(chart, session.vayu);
+    nockChart.label = data.name;
+    return nockChart;
+  }
+
   Future<NockValue?> _assign(String name, Expr value) async {
-    const reserved = {'config', 'help', 'vars', 'quit', 'chart', 'now'};
+    const reserved = {'config', 'help', 'vars', 'quit', 'chart', 'now', 'read'};
     if (reserved.contains(name)) {
       throw NockError('cannot assign to reserved name "$name"');
     }
@@ -151,7 +197,10 @@ class Evaluator {
   DateTime _parseDate(String dateStr) {
     try {
       final dt = DateTime.parse(dateStr);
-      return dt.isUtc ? dt : dt.toUtc();
+      if (dt.isUtc) return dt;
+      // No timezone specified — treat the literal values as UTC, not local.
+      return DateTime.utc(
+          dt.year, dt.month, dt.day, dt.hour, dt.minute, dt.second);
     } on FormatException {
       throw NockError(
           'invalid date: "$dateStr" (expected YYYY-MM-DD or YYYY-MM-DD HH:MM)');
@@ -177,6 +226,9 @@ class Evaluator {
   Variables:    name = expr
   Chart:        chart("YYYY-MM-DD HH:MM", lat, lon)
                 chart("YYYY-MM-DD HH:MM", lat, lon, config)
+  Read:         read("path/to/chart.chtk")
+                read("path/to/chart.jhd")
+                read("path/to/chart.toml")
   Config:       config(ayanamsa: "...", houses: "...", ...)
   Properties:   .sun .moon .mars .mercury .jupiter .venus .saturn
                 .rahu .ketu

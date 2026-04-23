@@ -1,0 +1,12 @@
+name = "Josh"
+
+[timeJD]
+jd = 2447679.3388888887
+utcoffset = -5.0
+
+[location]
+lat = 40.045833333333334
+long = -86.02361111111111
+alt = 235.0
+placename = "Noblesville, IN, USA"
+timezone = "-5.0"

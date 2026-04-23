@@ -139,6 +139,31 @@ void main() {
             (e) => e.message, 'message', contains('invalid date'))),
       );
     });
+
+    test('bare date treated as UTC, not local time', () async {
+      // "14:30" with no timezone should mean 14:30 UTC,
+      // same as explicitly appending Z.
+      final bare = await _runExpr(
+          eval, 'chart("1990-06-15 14:30", 39.76, -86.15)');
+      final withZ = await _runExpr(
+          eval, 'chart("1990-06-15T14:30:00Z", 39.76, -86.15)');
+      final bareLon = (bare as NockChart)
+          .chart.sun.rawLongitude;
+      final zLon = (withZ as NockChart)
+          .chart.sun.rawLongitude;
+      expect(bareLon, equals(zLon));
+    });
+
+    test('explicit UTC offset shifts the time', () async {
+      // 14:30+05:30 = 09:00 UTC, different from 14:30 UTC
+      final utc = await _runExpr(
+          eval, 'chart("1990-06-15 14:30", 39.76, -86.15)');
+      final offset = await _runExpr(
+          eval, 'chart("1990-06-15T14:30:00+05:30", 39.76, -86.15)');
+      final utcLon = (utc as NockChart).chart.sun.rawLongitude;
+      final offsetLon = (offset as NockChart).chart.sun.rawLongitude;
+      expect(utcLon, isNot(equals(offsetLon)));
+    });
   });
 
   group('property access', () {

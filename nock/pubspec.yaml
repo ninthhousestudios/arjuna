@@ -17,6 +17,8 @@ dependencies:
     path: ../arrow/core
   arrow_options:
     path: ../arrow/options
+  charts_dart:
+    path: ../../charts_dart
   grpc: ^5.0.0
   protobuf: ^6.0.0
   args: ^2.6.0
