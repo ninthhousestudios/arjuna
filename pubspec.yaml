@@ -23,6 +23,8 @@ dev_dependencies:
   melos: ^7.5.0
 
 melos:
+  name: arjuna
+
   command:
     bootstrap:
       runPubGetInParallel: true
@@ -37,6 +39,8 @@ melos:
       select-package:
         depends-on: build_runner
     protogen:
+      # Requires: dart pub global activate protoc_plugin
+      # (installs protoc-gen-dart to $HOME/.pub-cache/bin/)
       description: Regenerate Dart proto stubs from .proto files
       run: |
         protoc \

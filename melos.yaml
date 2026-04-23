@@ -1,24 +1,3 @@
-name: arjuna
-
-command:
-  bootstrap:
-    runPubGetInParallel: true
-
-scripts:
-  analyze:
-    exec: dart analyze
-  test:
-    exec: dart test
-  generate:
-    exec: dart run build_runner build --delete-conflicting-outputs
-    select-package:
-      depends-on: build_runner
-  protogen:
-    description: Regenerate Dart proto stubs from .proto files
-    run: |
-      protoc \
-        --proto_path=proto \
-        --dart_out=grpc:quiver/core/lib/src/generated \
-        proto/arrow/types.proto \
-        proto/arrow/chart.proto \
-        proto/quiver/health.proto
+# Melos config has been consolidated into pubspec.yaml for Melos 7.
+# This file is kept as a stub so Melos doesn't warn about a missing file.
+# See pubspec.yaml melos: section for all scripts and configuration.
