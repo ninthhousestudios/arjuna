@@ -13,6 +13,10 @@ dependencies:
     path: ../quiver/embedded
   quiver_core:
     path: ../quiver/core
+  arrow_core:
+    path: ../arrow/core
+  arrow_options:
+    path: ../arrow/options
   grpc: ^5.0.0
   protobuf: ^6.0.0
   args: ^2.6.0
