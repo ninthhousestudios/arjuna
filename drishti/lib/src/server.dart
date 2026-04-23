@@ -12,12 +12,8 @@ final _log = Logger('Drishti');
 /// Starts the Drishti MCP server on stdio transport.
 ///
 /// [ephePath] is the optional path to Swiss Ephemeris data files.
+/// Returns when the server shuts down (via signal or transport close).
 Future<void> startServer({String? ephePath}) async {
-  Logger.root.level = Level.INFO;
-  Logger.root.onRecord.listen((record) {
-    stderr.writeln('[${record.level.name}] ${record.loggerName}: ${record.message}');
-  });
-
   final server = McpServer(
     Implementation(name: 'drishti', version: '0.1.0'),
   );
@@ -31,19 +27,25 @@ Future<void> startServer({String? ephePath}) async {
 
   _log.info('Drishti MCP server started on stdio');
 
-  // Listen for SIGINT to clean up.
-  final sigint = ProcessSignal.sigint.watch().listen((_) async {
-    _log.info('SIGINT received, shutting down');
-    vayu.dispose();
-    await server.close();
-    exit(0);
-  });
+  final done = Completer<void>();
 
-  // Keep alive until the transport closes.
-  // The MCP server handles the event loop via the transport.
-  // We wait for the server to be closed (transport disconnect).
-  await Future<void>.delayed(const Duration(days: 365));
+  void shutdown(String signal) {
+    if (done.isCompleted) return;
+    _log.info('$signal received, shutting down');
+    vayu.dispose();
+    server.close();
+    done.complete();
+  }
+
+  final sigint = ProcessSignal.sigint.watch().listen((_) => shutdown('SIGINT'));
+  StreamSubscription<ProcessSignal>? sigterm;
+  if (!Platform.isWindows) {
+    sigterm =
+        ProcessSignal.sigterm.watch().listen((_) => shutdown('SIGTERM'));
+  }
+
+  await done.future;
 
   sigint.cancel();
-  vayu.dispose();
+  sigterm?.cancel();
 }
