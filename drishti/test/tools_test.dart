@@ -2,6 +2,7 @@ import 'package:quiver_embedded/quiver_embedded.dart';
 import 'package:test/test.dart';
 
 import 'package:drishti/src/formatting/chart_formatter.dart';
+import 'package:drishti/src/tools/calculate_chart.dart';
 
 void main() {
   late Vayu vayu;
@@ -162,6 +163,65 @@ void main() {
       final planets = result['planets'] as List;
       // Western: Sun, Moon, Mercury, Venus, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto
       expect(planets.length, equals(10));
+    });
+  });
+
+  group('handleCalculateChart error paths', () {
+    test('missing date returns error', () {
+      final result = handleCalculateChart(
+        {'latitude': 28.6, 'longitude': 77.2},
+        vayu,
+      );
+      expect(result.isError, isTrue);
+    });
+
+    test('invalid date format returns error', () {
+      final result = handleCalculateChart(
+        {'date': 'not-a-date', 'latitude': 28.6, 'longitude': 77.2},
+        vayu,
+      );
+      expect(result.isError, isTrue);
+    });
+
+    test('latitude out of range returns error', () {
+      final result = handleCalculateChart(
+        {'date': '2000-01-01T12:00:00Z', 'latitude': 91.0, 'longitude': 77.2},
+        vayu,
+      );
+      expect(result.isError, isTrue);
+    });
+
+    test('longitude out of range returns error', () {
+      final result = handleCalculateChart(
+        {'date': '2000-01-01T12:00:00Z', 'latitude': 28.6, 'longitude': 181.0},
+        vayu,
+      );
+      expect(result.isError, isTrue);
+    });
+
+    test('unknown preset returns error', () {
+      final result = handleCalculateChart(
+        {
+          'date': '2000-01-01T12:00:00Z',
+          'latitude': 28.6,
+          'longitude': 77.2,
+          'preset': 'vedic',
+        },
+        vayu,
+      );
+      expect(result.isError, isTrue);
+    });
+
+    test('valid request succeeds', () {
+      final result = handleCalculateChart(
+        {
+          'date': '2000-01-01T12:00:00Z',
+          'latitude': 28.6,
+          'longitude': 77.2,
+        },
+        vayu,
+      );
+      expect(result.isError, isFalse);
     });
   });
 }

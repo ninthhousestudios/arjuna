@@ -98,18 +98,19 @@ void main() {
       // Dispose should wait for in-flight requests.
       await pool.dispose();
 
-      // All futures should have completed (either success or error).
-      final results = <bool>[];
+      // Every future must resolve (success or error) — none should hang.
+      int succeeded = 0;
+      int errored = 0;
       for (final f in futures) {
         try {
           await f;
-          results.add(true);
+          succeeded++;
         } catch (_) {
-          results.add(false);
+          errored++;
         }
       }
-      // At least some should have completed successfully.
-      expect(results.where((r) => r).length, greaterThan(0));
+      expect(succeeded + errored, equals(5));
+      expect(succeeded, greaterThan(0));
     });
 
     test('calculate throws after dispose', () async {
