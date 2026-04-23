@@ -43,7 +43,7 @@ DateTime fromJulianDay(double jd) {
   final minute = totalMinutes.floor();
   final totalSeconds = (totalMinutes - minute) * 60.0;
   final second = totalSeconds.floor();
-  final millisecond = ((totalSeconds - second) * 1000.0).round();
+  final millisecond = ((totalSeconds - second) * 1000.0).round().clamp(0, 999);
 
   return DateTime.utc(year, month, day, hour, minute, second, millisecond);
 }

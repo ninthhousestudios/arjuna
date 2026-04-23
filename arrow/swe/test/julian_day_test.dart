@@ -66,5 +66,13 @@ void main() {
       // Millisecond precision is ~1.16e-8 days
       expect(restored, closeTo(jd, 2e-8));
     });
+
+    test('near-midnight millisecond edge case does not produce ms=1000', () {
+      // JD for 2024-01-01 23:59:59.9997 — rounding would push ms to 1000.
+      final dt = fromJulianDay(2460311.49999997);
+      expect(dt.millisecond, lessThanOrEqualTo(999));
+      expect(dt.millisecond, greaterThanOrEqualTo(0));
+      expect(dt.isUtc, isTrue);
+    });
   });
 }
