@@ -1,54 +1,5 @@
 import 'package:quiver_embedded/quiver_embedded.dart';
 
-/// Sign names indexed by sign number (1-12).
-const _signNames = [
-  '', // 0 placeholder
-  'Aries',
-  'Taurus',
-  'Gemini',
-  'Cancer',
-  'Leo',
-  'Virgo',
-  'Libra',
-  'Scorpio',
-  'Sagittarius',
-  'Capricorn',
-  'Aquarius',
-  'Pisces',
-];
-
-/// Nakshatra names indexed by nakshatra number (1-27).
-const _nakshatraNames = [
-  '', // 0 placeholder
-  'Ashvini',
-  'Bharani',
-  'Krittika',
-  'Rohini',
-  'Mrigashira',
-  'Ardra',
-  'Punarvasu',
-  'Pushya',
-  'Ashlesha',
-  'Magha',
-  'Purva Phalguni',
-  'Uttara Phalguni',
-  'Hasta',
-  'Chitra',
-  'Svati',
-  'Vishakha',
-  'Anuradha',
-  'Jyeshtha',
-  'Mula',
-  'Purva Ashadha',
-  'Uttara Ashadha',
-  'Shravana',
-  'Dhanishta',
-  'Shatabhisha',
-  'Purva Bhadrapada',
-  'Uttara Bhadrapada',
-  'Revati',
-];
-
 /// Format a [Chart] into a structured map suitable for MCP structured content.
 Map<String, dynamic> formatChart(Chart chart) {
   return {
@@ -74,6 +25,7 @@ Map<String, dynamic> _formatPlanet(Planet planet) {
 
   final result = <String, dynamic>{
     'name': planet.body.name,
+    // Ecliptic longitude after ayanamsa correction (sidereal for Vedic presets).
     'longitude': planet.rawLongitude,
     'sign': sign,
     'sign_name': _signName(sign),
@@ -105,11 +57,9 @@ Map<String, dynamic> _formatHouse(int number, Cusp cusp) {
 }
 
 String _signName(int sign) {
-  if (sign < 1 || sign > 12) return 'Unknown';
-  return _signNames[sign];
+  return SignData.names[sign] ?? 'Unknown';
 }
 
 String _nakshatraName(int nak) {
-  if (nak < 1 || nak > 27) return 'Unknown';
-  return _nakshatraNames[nak];
+  return NakshatraData.names[nak] ?? 'Unknown';
 }
