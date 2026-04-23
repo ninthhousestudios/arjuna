@@ -33,6 +33,7 @@ final _inputSchema = JsonObject(
     ),
   },
   required: ['date', 'latitude', 'longitude'],
+  additionalProperties: false,
 );
 
 /// Registers the calculate_chart tool on the given [server].
@@ -60,6 +61,12 @@ CallToolResult _handleCalculateChart(
     return _errorResult('Invalid date format: $dateStr. Use ISO 8601 (e.g. 2000-01-01T12:00:00Z)');
   }
   final utcDateTime = dateTime.toUtc();
+  if (!dateStr.endsWith('Z') &&
+      !dateStr.contains('+') &&
+      !RegExp(r'\d{2}-\d{2}$').hasMatch(dateStr)) {
+    _log.info(
+        'Date "$dateStr" has no timezone indicator; interpreted as local time');
+  }
 
   // Parse latitude.
   final lat = _parseNum(args['latitude']);
@@ -88,8 +95,12 @@ CallToolResult _handleCalculateChart(
     'ernst' => ArrowPresets.ernst,
     'lahiri' => ArrowPresets.lahiriVedic,
     'western' => ArrowPresets.westernTropical,
-    _ => ArrowPresets.ernst,
+    _ => null,
   };
+  if (options == null) {
+    return _errorResult(
+        "Unknown preset: '$presetStr'. Valid values: ernst, lahiri, western");
+  }
 
   final location = Location(latitude: lat, longitude: lon, altitude: alt);
 
