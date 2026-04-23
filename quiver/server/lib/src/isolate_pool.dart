@@ -105,7 +105,11 @@ class IsolatePool {
       _isolates.add(isolate);
 
       // Worker sends its SendPort back on the init port.
-      final workerSendPort = await initPort.first as SendPort;
+      final workerSendPort = await initPort.first.timeout(
+        const Duration(seconds: 10),
+        onTimeout: () =>
+            throw StateError('Worker $i failed to initialize within 10s'),
+      ) as SendPort;
       _sendPorts.add(workerSendPort);
       initPort.close();
 
@@ -141,8 +145,9 @@ class IsolatePool {
   Future<EphSnapshot> calculate(
     double jdUt,
     Location location,
-    ArrowOptions options,
-  ) {
+    ArrowOptions options, {
+    Duration? timeout,
+  }) {
     if (!_started || _disposed) {
       throw StateError('IsolatePool is not running');
     }
@@ -165,7 +170,14 @@ class IsolatePool {
     _sendPorts[workerIndex].send(request.toMessage());
     _log.fine('Dispatched request $id to worker $workerIndex');
 
-    return completer.future;
+    final future = completer.future;
+    if (timeout != null) {
+      return future.timeout(timeout, onTimeout: () {
+        _pending.remove(id);
+        throw TimeoutException('IsolatePool request $id timed out', timeout);
+      });
+    }
+    return future;
   }
 
   /// Graceful shutdown — complete in-flight requests, then close all isolates.
@@ -174,12 +186,24 @@ class IsolatePool {
     _disposed = true;
     _log.info('Disposing isolate pool...');
 
-    // Wait for in-flight requests to complete.
+    // Wait for in-flight requests with a grace period.
     if (_pending.isNotEmpty) {
       _log.fine('Waiting for ${_pending.length} in-flight requests');
-      await Future.wait(
-        _pending.values.map((c) => c.future.catchError((_) {})),
-      );
+      try {
+        await Future.wait(
+          _pending.values.map((c) => c.future.catchError((_) {})),
+        ).timeout(const Duration(seconds: 5));
+      } on TimeoutException {
+        _log.warning(
+          'Timed out waiting for ${_pending.length} in-flight requests during dispose',
+        );
+        for (final c in _pending.values) {
+          if (!c.isCompleted) {
+            c.completeError(
+                StateError('IsolatePool disposed while request was pending'));
+          }
+        }
+      }
     }
 
     for (final rp in _receivePorts) {
@@ -223,6 +247,11 @@ class _WorkerInit {
 ///
 /// Creates its own SwissEph + SweFacade (each isolate gets independent C state),
 /// then listens for calculation requests and sends results back.
+///
+/// Serialization relies on freezed-generated `toJson`/`fromJson` for
+/// [Location], [ArrowOptions], and [EphSnapshot]. If `.g.dart` files are stale,
+/// deserialization may silently drop fields. Run `melos generate` after
+/// modifying freezed model classes.
 void _workerEntryPoint(List<Object?> initMessage) {
   final init = _WorkerInit.fromMessage(initMessage);
   final log = Logger('Quiver.Server.IsolatePool.Worker${init.workerId}');
