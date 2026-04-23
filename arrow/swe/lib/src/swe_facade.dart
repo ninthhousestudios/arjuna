@@ -287,25 +287,23 @@ class SweFacade {
   ///
   /// Non-standard ayanamsas (custom `setSidModeEx` configurations) are not
   /// supported here; pass a standard [Ayanamsa].
-  double getAyanamsa(double jdEt, Ayanamsa ayanamsa) {
-    if (ayanamsa.isTropical) return 0.0;
-    if (ayanamsa.isStandard) {
-      _swe.setSidMode(ayanamsa.sweCode);
-    }
-    return _swe.getAyanamsa(jdEt);
-  }
+  double getAyanamsa(double jdEt, Ayanamsa ayanamsa) =>
+      _ayanamsaWith(ayanamsa, () => _swe.getAyanamsa(jdEt));
 
   /// Ayanamsa value (arc-degrees) for universal time [jdUt] under [ayanamsa].
   ///
   /// UT counterpart of [getAyanamsa]. Differs by roughly delta-T (~64s worth
   /// of precession ≈ 0.001°) — negligible for sign-level work, meaningful
   /// for sub-arcsecond calculations.
-  double getAyanamsaUt(double jdUt, Ayanamsa ayanamsa) {
+  double getAyanamsaUt(double jdUt, Ayanamsa ayanamsa) =>
+      _ayanamsaWith(ayanamsa, () => _swe.getAyanamsaUt(jdUt));
+
+  double _ayanamsaWith(Ayanamsa ayanamsa, double Function() compute) {
     if (ayanamsa.isTropical) return 0.0;
     if (ayanamsa.isStandard) {
       _swe.setSidMode(ayanamsa.sweCode);
     }
-    return _swe.getAyanamsaUt(jdUt);
+    return compute();
   }
 
   /// Find the four tropical cardinal points of calendar [year]: the JDs (UT)

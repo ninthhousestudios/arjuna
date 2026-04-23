@@ -4,14 +4,13 @@ import 'dart:io';
 import 'package:arrow_options/arrow_options.dart';
 import 'package:arrow_swe/arrow_swe.dart';
 import 'package:arrow_tool/arrow_tool.dart';
-import 'package:swisseph/swisseph.dart';
 
 /// Generate test fixture JSON from a .chtk chart file.
 ///
-/// Usage: dart run tool/bin/generate-test-data.dart [options]
-///   --chtk <path>      Path to .chtk file (default: ~/charts/mine/josh.chtk)
-///   --swe-lib <path>   Path to libswe.so/.dylib (default: searches common paths)
-///   --ephe-path <dir>  Swiss Ephemeris data directory (.se1 + sefstars.txt).
+/// Usage: dart run tool/bin/generate_test_data.dart [options]
+///   --chtk `path`      Path to .chtk file (default: ~/charts/mine/josh.chtk)
+///   --swe-lib `path`   Path to libswe.so/.dylib (default: searches common paths)
+///   --ephe-path `dir`  Swiss Ephemeris data directory (.se1 + sefstars.txt).
 ///                      Defaults to $ARROW_EPHE_PATH, then libaditya/ephe, then
 ///                      left unset (SWE falls back to Moshier).
 void main(List<String> args) {

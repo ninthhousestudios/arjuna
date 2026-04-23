@@ -1,19 +1,24 @@
 import 'package:arrow_options/arrow_options.dart';
 import 'package:arrow_swe/arrow_swe.dart';
 
+import 'cusp.dart';
+import 'graha.dart';
+import 'karaka.dart';
 import 'motion_state.dart';
+import 'planet.dart';
 import 'rashi.dart';
 import 'varga.dart';
 
 /// The main entry point for a chart — wraps an [EphSnapshot] + [CalcConfig].
 ///
 /// Provides the rashi (D1) chart and lazily-cached access to any divisional
-/// chart via [varga].
+/// chart via [varga]. Typed planet accessors delegate to [rashi].
 ///
 /// Usage:
 /// ```dart
 /// final chart = Chart(snapshot, config);
-/// chart.rashi.sun.sign;         // sign in rashi
+/// chart.sun.dignity;                     // dignity in rashi
+/// chart.rashi.sun.sign;                  // sign in rashi
 /// chart.varga(VargaType.navamsha).sun.sign;  // sign in navamsha
 /// ```
 class Chart {
@@ -33,6 +38,27 @@ class Chart {
   /// Get a divisional chart. Cached after first access.
   Varga varga(VargaType type) =>
       _vargaCache.putIfAbsent(type, () => Varga(type, snapshot, config));
+
+  // Typed planet accessors (delegate to rashi).
+  Karaka get sun => rashi.sun;
+  Karaka get moon => rashi.moon;
+  Karaka get mars => rashi.mars;
+  Karaka get mercury => rashi.mercury;
+  Karaka get jupiter => rashi.jupiter;
+  Karaka get venus => rashi.venus;
+  Karaka get saturn => rashi.saturn;
+  Graha get rahu => rashi.rahu;
+  Graha get ketu => rashi.ketu;
+
+  List<Karaka> get karakas => rashi.karakas;
+  List<Graha> get grahas => rashi.grahas;
+  List<Planet> get planets => rashi.planets;
+
+  List<Cusp> get cusps => rashi.cusps;
+  Cusp cusp(int house) => cusps[house - 1];
+
+  double get ascendant => snapshot.ascmc.ascendant;
+  double get mc => snapshot.ascmc.mc;
 
   /// Synodic state for each body that has pheno data. Sparse — nodes
   /// (Rahu/Ketu) are omitted since their pheno is null.

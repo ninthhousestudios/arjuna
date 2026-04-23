@@ -1,76 +1,11 @@
 import 'package:arrow_options/arrow_options.dart';
-import 'package:arrow_swe/arrow_swe.dart';
 import 'package:arrow_core/arrow_core.dart';
 import 'package:test/test.dart';
 
-/// Build a minimal EphSnapshot for testing.
-EphSnapshot _stubSnapshot() {
-  const location = Location(latitude: 40.0, longitude: -74.0);
-  const options = ArrowOptions();
-
-  // Sun at 45° (15° Taurus → sign 3 aditya), Moon at 120° (0° Leo → sign 6),
-  // Mars at 200° (20° Libra, retrograde → sign 8), Mercury at 55°,
-  // Jupiter at 280°, Venus at 30°, Saturn at 310°,
-  // Rahu at 100°, Ketu at 280°
-  final bodies = <Body, BodyPosition>{
-    Body.sun: const BodyPosition(
-      longitude: 45.0, latitude: 0.5, distance: 1.0,
-      speedLongitude: 0.98, speedLatitude: 0.0, speedDistance: 0.0,
-    ),
-    Body.moon: const BodyPosition(
-      longitude: 120.0, latitude: -1.2, distance: 0.0025,
-      speedLongitude: 13.2, speedLatitude: 0.0, speedDistance: 0.0,
-    ),
-    Body.mars: const BodyPosition(
-      longitude: 200.0, latitude: 1.5, distance: 1.8,
-      speedLongitude: -0.3, speedLatitude: 0.0, speedDistance: 0.0,
-    ),
-    Body.mercury: const BodyPosition(
-      longitude: 55.0, latitude: -0.2, distance: 0.9,
-      speedLongitude: 1.5, speedLatitude: 0.0, speedDistance: 0.0,
-    ),
-    Body.jupiter: const BodyPosition(
-      longitude: 280.0, latitude: 0.3, distance: 5.2,
-      speedLongitude: 0.08, speedLatitude: 0.0, speedDistance: 0.0,
-    ),
-    Body.venus: const BodyPosition(
-      longitude: 30.0, latitude: -0.5, distance: 0.7,
-      speedLongitude: 1.2, speedLatitude: 0.0, speedDistance: 0.0,
-    ),
-    Body.saturn: const BodyPosition(
-      longitude: 310.0, latitude: 0.1, distance: 9.5,
-      speedLongitude: 0.03, speedLatitude: 0.0, speedDistance: 0.0,
-    ),
-    Body.rahu: const BodyPosition(
-      longitude: 100.0, latitude: 0.0, distance: 0.0,
-      speedLongitude: -0.05, speedLatitude: 0.0, speedDistance: 0.0,
-    ),
-    Body.ketu: const BodyPosition(
-      longitude: 280.0, latitude: 0.0, distance: 0.0,
-      speedLongitude: -0.05, speedLatitude: 0.0, speedDistance: 0.0,
-    ),
-  };
-
-  return EphSnapshot(
-    jdUt: 2460000.5,
-    location: location,
-    options: options,
-    bodiesEcliptic: bodies,
-    bodiesEquatorial: bodies,
-    phenoData: const {},
-    cusps: List.generate(12, (i) => (i * 30.0 + 10.0) % 360),
-    ascmc: const AscMcPoints(
-      ascendant: 10.0, mc: 280.0, armc: 280.0, vertex: 190.0,
-      equatorialAscendant: 10.0, coAscendantKoch: 10.0,
-      coAscendantMunkasey: 10.0, polarAscendant: 190.0,
-    ),
-    sunTimes: const SunTimes(sunrise: 2460000.75, sunset: 2460001.25),
-    ayanamsaValue: 0.0,
-  );
-}
+import 'helpers/stub_snapshot.dart';
 
 void main() {
-  final snapshot = _stubSnapshot();
+  final snapshot = stubSnapshot();
   const config = CalcConfig();
 
   group('Chart', () {
@@ -190,6 +125,133 @@ void main() {
       final chart = Chart(snapshot, config);
       expect(chart.rashi.mars.isRetrograde, isTrue);
       expect(chart.rashi.sun.isRetrograde, isFalse);
+    });
+  });
+
+  group('Typed accessors on Chart', () {
+    test('chart.sun returns Karaka', () {
+      final chart = Chart(snapshot, config);
+      expect(chart.sun, isA<Karaka>());
+      expect(chart.sun.body, Body.sun);
+      expect(chart.sun.sign, chart.rashi.sun.sign);
+    });
+
+    test('chart.rahu returns Graha', () {
+      final chart = Chart(snapshot, config);
+      expect(chart.rahu, isA<Graha>());
+      expect(chart.rahu.body, Body.rahu);
+    });
+
+    test('chart.planets includes all bodies', () {
+      final chart = Chart(snapshot, config);
+      expect(chart.planets.length, 9);
+      final bodies = chart.planets.map((p) => p.body).toSet();
+      expect(bodies, containsAll([Body.sun, Body.rahu, Body.ketu]));
+    });
+
+    test('chart.karakas has 7 entries', () {
+      final chart = Chart(snapshot, config);
+      expect(chart.karakas.length, 7);
+      final bodies = chart.karakas.map((k) => k.body).toSet();
+      expect(bodies.contains(Body.rahu), isFalse);
+    });
+
+    test('chart.grahas has 9 entries', () {
+      final chart = Chart(snapshot, config);
+      expect(chart.grahas.length, 9);
+      final bodies = chart.grahas.map((g) => g.body).toSet();
+      expect(bodies, containsAll([Body.sun, Body.rahu, Body.ketu]));
+    });
+
+    test('chart.cusps has 12 entries', () {
+      final chart = Chart(snapshot, config);
+      expect(chart.cusps.length, 12);
+      expect(chart.cusps[0].house, 1);
+      expect(chart.cusps[11].house, 12);
+    });
+
+    test('chart.cusp(n) returns correct house', () {
+      final chart = Chart(snapshot, config);
+      expect(chart.cusp(1).house, 1);
+      expect(chart.cusp(7).house, 7);
+    });
+
+    test('chart.ascendant and chart.mc', () {
+      final chart = Chart(snapshot, config);
+      expect(chart.ascendant, 10.0);
+      expect(chart.mc, 280.0);
+    });
+  });
+
+  group('Varga typed accessors', () {
+    test('varga.sun returns Karaka', () {
+      final chart = Chart(snapshot, config);
+      final nav = chart.varga(VargaType.navamsha);
+      expect(nav.sun, isA<Karaka>());
+      expect(nav.sun.body, Body.sun);
+    });
+
+    test('varga.rahu returns Graha', () {
+      final chart = Chart(snapshot, config);
+      expect(chart.rashi.rahu, isA<Graha>());
+      expect(chart.rashi.rahu.body, Body.rahu);
+    });
+
+    test('varga.cusps retained', () {
+      final chart = Chart(snapshot, config);
+      expect(chart.rashi.cusps.length, 12);
+    });
+  });
+
+  group('Karaka dignity', () {
+    test('chart.sun.dignity returns a DignityType', () {
+      final chart = Chart(snapshot, config);
+      final dignity = chart.sun.dignity;
+      expect(dignity, isA<DignityType>());
+    });
+
+    test('Sun at 45° (Taurus in zodiac) dignity computes', () {
+      // Use zodiac circle for simpler sign math
+      const zodiacConfig = CalcConfig(circle: Circle.zodiac);
+      final chart = Chart(snapshot, zodiacConfig);
+      // Sun at 45° zodiac = 15° Taurus (sign 2). Lord Venus at 30° = 0° Taurus.
+      final dignity = chart.sun.dignity;
+      expect(dignity, isNotNull);
+    });
+  });
+
+  group('Karaka combustion', () {
+    test('Mercury near Sun is combust through chart', () {
+      final chart = Chart(snapshot, config);
+      // Mercury at 55°, Sun at 45° → 10° apart < 14° orb → combust
+      expect(chart.mercury.isCombust, isTrue);
+    });
+
+    test('Jupiter far from Sun is not combust', () {
+      final chart = Chart(snapshot, config);
+      // Jupiter at 280°, Sun at 45° → far apart → not combust
+      expect(chart.jupiter.isCombust, isFalse);
+    });
+
+    test('Sun is never combust', () {
+      final chart = Chart(snapshot, config);
+      expect(chart.sun.isCombust, isFalse);
+    });
+  });
+
+  group('Cusp nakshatra', () {
+    test('cusp.nakshatra returns valid range', () {
+      final chart = Chart(snapshot, config);
+      for (final cusp in chart.cusps) {
+        expect(cusp.nakshatra, inInclusiveRange(1, 27));
+      }
+    });
+
+    test('cusp.pada returns valid range', () {
+      final chart = Chart(snapshot, config);
+      for (final cusp in chart.cusps) {
+        expect(cusp.pada, inInclusiveRange(1, 4));
+      }
     });
   });
 }

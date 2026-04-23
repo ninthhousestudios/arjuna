@@ -324,4 +324,93 @@ void main() {
       expect(lon.sign, 1);
     });
   });
+
+  group('Saptamsha (D7)', () {
+    test('0deg Aries (odd sign) starts from Aries', () {
+      // realSign=1 (odd) → startSign=1 (Aries)
+      // amshaElapsed=0, baseLon=0 → sign 1
+      final lon = Longitude(0.0, 0.0, VargaType.saptamsha, config);
+      expect(lon.sign, 1);
+      expect(lon.deity, VargaDeity.kshara);
+    });
+
+    test('5deg Aries (odd sign) second division', () {
+      // amshaSize = 30/7 ≈ 4.2857
+      // position = 5 / 4.2857 = 1.1667
+      // amshaElapsed=1, startSign=1, baseLon=0
+      // newLon = 0 + 30 + 0.1667*30 = 35 → sign 2
+      final lon = Longitude(5.0, 5.0, VargaType.saptamsha, config);
+      expect(lon.sign, 2);
+      expect(lon.deity, VargaDeity.kshira);
+    });
+
+    test('30deg Taurus (even sign) starts from 7th sign', () {
+      // realSign=2 (even) → startSign = ((2-1+6)%12)+1 = 8 (Scorpio)
+      // amshaElapsed=0, baseLon=_baseLon(8)=210
+      // newLon = 210 → sign (210/30)=7 → sign 8
+      final lon = Longitude(30.0, 30.0, VargaType.saptamsha, config);
+      expect(lon.sign, 8);
+    });
+
+    test('even sign deity is reversed', () {
+      // 30deg Taurus (even): deity should be reversed → shuddhaJala first
+      final lon = Longitude(30.0, 30.0, VargaType.saptamsha, config);
+      expect(lon.deity, VargaDeity.shuddhaJala);
+    });
+
+    test('parivritti variant still works', () {
+      final lon = Longitude(0.0, 0.0, VargaType.saptamshaParivritti, config);
+      expect(lon.sign, 1);
+    });
+  });
+
+  group('Trimsamsha (D30)', () {
+    test('odd sign 3deg → Mars → Aries (sign 1)', () {
+      // Aries (odd): 0-5° = Mars → Aries
+      final lon = Longitude(3.0, 3.0, VargaType.trimsamsha, config);
+      expect(lon.sign, 1);
+    });
+
+    test('odd sign 7deg → Saturn → Aquarius (sign 11)', () {
+      // Aries: 5-10° = Saturn → Aquarius
+      final lon = Longitude(7.0, 7.0, VargaType.trimsamsha, config);
+      expect(lon.sign, 11);
+    });
+
+    test('odd sign 14deg → Jupiter → Sagittarius (sign 9)', () {
+      // Aries: 10-18° = Jupiter → Sagittarius
+      final lon = Longitude(14.0, 14.0, VargaType.trimsamsha, config);
+      expect(lon.sign, 9);
+    });
+
+    test('odd sign 22deg → Mercury → Gemini (sign 3)', () {
+      // Aries: 18-25° = Mercury → Gemini
+      final lon = Longitude(22.0, 22.0, VargaType.trimsamsha, config);
+      expect(lon.sign, 3);
+    });
+
+    test('odd sign 27deg → Venus → Taurus (sign 2)', () {
+      // Aries: 25-30° = Venus → Taurus
+      final lon = Longitude(27.0, 27.0, VargaType.trimsamsha, config);
+      expect(lon.sign, 2);
+    });
+
+    test('even sign 3deg → Venus → Taurus (sign 2)', () {
+      // Taurus (even): 0-5° = Venus → Taurus
+      final lon = Longitude(33.0, 33.0, VargaType.trimsamsha, config);
+      expect(lon.sign, 2);
+    });
+
+    test('even sign 38deg → Mercury → Gemini (sign 3)', () {
+      // Taurus (even): 5-12° = Mercury → Gemini. 38° = 8° in-sign.
+      final lon = Longitude(38.0, 38.0, VargaType.trimsamsha, config);
+      expect(lon.sign, 3);
+    });
+
+    test('even sign 57deg → Mars → Aries (sign 1)', () {
+      // Taurus (even): 25-30° = Mars → Aries. 57° = 27° in-sign.
+      final lon = Longitude(57.0, 57.0, VargaType.trimsamsha, config);
+      expect(lon.sign, 1);
+    });
+  });
 }

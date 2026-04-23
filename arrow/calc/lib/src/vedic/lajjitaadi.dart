@@ -123,7 +123,7 @@ class LajjitaadiResult {
 
 /// The seven karakas libaditya iterates for Lajjitaadi. Order matches
 /// `avasthas.py:24`.
-const List<Body> karakas = [
+const List<Body> _karakas = [
   Body.sun,
   Body.moon,
   Body.mars,
@@ -135,7 +135,7 @@ const List<Body> karakas = [
 
 /// Nine grahas used for the aspect/conjunction scan. Matches
 /// `avasthas.py:25`.
-const List<Body> grahas = [
+const List<Body> _grahas = [
   Body.sun,
   Body.moon,
   Body.mars,
@@ -171,11 +171,8 @@ class Lajjitaadi {
     required int lagnaSign,
     required int fifthCuspSign,
   }) {
-    // avasthas.py:59 — 5th sign forward from lagna (1..12, wrap-safe).
     final fifthSignFromLagna = ((lagnaSign - 1 + 4) % 12) + 1;
 
-    // Moon nature is contextual (libaditya planets.py:1652): benefic in
-    // Shukla Paksha, malefic in Krishna. Pre-compute once.
     final sunLon = grahaLongitudes[Body.sun]!;
     final moonLon = grahaLongitudes[Body.moon]!;
     final moonNature =
@@ -183,174 +180,239 @@ class Lajjitaadi {
 
     final raw = <Body, Map<LajjitaadiState, List<LajjitaadiFactor>>>{};
 
-    for (final name in karakas) {
+    for (final name in _karakas) {
       final avasthas = <LajjitaadiState, List<LajjitaadiFactor>>{};
       final planetLon = grahaLongitudes[name]!;
       final signNum = karakaSigns[name]!;
       final dignity = karakaDignities[name]!;
       final signLord = SignData.lord(signNum);
 
-      // avasthas.py:70–119 — per-other scan for delighted/starved/
-      // agitated/thirsty.
-      for (final otherName in grahas) {
-        if (otherName == name) continue;
-        final otherLon = grahaLongitudes[otherName]!;
-        final isConjunction = Aspect.isConjunction(otherLon, planetLon);
-        final aspectStrength = Aspect.strength(otherName, otherLon, planetLon);
-
-        final isFriend = karakas.contains(otherName) &&
-            Dignity.isNaturalFriend(name, otherName);
-        final isEnemy = karakas.contains(otherName) &&
-            Dignity.isNaturalEnemy(name, otherName);
-
-        // --- Delighted ---
-        if (isConjunction && otherName == Body.jupiter) {
-          _add(avasthas, LajjitaadiState.delighted, LajjitaadiFactor(
-            source: 'conjunction', planet: otherName, strength: 60,
-          ));
-        }
-        if (isConjunction && isFriend && otherName != Body.saturn) {
-          _add(avasthas, LajjitaadiState.delighted, LajjitaadiFactor(
-            source: 'conjunction', planet: otherName, strength: 60,
-          ));
-        }
-        if (aspectStrength > 0 && isFriend) {
-          _add(avasthas, LajjitaadiState.delighted, LajjitaadiFactor(
-            source: 'aspect', planet: otherName, strength: aspectStrength,
-          ));
-        }
-
-        // --- Starved ---
-        if (isConjunction && isEnemy) {
-          _add(avasthas, LajjitaadiState.starved, LajjitaadiFactor(
-            source: 'conjunction', planet: otherName, strength: 60,
-          ));
-        }
-        // avasthas.py:101 — Saturn conjunction always starves (no friend
-        // check; outer loop already excludes self-conjunction).
-        if (isConjunction && otherName == Body.saturn) {
-          _add(avasthas, LajjitaadiState.starved, LajjitaadiFactor(
-            source: 'conjunction', planet: Body.saturn, strength: 60,
-          ));
-        }
-        if (aspectStrength > 0 && isEnemy) {
-          _add(avasthas, LajjitaadiState.starved, LajjitaadiFactor(
-            source: 'aspect', planet: otherName, strength: aspectStrength,
-          ));
-        }
-
-        // --- Agitated ---
-        if (isConjunction && otherName == Body.sun) {
-          _add(avasthas, LajjitaadiState.agitated, LajjitaadiFactor(
-            source: 'conjunction', planet: Body.sun, strength: 60,
-          ));
-        }
-        // avasthas.py:112 — aspected by natural enemy who is a malefic.
-        // "other in KARAKAS" gate already enforced by isEnemy logic above.
-        // Moon's nature is contextual — use the pre-computed moonNature.
-        final otherNature = otherName == Body.moon
-            ? moonNature
-            : Nature.of(otherName);
-        if (aspectStrength > 0 &&
-            isEnemy &&
-            otherNature == Nature.malefic) {
-          _add(avasthas, LajjitaadiState.agitated, LajjitaadiFactor(
-            source: 'aspect', planet: otherName, strength: aspectStrength,
-          ));
-        }
-
-        // --- Thirsty ---
-        if (_waterSigns.contains(signNum) &&
-            aspectStrength > 0 &&
-            isEnemy) {
-          _add(avasthas, LajjitaadiState.thirsty, LajjitaadiFactor(
-            source: 'aspect', planet: otherName, strength: aspectStrength,
-          ));
-        }
-      }
-
-      // avasthas.py:122–133 — delighted/starved by sign lord.
-      if (signLord != name && karakas.contains(signLord)) {
-        if (Dignity.isNaturalFriend(name, signLord)) {
-          _add(avasthas, LajjitaadiState.delighted, LajjitaadiFactor(
-            source: 'sign', lord: signLord, strength: 60,
-          ));
-        }
-        if (Dignity.isNaturalEnemy(name, signLord)) {
-          _add(avasthas, LajjitaadiState.starved, LajjitaadiFactor(
-            source: 'sign', lord: signLord, strength: 60,
-          ));
-        }
-      }
-
-      // avasthas.py:136 — healthy in own sign.
-      if (dignity == DignityType.ownSign) {
-        _add(avasthas, LajjitaadiState.healthy, LajjitaadiFactor(
-          source: 'sign', strength: 60,
-        ));
-      }
-
-      // avasthas.py:140–143 — proud in EX or MT.
-      if (dignity == DignityType.exalted) {
-        _add(avasthas, LajjitaadiState.proud, LajjitaadiFactor(
-          source: 'dignity', dignity: 'EX', strength: 60,
-        ));
-      } else if (dignity == DignityType.moolatrikona) {
-        _add(avasthas, LajjitaadiState.proud, LajjitaadiFactor(
-          source: 'dignity', dignity: 'MT', strength: 60,
-        ));
-      }
-
-      // avasthas.py:149–175 — shamed (compound trigger).
-      final conjSunMarsSaturn = <Body>[];
-      var conjRahuKetu = false;
-      for (final otherName in grahas) {
-        if (otherName == name) continue;
-        if (!Aspect.isConjunction(grahaLongitudes[otherName]!, planetLon)) {
-          continue;
-        }
-        if (otherName == Body.sun ||
-            otherName == Body.mars ||
-            otherName == Body.saturn) {
-          conjSunMarsSaturn.add(otherName);
-        }
-        if (otherName == Body.rahu || otherName == Body.ketu) {
-          conjRahuKetu = true;
-        }
-      }
-      if (conjSunMarsSaturn.isNotEmpty) {
-        final inFifthSign = signNum == fifthSignFromLagna;
-        final conjFifthCusp = signNum == fifthCuspSign;
-        if (conjRahuKetu || inFifthSign || conjFifthCusp) {
-          for (final trigger in conjSunMarsSaturn) {
-            _add(avasthas, LajjitaadiState.shamed, LajjitaadiFactor(
-              source: 'conjunction', planet: trigger, strength: 60,
-            ));
-          }
-          if (conjRahuKetu) {
-            _add(avasthas, LajjitaadiState.shamed, const LajjitaadiFactor(
-              source: 'condition', detail: 'conjunct Rahu/Ketu',
-            ));
-          }
-          if (inFifthSign) {
-            _add(avasthas, LajjitaadiState.shamed, const LajjitaadiFactor(
-              source: 'condition', detail: 'in 5th sign',
-            ));
-          }
-          if (conjFifthCusp && !inFifthSign) {
-            _add(avasthas, LajjitaadiState.shamed, const LajjitaadiFactor(
-              source: 'condition', detail: 'conjunct 5th cusp',
-            ));
-          }
-        }
-      }
+      _scanInteractions(avasthas, name, planetLon, signNum, grahaLongitudes,
+          moonNature);
+      _checkSignLord(avasthas, name, signLord);
+      _checkDignity(avasthas, dignity);
+      _checkShamed(avasthas, name, planetLon, signNum, grahaLongitudes,
+          fifthSignFromLagna, fifthCuspSign);
 
       raw[name] = avasthas;
     }
 
-    // avasthas.py:183–205 — build receiving + giving from the raw pass.
+    return _buildResults(raw);
+  }
+
+  /// avasthas.py:70–119 — per-other scan for delighted/starved/agitated/thirsty.
+  static void _scanInteractions(
+    Map<LajjitaadiState, List<LajjitaadiFactor>> avasthas,
+    Body name,
+    double planetLon,
+    int signNum,
+    Map<Body, double> grahaLongitudes,
+    Nature moonNature,
+  ) {
+    for (final otherName in _grahas) {
+      if (otherName == name) continue;
+      final otherLon = grahaLongitudes[otherName]!;
+      final isConj = Aspect.isConjunction(otherLon, planetLon);
+      final aspectStr = Aspect.strength(otherName, otherLon, planetLon);
+
+      final isFriend = _karakas.contains(otherName) &&
+          Dignity.isNaturalFriend(name, otherName);
+      final isEnemy = _karakas.contains(otherName) &&
+          Dignity.isNaturalEnemy(name, otherName);
+
+      _checkDelighted(avasthas, otherName, isConj, aspectStr, isFriend);
+      _checkStarved(avasthas, otherName, isConj, aspectStr, isEnemy);
+      _checkAgitated(
+          avasthas, otherName, isConj, aspectStr, isEnemy, moonNature);
+      _checkThirsty(avasthas, otherName, signNum, aspectStr, isEnemy);
+    }
+  }
+
+  static void _checkDelighted(
+    Map<LajjitaadiState, List<LajjitaadiFactor>> avasthas,
+    Body other,
+    bool isConj,
+    double aspectStr,
+    bool isFriend,
+  ) {
+    if (isConj && other == Body.jupiter) {
+      _add(avasthas, LajjitaadiState.delighted, LajjitaadiFactor(
+        source: 'conjunction', planet: other, strength: 60,
+      ));
+    }
+    if (isConj && isFriend && other != Body.saturn) {
+      _add(avasthas, LajjitaadiState.delighted, LajjitaadiFactor(
+        source: 'conjunction', planet: other, strength: 60,
+      ));
+    }
+    if (aspectStr > 0 && isFriend) {
+      _add(avasthas, LajjitaadiState.delighted, LajjitaadiFactor(
+        source: 'aspect', planet: other, strength: aspectStr,
+      ));
+    }
+  }
+
+  static void _checkStarved(
+    Map<LajjitaadiState, List<LajjitaadiFactor>> avasthas,
+    Body other,
+    bool isConj,
+    double aspectStr,
+    bool isEnemy,
+  ) {
+    if (isConj && isEnemy) {
+      _add(avasthas, LajjitaadiState.starved, LajjitaadiFactor(
+        source: 'conjunction', planet: other, strength: 60,
+      ));
+    }
+    // avasthas.py:101 — Saturn conjunction always starves.
+    if (isConj && other == Body.saturn) {
+      _add(avasthas, LajjitaadiState.starved, LajjitaadiFactor(
+        source: 'conjunction', planet: Body.saturn, strength: 60,
+      ));
+    }
+    if (aspectStr > 0 && isEnemy) {
+      _add(avasthas, LajjitaadiState.starved, LajjitaadiFactor(
+        source: 'aspect', planet: other, strength: aspectStr,
+      ));
+    }
+  }
+
+  static void _checkAgitated(
+    Map<LajjitaadiState, List<LajjitaadiFactor>> avasthas,
+    Body other,
+    bool isConj,
+    double aspectStr,
+    bool isEnemy,
+    Nature moonNature,
+  ) {
+    if (isConj && other == Body.sun) {
+      _add(avasthas, LajjitaadiState.agitated, LajjitaadiFactor(
+        source: 'conjunction', planet: Body.sun, strength: 60,
+      ));
+    }
+    // avasthas.py:112 — aspected by natural enemy who is a malefic.
+    final otherNature =
+        other == Body.moon ? moonNature : Nature.of(other);
+    if (aspectStr > 0 && isEnemy && otherNature == Nature.malefic) {
+      _add(avasthas, LajjitaadiState.agitated, LajjitaadiFactor(
+        source: 'aspect', planet: other, strength: aspectStr,
+      ));
+    }
+  }
+
+  static void _checkThirsty(
+    Map<LajjitaadiState, List<LajjitaadiFactor>> avasthas,
+    Body other,
+    int signNum,
+    double aspectStr,
+    bool isEnemy,
+  ) {
+    if (_waterSigns.contains(signNum) && aspectStr > 0 && isEnemy) {
+      _add(avasthas, LajjitaadiState.thirsty, LajjitaadiFactor(
+        source: 'aspect', planet: other, strength: aspectStr,
+      ));
+    }
+  }
+
+  /// avasthas.py:122–133 — delighted/starved by sign lord.
+  static void _checkSignLord(
+    Map<LajjitaadiState, List<LajjitaadiFactor>> avasthas,
+    Body name,
+    Body signLord,
+  ) {
+    if (signLord == name || !_karakas.contains(signLord)) return;
+    if (Dignity.isNaturalFriend(name, signLord)) {
+      _add(avasthas, LajjitaadiState.delighted, LajjitaadiFactor(
+        source: 'sign', lord: signLord, strength: 60,
+      ));
+    }
+    if (Dignity.isNaturalEnemy(name, signLord)) {
+      _add(avasthas, LajjitaadiState.starved, LajjitaadiFactor(
+        source: 'sign', lord: signLord, strength: 60,
+      ));
+    }
+  }
+
+  /// avasthas.py:136–143 — healthy (own sign), proud (exalted/moolatrikona).
+  static void _checkDignity(
+    Map<LajjitaadiState, List<LajjitaadiFactor>> avasthas,
+    DignityType dignity,
+  ) {
+    if (dignity == DignityType.ownSign) {
+      _add(avasthas, LajjitaadiState.healthy, const LajjitaadiFactor(
+        source: 'sign', strength: 60,
+      ));
+    } else if (dignity == DignityType.exalted) {
+      _add(avasthas, LajjitaadiState.proud, const LajjitaadiFactor(
+        source: 'dignity', dignity: 'EX', strength: 60,
+      ));
+    } else if (dignity == DignityType.moolatrikona) {
+      _add(avasthas, LajjitaadiState.proud, const LajjitaadiFactor(
+        source: 'dignity', dignity: 'MT', strength: 60,
+      ));
+    }
+  }
+
+  /// avasthas.py:149–175 — shamed (compound trigger).
+  static void _checkShamed(
+    Map<LajjitaadiState, List<LajjitaadiFactor>> avasthas,
+    Body name,
+    double planetLon,
+    int signNum,
+    Map<Body, double> grahaLongitudes,
+    int fifthSignFromLagna,
+    int fifthCuspSign,
+  ) {
+    final conjSunMarsSaturn = <Body>[];
+    var conjRahuKetu = false;
+    for (final otherName in _grahas) {
+      if (otherName == name) continue;
+      if (!Aspect.isConjunction(grahaLongitudes[otherName]!, planetLon)) {
+        continue;
+      }
+      if (otherName == Body.sun ||
+          otherName == Body.mars ||
+          otherName == Body.saturn) {
+        conjSunMarsSaturn.add(otherName);
+      }
+      if (otherName == Body.rahu || otherName == Body.ketu) {
+        conjRahuKetu = true;
+      }
+    }
+    if (conjSunMarsSaturn.isEmpty) return;
+
+    final inFifthSign = signNum == fifthSignFromLagna;
+    final conjFifthCusp = signNum == fifthCuspSign;
+    if (!conjRahuKetu && !inFifthSign && !conjFifthCusp) return;
+
+    for (final trigger in conjSunMarsSaturn) {
+      _add(avasthas, LajjitaadiState.shamed, LajjitaadiFactor(
+        source: 'conjunction', planet: trigger, strength: 60,
+      ));
+    }
+    if (conjRahuKetu) {
+      _add(avasthas, LajjitaadiState.shamed, const LajjitaadiFactor(
+        source: 'condition', detail: 'conjunct Rahu/Ketu',
+      ));
+    }
+    if (inFifthSign) {
+      _add(avasthas, LajjitaadiState.shamed, const LajjitaadiFactor(
+        source: 'condition', detail: 'in 5th sign',
+      ));
+    }
+    if (conjFifthCusp && !inFifthSign) {
+      _add(avasthas, LajjitaadiState.shamed, const LajjitaadiFactor(
+        source: 'condition', detail: 'conjunct 5th cusp',
+      ));
+    }
+  }
+
+  /// avasthas.py:183–205 — build receiving + giving from the raw pass.
+  static Map<Body, LajjitaadiResult> _buildResults(
+    Map<Body, Map<LajjitaadiState, List<LajjitaadiFactor>>> raw,
+  ) {
     final results = <Body, LajjitaadiResult>{};
-    for (final name in karakas) {
+    for (final name in _karakas) {
       final avasthas = raw[name]!;
       if (avasthas.isEmpty) continue;
 
@@ -362,7 +424,7 @@ class Lajjitaadi {
       }
 
       final giving = <LajjitaadiState, List<LajjitaadiFactor>>{};
-      for (final otherName in karakas) {
+      for (final otherName in _karakas) {
         if (otherName == name) continue;
         final otherAvasthas = raw[otherName];
         if (otherAvasthas == null) continue;

@@ -244,5 +244,112 @@ void main() {
             reason: '${entry.key.name} present but empty');
       }
     });
+
+    test('starved — karaka conjunct natural enemy', () {
+      // Sun and Saturn are natural enemies.
+      final longs = _scattered(override: {
+        Body.sun: 250.0,
+        Body.saturn: 255.0,
+      });
+      final got = Lajjitaadi.compute(
+        grahaLongitudes: longs,
+        karakaDignities: _neutralDignities(),
+        karakaSigns: _signsFromLongitudes(longs),
+        lagnaSign: 1,
+        fifthCuspSign: 5,
+      );
+      final sun = got[Body.sun]!;
+      final starved = sun.avasthas[LajjitaadiState.starved]!;
+      expect(starved.where((f) => f.planet == Body.saturn).length,
+          greaterThanOrEqualTo(2),
+          reason: 'enemy conj + Saturn-always-starves both fire');
+    });
+
+    test('delighted — sign lord is natural friend', () {
+      // Mars in Leo (sign 5). Lord of Leo = Sun. Mars ↔ Sun = friend.
+      final longs = _scattered(override: {Body.mars: 140.0});
+      final got = Lajjitaadi.compute(
+        grahaLongitudes: longs,
+        karakaDignities: _neutralDignities(),
+        karakaSigns: _signsFromLongitudes(longs),
+        lagnaSign: 1,
+        fifthCuspSign: 10,
+      );
+      final mars = got[Body.mars]!;
+      final delighted = mars.avasthas[LajjitaadiState.delighted] ?? [];
+      expect(
+          delighted.any((f) => f.source == 'sign' && f.lord == Body.sun),
+          isTrue,
+          reason: 'Mars should be delighted by Sun as lord of Leo');
+    });
+
+    test('shamed — conj Sun/Mars/Saturn AND conjunct Rahu/Ketu', () {
+      // Venus conj Mars conj Rahu — triggers shamed via Rahu path.
+      final longs = _scattered(override: {
+        Body.venus: 200.0,
+        Body.mars: 205.0,
+        Body.rahu: 203.0,
+      });
+      final got = Lajjitaadi.compute(
+        grahaLongitudes: longs,
+        karakaDignities: _neutralDignities(),
+        karakaSigns: _signsFromLongitudes(longs),
+        lagnaSign: 1,
+        fifthCuspSign: 10,
+      );
+      final venus = got[Body.venus]!;
+      final shamed = venus.avasthas[LajjitaadiState.shamed]!;
+      expect(shamed.any((f) => f.planet == Body.mars), isTrue);
+      expect(
+          shamed.any(
+              (f) => f.source == 'condition' && f.detail == 'conjunct Rahu/Ketu'),
+          isTrue);
+    });
+
+    test('shamed — conjunct 5th cusp (not in 5th sign from lagna)', () {
+      // Jupiter conj Saturn, 5th cusp sign = 8, lagna = 6 (5th sign = 10).
+      final longs = _scattered(override: {
+        Body.jupiter: 220.0, // Scorpio (sign 8)
+        Body.saturn: 225.0,
+      });
+      final got = Lajjitaadi.compute(
+        grahaLongitudes: longs,
+        karakaDignities: _neutralDignities(),
+        karakaSigns: _signsFromLongitudes(longs),
+        lagnaSign: 6,
+        fifthCuspSign: 8,
+      );
+      final jupiter = got[Body.jupiter]!;
+      final shamed = jupiter.avasthas[LajjitaadiState.shamed]!;
+      expect(
+          shamed.any(
+              (f) => f.source == 'condition' && f.detail == 'conjunct 5th cusp'),
+          isTrue);
+      expect(
+          shamed.any(
+              (f) => f.source == 'condition' && f.detail == 'in 5th sign'),
+          isFalse,
+          reason: '5th sign from lagna 6 is 10, not 8');
+    });
+
+    test('agitated — aspected by malefic natural enemy', () {
+      // Sun and Saturn are natural enemies. Saturn is a natural malefic.
+      // Place Saturn 180° from Sun for opposition aspect.
+      final longs = _scattered(override: {
+        Body.sun: 100.0,
+        Body.saturn: 280.0,
+      });
+      final got = Lajjitaadi.compute(
+        grahaLongitudes: longs,
+        karakaDignities: _neutralDignities(),
+        karakaSigns: _signsFromLongitudes(longs),
+        lagnaSign: 1,
+        fifthCuspSign: 5,
+      );
+      final sun = got[Body.sun]!;
+      final agitated = sun.avasthas[LajjitaadiState.agitated] ?? [];
+      expect(agitated.any((f) => f.planet == Body.saturn), isTrue,
+          reason: 'Sun agitated by malefic enemy Saturn aspect');
+    });
   });
 }

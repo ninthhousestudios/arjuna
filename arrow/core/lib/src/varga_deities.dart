@@ -432,6 +432,14 @@ const _d60 = [
   VargaDeity.chandraRekha,
 ];
 
+// Pre-computed reversed tables for even-sign lookups.
+final _d7Rev = _d7.reversed.toList();
+final _d10Rev = _d10.reversed.toList();
+final _d16Rev = _d16.reversed.toList();
+final _d24Rev = _d24.reversed.toList();
+final _d27Rev = _d27.reversed.toList();
+final _d60Rev = _d60.reversed.toList();
+
 // ---------------------------------------------------------------------------
 // Lookup function
 // ---------------------------------------------------------------------------
@@ -468,28 +476,22 @@ VargaDeity? lookupDeity(VargaType type, int divisionIndex, {int? signNum}) {
       return _d4[divisionIndex % 4];
 
     case 7:
-      if (signNum != null && !_isOdd(signNum)) {
-        return _d7.reversed.toList()[divisionIndex % 7];
-      }
-      return _d7[divisionIndex % 7];
+      final t7 = (signNum != null && !_isOdd(signNum)) ? _d7Rev : _d7;
+      return t7[divisionIndex % 7];
 
     case 9:
       return _d9[divisionIndex % 3];
 
     case 10:
-      if (signNum != null && !_isOdd(signNum)) {
-        return _d10.reversed.toList()[divisionIndex % 10];
-      }
-      return _d10[divisionIndex % 10];
+      final t10 = (signNum != null && !_isOdd(signNum)) ? _d10Rev : _d10;
+      return t10[divisionIndex % 10];
 
     case 12:
       return _d12[divisionIndex % 4];
 
     case 16:
-      if (signNum != null && !_isOdd(signNum)) {
-        return _d16.reversed.toList()[divisionIndex % 4];
-      }
-      return _d16[divisionIndex % 4];
+      final t16 = (signNum != null && !_isOdd(signNum)) ? _d16Rev : _d16;
+      return t16[divisionIndex % 4];
 
     case 20:
       if (signNum != null && _isOdd(signNum)) {
@@ -498,16 +500,12 @@ VargaDeity? lookupDeity(VargaType type, int divisionIndex, {int? signNum}) {
       return _d20Even[divisionIndex % 20];
 
     case 24:
-      if (signNum != null && !_isOdd(signNum)) {
-        return _d24.reversed.toList()[divisionIndex % 12];
-      }
-      return _d24[divisionIndex % 12];
+      final t24 = (signNum != null && !_isOdd(signNum)) ? _d24Rev : _d24;
+      return t24[divisionIndex % 12];
 
     case 27:
-      if (signNum != null && !_isOdd(signNum)) {
-        return _d27.reversed.toList()[divisionIndex % 27];
-      }
-      return _d27[divisionIndex % 27];
+      final t27 = (signNum != null && !_isOdd(signNum)) ? _d27Rev : _d27;
+      return t27[divisionIndex % 27];
 
     case 40:
       return _d40[divisionIndex % 12];
@@ -523,10 +521,8 @@ VargaDeity? lookupDeity(VargaType type, int divisionIndex, {int? signNum}) {
       return table[divisionIndex % 3];
 
     case 60:
-      if (signNum != null && !_isOdd(signNum)) {
-        return _d60.reversed.toList()[divisionIndex % 60];
-      }
-      return _d60[divisionIndex % 60];
+      final t60 = (signNum != null && !_isOdd(signNum)) ? _d60Rev : _d60;
+      return t60[divisionIndex % 60];
 
     default:
       return null;

@@ -1,26 +1,11 @@
 @Tags(['integration'])
 library;
 
-import 'dart:io';
-
 import 'package:arrow_options/arrow_options.dart';
 import 'package:arrow_swe/arrow_swe.dart';
-import 'package:swisseph/swisseph.dart';
 import 'package:test/test.dart';
 
-String? _findEphePath() {
-  final env = Platform.environment['ARROW_EPHE_PATH'];
-  if (env != null && Directory(env).existsSync()) return env;
-  final home = Platform.environment['HOME'] ?? '';
-  for (final p in [
-    '$home/nhs/soft/astrology/libaditya/libaditya/ephe',
-    '$home/.arrow/ephe',
-    '/usr/local/share/swisseph',
-  ]) {
-    if (Directory(p).existsSync()) return p;
-  }
-  return null;
-}
+import 'helpers/find_ephe_path.dart';
 
 /// Expected cardinal-point calendar dates for the test years.
 ///
@@ -36,7 +21,7 @@ const _expected = <int, List<(int, int)>>{
 };
 
 void main() {
-  final ephePath = _findEphePath();
+  final ephePath = findEphePath();
   final skipReason = ephePath == null
       ? 'no ephe path found; set ARROW_EPHE_PATH'
       : null;

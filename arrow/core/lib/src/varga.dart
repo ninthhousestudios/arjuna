@@ -18,45 +18,50 @@ class Varga {
   final CalcConfig config;
 
   late final Map<Body, Planet> _planetMap;
+  late final Map<Body, Graha> _grahaMap;
   late final Map<Body, Karaka> _karakaMap;
+  late final List<Cusp> cusps;
   late final Map<int, Sign> signs; // 1-12
 
   /// Division number for this varga.
   int get amsha => vargaType.amsha;
 
   Varga(this.vargaType, this.snapshot, this.config) {
-    _init();
+    _initMaps();
   }
 
-  void _init() {
-    // 1. Create Planet for each body in the snapshot
-    _planetMap = {};
-    for (final body in snapshot.bodiesEcliptic.keys) {
-      _planetMap[body] = Planet(body, snapshot, config, vargaType);
-    }
+  void _initMaps() {
+    final sunLon = snapshot.bodiesEcliptic[Body.sun]?.longitude;
 
-    // 2. Create Karaka for each karaka-eligible body
+    _planetMap = {};
+    _grahaMap = {};
     _karakaMap = {};
-    for (final body in Body.karakas) {
-      if (_planetMap.containsKey(body)) {
-        _karakaMap[body] = Karaka(_planetMap[body]!);
+
+    for (final body in snapshot.bodiesEcliptic.keys) {
+      if (Body.karakas.contains(body)) {
+        final k = Karaka(body, snapshot, config, vargaType,
+            sunLongitude: sunLon);
+        _karakaMap[body] = k;
+        _grahaMap[body] = k;
+        _planetMap[body] = k;
+      } else if (body == Body.rahu || body == Body.ketu) {
+        final g = Graha(body, snapshot, config, vargaType);
+        _grahaMap[body] = g;
+        _planetMap[body] = g;
+      } else {
+        _planetMap[body] = Planet(body, snapshot, config, vargaType);
       }
     }
 
-    // 3. Create cusps
-    final cuspList = List.generate(12, (i) {
+    cusps = List.generate(12, (i) {
       return Cusp(i + 1, snapshot.cusps[i], config);
     });
 
-    // 4. Build Sign objects: for each sign 1-12, collect planets/cusps
     signs = {};
     for (var s = 1; s <= 12; s++) {
-      final signPlanets = _planetMap.values
-          .where((p) => p.sign == s)
-          .toList();
-      final signCusps = cuspList
-          .where((c) => c.sign == s)
-          .toList();
+      final signPlanets =
+          _planetMap.values.where((p) => p.sign == s).toList();
+      final signCusps = cusps.where((c) => c.sign == s).toList();
       signs[s] = Sign(s, signPlanets, signCusps);
     }
   }
@@ -70,19 +75,25 @@ class Varga {
   /// All karakas in this varga.
   List<Karaka> get karakas => _karakaMap.values.toList();
 
+  /// All grahas (karakas + Rahu/Ketu) in this varga.
+  List<Graha> get grahas => _grahaMap.values.toList();
+
+  /// All planets in this varga.
+  List<Planet> get planets => _planetMap.values.toList();
+
   /// Get the sign a planet occupies.
   Sign signOf(Planet p) => signs[p.sign]!;
 
-  // Named planet accessors
-  Planet get sun => _planetMap[Body.sun]!;
-  Planet get moon => _planetMap[Body.moon]!;
-  Planet get mars => _planetMap[Body.mars]!;
-  Planet get mercury => _planetMap[Body.mercury]!;
-  Planet get jupiter => _planetMap[Body.jupiter]!;
-  Planet get venus => _planetMap[Body.venus]!;
-  Planet get saturn => _planetMap[Body.saturn]!;
-  Planet get rahu => _planetMap[Body.rahu]!;
-  Planet get ketu => _planetMap[Body.ketu]!;
+  // Named planet accessors with narrowed return types.
+  Karaka get sun => _karakaMap[Body.sun]!;
+  Karaka get moon => _karakaMap[Body.moon]!;
+  Karaka get mars => _karakaMap[Body.mars]!;
+  Karaka get mercury => _karakaMap[Body.mercury]!;
+  Karaka get jupiter => _karakaMap[Body.jupiter]!;
+  Karaka get venus => _karakaMap[Body.venus]!;
+  Karaka get saturn => _karakaMap[Body.saturn]!;
+  Graha get rahu => _grahaMap[Body.rahu]!;
+  Graha get ketu => _grahaMap[Body.ketu]!;
 
   @override
   String toString() => 'Varga(${vargaType.name})';

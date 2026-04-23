@@ -114,6 +114,7 @@ class Longitude {
       VargaType.hora => _hora(lon),
       VargaType.drekkana => _drekkana(lon),
       VargaType.chaturthamsha => _chaturthamsha(lon),
+      VargaType.saptamsha => _saptamsha(lon),
       VargaType.dashamsha => _dashamsha(lon),
       VargaType.dashamshaReversed => _dashamsha(lon, evenReversed: true),
       VargaType.dvadashamsha => _dvadashamsha(lon),
@@ -122,6 +123,7 @@ class Longitude {
       VargaType.parasharaChaturvimshamsha =>
         _siddhamsha(lon, parashara: true),
       VargaType.siddhamsha => _siddhamsha(lon),
+      VargaType.trimsamsha => _trimsamsha(lon),
       VargaType.bhamsha => _bhamsha(lon),
       VargaType.khavedamsha => _khavedamsha(lon),
       VargaType.akshavedamsha => _akshavedamsha(lon),
@@ -180,71 +182,38 @@ class Longitude {
     return (newLon, deity);
   }
 
+  /// Amsha → canonical VargaType for deity lookup. lookupDeity handles
+  /// its own modulo, so no per-case wrapping needed here.
+  static const _deityVargaByAmsha = <int, VargaType>{
+    3: VargaType.drekkana,
+    4: VargaType.chaturthamsha,
+    7: VargaType.saptamsha,
+    9: VargaType.navamsha,
+    10: VargaType.dashamsha,
+    12: VargaType.dvadashamsha,
+    16: VargaType.shodashamsha,
+    20: VargaType.vimshamsha,
+    24: VargaType.parasharaChaturvimshamsha,
+    27: VargaType.bhamsha,
+    40: VargaType.khavedamsha,
+    60: VargaType.shashtyamsha,
+  };
+
   /// Deity lookup for parivritti vargas, ported from
   /// `set_parivritti_deities` in libaditya.
   VargaDeity? _parivrittiDeity(int amsha, int whichAmsha, int realSign) {
-    switch (amsha) {
-      case 2:
-        // Odd signs: odd portions = Sun, even = Moon. Even signs reversed.
-        final isOddPortion = (whichAmsha + 1).isOdd;
-        if (_isOdd(realSign)) {
-          return isOddPortion ? VargaDeity.sun : VargaDeity.moon;
-        } else {
-          return isOddPortion ? VargaDeity.moon : VargaDeity.sun;
-        }
-
-      case 3:
-        return lookupDeity(VargaType.drekkana, whichAmsha % 3,
-            signNum: realSign);
-
-      case 4:
-        return lookupDeity(VargaType.chaturthamsha, whichAmsha % 4,
-            signNum: realSign);
-
-      case 7:
-        return lookupDeity(VargaType.saptamsha, whichAmsha % 7,
-            signNum: realSign);
-
-      case 9:
-        return lookupDeity(VargaType.navamsha, whichAmsha % 3,
-            signNum: realSign);
-
-      case 10:
-        return lookupDeity(VargaType.dashamsha, whichAmsha % 10,
-            signNum: realSign);
-
-      case 12:
-        return lookupDeity(VargaType.dvadashamsha, whichAmsha % 4,
-            signNum: realSign);
-
-      case 16:
-        return lookupDeity(VargaType.shodashamsha, whichAmsha % 4,
-            signNum: realSign);
-
-      case 20:
-        return lookupDeity(VargaType.vimshamsha, whichAmsha % 20,
-            signNum: realSign);
-
-      case 24:
-        return lookupDeity(VargaType.parasharaChaturvimshamsha,
-            whichAmsha % 12,
-            signNum: realSign);
-
-      case 27:
-        return lookupDeity(VargaType.bhamsha, whichAmsha % 27,
-            signNum: realSign);
-
-      case 40:
-        return lookupDeity(VargaType.khavedamsha, whichAmsha % 12,
-            signNum: realSign);
-
-      case 60:
-        return lookupDeity(VargaType.shashtyamsha, whichAmsha % 60,
-            signNum: realSign);
-
-      default:
-        return null;
+    // D2 hora deity is sign-parity dependent, handled inline.
+    if (amsha == 2) {
+      final isOddPortion = (whichAmsha + 1).isOdd;
+      if (_isOdd(realSign)) {
+        return isOddPortion ? VargaDeity.sun : VargaDeity.moon;
+      } else {
+        return isOddPortion ? VargaDeity.moon : VargaDeity.sun;
+      }
     }
+    final type = _deityVargaByAmsha[amsha];
+    if (type == null) return null;
+    return lookupDeity(type, whichAmsha, signNum: realSign);
   }
 
   // ---------------------------------------------------------------------------
@@ -598,6 +567,80 @@ class Longitude {
     final newLon =
         baseLon + (amshaElapsed * 30) + (currentInAmsha * 30);
     return (newLon, deity);
+  }
+
+  /// D7 Saptamsha.
+  ///
+  /// Divide each sign into 7 equal parts (4°17'8.57" each).
+  /// Odd signs count from the sign itself; even signs from the 7th sign.
+  VargaResult _saptamsha(double lon) {
+    final realSign = _eclipticSignNum;
+    final realInSign = _eclipticInSign;
+
+    const amshaSize = 30.0 / 7;
+    final position = realInSign / amshaSize;
+    final amshaElapsed = position.floor();
+    final currentInAmsha = position % 1;
+
+    final startSign = _isOdd(realSign)
+        ? realSign
+        : ((realSign - 1 + 6) % 12) + 1;
+
+    final baseLon = _baseLon(startSign);
+
+    final deity = lookupDeity(VargaType.saptamsha, amshaElapsed,
+        signNum: realSign);
+
+    final newLon = baseLon + (amshaElapsed * 30) + (currentInAmsha * 30);
+    return (newLon, deity);
+  }
+
+  /// D30 Trimsamsha (Parashara).
+  ///
+  /// Unequal divisions within each sign. Odd signs:
+  /// Mars(5°)→Aries, Saturn(5°)→Aquarius, Jupiter(8°)→Sagittarius,
+  /// Mercury(7°)→Gemini, Venus(5°)→Taurus. Even signs: reversed order.
+  VargaResult _trimsamsha(double lon) {
+    final realSign = _eclipticSignNum;
+    final realInSign = _eclipticInSign;
+
+    // (endDeg, targetSign) — target is the lord's primary sign.
+    const oddTable = [
+      (5.0, 1), // Mars → Aries
+      (10.0, 11), // Saturn → Aquarius
+      (18.0, 9), // Jupiter → Sagittarius
+      (25.0, 3), // Mercury → Gemini
+      (30.0, 2), // Venus → Taurus
+    ];
+
+    const evenTable = [
+      (5.0, 2), // Venus → Taurus
+      (12.0, 3), // Mercury → Gemini
+      (20.0, 9), // Jupiter → Sagittarius
+      (25.0, 11), // Saturn → Aquarius
+      (30.0, 1), // Mars → Aries
+    ];
+
+    final table = _isOdd(realSign) ? oddTable : evenTable;
+
+    double prevEnd = 0.0;
+    int targetSign = 1;
+    double portionSize = 5.0;
+
+    for (final (endDeg, lordSign) in table) {
+      if (realInSign < endDeg) {
+        targetSign = lordSign;
+        portionSize = endDeg - prevEnd;
+        break;
+      }
+      prevEnd = endDeg;
+    }
+
+    final posInPortion = (realInSign - prevEnd) / portionSize;
+    final baseLon = _baseLon(targetSign);
+    final newLon = baseLon + posInPortion * 30;
+
+    return (newLon, null);
   }
 
   /// D60 Shashtyamsha.
