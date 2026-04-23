@@ -17,6 +17,32 @@ workspace:
   - nock
   - bowyer/core
   - bowyer/cli
+  - drishti
 
 dev_dependencies:
   melos: ^7.5.0
+
+melos:
+  command:
+    bootstrap:
+      runPubGetInParallel: true
+
+  scripts:
+    analyze:
+      exec: dart analyze
+    test:
+      exec: dart test
+    generate:
+      exec: dart run build_runner build --delete-conflicting-outputs
+      select-package:
+        depends-on: build_runner
+    protogen:
+      description: Regenerate Dart proto stubs from .proto files
+      run: |
+        protoc \
+          --proto_path=proto \
+          --plugin=protoc-gen-dart=$HOME/.pub-cache/bin/protoc-gen-dart \
+          --dart_out=grpc:quiver/core/lib/src/generated \
+          proto/arrow/types.proto \
+          proto/arrow/chart.proto \
+          proto/quiver/health.proto

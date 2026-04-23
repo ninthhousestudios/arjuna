@@ -17,7 +17,7 @@ class ChartService extends ChartServiceBase {
     _log.fine('Calculate request: jd=${request.jdUt}');
 
     try {
-      return _gateway.calculateChart(request);
+      return await _gateway.calculateChart(request);
     } catch (e, stack) {
       _log.severe('Chart calculation failed', e, stack);
       throw GrpcError.internal('Chart calculation failed: $e');

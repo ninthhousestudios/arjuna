@@ -13,3 +13,12 @@ scripts:
     exec: dart run build_runner build --delete-conflicting-outputs
     select-package:
       depends-on: build_runner
+  protogen:
+    description: Regenerate Dart proto stubs from .proto files
+    run: |
+      protoc \
+        --proto_path=proto \
+        --dart_out=grpc:quiver/core/lib/src/generated \
+        proto/arrow/types.proto \
+        proto/arrow/chart.proto \
+        proto/quiver/health.proto

@@ -11,6 +11,8 @@ resolution: workspace
 dependencies:
   quiver_core:
     path: ../core
+  arrow_options:
+    path: ../../arrow/options
   arrow_swe:
     path: ../../arrow/swe
   grpc: ^5.0.0

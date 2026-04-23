@@ -8,11 +8,14 @@ void main(List<String> args) async {
   final parser = ArgParser()
     ..addOption('port', abbr: 'p', defaultsTo: '50051')
     ..addOption('ephe-path', help: 'Swiss Ephemeris data directory')
+    ..addOption('pool-size', help: 'Number of worker isolates (default: CPU count, clamped 2-16)')
     ..addOption('log-level', defaultsTo: 'info');
 
   final results = parser.parse(args);
   final port = int.parse(results.option('port')!);
   final ephePath = results.option('ephe-path');
+  final poolSizeStr = results.option('pool-size');
+  final poolSize = poolSizeStr != null ? int.parse(poolSizeStr) : null;
 
   Logger.root.level = Level.LEVELS.firstWhere(
     (l) => l.name == results.option('log-level')!.toUpperCase(),
@@ -22,5 +25,5 @@ void main(List<String> args) async {
     stderr.writeln('${record.level.name}: ${record.loggerName}: ${record.message}');
   });
 
-  await serve(port: port, ephePath: ephePath);
+  await serve(port: port, ephePath: ephePath, poolSize: poolSize);
 }

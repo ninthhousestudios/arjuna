@@ -1,3 +1,4 @@
+import 'package:arrow_options/arrow_options.dart';
 import 'package:arrow_swe/arrow_swe.dart';
 import 'package:logging/logging.dart';
 
@@ -7,19 +8,34 @@ import '../mapping/response_mapper.dart';
 
 final _log = Logger('Quiver.Core.ArrowGateway');
 
+/// Callback that produces an [EphSnapshot] from raw inputs.
+///
+/// Used to abstract over synchronous [SweFacade] (embedded/local) vs
+/// asynchronous [IsolatePool] (server) calculation backends.
+typedef SnapshotCalculator = Future<EphSnapshot> Function(
+  double jdUt,
+  Location location,
+  ArrowOptions options,
+);
+
 class ArrowGateway {
-  final SweFacade _swe;
+  final SnapshotCalculator _calculate;
 
-  ArrowGateway(this._swe);
+  ArrowGateway.fromCalculator(this._calculate);
 
-  CalcResponse calculateChart(CalcRequest request) {
+  /// Convenience: wrap a synchronous [SweFacade].
+  factory ArrowGateway(SweFacade swe) => ArrowGateway.fromCalculator(
+        (jd, loc, opts) async => swe.calcAll(jd, loc, opts),
+      );
+
+  Future<CalcResponse> calculateChart(CalcRequest request) async {
     final location = RequestMapper.toLocation(request);
     final options = RequestMapper.toArrowOptions(request);
 
     _log.info('calculateChart jd=${request.jdUt} '
         'lat=${location.latitude} lon=${location.longitude}');
 
-    final snapshot = _swe.calcAll(request.jdUt, location, options);
+    final snapshot = await _calculate(request.jdUt, location, options);
     return ResponseMapper.fromSnapshot(snapshot);
   }
 }
