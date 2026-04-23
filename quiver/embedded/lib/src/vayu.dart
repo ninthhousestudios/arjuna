@@ -38,6 +38,7 @@ class Vayu {
     Location location,
     ArrowOptions options,
   ) {
+    assert(dateTimeUtc.isUtc, 'dateTimeUtc must be in UTC');
     _checkNotDisposed();
     final jd = julianDay(dateTimeUtc);
     final snapshot = _swe.calcAll(jd, location, options);
@@ -50,6 +51,7 @@ class Vayu {
     Location location,
     ArrowOptions options,
   ) {
+    assert(dateTimeUtc.isUtc, 'dateTimeUtc must be in UTC');
     _checkNotDisposed();
     final jd = julianDay(dateTimeUtc);
     return _swe.calcAll(jd, location, options);

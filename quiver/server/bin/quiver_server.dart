@@ -9,13 +9,37 @@ void main(List<String> args) async {
     ..addOption('port', abbr: 'p', defaultsTo: '50051')
     ..addOption('ephe-path', help: 'Swiss Ephemeris data directory')
     ..addOption('pool-size', help: 'Number of worker isolates (default: CPU count, clamped 2-16)')
-    ..addOption('log-level', defaultsTo: 'info');
+    ..addOption('log-level', defaultsTo: 'info')
+    ..addFlag('help', abbr: 'h', negatable: false);
 
   final results = parser.parse(args);
-  final port = int.parse(results.option('port')!);
+
+  if (results.flag('help')) {
+    stderr.writeln('Usage: quiver_server [options]');
+    stderr.writeln(parser.usage);
+    exit(0);
+  }
+
+  final int port;
+  try {
+    port = int.parse(results.option('port')!);
+  } on FormatException {
+    stderr.writeln('Error: --port must be an integer');
+    exit(1);
+  }
   final ephePath = results.option('ephe-path');
   final poolSizeStr = results.option('pool-size');
-  final poolSize = poolSizeStr != null ? int.parse(poolSizeStr) : null;
+  final int? poolSize;
+  if (poolSizeStr != null) {
+    try {
+      poolSize = int.parse(poolSizeStr);
+    } on FormatException {
+      stderr.writeln('Error: --pool-size must be an integer');
+      exit(1);
+    }
+  } else {
+    poolSize = null;
+  }
 
   Logger.root.level = Level.LEVELS.firstWhere(
     (l) => l.name == results.option('log-level')!.toUpperCase(),
