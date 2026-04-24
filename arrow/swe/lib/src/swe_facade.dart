@@ -331,7 +331,8 @@ class SweFacade {
 
     double? riseJd;
     double? setJd;
-    bool circumpolar = false;
+    bool riseFailed = false;
+    bool setFailed = false;
 
     try {
       final r = _swe.riseTrans(
@@ -345,8 +346,8 @@ class SweFacade {
       );
       riseJd = r.transitTime;
     } catch (e) {
-      _log.fine('star rise failed for $sweName: $e');
-      circumpolar = true;
+      _log.warning('star rise failed for $sweName: $e');
+      riseFailed = true;
     }
 
     try {
@@ -361,9 +362,16 @@ class SweFacade {
       );
       setJd = r.transitTime;
     } catch (e) {
-      _log.fine('star set failed for $sweName: $e');
-      circumpolar = true;
+      _log.warning('star set failed for $sweName: $e');
+      setFailed = true;
     }
+
+    // Only mark circumpolar when both rise and set fail — a single failure
+    // could be a genuine circumpolar condition or an input/ephemeris error,
+    // but both failing strongly implies a circumpolar star at this latitude.
+    // TODO: inspect SWE error codes when the Dart binding exposes them to
+    // distinguish circumpolar from calculation errors more precisely.
+    final circumpolar = riseFailed && setFailed;
 
     return StarData(
       apparentMagnitude: mag,

@@ -16,6 +16,7 @@ dependencies:
   arrow_core:
     path: ../core
   logging: ^1.3.0
+  meta: ^1.16.0
 
 dev_dependencies:
   lints: ^6.0.0

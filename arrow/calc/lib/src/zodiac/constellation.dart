@@ -1,5 +1,6 @@
 import 'package:arrow_core/arrow_core.dart';
 import 'package:arrow_options/arrow_options.dart';
+import 'package:meta/meta.dart';
 
 /// A constellation in the 13-sign true-sidereal zodiac.
 ///
@@ -36,7 +37,9 @@ class Constellation {
   int get planetCount => _planets.length;
   int get starCount => _stars.length;
 
+  @internal
   void addPlanet(CelestialBody planet) => _planets.add(planet);
+  @internal
   void addStar(FixedStar star) => _stars.add(star);
 
   /// Whether [longitude] falls within this constellation's boundaries.

@@ -1,22 +1,8 @@
 import 'package:arrow_core/arrow_core.dart';
 import 'package:arrow_options/arrow_options.dart';
-import 'package:arrow_swe/arrow_swe.dart';
 
-import 'boundary_stars.dart';
 import 'constellation.dart';
 import 'constellation_star_map.dart';
-
-/// Build an [Ecliptic13] from an [EphSnapshot].
-///
-/// Extracts boundary star longitudes from [snap.starsEcliptic] and builds
-/// the 13-constellation ecliptic. The snapshot must include [boundaryStars].
-Ecliptic13 buildEcliptic13(EphSnapshot snap) {
-  final starLongitudes = <Star, double>{};
-  for (final entry in snap.starsEcliptic.entries) {
-    starLongitudes[entry.key] = entry.value.longitude;
-  }
-  return Ecliptic13.build(starLongitudes: starLongitudes);
-}
 
 /// 13-constellation true-sidereal ecliptic.
 ///
@@ -86,7 +72,9 @@ class Ecliptic13 {
     for (final c in _constellations.values) {
       if (c.contains(lon)) return c;
     }
-    return _constellations.values.first;
+    throw StateError(
+      'No constellation contains longitude $lon — boundary coverage gap?',
+    );
   }
 
   /// Placement result for a longitude: constellation, degrees into it,
@@ -142,10 +130,12 @@ class Ecliptic13 {
       boundaries.add(midpoint);
     }
 
-    // Rotate so the first boundary is for Aries (boundary between Pisces and Aries).
-    // boundaries[i] is the boundary between constellation i-1 and i,
-    // but we computed boundary between i and i+1. The boundary at index
-    // ordered.length-1 is between Pisces(last) and Aries(first) = Aries start.
+    // Pre-rotation: boundaries[i] = midpoint between constellation i's last
+    // star and constellation (i+1)'s first star, i.e. the *end* of
+    // constellation i / *beginning* of constellation (i+1). The final entry
+    // (Pisces→Aries midpoint) is the beginning of Aries.
+    //
+    // Post-rotation: boundaries[i] = beginning of constellation i.
     final ariesBoundary = boundaries.removeLast();
     boundaries.insert(0, ariesBoundary);
 

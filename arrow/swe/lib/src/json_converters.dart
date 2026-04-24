@@ -33,7 +33,10 @@ class StarMapConverter
   Map<Star, BodyPosition> fromJson(Map<String, dynamic> json) {
     return json.map(
       (key, value) => MapEntry(
-        Star.values.firstWhere((s) => s.name == key),
+        Star.values.firstWhere(
+          (s) => s.name == key,
+          orElse: () => throw FormatException('Unknown Star enum value: $key'),
+        ),
         BodyPosition.fromJson(value as Map<String, dynamic>),
       ),
     );
@@ -74,7 +77,10 @@ class StarDataMapConverter
   Map<Star, StarData> fromJson(Map<String, dynamic> json) {
     return json.map(
       (key, value) => MapEntry(
-        Star.values.firstWhere((s) => s.name == key),
+        Star.values.firstWhere(
+          (s) => s.name == key,
+          orElse: () => throw FormatException('Unknown Star enum value: $key'),
+        ),
         StarData.fromJson(value as Map<String, dynamic>),
       ),
     );

@@ -59,6 +59,18 @@ void main() {
       expect(result.percent, lessThan(100));
     });
 
+    test('Aries begins near expected sidereal longitude', () {
+      final aries = ecliptic[ConstellationId.aries];
+      // With synthetic data the exact value depends on the star spacing,
+      // but Aries must begin between the Pisces→Aries midpoint. Verify
+      // the rotation placed a real boundary (not a default 0).
+      expect(aries.beginning, isNotNaN);
+      // Aries beginning must equal the boundary between the last
+      // constellation (Pisces) and the first (Aries).
+      final pisces = ecliptic[ConstellationId.pisces];
+      expect(aries.beginning, closeTo(pisces.end, 0.001));
+    });
+
     test('missing boundary star throws StateError', () {
       final incomplete = Map<Star, double>.from(longitudes);
       incomplete.remove(incomplete.keys.first);
