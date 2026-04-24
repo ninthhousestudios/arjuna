@@ -21,6 +21,12 @@ class FixedStar extends SkyObject {
   /// Nakshatra number (1-27) if this star is a junction star (yogatara).
   final int? junctionOf;
 
+  /// Magnitude and rise/set data. Null when [SweConfig.includeStarData] is off.
+  final StarData? starData;
+
+  /// Apparent magnitude — from [StarData] if available, else [Star.traditionalMag].
+  double? get magnitude => starData?.apparentMagnitude ?? star?.traditionalMag;
+
   @override
   final CalcConfig config;
 
@@ -39,6 +45,7 @@ class FixedStar extends SkyObject {
     required BodyPosition eclipticPos,
     required BodyPosition equatorialPos,
     required this.junctionOf,
+    required this.starData,
     required this.config,
   })  : _eclipticPos = eclipticPos,
         _equatorialPos = equatorialPos;
@@ -55,6 +62,7 @@ class FixedStar extends SkyObject {
       eclipticPos: snapshot.starsEcliptic[star]!,
       equatorialPos: snapshot.starsEquatorial[star]!,
       junctionOf: star.nakshatra,
+      starData: snapshot.starData[star],
       config: config,
     );
   }
@@ -71,6 +79,7 @@ class FixedStar extends SkyObject {
       eclipticPos: snapshot.customStarsEcliptic[name]!,
       equatorialPos: snapshot.customStarsEquatorial[name]!,
       junctionOf: null,
+      starData: snapshot.customStarData[name],
       config: config,
     );
   }

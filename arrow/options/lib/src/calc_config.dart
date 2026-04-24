@@ -4,6 +4,7 @@ import 'ayanamsa.dart';
 import 'circle.dart';
 import 'tradition.dart';
 import 'vedic_config.dart';
+import 'zodiac_system.dart';
 
 part 'calc_config.freezed.dart';
 part 'calc_config.g.dart';
@@ -19,6 +20,7 @@ abstract class CalcConfig with _$CalcConfig {
     @Default(Ayanamsa.dhruva) Ayanamsa nakAyanamsa,
     @Default(true) bool nakEquatorial,
     @Default({Tradition.vedic}) Set<Tradition> traditions,
+    @Default(ZodiacSystem.sidereal12) ZodiacSystem zodiacSystem,
     @Default(VedicConfig()) VedicConfig vedic,
   }) = _CalcConfig;
 

@@ -9,6 +9,7 @@ import 'dhruva.dart';
 import 'eph_snapshot.dart';
 import 'ephemeris_flag.dart';
 import 'pheno_data.dart';
+import 'star_data.dart';
 import 'sun_times.dart';
 
 final _log = Logger('Arrow.Swe');
@@ -192,6 +193,22 @@ class SweFacade {
       }
     }
 
+    // Star data (magnitude + rise/set).
+    final starDataMap = <Star, StarData>{};
+    final customStarDataMap = <String, StarData>{};
+    if (sweConfig.includeStarData) {
+      for (final star in sweConfig.stars) {
+        starDataMap[star] = _calcStarData(
+          star.sweName, jdUt, loc, sweConfig,
+        );
+      }
+      for (final name in sweConfig.customStarNames) {
+        customStarDataMap[name] = _calcStarData(
+          name, jdUt, loc, sweConfig,
+        );
+      }
+    }
+
     // House cusps and ascmc.
     // housesEx takes hsys as the ASCII code of the house system character.
     final hsys = sweConfig.houseSystem.sweChar.codeUnitAt(0);
@@ -234,6 +251,8 @@ class SweFacade {
       starsEquatorial: starsEqu,
       customStarsEcliptic: customStarsEcl,
       customStarsEquatorial: customStarsEqu,
+      starData: starDataMap,
+      customStarData: customStarDataMap,
     );
   }
 
@@ -296,6 +315,25 @@ class SweFacade {
         coAscendantMunkasey: a[6],
         polarAscendant: a[7],
       );
+
+  StarData _calcStarData(
+    String sweName,
+    double jdUt,
+    Location loc,
+    SweConfig sweConfig,
+  ) {
+    double? mag;
+    try {
+      mag = _swe.fixstar2Mag(sweName);
+    } catch (e) {
+      _log.fine('fixstar2Mag failed for $sweName: $e');
+    }
+
+    // Rise/set via riseTrans is not yet supported for stars — the swisseph
+    // Dart binding passes an empty starname buffer. Once the binding adds
+    // a starname parameter, wire it here with body=0.
+    return StarData(apparentMagnitude: mag);
+  }
 
   SunTimes _calcSunTimes(double jdUt, Location loc) {
     double? sunrise;

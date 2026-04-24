@@ -19,3 +19,8 @@ export 'src/vedic/panchanga/tithi.dart';
 export 'src/vedic/panchanga/vara.dart';
 export 'src/vedic/panchanga/vedanga_jyotisha.dart';
 export 'src/vedic/panchanga/yoga.dart';
+
+export 'src/zodiac/boundary_stars.dart';
+export 'src/zodiac/constellation.dart';
+export 'src/zodiac/constellation_star_map.dart';
+export 'src/zodiac/ecliptic13.dart';

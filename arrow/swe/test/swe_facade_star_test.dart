@@ -163,6 +163,68 @@ void main() {
       expect(snap.customStarsEquatorial, isEmpty);
     });
   });
+
+  group('SweFacade star data', skip: skipReason, () {
+    const jdUt = 2451545.0;
+
+    late SwissEph swe;
+    late SweFacade facade;
+
+    setUp(() {
+      swe = SwissEph.find();
+      facade = SweFacade(swe, ephePath: ephePath);
+    });
+
+    tearDown(() {
+      swe.close();
+    });
+
+    test('includeStarData=false produces empty starData', () {
+      final options = ArrowOptions(
+        sweConfig: SweConfig(
+          stars: {Star.aldebaran},
+          includeStarData: false,
+        ),
+      );
+      final snap = facade.calcAll(jdUt, _testLocation, options);
+      expect(snap.starsEcliptic, contains(Star.aldebaran));
+      expect(snap.starData, isEmpty);
+    });
+
+    test('includeStarData=true populates magnitude', () {
+      final options = ArrowOptions(
+        sweConfig: SweConfig(
+          bodies: {},
+          stars: {Star.aldebaran, Star.sirius},
+          includeStarData: true,
+        ),
+      );
+      final snap = facade.calcAll(jdUt, _testLocation, options);
+
+      expect(snap.starData, hasLength(2));
+
+      final aldeb = snap.starData[Star.aldebaran]!;
+      expect(aldeb.apparentMagnitude, isNotNull);
+      expect(aldeb.apparentMagnitude!, closeTo(0.87, 0.1));
+
+      final sirius = snap.starData[Star.sirius]!;
+      expect(sirius.apparentMagnitude, isNotNull);
+      expect(sirius.apparentMagnitude!, closeTo(-1.46, 0.1));
+    });
+
+    test('custom star data populated when includeStarData is true', () {
+      final options = ArrowOptions(
+        sweConfig: SweConfig(
+          bodies: {},
+          customStarNames: {'Sirius'},
+          includeStarData: true,
+        ),
+      );
+      final snap = facade.calcAll(jdUt, _testLocation, options);
+      expect(snap.customStarData, contains('Sirius'));
+      expect(snap.customStarData['Sirius']!.apparentMagnitude, isNotNull);
+    });
+  });
 }
 
 const _testLocation = Location(

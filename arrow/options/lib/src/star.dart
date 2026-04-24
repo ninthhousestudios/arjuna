@@ -98,7 +98,7 @@ enum Star {
     nakshatra: 15,
   ),
   zubenelgenubi(
-    sweName: ',alfLib',
+    sweName: ',alf02Lib',
     label: 'Zubenelgenubi',
     traditionalMag: 2.75,
     nakshatra: 16,
@@ -217,6 +217,79 @@ enum Star {
     label: 'Zubeneschamali',
     traditionalMag: 2.61,
   ),
+
+  // ── 13-constellation boundary stars ──────────────────────────────
+
+  mesarthim(sweName: ',gamAri', label: 'Mesarthim', traditionalMag: 3.86),
+  botein(sweName: ',delAri', label: 'Botein', traditionalMag: 4.35),
+  omicronTauri(
+    sweName: ',omiTau',
+    label: 'Omicron Tauri',
+    traditionalMag: 3.60,
+  ),
+  zetaTauri(sweName: ',zetTau', label: 'Zeta Tauri', traditionalMag: 2.97),
+  oneGeminorum(sweName: ',1Gem', label: '1 Geminorum', traditionalMag: 4.16),
+  kappaGeminorum(
+    sweName: ',kapGem',
+    label: 'Kappa Geminorum',
+    traditionalMag: 3.57,
+  ),
+  chiCancri(sweName: ',chiCnc', label: 'Chi Cancri', traditionalMag: 5.14),
+  acubens(sweName: ',alfCnc', label: 'Acubens', traditionalMag: 4.25),
+  kappaLeonis(
+    sweName: ',kapLeo',
+    label: 'Kappa Leonis',
+    traditionalMag: 4.46,
+  ),
+  nuVirginis(sweName: ',nu.Vir', label: 'Nu Virginis', traditionalMag: 4.03),
+  muVirginis(
+    sweName: ',mu.Vir',
+    label: 'Rijl al Awwa',
+    traditionalMag: 3.87,
+  ),
+  fortyEightLibrae(
+    sweName: ',48Lib',
+    label: '48 Librae',
+    traditionalMag: 4.87,
+  ),
+  tauScorpii(
+    sweName: ',tauSco',
+    label: 'Tau Scorpii',
+    traditionalMag: 2.82,
+  ),
+  fortyFiveOphiuchi(
+    sweName: ',45Oph',
+    label: '45 Ophiuchi',
+    traditionalMag: 4.29,
+  ),
+  nash(sweName: ',gam02Sgr', label: 'Nash', traditionalMag: 2.98),
+  omegaSagittarii(
+    sweName: ',omeSgr',
+    label: 'Omega Sagittarii',
+    traditionalMag: 4.70,
+  ),
+  dabih(sweName: ',betCap', label: 'Dabih', traditionalMag: 3.05),
+  denebAlgedi(
+    sweName: ',delCap',
+    label: 'Deneb Algedi',
+    traditionalMag: 2.85,
+  ),
+  iotaAquarii(
+    sweName: ',iotAqr',
+    label: 'Iota Aquarii',
+    traditionalMag: 4.27,
+  ),
+  phiAquarii(
+    sweName: ',phiAqr',
+    label: 'Phi Aquarii',
+    traditionalMag: 4.22,
+  ),
+  gammaPiscium(
+    sweName: ',gamPsc',
+    label: 'Gamma Piscium',
+    traditionalMag: 3.69,
+  ),
+  alrescha(sweName: ',alfPsc', label: 'Alrescha', traditionalMag: 3.82),
 
   // ── Deep-sky / special ───────────────────────────────────────────
 

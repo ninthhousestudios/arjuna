@@ -9,6 +9,7 @@ export 'src/eph_snapshot.dart';
 export 'src/ephemeris_flag.dart';
 export 'src/julian_day.dart';
 export 'src/pheno_data.dart';
+export 'src/star_data.dart';
 export 'src/sun_times.dart';
 export 'src/swe_facade.dart';
 
