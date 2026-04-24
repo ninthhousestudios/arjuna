@@ -2,36 +2,28 @@ import 'package:arrow_options/arrow_options.dart';
 import 'package:arrow_swe/arrow_swe.dart';
 
 import 'longitude.dart';
+import 'sky_object.dart';
 
-/// Base class for all celestial bodies in a chart.
+/// A graha (planetary body) in a chart.
 ///
-/// Wraps a [Body] enum value with its positions from an [EphSnapshot],
-/// providing [Longitude]-based access to sign, nakshatra, and varga data.
-class CelestialBody {
+/// Extends [SkyObject] with [Body]-specific position lookup and
+/// extra reference frames (barycentric, heliocentric).
+class CelestialBody extends SkyObject {
   final Body body;
   final EphSnapshot snapshot;
+  @override
   final CalcConfig config;
+  @override
   final VargaType vargaType;
 
   CelestialBody(this.body, this.snapshot, this.config, this.vargaType);
 
+  @override
   BodyPosition get position => snapshot.bodiesEcliptic[body]!;
+  @override
   BodyPosition get equatorialPosition => snapshot.bodiesEquatorial[body]!;
-  double get rawLongitude => position.longitude;
-  double get rawEquatorialLongitude => equatorialPosition.longitude;
 
-  Longitude get longitude =>
-      Longitude(rawLongitude, rawEquatorialLongitude, vargaType, config);
-
-  /// Compute longitude in a different varga.
-  Longitude varga(VargaType type) =>
-      Longitude(rawLongitude, rawEquatorialLongitude, type, config);
-
-  int get sign => longitude.sign;
-  int get nakshatra => longitude.nakshatra;
-  int get pada => longitude.pada;
-
-  /// Barycentric (Solar System Barycenter–centered) ecliptic position.
+  /// Barycentric (Solar System Barycenter-centered) ecliptic position.
   ///
   /// Null when `ReferencePoint.barycentric` is not in `SweConfig.extraFrames`.
   /// Null for [Body.ketu] only if Rahu was not requested.

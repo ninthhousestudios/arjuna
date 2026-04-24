@@ -5,6 +5,7 @@ import 'body.dart';
 import 'ephemeris_source.dart';
 import 'house_system.dart';
 import 'reference_point.dart';
+import 'star.dart';
 
 part 'swe_config.freezed.dart';
 part 'swe_config.g.dart';
@@ -33,6 +34,8 @@ abstract class SweConfig with _$SweConfig {
     @Default(false) bool topocentric,
     @Default(EphemerisSource.swissEph) EphemerisSource ephemerisSource,
     @Default(<ReferencePoint>{}) Set<ReferencePoint> extraFrames,
+    @Default(<Star>{}) Set<Star> stars,
+    @Default(<String>{}) Set<String> customStarNames,
   }) = _SweConfig;
 
   factory SweConfig.fromJson(Map<String, dynamic> json) =>

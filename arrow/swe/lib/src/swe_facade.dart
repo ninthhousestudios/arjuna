@@ -150,6 +150,48 @@ class SweFacade {
       }
     }
 
+    // Fixed stars.
+    final starsEcl = <Star, BodyPosition>{};
+    final starsEqu = <Star, BodyPosition>{};
+    for (final star in sweConfig.stars) {
+      _log.fine('calc star=${star.label} sweName=${star.sweName}');
+      try {
+        final ecl = _swe.fixstar2Ut(star.sweName, jdUt, baseEclFlags);
+        final equ = _swe.fixstar2Ut(star.sweName, jdUt, equatorialFlags);
+        starsEcl[star] = _fromFixstarResult(ecl);
+        starsEqu[star] = _fromFixstarResult(equ);
+      } catch (e) {
+        _log.warning('fixstar calc failed for ${star.label}: $e');
+      }
+    }
+
+    // Custom star names (arbitrary SWE nomen strings with % fallback).
+    final customStarsEcl = <String, BodyPosition>{};
+    final customStarsEqu = <String, BodyPosition>{};
+    for (final name in sweConfig.customStarNames) {
+      _log.fine('calc customStar=$name');
+      try {
+        final ecl = _swe.fixstar2Ut(name, jdUt, baseEclFlags);
+        final equ = _swe.fixstar2Ut(name, jdUt, equatorialFlags);
+        customStarsEcl[name] = _fromFixstarResult(ecl);
+        customStarsEqu[name] = _fromFixstarResult(equ);
+      } catch (_) {
+        if (!name.endsWith('%')) {
+          _log.fine('fixstar exact match failed for $name, retrying with %');
+          try {
+            final ecl = _swe.fixstar2Ut('$name%', jdUt, baseEclFlags);
+            final equ = _swe.fixstar2Ut('$name%', jdUt, equatorialFlags);
+            customStarsEcl[name] = _fromFixstarResult(ecl);
+            customStarsEqu[name] = _fromFixstarResult(equ);
+          } catch (e2) {
+            _log.warning('fixstar calc failed for custom star $name: $e2');
+          }
+        } else {
+          _log.warning('fixstar calc failed for custom star $name');
+        }
+      }
+    }
+
     // House cusps and ascmc.
     // housesEx takes hsys as the ASCII code of the house system character.
     final hsys = sweConfig.houseSystem.sweChar.codeUnitAt(0);
@@ -188,10 +230,23 @@ class SweFacade {
       ayanamsaValue: ayanamsaValue,
       bodiesEclipticBarycentric: baryEcl,
       bodiesEclipticHeliocentric: helioEcl,
+      starsEcliptic: starsEcl,
+      starsEquatorial: starsEqu,
+      customStarsEcliptic: customStarsEcl,
+      customStarsEquatorial: customStarsEqu,
     );
   }
 
   BodyPosition _fromCalcResult(CalcResult r) => BodyPosition(
+        longitude: r.longitude,
+        latitude: r.latitude,
+        distance: r.distance,
+        speedLongitude: r.longitudeSpeed,
+        speedLatitude: r.latitudeSpeed,
+        speedDistance: r.distanceSpeed,
+      );
+
+  BodyPosition _fromFixstarResult(FixstarResult r) => BodyPosition(
         longitude: r.longitude,
         latitude: r.latitude,
         distance: r.distance,

@@ -14,6 +14,7 @@ export 'src/location.dart';
 export 'src/presets.dart';
 export 'src/rashi_aspect_mode.dart';
 export 'src/reference_point.dart';
+export 'src/star.dart';
 export 'src/swe_config.dart';
 export 'src/tradition.dart';
 export 'src/varga_type.dart';

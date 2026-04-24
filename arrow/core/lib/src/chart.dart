@@ -2,6 +2,7 @@ import 'package:arrow_options/arrow_options.dart';
 import 'package:arrow_swe/arrow_swe.dart';
 
 import 'cusp.dart';
+import 'fixed_star.dart';
 import 'graha.dart';
 import 'karaka.dart';
 import 'motion_state.dart';
@@ -30,9 +31,21 @@ class Chart {
 
   final Map<VargaType, Varga> _vargaCache = {};
 
+  late final Map<Star, FixedStar> fixedStars;
+  late final Map<String, FixedStar> customFixedStars;
+
   Chart(this.snapshot, this.config) {
     rashi = Rashi(snapshot, config);
     _vargaCache[VargaType.rashi] = rashi;
+
+    fixedStars = {
+      for (final star in snapshot.starsEcliptic.keys)
+        star: FixedStar.fromEnum(star, snapshot, config),
+    };
+    customFixedStars = {
+      for (final name in snapshot.customStarsEcliptic.keys)
+        name: FixedStar.custom(name, snapshot, config),
+    };
   }
 
   /// Get a divisional chart. Cached after first access.

@@ -25,6 +25,10 @@ abstract class EphSnapshot with _$EphSnapshot {
     required double ayanamsaValue,
     @BodyMapConverter() Map<Body, BodyPosition>? bodiesEclipticBarycentric,
     @BodyMapConverter() Map<Body, BodyPosition>? bodiesEclipticHeliocentric,
+    @StarMapConverter() @Default(<Star, BodyPosition>{}) Map<Star, BodyPosition> starsEcliptic,
+    @StarMapConverter() @Default(<Star, BodyPosition>{}) Map<Star, BodyPosition> starsEquatorial,
+    @StringBodyPositionMapConverter() @Default(<String, BodyPosition>{}) Map<String, BodyPosition> customStarsEcliptic,
+    @StringBodyPositionMapConverter() @Default(<String, BodyPosition>{}) Map<String, BodyPosition> customStarsEquatorial,
   }) = _EphSnapshot;
 
   factory EphSnapshot.fromJson(Map<String, dynamic> json) =>
