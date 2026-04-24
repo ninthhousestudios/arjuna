@@ -5,6 +5,7 @@ import 'package:swisseph/swisseph.dart';
 import 'asc_mc_points.dart';
 import 'body_position.dart';
 import 'cardinal_points.dart';
+import 'dhruva.dart';
 import 'eph_snapshot.dart';
 import 'ephemeris_flag.dart';
 import 'pheno_data.dart';
@@ -305,6 +306,28 @@ class SweFacade {
     }
     return compute();
   }
+
+  /// Sidereal ecliptic longitude of [sweId] at [jdUt] under [ayanamsa].
+  ///
+  /// Sets the SWE sidereal mode and computes directly in the sidereal frame,
+  /// rather than computing tropical and subtracting. Only for standard SWE
+  /// ayanamsas (codes 0–96).
+  double calcSiderealLongitude(double jdUt, int sweId, Ayanamsa ayanamsa) {
+    assert(ayanamsa.isStandard);
+    _swe.setSidMode(ayanamsa.sweCode);
+    final flags = ephemerisFlag(EphemerisSource.swissEph) |
+        seFlgSpeed |
+        seFlgSidereal;
+    final r = _swe.calcUt(jdUt, sweId, flags);
+    return r.longitude;
+  }
+
+  /// Dhruva GC mid-Mula Equatorial longitude for [sweId] at [jdUt].
+  ///
+  /// Delegates to the free function [dhruvaGcEquatorial] which anchors
+  /// the nakshatra system equatorially on Sgr A*.
+  double calcDhruvaLongitude(double jdUt, int sweId) =>
+      dhruvaGcEquatorial(_swe, jdUt, sweId);
 
   /// Find the four tropical cardinal points of calendar [year]: the JDs (UT)
   /// at which the Sun reaches tropical longitudes 0°, 90°, 180°, 270°.
