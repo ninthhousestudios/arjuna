@@ -329,10 +329,48 @@ class SweFacade {
       _log.fine('fixstar2Mag failed for $sweName: $e');
     }
 
-    // Rise/set via riseTrans is not yet supported for stars — the swisseph
-    // Dart binding passes an empty starname buffer. Once the binding adds
-    // a starname parameter, wire it here with body=0.
-    return StarData(apparentMagnitude: mag);
+    double? riseJd;
+    double? setJd;
+    bool circumpolar = false;
+
+    try {
+      final r = _swe.riseTrans(
+        jdUt,
+        0,
+        starName: sweName,
+        rsmi: seCalcRise,
+        geolon: loc.longitude,
+        geolat: loc.latitude,
+        geoalt: loc.altitude,
+      );
+      riseJd = r.transitTime;
+    } catch (e) {
+      _log.fine('star rise failed for $sweName: $e');
+      circumpolar = true;
+    }
+
+    try {
+      final r = _swe.riseTrans(
+        jdUt,
+        0,
+        starName: sweName,
+        rsmi: seCalcSet,
+        geolon: loc.longitude,
+        geolat: loc.latitude,
+        geoalt: loc.altitude,
+      );
+      setJd = r.transitTime;
+    } catch (e) {
+      _log.fine('star set failed for $sweName: $e');
+      circumpolar = true;
+    }
+
+    return StarData(
+      apparentMagnitude: mag,
+      riseJd: riseJd,
+      setJd: setJd,
+      circumpolar: circumpolar,
+    );
   }
 
   SunTimes _calcSunTimes(double jdUt, Location loc) {

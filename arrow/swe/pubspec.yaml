@@ -11,7 +11,7 @@ resolution: workspace
 dependencies:
   arrow_options:
     path: ../options
-  swisseph: ^0.4.5
+  swisseph: ^0.4.6
   freezed_annotation: ^3.0.0
   json_annotation: ^4.9.0
   logging: ^1.3.0

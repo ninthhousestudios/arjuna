@@ -191,7 +191,7 @@ void main() {
       expect(snap.starData, isEmpty);
     });
 
-    test('includeStarData=true populates magnitude', () {
+    test('includeStarData=true populates magnitude and rise/set', () {
       final options = ArrowOptions(
         sweConfig: SweConfig(
           bodies: {},
@@ -206,10 +206,16 @@ void main() {
       final aldeb = snap.starData[Star.aldebaran]!;
       expect(aldeb.apparentMagnitude, isNotNull);
       expect(aldeb.apparentMagnitude!, closeTo(0.87, 0.1));
+      expect(aldeb.riseJd, isNotNull);
+      expect(aldeb.setJd, isNotNull);
+      expect(aldeb.riseJd!, greaterThan(jdUt));
+      expect(aldeb.setJd!, greaterThan(jdUt));
 
       final sirius = snap.starData[Star.sirius]!;
       expect(sirius.apparentMagnitude, isNotNull);
       expect(sirius.apparentMagnitude!, closeTo(-1.46, 0.1));
+      expect(sirius.riseJd, isNotNull);
+      expect(sirius.setJd, isNotNull);
     });
 
     test('custom star data populated when includeStarData is true', () {
