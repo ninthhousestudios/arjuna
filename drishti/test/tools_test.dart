@@ -108,6 +108,37 @@ void main() {
       }
     });
 
+    test('ascmc section has 6 numeric values', () {
+      final result = formatChart(chart);
+      expect(result, contains('ascmc'));
+      final ascmc = result['ascmc'] as Map<String, dynamic>;
+      const expectedKeys = [
+        'armc',
+        'vertex',
+        'equatorial_ascendant',
+        'co_ascendant_koch',
+        'co_ascendant_munkasey',
+        'polar_ascendant',
+      ];
+      expect(ascmc.length, equals(6));
+      for (final key in expectedKeys) {
+        expect(ascmc, contains(key));
+        expect(ascmc[key], isA<double>(), reason: '$key should be a double');
+      }
+    });
+
+    test('each planet has house_number in 1-12 range', () {
+      final result = formatChart(chart);
+      final planets = result['planets'] as List;
+      for (final planet in planets) {
+        final p = planet as Map<String, dynamic>;
+        expect(p, contains('house_number'));
+        expect(p['house_number'], isA<int>());
+        expect(p['house_number'] as int, greaterThanOrEqualTo(1));
+        expect(p['house_number'] as int, lessThanOrEqualTo(12));
+      }
+    });
+
     test('sign names are valid', () {
       final result = formatChart(chart);
       final planets = result['planets'] as List;
