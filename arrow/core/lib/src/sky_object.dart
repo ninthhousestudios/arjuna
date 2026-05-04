@@ -18,24 +18,23 @@ abstract class SkyObject {
   double get rawLongitude => position.longitude;
   double get rawEquatorialLongitude => equatorialPosition.longitude;
 
-  /// Nakshatra-frame ayanamsa offset to apply when computing nakshatra and
-  /// pada. Default 0 (tropical) — subclasses with snapshot access override.
-  double get nakAyanamsaValue => 0.0;
+  /// Pre-computed longitude in the nakshatra frame.
+  /// Subclasses with snapshot access pick ecliptic or equatorial based on
+  /// [CalcConfig.nakEquatorial].
+  double get nakLongitude => 0.0;
 
   Longitude get longitude => Longitude(
         rawLongitude,
-        rawEquatorialLongitude,
         vargaType,
         config,
-        nakAyanamsaValue: nakAyanamsaValue,
+        nakLongitude: nakLongitude,
       );
 
   Longitude varga(VargaType type) => Longitude(
         rawLongitude,
-        rawEquatorialLongitude,
         type,
         config,
-        nakAyanamsaValue: nakAyanamsaValue,
+        nakLongitude: nakLongitude,
       );
 
   int get sign => longitude.sign;

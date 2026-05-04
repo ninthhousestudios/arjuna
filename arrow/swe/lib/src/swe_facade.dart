@@ -238,10 +238,143 @@ class SweFacade {
       _log.fine('ayanamsa=$ayanamsaValue');
     }
 
-    // Ayanamsa value (nakshatra frame). Independent of signAyanamsa: a chart
-    // can have tropical signs and dhruva nakshatras (the ernst preset).
-    final nakAyanamsaValue = _calcNakAyanamsa(jdUt, sweConfig.nakAyanamsa);
-    _log.fine('nakAyanamsa=${sweConfig.nakAyanamsa.label} value=$nakAyanamsaValue');
+    // ── Nakshatra-frame longitudes ──
+    // Computed AFTER all sign-frame work is done (including getAyanamsaUt).
+    // SWE sidereal mode may change here — nothing after this depends on it.
+    final nakAyanamsa = sweConfig.nakAyanamsa;
+    _log.fine('nakAyanamsa=${nakAyanamsa.label}');
+
+    final bodiesNakEclLon = <Body, double>{};
+    final bodiesNakEquLon = <Body, double>{};
+    final starsNakEclLon = <Star, double>{};
+    final starsNakEquLon = <Star, double>{};
+    final customStarsNakEclLon = <String, double>{};
+    final customStarsNakEquLon = <String, double>{};
+
+    if (nakAyanamsa == sweConfig.signAyanamsa) {
+      // Nak frame == sign frame. Extract longitudes from existing positions.
+      for (final e in bodiesEcliptic.entries) {
+        bodiesNakEclLon[e.key] = e.value.longitude;
+      }
+      for (final e in bodiesEquatorial.entries) {
+        bodiesNakEquLon[e.key] = e.value.longitude;
+      }
+      for (final e in starsMap.entries) {
+        starsNakEclLon[e.key] = e.value.ecliptic.longitude;
+        starsNakEquLon[e.key] = e.value.equatorial.longitude;
+      }
+      for (final e in customStarsMap.entries) {
+        customStarsNakEclLon[e.key] = e.value.ecliptic.longitude;
+        customStarsNakEquLon[e.key] = e.value.equatorial.longitude;
+      }
+    } else if (nakAyanamsa == Ayanamsa.dhruva) {
+      // Dhruva is equatorial-only. Ecliptic maps store the same value.
+      for (final body in sweConfig.bodies) {
+        if (body == Body.ketu) continue;
+        final sweId = body == Body.rahu
+            ? (sweConfig.trueNode ? seTrueNode : seMeanNode)
+            : sweIdFor(body);
+        final equ = dhruvaGcEquatorial(_swe, jdUt, sweId);
+        bodiesNakEclLon[body] = equ;
+        bodiesNakEquLon[body] = equ;
+      }
+      if (sweConfig.bodies.contains(Body.ketu) &&
+          bodiesNakEquLon.containsKey(Body.rahu)) {
+        final ketuNak = (bodiesNakEquLon[Body.rahu]! + 180) % 360;
+        bodiesNakEclLon[Body.ketu] = ketuNak;
+        bodiesNakEquLon[Body.ketu] = ketuNak;
+      }
+      for (final star in sweConfig.stars) {
+        try {
+          final equ =
+              dhruvaGcEquatorialStar(_swe, jdUt, sweNameFor(star));
+          starsNakEclLon[star] = equ;
+          starsNakEquLon[star] = equ;
+        } catch (e) {
+          _log.warning('dhruva nak calc failed for ${star.label}: $e');
+        }
+      }
+      for (final name in sweConfig.customStarNames) {
+        try {
+          final equ = dhruvaGcEquatorialStar(_swe, jdUt, name);
+          customStarsNakEclLon[name] = equ;
+          customStarsNakEquLon[name] = equ;
+        } catch (_) {
+          if (!name.endsWith('%')) {
+            try {
+              final equ = dhruvaGcEquatorialStar(_swe, jdUt, '$name%');
+              customStarsNakEclLon[name] = equ;
+              customStarsNakEquLon[name] = equ;
+            } catch (_) {}
+          }
+        }
+      }
+    } else {
+      // Standard SWE ayanamsa or tropical, different from signAyanamsa.
+      // setSidMode changes global SWE state — safe because sign-frame work
+      // (including getAyanamsaUt) is already complete.
+      final int nakEclFlags;
+      final int nakEquFlags;
+      if (nakAyanamsa.isTropical) {
+        nakEclFlags = ephemerisFlag(sweConfig.ephemerisSource) |
+            seFlgSpeed |
+            (sweConfig.topocentric ? seFlgTopoCtr : 0);
+        nakEquFlags = nakEclFlags | seFlgEquatorial;
+      } else {
+        _swe.setSidMode(nakAyanamsa.sweCode);
+        nakEclFlags = ephemerisFlag(sweConfig.ephemerisSource) |
+            seFlgSpeed |
+            seFlgSidereal |
+            (sweConfig.topocentric ? seFlgTopoCtr : 0);
+        nakEquFlags = nakEclFlags | seFlgEquatorial;
+      }
+
+      for (final body in sweConfig.bodies) {
+        if (body == Body.ketu) continue;
+        final sweId = body == Body.rahu
+            ? (sweConfig.trueNode ? seTrueNode : seMeanNode)
+            : sweIdFor(body);
+        bodiesNakEclLon[body] =
+            _swe.calcUt(jdUt, sweId, nakEclFlags).longitude;
+        bodiesNakEquLon[body] =
+            _swe.calcUt(jdUt, sweId, nakEquFlags).longitude;
+      }
+      if (sweConfig.bodies.contains(Body.ketu) &&
+          bodiesNakEclLon.containsKey(Body.rahu)) {
+        bodiesNakEclLon[Body.ketu] =
+            (bodiesNakEclLon[Body.rahu]! + 180) % 360;
+        bodiesNakEquLon[Body.ketu] =
+            (bodiesNakEquLon[Body.rahu]! + 180) % 360;
+      }
+      for (final star in sweConfig.stars) {
+        try {
+          final sweName = sweNameFor(star);
+          starsNakEclLon[star] =
+              _swe.fixstar2Ut(sweName, jdUt, nakEclFlags).longitude;
+          starsNakEquLon[star] =
+              _swe.fixstar2Ut(sweName, jdUt, nakEquFlags).longitude;
+        } catch (e) {
+          _log.warning('fixstar nak calc failed for ${star.label}: $e');
+        }
+      }
+      for (final name in sweConfig.customStarNames) {
+        try {
+          customStarsNakEclLon[name] =
+              _swe.fixstar2Ut(name, jdUt, nakEclFlags).longitude;
+          customStarsNakEquLon[name] =
+              _swe.fixstar2Ut(name, jdUt, nakEquFlags).longitude;
+        } catch (_) {
+          if (!name.endsWith('%')) {
+            try {
+              customStarsNakEclLon[name] =
+                  _swe.fixstar2Ut('$name%', jdUt, nakEclFlags).longitude;
+              customStarsNakEquLon[name] =
+                  _swe.fixstar2Ut('$name%', jdUt, nakEquFlags).longitude;
+            } catch (_) {}
+          }
+        }
+      }
+    }
 
     // Sunrise / sunset.
     final sunTimes = _calcSunTimes(jdUt, loc);
@@ -257,7 +390,12 @@ class SweFacade {
       ascmc: ascmc,
       sunTimes: sunTimes,
       ayanamsaValue: ayanamsaValue,
-      nakAyanamsaValue: nakAyanamsaValue,
+      bodiesNakEclLon: bodiesNakEclLon,
+      bodiesNakEquLon: bodiesNakEquLon,
+      starsNakEclLon: starsNakEclLon,
+      starsNakEquLon: starsNakEquLon,
+      customStarsNakEclLon: customStarsNakEclLon,
+      customStarsNakEquLon: customStarsNakEquLon,
       bodiesEclipticBarycentric: baryEcl,
       bodiesEclipticHeliocentric: helioEcl,
       stars: starsMap,
@@ -453,25 +591,6 @@ class SweFacade {
       _swe.setSidMode(ayanamsa.sweCode);
     }
     return compute();
-  }
-
-  /// Offset (degrees) to subtract from a longitude before computing nakshatra
-  /// or pada. For standard SWE ayanamsas, this is the ecliptic ayanamsa value.
-  /// For dhruva, it is the equatorial RA of Ashvini's start, anchored on Sgr A*.
-  double _calcNakAyanamsa(double jdUt, Ayanamsa ayanamsa) {
-    if (ayanamsa.isTropical) return 0.0;
-    if (ayanamsa.isStandard) {
-      _swe.setSidMode(ayanamsa.sweCode);
-      return _swe.getAyanamsaUt(jdUt);
-    }
-    if (ayanamsa == Ayanamsa.dhruva) {
-      // Ashvini begins 18.5 nakshatra-spans before the GC's equatorial RA
-      // (the GC sits at the midpoint of Mula, the 19th nakshatra).
-      final gc = _swe.fixstar2Ut(',SgrA*', jdUt, seFlgEquatorial);
-      return gc.longitude - (360.0 / 27.0) * 18.5;
-    }
-    _log.warning('nakshatra ayanamsa $ayanamsa not yet supported; using 0');
-    return 0.0;
   }
 
   /// Sidereal ecliptic longitude of [sweId] at [jdUt] under [ayanamsa].

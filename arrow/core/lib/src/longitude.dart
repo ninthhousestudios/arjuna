@@ -14,19 +14,16 @@ class Longitude {
   /// Raw ecliptic longitude (0-360), as received from ephemeris.
   final double eclipticLongitude;
 
-  /// Equatorial longitude, used for nakshatra when [CalcConfig.nakEquatorial].
-  final double equatorialLongitude;
-
   /// Which varga this longitude is computed for.
   final VargaType vargaType;
 
   /// Calculation configuration (circle, nakshatra ayanamsa, etc.).
   final CalcConfig config;
 
-  /// Ayanamsa offset (degrees) for the nakshatra frame, sourced from the
-  /// snapshot. Subtracted from the chosen longitude before the nakshatra and
-  /// pada lookups. Tropical contexts pass 0.
-  final double nakAyanamsaValue;
+  /// Pre-computed longitude in the nakshatra frame (0-360).
+  /// Computed by SWE in the appropriate sidereal/equatorial mode.
+  /// When null, falls back to [eclipticLongitude].
+  final double? nakLongitude;
 
   /// The longitude in the varga's coordinate frame.
   late final double amshaLongitude;
@@ -36,10 +33,9 @@ class Longitude {
 
   Longitude(
     this.eclipticLongitude,
-    this.equatorialLongitude,
     this.vargaType,
     this.config, {
-    this.nakAyanamsaValue = 0.0,
+    this.nakLongitude,
   }) {
     if (vargaType == VargaType.rashi) {
       amshaLongitude = eclipticLongitude;
@@ -84,14 +80,7 @@ class Longitude {
     return (posInNak / (nakSpan / 4)).floor() + 1;
   }
 
-  /// Longitude in the nakshatra frame: chosen-frame longitude minus ayanamsa,
-  /// folded into [0, 360).
-  double _nakshatraLon() {
-    final rawLon =
-        config.nakEquatorial ? equatorialLongitude : eclipticLongitude;
-    final adjusted = (rawLon - nakAyanamsaValue) % 360;
-    return adjusted < 0 ? adjusted + 360 : adjusted;
-  }
+  double _nakshatraLon() => (nakLongitude ?? eclipticLongitude) % 360;
 
   /// Degrees within current sign (0-30).
   double get inSignLongitude => longitude % 30;

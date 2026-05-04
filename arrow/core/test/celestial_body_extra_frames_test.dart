@@ -21,6 +21,8 @@ void main() {
     for (final b in Body.values) b: geoPos,
   };
 
+  final nakLons = geoMap.map((k, v) => MapEntry(k, v.longitude));
+
   EphSnapshot snap({
     Map<Body, BodyPosition>? bary,
     Map<Body, BodyPosition>? helio,
@@ -40,6 +42,8 @@ void main() {
         ),
         sunTimes: const SunTimes(),
         ayanamsaValue: 0,
+        bodiesNakEclLon: nakLons,
+        bodiesNakEquLon: nakLons,
         bodiesEclipticBarycentric: bary,
         bodiesEclipticHeliocentric: helio,
       );

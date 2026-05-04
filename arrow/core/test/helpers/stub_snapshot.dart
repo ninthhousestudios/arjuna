@@ -47,6 +47,8 @@ EphSnapshot stubSnapshot() {
     ),
   };
 
+  final nakLons = bodies.map((k, v) => MapEntry(k, v.longitude));
+
   return EphSnapshot(
     jdUt: 2460000.5,
     location: location,
@@ -62,5 +64,7 @@ EphSnapshot stubSnapshot() {
     ),
     sunTimes: const SunTimes(sunrise: 2460000.75, sunset: 2460001.25),
     ayanamsaValue: 0.0,
+    bodiesNakEclLon: nakLons,
+    bodiesNakEquLon: nakLons,
   );
 }

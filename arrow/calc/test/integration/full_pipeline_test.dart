@@ -75,6 +75,8 @@ EphSnapshot _stubSnapshot() {
         apparentDiameter: 0.005, apparentMagnitude: 0.5),
   };
 
+  final nakLons = bodies.map((k, v) => MapEntry(k, v.longitude));
+
   return EphSnapshot(
     jdUt: 2460000.5,
     location: location,
@@ -90,6 +92,8 @@ EphSnapshot _stubSnapshot() {
     ),
     sunTimes: const SunTimes(sunrise: 2460000.75, sunset: 2460001.25),
     ayanamsaValue: 0.0,
+    bodiesNakEclLon: nakLons,
+    bodiesNakEquLon: nakLons,
   );
 }
 
@@ -167,10 +171,9 @@ void main() {
         for (final body in _karakas) body: dignities[body]!,
       };
       final ascLon = Longitude(
-          snapshot.ascmc.ascendant, snapshot.ascmc.ascendant,
-          VargaType.rashi, config);
+          snapshot.ascmc.ascendant, VargaType.rashi, config);
       final fifthLon = Longitude(
-          snapshot.cusps[4], snapshot.cusps[4], VargaType.rashi, config);
+          snapshot.cusps[4], VargaType.rashi, config);
       final result = Lajjitaadi.compute(
         grahaLongitudes: longitudes,
         karakaDignities: karakaDignities,

@@ -22,7 +22,7 @@ class Karaka extends Planet {
       return Dignity.calculate(body, sign, longitude.inSignLongitude, sign);
     }
     final lordLon =
-        Longitude(lordPos.longitude, lordPos.longitude, VargaType.rashi, config);
+        Longitude(lordPos.longitude, VargaType.rashi, config);
     return Dignity.calculate(
         body, sign, longitude.inSignLongitude, lordLon.sign);
   }

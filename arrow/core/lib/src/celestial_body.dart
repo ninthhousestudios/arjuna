@@ -23,7 +23,9 @@ class CelestialBody extends SkyObject {
   @override
   BodyPosition get equatorialPosition => snapshot.bodiesEquatorial[body]!;
   @override
-  double get nakAyanamsaValue => snapshot.nakAyanamsaValue;
+  double get nakLongitude => config.nakEquatorial
+      ? snapshot.bodiesNakEquLon[body]!
+      : snapshot.bodiesNakEclLon[body]!;
 
   /// Barycentric (Solar System Barycenter-centered) ecliptic position.
   ///
@@ -47,7 +49,7 @@ class CelestialBody extends SkyObject {
   Longitude? get barycentricRashiLongitude {
     final pos = barycentricPosition;
     if (pos == null) return null;
-    return Longitude(pos.longitude, 0.0, VargaType.rashi, config);
+    return Longitude(pos.longitude, VargaType.rashi, config);
   }
 
   /// Rashi-only longitude in the heliocentric frame. Same equatorial caveat
@@ -55,7 +57,7 @@ class CelestialBody extends SkyObject {
   Longitude? get heliocentricRashiLongitude {
     final pos = heliocentricPosition;
     if (pos == null) return null;
-    return Longitude(pos.longitude, 0.0, VargaType.rashi, config);
+    return Longitude(pos.longitude, VargaType.rashi, config);
   }
 
   @override

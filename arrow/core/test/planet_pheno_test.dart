@@ -16,6 +16,10 @@ void main() {
     apparentMagnitude: -4.2,
   );
 
+  final nakLons = {
+    for (final b in Body.values) b: pos.longitude,
+  };
+
   EphSnapshot snap({required Map<Body, PhenoData> pheno}) => EphSnapshot(
         jdUt: 2460000.5,
         location: const Location(latitude: 0, longitude: 0, altitude: 0),
@@ -39,6 +43,8 @@ void main() {
         ),
         sunTimes: const SunTimes(),
         ayanamsaValue: 0,
+        bodiesNakEclLon: nakLons,
+        bodiesNakEquLon: nakLons,
       );
 
   test('Planet.pheno returns snapshot entry for body', () {

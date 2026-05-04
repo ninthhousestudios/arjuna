@@ -17,7 +17,7 @@ class FixedStar extends SkyObject {
 
   final BodyPosition _eclipticPos;
   final BodyPosition _equatorialPos;
-  final double _nakAyanamsaValue;
+  final double _nakLongitude;
 
   /// Nakshatra number (1-27) if this star is a junction star (yogatara).
   final int? junctionOf;
@@ -41,7 +41,7 @@ class FixedStar extends SkyObject {
   BodyPosition get equatorialPosition => _equatorialPos;
 
   @override
-  double get nakAyanamsaValue => _nakAyanamsaValue;
+  double get nakLongitude => _nakLongitude;
 
   FixedStar._({
     required this.star,
@@ -51,10 +51,10 @@ class FixedStar extends SkyObject {
     required this.junctionOf,
     required this.starData,
     required this.config,
-    required double nakAyanamsaValue,
+    required double nakLongitude,
   })  : _eclipticPos = eclipticPos,
         _equatorialPos = equatorialPos,
-        _nakAyanamsaValue = nakAyanamsaValue;
+        _nakLongitude = nakLongitude;
 
   /// Construct from a [Star] enum entry and snapshot data.
   factory FixedStar.fromEnum(
@@ -71,7 +71,9 @@ class FixedStar extends SkyObject {
       junctionOf: star.nakshatra,
       starData: sp.starData,
       config: config,
-      nakAyanamsaValue: snapshot.nakAyanamsaValue,
+      nakLongitude: config.nakEquatorial
+          ? snapshot.starsNakEquLon[star]!
+          : snapshot.starsNakEclLon[star]!,
     );
   }
 
@@ -90,7 +92,9 @@ class FixedStar extends SkyObject {
       junctionOf: null,
       starData: sp.starData,
       config: config,
-      nakAyanamsaValue: snapshot.nakAyanamsaValue,
+      nakLongitude: config.nakEquatorial
+          ? snapshot.customStarsNakEquLon[name]!
+          : snapshot.customStarsNakEclLon[name]!,
     );
   }
 

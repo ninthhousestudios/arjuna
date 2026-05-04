@@ -2,26 +2,29 @@ import 'package:swisseph/swisseph.dart';
 
 const double _nakshatraSpan = 360.0 / 27.0;
 
-/// Dhruva GC Equatorial ayanamsa (libaditya ayanamsa 98).
+/// Equatorial RA of the start of Ashvini in the dhruva system at [jdUt].
 ///
-/// Anchors the nakshatra system equatorially on Sgr A* (the Galactic Center),
-/// placing it at the midpoint of Mula. Ashvini begins 18 nakshatras before
-/// the Mula midpoint. All coordinates are equatorial (right ascension).
-///
-/// Returns the number of degrees from the beginning of Ashvini, measured
-/// along the equator, for the body [planet] at Julian day [jdUt].
-double dhruvaGcEquatorial(SwissEph swe, double jdUt, int planet) {
+/// Anchored on Sgr A* (Galactic Center) at the midpoint of Mula.
+double dhruvaAshviniStart(SwissEph swe, double jdUt) {
   final gc = swe.fixstar2Ut(',SgrA*', jdUt, seFlgEquatorial);
-  final gcEqu = gc.longitude;
+  final mula = gc.longitude - (_nakshatraSpan / 2);
+  return mula - (18 * _nakshatraSpan);
+}
 
-  final mula = gcEqu - (_nakshatraSpan / 2);
-  final ashvini = mula - (18 * _nakshatraSpan);
-
+/// Degrees from Ashvini start along the equator for body [planet].
+double dhruvaGcEquatorial(SwissEph swe, double jdUt, int planet) {
+  final ashvini = dhruvaAshviniStart(swe, jdUt);
   final result = swe.calcUt(jdUt, planet, seFlgEquatorial);
   var equLong = result.longitude;
+  if (equLong < ashvini) equLong += 360;
+  return equLong - ashvini;
+}
 
-  if (equLong < ashvini) {
-    equLong += 360;
-  }
+/// Degrees from Ashvini start along the equator for fixed star [sweName].
+double dhruvaGcEquatorialStar(SwissEph swe, double jdUt, String sweName) {
+  final ashvini = dhruvaAshviniStart(swe, jdUt);
+  final result = swe.fixstar2Ut(sweName, jdUt, seFlgEquatorial);
+  var equLong = result.longitude;
+  if (equLong < ashvini) equLong += 360;
   return equLong - ashvini;
 }

@@ -88,3 +88,59 @@ class BodyPhenoMapConverter
     return object.map((key, value) => MapEntry(key.name, value.toJson()));
   }
 }
+
+class BodyDoubleMapConverter
+    implements JsonConverter<Map<Body, double>, Map<String, dynamic>> {
+  const BodyDoubleMapConverter();
+
+  @override
+  Map<Body, double> fromJson(Map<String, dynamic> json) {
+    return json.map(
+      (key, value) =>
+          MapEntry(Body.values.byName(key), (value as num).toDouble()),
+    );
+  }
+
+  @override
+  Map<String, dynamic> toJson(Map<Body, double> object) {
+    return object.map((key, value) => MapEntry(key.name, value));
+  }
+}
+
+class StarDoubleMapConverter
+    implements JsonConverter<Map<Star, double>, Map<String, dynamic>> {
+  const StarDoubleMapConverter();
+
+  @override
+  Map<Star, double> fromJson(Map<String, dynamic> json) {
+    return json.map(
+      (key, value) => MapEntry(
+        Star.values.firstWhere(
+          (s) => s.name == key,
+          orElse: () =>
+              throw FormatException('Unknown Star enum value: $key'),
+        ),
+        (value as num).toDouble(),
+      ),
+    );
+  }
+
+  @override
+  Map<String, dynamic> toJson(Map<Star, double> object) {
+    return object.map((key, value) => MapEntry(key.name, value));
+  }
+}
+
+class StringDoubleMapConverter
+    implements JsonConverter<Map<String, double>, Map<String, dynamic>> {
+  const StringDoubleMapConverter();
+
+  @override
+  Map<String, double> fromJson(Map<String, dynamic> json) {
+    return json.map(
+        (key, value) => MapEntry(key, (value as num).toDouble()));
+  }
+
+  @override
+  Map<String, dynamic> toJson(Map<String, double> object) => object;
+}

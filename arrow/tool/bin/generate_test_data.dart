@@ -70,7 +70,7 @@ void main(List<String> args) {
   // 4. Compute EphSnapshot
   final swe = SwissEph(sweLib);
   final facade = SweFacade(swe, ephePath: ephePath);
-  final snapshot = facade.calcAll(jdUt, location, options);
+  final snapshot = facade.calcAll(jdUt, location, options.sweConfig);
   swe.close();
 
   // 5. Output reference data

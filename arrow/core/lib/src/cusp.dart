@@ -10,11 +10,8 @@ class Cusp {
   /// The cusp longitude.
   final Longitude longitude;
 
-  // Cusps are ecliptic-only; equatorial longitude set equal to ecliptic
-  // because house cusps have no meaningful equatorial position.
   Cusp(this.house, double eclipticLongitude, CalcConfig config)
-      : longitude = Longitude(
-            eclipticLongitude, eclipticLongitude, VargaType.rashi, config);
+      : longitude = Longitude(eclipticLongitude, VargaType.rashi, config);
 
   int get sign => longitude.sign;
   int get nakshatra => longitude.nakshatra;

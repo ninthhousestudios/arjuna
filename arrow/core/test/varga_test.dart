@@ -13,7 +13,7 @@ void main() {
       // 0deg in zodiac circle: sign 1 (Aries)
       // Parivritti: realLon=0, amshaSize=30/9=3.333..., position=0/3.333=0
       // amshaElapsed=0, newLon = 0 + 0*30 + 0 = 0 => sign 1
-      final lon = Longitude(0.0, 0.0, VargaType.navamsha, config);
+      final lon = Longitude(0.0, VargaType.navamsha, config);
       expect(lon.sign, 1);
       expect(lon.deity, VargaDeity.deva); // index 0 % 3 = 0 -> deva
     });
@@ -25,7 +25,7 @@ void main() {
       // newLon = 0 + 13*30 + 0.5*30 = 390 + 15 = 405 => 405%360 = 45
       // But wait — the class does % 360 at assignment.
       // sign in zodiac = (45 / 30).floor() = 1 => sign 2
-      final lon = Longitude(45.0, 45.0, VargaType.navamsha, config);
+      final lon = Longitude(45.0, VargaType.navamsha, config);
       expect(lon.sign, 2);
       // deity: whichAmsha=13, 13%3=1 -> nri
       expect(lon.deity, VargaDeity.nri);
@@ -36,7 +36,7 @@ void main() {
       // amshaElapsed = 55, currentInAmsha = 0.5
       // newLon = 0 + 55*30 + 15 = 1650 + 15 = 1665 => 1665%360 = 225
       // sign = (225/30).floor() = 7 => sign 8
-      final lon = Longitude(185.0, 185.0, VargaType.navamsha, config);
+      final lon = Longitude(185.0, VargaType.navamsha, config);
       expect(lon.sign, 8);
       // deity: 55%3=1 -> nri
       expect(lon.deity, VargaDeity.nri);
@@ -48,7 +48,7 @@ void main() {
       // realSign = 1 (odd), realInSign = 5, < 15 -> Sun
       // baseLon = 0, newLon = 0 + (5/15)*30 = 10
       // sign = (10/30).floor() = 0 => sign 1
-      final lon = Longitude(5.0, 5.0, VargaType.hora, config);
+      final lon = Longitude(5.0, VargaType.hora, config);
       expect(lon.sign, 1);
       expect(lon.deity, VargaDeity.sun);
     });
@@ -58,7 +58,7 @@ void main() {
       // baseLon = 0, oppositeLon = 180
       // newLon = 180 + ((20-15)/15)*30 = 180 + 10 = 190
       // sign = (190/30).floor() = 6 => sign 7 (Libra)
-      final lon = Longitude(20.0, 20.0, VargaType.hora, config);
+      final lon = Longitude(20.0, VargaType.hora, config);
       expect(lon.sign, 7);
       expect(lon.deity, VargaDeity.moon);
     });
@@ -67,7 +67,7 @@ void main() {
       // realSign = 2 (even), realInSign = 5, < 15 -> Moon
       // baseLon = 30, newLon = 30 + (5/15)*30 = 30+10 = 40
       // sign = (40/30).floor() = 1 => sign 2
-      final lon = Longitude(35.0, 35.0, VargaType.hora, config);
+      final lon = Longitude(35.0, VargaType.hora, config);
       expect(lon.sign, 2);
       expect(lon.deity, VargaDeity.moon);
     });
@@ -77,7 +77,7 @@ void main() {
       // baseLon = 30, oppositeLon = 210
       // newLon = 210 + ((20-15)/15)*30 = 210+10 = 220
       // sign = (220/30).floor() = 7 => sign 8 (Scorpio)
-      final lon = Longitude(50.0, 50.0, VargaType.hora, config);
+      final lon = Longitude(50.0, VargaType.hora, config);
       expect(lon.sign, 8);
       expect(lon.deity, VargaDeity.sun);
     });
@@ -85,7 +85,7 @@ void main() {
 
   group('Drekkana (D3)', () {
     test('5deg Aries (first third) -> stays Aries, Narada', () {
-      final lon = Longitude(5.0, 5.0, VargaType.drekkana, config);
+      final lon = Longitude(5.0, VargaType.drekkana, config);
       expect(lon.sign, 1); // baseLon=0, (5/10)*30=15 => sign 1
       expect(lon.deity, VargaDeity.narada);
     });
@@ -93,7 +93,7 @@ void main() {
     test('15deg Aries (second third) -> Leo (trine), Agastya', () {
       // trineLon = 0+120 = 120, newLon = 120 + ((15-10)/10)*30 = 120+15 = 135
       // sign = (135/30).floor() = 4 => sign 5 (Leo)
-      final lon = Longitude(15.0, 15.0, VargaType.drekkana, config);
+      final lon = Longitude(15.0, VargaType.drekkana, config);
       expect(lon.sign, 5);
       expect(lon.deity, VargaDeity.agastya);
     });
@@ -101,7 +101,7 @@ void main() {
     test('25deg Aries (third third) -> Sagittarius, Durvasas', () {
       // trineTrineLon = 240, newLon = 240 + ((25-20)/10)*30 = 240+15 = 255
       // sign = (255/30).floor() = 8 => sign 9 (Sagittarius)
-      final lon = Longitude(25.0, 25.0, VargaType.drekkana, config);
+      final lon = Longitude(25.0, VargaType.drekkana, config);
       expect(lon.sign, 9);
       expect(lon.deity, VargaDeity.durvasas);
     });
@@ -109,7 +109,7 @@ void main() {
 
   group('Chaturthamsha (D4)', () {
     test('first quarter of Aries -> stays Aries, Sanaka', () {
-      final lon = Longitude(3.0, 3.0, VargaType.chaturthamsha, config);
+      final lon = Longitude(3.0, VargaType.chaturthamsha, config);
       expect(lon.sign, 1);
       expect(lon.deity, VargaDeity.sanaka);
     });
@@ -118,7 +118,7 @@ void main() {
       // fourth = 7.5, 10deg is in second quarter
       // sq1 = 90, newLon = 90 + ((10-7.5)/7.5)*30 = 90+10 = 100
       // sign = (100/30).floor() = 3 => sign 4 (Cancer)
-      final lon = Longitude(10.0, 10.0, VargaType.chaturthamsha, config);
+      final lon = Longitude(10.0, VargaType.chaturthamsha, config);
       expect(lon.sign, 4);
       expect(lon.deity, VargaDeity.sananda);
     });
@@ -130,7 +130,7 @@ void main() {
       // amshaElapsed=1, currentInAmsha=0.666
       // baseLon=0, newLon = 0 + 1*30 + 0.666*30 = 30+20 = 50
       // sign = (50/30).floor() = 1 => sign 2
-      final lon = Longitude(5.0, 5.0, VargaType.dashamsha, config);
+      final lon = Longitude(5.0, VargaType.dashamsha, config);
       expect(lon.sign, 2);
     });
 
@@ -141,20 +141,20 @@ void main() {
       // amshaElapsed=1, currentInAmsha=0.666
       // newLon = 270 + 30 + 20 = 320
       // sign = (320/30).floor() = 10 => sign 11
-      final lon = Longitude(35.0, 35.0, VargaType.dashamsha, config);
+      final lon = Longitude(35.0, VargaType.dashamsha, config);
       expect(lon.sign, 11);
     });
 
     test('dashamsha odd sign deity is forward order', () {
       // 0deg Aries: amshaElapsed=0, odd sign -> first deity = Indra
-      final lon = Longitude(0.0, 0.0, VargaType.dashamsha, config);
+      final lon = Longitude(0.0, VargaType.dashamsha, config);
       expect(lon.deity, VargaDeity.indra);
     });
   });
 
   group('Dvadashamsha (D12)', () {
     test('0deg Aries -> stays Aries, Ganesha', () {
-      final lon = Longitude(0.0, 0.0, VargaType.dvadashamsha, config);
+      final lon = Longitude(0.0, VargaType.dvadashamsha, config);
       expect(lon.sign, 1);
       expect(lon.deity, VargaDeity.ganesha);
     });
@@ -165,7 +165,7 @@ void main() {
       // baseLon=0, newLon = 0 + 2*30 + 0 = 60
       // sign = (60/30).floor() = 2 => sign 3 (Gemini)
       // deity: 2%4=2 -> Yama
-      final lon = Longitude(5.0, 5.0, VargaType.dvadashamsha, config);
+      final lon = Longitude(5.0, VargaType.dvadashamsha, config);
       expect(lon.sign, 3);
       expect(lon.deity, VargaDeity.yama);
     });
@@ -176,7 +176,7 @@ void main() {
       // 0deg Aries: moveable, baseLon=0
       // amshaSize=30/16=1.875, position=0
       // newLon=0+0+0=0, sign=1
-      final lon = Longitude(0.0, 0.0, VargaType.shodashamsha, config);
+      final lon = Longitude(0.0, VargaType.shodashamsha, config);
       expect(lon.sign, 1);
     });
 
@@ -185,7 +185,7 @@ void main() {
       // baseLonFixed = (30*4) = 120
       // realInSign = 0, amshaElapsed=0
       // newLon = 120, sign = (120/30).floor()+1 = 5 (Leo)
-      final lon = Longitude(30.0, 30.0, VargaType.shodashamsha, config);
+      final lon = Longitude(30.0, VargaType.shodashamsha, config);
       expect(lon.sign, 5);
     });
   });
@@ -199,7 +199,7 @@ void main() {
       // amshaElapsed=0, currentInAmsha=0
       // newLon = 0
       // sign = 1, deity: index 0, odd sign -> Ghora
-      final lon = Longitude(0.0, 0.0, VargaType.shashtyamsha, config);
+      final lon = Longitude(0.0, VargaType.shashtyamsha, config);
       expect(lon.sign, 1);
       expect(lon.deity, VargaDeity.ghora);
     });
@@ -210,7 +210,7 @@ void main() {
       // targetSign = ((2-1)+(1-1))%12+1 = 2
       // baseLon = 30
       // amshaElapsed=0, even sign -> reversed list, index 0 = last item
-      final lon = Longitude(30.0, 30.0, VargaType.shashtyamsha, config);
+      final lon = Longitude(30.0, VargaType.shashtyamsha, config);
       expect(lon.sign, 2);
       // Reversed D60 list index 0 = chandraRekha (last element reversed)
       expect(lon.deity, VargaDeity.chandraRekha);
@@ -219,7 +219,7 @@ void main() {
 
   group('Khavedamsha (D40)', () {
     test('odd sign starts from Aries', () {
-      final lon = Longitude(0.0, 0.0, VargaType.khavedamsha, config);
+      final lon = Longitude(0.0, VargaType.khavedamsha, config);
       expect(lon.sign, 1);
       expect(lon.deity, VargaDeity.vishnu);
     });
@@ -228,7 +228,7 @@ void main() {
       // 30deg = Taurus (even), baseLon = _baseLon(7) = 180
       // realInSign=0, amshaElapsed=0
       // newLon = 180, sign = 7
-      final lon = Longitude(30.0, 30.0, VargaType.khavedamsha, config);
+      final lon = Longitude(30.0, VargaType.khavedamsha, config);
       expect(lon.sign, 7);
     });
   });
@@ -236,7 +236,7 @@ void main() {
   group('Akshavedamsha (D45)', () {
     test('moveable sign starts from Aries', () {
       // 0deg Aries: moveable, baseLon = 0
-      final lon = Longitude(0.0, 0.0, VargaType.akshavedamsha, config);
+      final lon = Longitude(0.0, VargaType.akshavedamsha, config);
       expect(lon.sign, 1);
       // deity: moveable, index 0 % 3 = 0 -> Vidhi
       expect(lon.deity, VargaDeity.vidhi);
@@ -244,7 +244,7 @@ void main() {
 
     test('fixed sign starts from Leo', () {
       // 30deg Taurus: fixed, baseLon = _baseLon(5) = 120
-      final lon = Longitude(30.0, 30.0, VargaType.akshavedamsha, config);
+      final lon = Longitude(30.0, VargaType.akshavedamsha, config);
       expect(lon.sign, 5);
       // deity: fixed, index 0 % 3 = 0 -> Isha
       expect(lon.deity, VargaDeity.isha);
@@ -252,7 +252,7 @@ void main() {
 
     test('dual sign starts from Sagittarius', () {
       // 60deg Gemini: dual, baseLon = _baseLon(9) = 240
-      final lon = Longitude(60.0, 60.0, VargaType.akshavedamsha, config);
+      final lon = Longitude(60.0, VargaType.akshavedamsha, config);
       expect(lon.sign, 9);
       // deity: dual, index 0 % 3 = 0 -> Vishnu
       expect(lon.deity, VargaDeity.vishnu);
@@ -261,32 +261,32 @@ void main() {
 
   group('Vimshamsha (D20)', () {
     test('moveable sign starts from Aries', () {
-      final lon = Longitude(0.0, 0.0, VargaType.vimshamsha, config);
+      final lon = Longitude(0.0, VargaType.vimshamsha, config);
       expect(lon.sign, 1);
     });
 
     test('odd sign uses odd deity table', () {
       // 0deg Aries: odd sign, amshaElapsed=0 -> Kali
-      final lon = Longitude(0.0, 0.0, VargaType.vimshamsha, config);
+      final lon = Longitude(0.0, VargaType.vimshamsha, config);
       expect(lon.deity, VargaDeity.kali);
     });
 
     test('even sign uses even deity table', () {
       // 30deg Taurus: even sign, amshaElapsed=0 -> Daya
-      final lon = Longitude(30.0, 30.0, VargaType.vimshamsha, config);
+      final lon = Longitude(30.0, VargaType.vimshamsha, config);
       expect(lon.deity, VargaDeity.daya);
     });
   });
 
   group('Bhamsha (D27)', () {
     test('fire sign starts from Aries', () {
-      final lon = Longitude(0.0, 0.0, VargaType.bhamsha, config);
+      final lon = Longitude(0.0, VargaType.bhamsha, config);
       expect(lon.sign, 1);
     });
 
     test('earth sign starts from Cancer', () {
       // 30deg = Taurus (earth), startSign=4, baseLon=90
-      final lon = Longitude(30.0, 30.0, VargaType.bhamsha, config);
+      final lon = Longitude(30.0, VargaType.bhamsha, config);
       expect(lon.sign, 4);
     });
   });
@@ -295,7 +295,7 @@ void main() {
     test('odd sign starts from Leo', () {
       // 0deg Aries (odd), baseLonOdd = _baseLon(5) = 120
       // amshaElapsed=0 => newLon=120, sign=5 (Leo)
-      final lon = Longitude(0.0, 0.0, VargaType.siddhamsha, config);
+      final lon = Longitude(0.0, VargaType.siddhamsha, config);
       expect(lon.sign, 5);
     });
 
@@ -303,13 +303,13 @@ void main() {
       // 30deg Taurus (even), baseLonEven = _baseLon(4) = 90
       // amshaElapsed=0, currentInAmsha=0 => newLon=90
       // sign = (90/30).floor() = 3 => sign 4 (Cancer)
-      final lon = Longitude(30.0, 30.0, VargaType.siddhamsha, config);
+      final lon = Longitude(30.0, VargaType.siddhamsha, config);
       expect(lon.sign, 4);
     });
 
     test('parashara even sign goes forward', () {
       final lon = Longitude(
-          30.0, 30.0, VargaType.parasharaChaturvimshamsha, config);
+          30.0, VargaType.parasharaChaturvimshamsha, config);
       expect(lon.sign, 4);
     });
   });
@@ -320,7 +320,7 @@ void main() {
       // 0deg: position = 0/15 = 0, amshaElapsed=0, currentInAmsha=0
       // newLon = 0+0+0 = 0
       final lon =
-          Longitude(0.0, 0.0, VargaType.horaParivritti, config);
+          Longitude(0.0, VargaType.horaParivritti, config);
       expect(lon.sign, 1);
     });
   });
@@ -329,7 +329,7 @@ void main() {
     test('0deg Aries (odd sign) starts from Aries', () {
       // realSign=1 (odd) → startSign=1 (Aries)
       // amshaElapsed=0, baseLon=0 → sign 1
-      final lon = Longitude(0.0, 0.0, VargaType.saptamsha, config);
+      final lon = Longitude(0.0, VargaType.saptamsha, config);
       expect(lon.sign, 1);
       expect(lon.deity, VargaDeity.kshara);
     });
@@ -339,7 +339,7 @@ void main() {
       // position = 5 / 4.2857 = 1.1667
       // amshaElapsed=1, startSign=1, baseLon=0
       // newLon = 0 + 30 + 0.1667*30 = 35 → sign 2
-      final lon = Longitude(5.0, 5.0, VargaType.saptamsha, config);
+      final lon = Longitude(5.0, VargaType.saptamsha, config);
       expect(lon.sign, 2);
       expect(lon.deity, VargaDeity.kshira);
     });
@@ -348,18 +348,18 @@ void main() {
       // realSign=2 (even) → startSign = ((2-1+6)%12)+1 = 8 (Scorpio)
       // amshaElapsed=0, baseLon=_baseLon(8)=210
       // newLon = 210 → sign (210/30)=7 → sign 8
-      final lon = Longitude(30.0, 30.0, VargaType.saptamsha, config);
+      final lon = Longitude(30.0, VargaType.saptamsha, config);
       expect(lon.sign, 8);
     });
 
     test('even sign deity is reversed', () {
       // 30deg Taurus (even): deity should be reversed → shuddhaJala first
-      final lon = Longitude(30.0, 30.0, VargaType.saptamsha, config);
+      final lon = Longitude(30.0, VargaType.saptamsha, config);
       expect(lon.deity, VargaDeity.shuddhaJala);
     });
 
     test('parivritti variant still works', () {
-      final lon = Longitude(0.0, 0.0, VargaType.saptamshaParivritti, config);
+      final lon = Longitude(0.0, VargaType.saptamshaParivritti, config);
       expect(lon.sign, 1);
     });
   });
@@ -367,49 +367,49 @@ void main() {
   group('Trimsamsha (D30)', () {
     test('odd sign 3deg → Mars → Aries (sign 1)', () {
       // Aries (odd): 0-5° = Mars → Aries
-      final lon = Longitude(3.0, 3.0, VargaType.trimsamsha, config);
+      final lon = Longitude(3.0, VargaType.trimsamsha, config);
       expect(lon.sign, 1);
     });
 
     test('odd sign 7deg → Saturn → Aquarius (sign 11)', () {
       // Aries: 5-10° = Saturn → Aquarius
-      final lon = Longitude(7.0, 7.0, VargaType.trimsamsha, config);
+      final lon = Longitude(7.0, VargaType.trimsamsha, config);
       expect(lon.sign, 11);
     });
 
     test('odd sign 14deg → Jupiter → Sagittarius (sign 9)', () {
       // Aries: 10-18° = Jupiter → Sagittarius
-      final lon = Longitude(14.0, 14.0, VargaType.trimsamsha, config);
+      final lon = Longitude(14.0, VargaType.trimsamsha, config);
       expect(lon.sign, 9);
     });
 
     test('odd sign 22deg → Mercury → Gemini (sign 3)', () {
       // Aries: 18-25° = Mercury → Gemini
-      final lon = Longitude(22.0, 22.0, VargaType.trimsamsha, config);
+      final lon = Longitude(22.0, VargaType.trimsamsha, config);
       expect(lon.sign, 3);
     });
 
     test('odd sign 27deg → Venus → Taurus (sign 2)', () {
       // Aries: 25-30° = Venus → Taurus
-      final lon = Longitude(27.0, 27.0, VargaType.trimsamsha, config);
+      final lon = Longitude(27.0, VargaType.trimsamsha, config);
       expect(lon.sign, 2);
     });
 
     test('even sign 3deg → Venus → Taurus (sign 2)', () {
       // Taurus (even): 0-5° = Venus → Taurus
-      final lon = Longitude(33.0, 33.0, VargaType.trimsamsha, config);
+      final lon = Longitude(33.0, VargaType.trimsamsha, config);
       expect(lon.sign, 2);
     });
 
     test('even sign 38deg → Mercury → Gemini (sign 3)', () {
       // Taurus (even): 5-12° = Mercury → Gemini. 38° = 8° in-sign.
-      final lon = Longitude(38.0, 38.0, VargaType.trimsamsha, config);
+      final lon = Longitude(38.0, VargaType.trimsamsha, config);
       expect(lon.sign, 3);
     });
 
     test('even sign 57deg → Mars → Aries (sign 1)', () {
       // Taurus (even): 25-30° = Mars → Aries. 57° = 27° in-sign.
-      final lon = Longitude(57.0, 57.0, VargaType.trimsamsha, config);
+      final lon = Longitude(57.0, VargaType.trimsamsha, config);
       expect(lon.sign, 1);
     });
   });
