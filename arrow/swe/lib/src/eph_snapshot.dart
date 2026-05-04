@@ -24,6 +24,7 @@ abstract class EphSnapshot with _$EphSnapshot {
     required AscMcPoints ascmc,
     required SunTimes sunTimes,
     required double ayanamsaValue,
+    @Default(0.0) double nakAyanamsaValue,
     @BodyMapConverter() Map<Body, BodyPosition>? bodiesEclipticBarycentric,
     @BodyMapConverter() Map<Body, BodyPosition>? bodiesEclipticHeliocentric,
     @StarMapConverter() @Default(<Star, BodyPosition>{}) Map<Star, BodyPosition> starsEcliptic,

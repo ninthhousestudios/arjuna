@@ -25,6 +25,11 @@ class Longitude {
   /// Calculation configuration (circle, nakshatra ayanamsa, etc.).
   final CalcConfig config;
 
+  /// Ayanamsa offset (degrees) for the nakshatra frame, sourced from the
+  /// snapshot. Subtracted from the chosen longitude before the nakshatra and
+  /// pada lookups. Tropical contexts pass 0.
+  final double nakAyanamsaValue;
+
   /// The longitude in the varga's coordinate frame.
   late final double amshaLongitude;
 
@@ -35,8 +40,9 @@ class Longitude {
     this.eclipticLongitude,
     this.equatorialLongitude,
     this.vargaType,
-    this.config,
-  ) {
+    this.config, {
+    this.nakAyanamsaValue = 0.0,
+  }) {
     if (vargaType == VargaType.rashi) {
       amshaLongitude = eclipticLongitude;
       deity = null;
@@ -70,20 +76,23 @@ class Longitude {
   /// Nakshatra (1-27).
   ///
   /// Uses nakshatra-specific ayanamsa and optionally equatorial longitude.
-  int get nakshatra {
-    final rawLon =
-        config.nakEquatorial ? equatorialLongitude : eclipticLongitude;
-    // nakAyanamsa offset would be applied here when available from EphSnapshot
-    return ((rawLon % 360) / (360 / 27)).floor() + 1;
-  }
+  int get nakshatra =>
+      ((_nakshatraLon() % 360) / (360 / 27)).floor() + 1;
 
   /// Pada (1-4) within nakshatra.
   int get pada {
+    const nakSpan = 360.0 / 27;
+    final posInNak = _nakshatraLon() % nakSpan;
+    return (posInNak / (nakSpan / 4)).floor() + 1;
+  }
+
+  /// Longitude in the nakshatra frame: chosen-frame longitude minus ayanamsa,
+  /// folded into [0, 360).
+  double _nakshatraLon() {
     final rawLon =
         config.nakEquatorial ? equatorialLongitude : eclipticLongitude;
-    final nakSpan = 360.0 / 27;
-    final posInNak = rawLon % nakSpan;
-    return (posInNak / (nakSpan / 4)).floor() + 1;
+    final adjusted = (rawLon - nakAyanamsaValue) % 360;
+    return adjusted < 0 ? adjusted + 360 : adjusted;
   }
 
   /// Degrees within current sign (0-30).

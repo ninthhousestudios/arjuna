@@ -224,12 +224,17 @@ class SweFacade {
     final cusps = List<double>.generate(12, (i) => houseResult.cusps[i + 1]);
     final ascmc = _ascMcFromList(houseResult.ascmc);
 
-    // Ayanamsa value.
+    // Ayanamsa value (sign frame).
     double ayanamsaValue = 0.0;
     if (isSidereal) {
       ayanamsaValue = _swe.getAyanamsaUt(jdUt);
       _log.fine('ayanamsa=$ayanamsaValue');
     }
+
+    // Ayanamsa value (nakshatra frame). Independent of signAyanamsa: a chart
+    // can have tropical signs and dhruva nakshatras (the ernst preset).
+    final nakAyanamsaValue = _calcNakAyanamsa(jdUt, sweConfig.nakAyanamsa);
+    _log.fine('nakAyanamsa=${sweConfig.nakAyanamsa.label} value=$nakAyanamsaValue');
 
     // Sunrise / sunset.
     final sunTimes = _calcSunTimes(jdUt, loc);
@@ -245,6 +250,7 @@ class SweFacade {
       ascmc: ascmc,
       sunTimes: sunTimes,
       ayanamsaValue: ayanamsaValue,
+      nakAyanamsaValue: nakAyanamsaValue,
       bodiesEclipticBarycentric: baryEcl,
       bodiesEclipticHeliocentric: helioEcl,
       starsEcliptic: starsEcl,
@@ -444,6 +450,25 @@ class SweFacade {
       _swe.setSidMode(ayanamsa.sweCode);
     }
     return compute();
+  }
+
+  /// Offset (degrees) to subtract from a longitude before computing nakshatra
+  /// or pada. For standard SWE ayanamsas, this is the ecliptic ayanamsa value.
+  /// For dhruva, it is the equatorial RA of Ashvini's start, anchored on Sgr A*.
+  double _calcNakAyanamsa(double jdUt, Ayanamsa ayanamsa) {
+    if (ayanamsa.isTropical) return 0.0;
+    if (ayanamsa.isStandard) {
+      _swe.setSidMode(ayanamsa.sweCode);
+      return _swe.getAyanamsaUt(jdUt);
+    }
+    if (ayanamsa == Ayanamsa.dhruva) {
+      // Ashvini begins 18.5 nakshatra-spans before the GC's equatorial RA
+      // (the GC sits at the midpoint of Mula, the 19th nakshatra).
+      final gc = _swe.fixstar2Ut(',SgrA*', jdUt, seFlgEquatorial);
+      return gc.longitude - (360.0 / 27.0) * 18.5;
+    }
+    _log.warning('nakshatra ayanamsa $ayanamsa not yet supported; using 0');
+    return 0.0;
   }
 
   /// Sidereal ecliptic longitude of [sweId] at [jdUt] under [ayanamsa].

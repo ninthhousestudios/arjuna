@@ -123,11 +123,54 @@ void main() {
       final lon = Longitude(180.0, 180.0, VargaType.rashi, defaultConfig);
       expect(lon.nakshatra, 14);
     });
+
+    test('ayanamsa offset shifts nakshatra (regression for #6)', () {
+      // 24deg tropical, with a 24deg ayanamsa, lands at sidereal 0deg = Ashvini.
+      final tropical =
+          Longitude(24.0, 24.0, VargaType.rashi, defaultConfig);
+      expect(tropical.nakshatra, 2,
+          reason: 'tropical 24° is in Bharani (nakshatra 2)');
+
+      final sidereal = Longitude(
+        24.0,
+        24.0,
+        VargaType.rashi,
+        defaultConfig,
+        nakAyanamsaValue: 24.0,
+      );
+      expect(sidereal.nakshatra, 1,
+          reason: 'with 24° ayanamsa, sidereal 0° is Ashvini (nakshatra 1)');
+    });
+
+    test('ayanamsa offset wraps below zero', () {
+      // 5deg tropical with 24deg ayanamsa: sidereal 341deg → Uttara Bhadrapada.
+      final lon = Longitude(
+        5.0,
+        5.0,
+        VargaType.rashi,
+        defaultConfig,
+        nakAyanamsaValue: 24.0,
+      );
+      expect(lon.nakshatra, 26);
+    });
   });
 
   group('Pada', () {
     test('0deg = pada 1', () {
       final lon = Longitude(0.0, 0.0, VargaType.rashi, defaultConfig);
+      expect(lon.pada, 1);
+    });
+
+    test('ayanamsa offset shifts pada', () {
+      // 27deg tropical, 24deg ayanamsa → sidereal 3deg → Ashvini pada 1.
+      final lon = Longitude(
+        27.0,
+        27.0,
+        VargaType.rashi,
+        defaultConfig,
+        nakAyanamsaValue: 24.0,
+      );
+      expect(lon.nakshatra, 1);
       expect(lon.pada, 1);
     });
   });

@@ -22,6 +22,8 @@ class CelestialBody extends SkyObject {
   BodyPosition get position => snapshot.bodiesEcliptic[body]!;
   @override
   BodyPosition get equatorialPosition => snapshot.bodiesEquatorial[body]!;
+  @override
+  double get nakAyanamsaValue => snapshot.nakAyanamsaValue;
 
   /// Barycentric (Solar System Barycenter-centered) ecliptic position.
   ///
