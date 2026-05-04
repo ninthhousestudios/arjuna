@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:arrow_options/arrow_options.dart';
 import 'package:arrow_swe/arrow_swe.dart';
 import 'package:arrow_tool/arrow_tool.dart';
+import 'package:swisseph/swisseph.dart';
 
 /// Generate test fixture JSON from a .chtk chart file.
 ///

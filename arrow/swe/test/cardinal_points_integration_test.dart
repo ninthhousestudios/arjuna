@@ -3,6 +3,7 @@ library;
 
 import 'package:arrow_options/arrow_options.dart';
 import 'package:arrow_swe/arrow_swe.dart';
+import 'package:swisseph/swisseph.dart';
 import 'package:test/test.dart';
 
 import 'helpers/find_ephe_path.dart';
