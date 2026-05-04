@@ -11,6 +11,7 @@ import 'eph_snapshot.dart';
 import 'ephemeris_flag.dart';
 import 'pheno_data.dart';
 import 'star_data.dart';
+import 'star_swe_name.dart';
 import 'sun_times.dart';
 
 final _log = Logger('Arrow.Swe');
@@ -161,10 +162,10 @@ class SweFacade {
     final starsEcl = <Star, BodyPosition>{};
     final starsEqu = <Star, BodyPosition>{};
     for (final star in sweConfig.stars) {
-      _log.fine('calc star=${star.label} sweName=${star.sweName}');
+      _log.fine('calc star=${star.label} sweName=${sweNameFor(star)}');
       try {
-        final ecl = _swe.fixstar2Ut(star.sweName, jdUt, baseEclFlags);
-        final equ = _swe.fixstar2Ut(star.sweName, jdUt, equatorialFlags);
+        final ecl = _swe.fixstar2Ut(sweNameFor(star), jdUt, baseEclFlags);
+        final equ = _swe.fixstar2Ut(sweNameFor(star), jdUt, equatorialFlags);
         starsEcl[star] = _fromFixstarResult(ecl);
         starsEqu[star] = _fromFixstarResult(equ);
       } catch (e) {
@@ -205,7 +206,7 @@ class SweFacade {
     if (includeStarData) {
       for (final star in sweConfig.stars) {
         starDataMap[star] = _calcStarData(
-          star.sweName, jdUt, loc, sweConfig,
+          sweNameFor(star), jdUt, loc, sweConfig,
         );
       }
       for (final name in sweConfig.customStarNames) {

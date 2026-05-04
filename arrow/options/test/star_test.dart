@@ -3,11 +3,6 @@ import 'package:test/test.dart';
 
 void main() {
   group('Star', () {
-    test('sweNames are unique', () {
-      final names = Star.values.map((s) => s.sweName).toSet();
-      expect(names.length, Star.values.length);
-    });
-
     test('labels are unique and non-empty', () {
       final labels = Star.values.map((s) => s.label).toList();
       expect(labels.toSet().length, labels.length);
@@ -48,14 +43,6 @@ void main() {
     test('galacticCenter has no nakshatra and no magnitude', () {
       expect(Star.galacticCenter.nakshatra, isNull);
       expect(Star.galacticCenter.traditionalMag, isNull);
-      expect(Star.galacticCenter.sweName, ',SgrA*');
-    });
-
-    test('well-known stars have expected names', () {
-      expect(Star.aldebaran.sweName, 'Aldebaran');
-      expect(Star.spica.sweName, 'Spica');
-      expect(Star.sirius.sweName, 'Sirius');
-      expect(Star.regulus.sweName, 'Regulus');
     });
   });
 }
