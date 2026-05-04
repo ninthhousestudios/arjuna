@@ -56,19 +56,19 @@ void main() {
     });
 
     test('Aldebaran falls in Taurus', () {
-      final aldebLon = snap.starsEcliptic[Star.aldebaran]!.longitude;
+      final aldebLon = snap.stars[Star.aldebaran]!.ecliptic.longitude;
       final result = ecliptic.constellationAt(aldebLon);
       expect(result.id, ConstellationId.taurus);
     });
 
     test('Antares falls in Scorpio', () {
-      final lon = snap.starsEcliptic[Star.antares]!.longitude;
+      final lon = snap.stars[Star.antares]!.ecliptic.longitude;
       final result = ecliptic.constellationAt(lon);
       expect(result.id, ConstellationId.scorpio);
     });
 
     test('Regulus falls in Leo', () {
-      final lon = snap.starsEcliptic[Star.regulus]!.longitude;
+      final lon = snap.stars[Star.regulus]!.ecliptic.longitude;
       final result = ecliptic.constellationAt(lon);
       expect(result.id, ConstellationId.leo);
     });

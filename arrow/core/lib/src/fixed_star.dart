@@ -62,13 +62,14 @@ class FixedStar extends SkyObject {
     EphSnapshot snapshot,
     CalcConfig config,
   ) {
+    final sp = snapshot.stars[star]!;
     return FixedStar._(
       star: star,
       name: star.label,
-      eclipticPos: snapshot.starsEcliptic[star]!,
-      equatorialPos: snapshot.starsEquatorial[star]!,
+      eclipticPos: sp.ecliptic,
+      equatorialPos: sp.equatorial,
       junctionOf: star.nakshatra,
-      starData: snapshot.starData[star],
+      starData: sp.starData,
       config: config,
       nakAyanamsaValue: snapshot.nakAyanamsaValue,
     );
@@ -80,13 +81,14 @@ class FixedStar extends SkyObject {
     EphSnapshot snapshot,
     CalcConfig config,
   ) {
+    final sp = snapshot.customStars[name]!;
     return FixedStar._(
       star: null,
       name: name,
-      eclipticPos: snapshot.customStarsEcliptic[name]!,
-      equatorialPos: snapshot.customStarsEquatorial[name]!,
+      eclipticPos: sp.ecliptic,
+      equatorialPos: sp.equatorial,
       junctionOf: null,
-      starData: snapshot.customStarData[name],
+      starData: sp.starData,
       config: config,
       nakAyanamsaValue: snapshot.nakAyanamsaValue,
     );

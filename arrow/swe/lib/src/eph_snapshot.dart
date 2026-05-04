@@ -5,7 +5,7 @@ import 'asc_mc_points.dart';
 import 'body_position.dart';
 import 'json_converters.dart';
 import 'pheno_data.dart';
-import 'star_data.dart';
+import 'star_position.dart';
 import 'sun_times.dart';
 
 part 'eph_snapshot.freezed.dart';
@@ -27,12 +27,8 @@ abstract class EphSnapshot with _$EphSnapshot {
     @Default(0.0) double nakAyanamsaValue,
     @BodyMapConverter() Map<Body, BodyPosition>? bodiesEclipticBarycentric,
     @BodyMapConverter() Map<Body, BodyPosition>? bodiesEclipticHeliocentric,
-    @StarMapConverter() @Default(<Star, BodyPosition>{}) Map<Star, BodyPosition> starsEcliptic,
-    @StarMapConverter() @Default(<Star, BodyPosition>{}) Map<Star, BodyPosition> starsEquatorial,
-    @StringBodyPositionMapConverter() @Default(<String, BodyPosition>{}) Map<String, BodyPosition> customStarsEcliptic,
-    @StringBodyPositionMapConverter() @Default(<String, BodyPosition>{}) Map<String, BodyPosition> customStarsEquatorial,
-    @StarDataMapConverter() @Default(<Star, StarData>{}) Map<Star, StarData> starData,
-    @StringStarDataMapConverter() @Default(<String, StarData>{}) Map<String, StarData> customStarData,
+    @StarPositionMapConverter() @Default(<Star, StarPosition>{}) Map<Star, StarPosition> stars,
+    @StringStarPositionMapConverter() @Default(<String, StarPosition>{}) Map<String, StarPosition> customStars,
   }) = _EphSnapshot;
 
   factory EphSnapshot.fromJson(Map<String, dynamic> json) =>

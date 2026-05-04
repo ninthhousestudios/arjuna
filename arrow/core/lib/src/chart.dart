@@ -38,11 +38,11 @@ class Chart {
     _vargaCache[VargaType.rashi] = rashi;
 
     fixedStars = {
-      for (final star in snapshot.starsEcliptic.keys)
+      for (final star in snapshot.stars.keys)
         star: FixedStar.fromEnum(star, snapshot, config),
     };
     customFixedStars = {
-      for (final name in snapshot.customStarsEcliptic.keys)
+      for (final name in snapshot.customStars.keys)
         name: FixedStar.custom(name, snapshot, config),
     };
   }

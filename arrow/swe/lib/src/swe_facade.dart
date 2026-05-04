@@ -11,6 +11,7 @@ import 'eph_snapshot.dart';
 import 'ephemeris_flag.dart';
 import 'pheno_data.dart';
 import 'star_data.dart';
+import 'star_position.dart';
 import 'star_swe_name.dart';
 import 'sun_times.dart';
 
@@ -157,61 +158,61 @@ class SweFacade {
       }
     }
 
-    // Fixed stars.
-    final starsEcl = <Star, BodyPosition>{};
-    final starsEqu = <Star, BodyPosition>{};
+    // Fixed stars — build StarPosition (ecliptic + equatorial + optional data).
+    final starsMap = <Star, StarPosition>{};
     for (final star in sweConfig.stars) {
       _log.fine('calc star=${star.label} sweName=${sweNameFor(star)}');
       try {
         final ecl = _swe.fixstar2Ut(sweNameFor(star), jdUt, baseEclFlags);
         final equ = _swe.fixstar2Ut(sweNameFor(star), jdUt, equatorialFlags);
-        starsEcl[star] = _fromFixstarResult(ecl);
-        starsEqu[star] = _fromFixstarResult(equ);
+        final data = includeStarData
+            ? _calcStarData(sweNameFor(star), jdUt, loc, sweConfig)
+            : null;
+        starsMap[star] = StarPosition(
+          ecliptic: _fromFixstarResult(ecl),
+          equatorial: _fromFixstarResult(equ),
+          starData: data,
+        );
       } catch (e) {
         _log.warning('fixstar calc failed for ${star.label}: $e');
       }
     }
 
     // Custom star names (arbitrary SWE nomen strings with % fallback).
-    final customStarsEcl = <String, BodyPosition>{};
-    final customStarsEqu = <String, BodyPosition>{};
+    final customStarsMap = <String, StarPosition>{};
     for (final name in sweConfig.customStarNames) {
       _log.fine('calc customStar=$name');
       try {
         final ecl = _swe.fixstar2Ut(name, jdUt, baseEclFlags);
         final equ = _swe.fixstar2Ut(name, jdUt, equatorialFlags);
-        customStarsEcl[name] = _fromFixstarResult(ecl);
-        customStarsEqu[name] = _fromFixstarResult(equ);
+        final data = includeStarData
+            ? _calcStarData(name, jdUt, loc, sweConfig)
+            : null;
+        customStarsMap[name] = StarPosition(
+          ecliptic: _fromFixstarResult(ecl),
+          equatorial: _fromFixstarResult(equ),
+          starData: data,
+        );
       } catch (_) {
         if (!name.endsWith('%')) {
           _log.fine('fixstar exact match failed for $name, retrying with %');
           try {
             final ecl = _swe.fixstar2Ut('$name%', jdUt, baseEclFlags);
             final equ = _swe.fixstar2Ut('$name%', jdUt, equatorialFlags);
-            customStarsEcl[name] = _fromFixstarResult(ecl);
-            customStarsEqu[name] = _fromFixstarResult(equ);
+            final data = includeStarData
+                ? _calcStarData(name, jdUt, loc, sweConfig)
+                : null;
+            customStarsMap[name] = StarPosition(
+              ecliptic: _fromFixstarResult(ecl),
+              equatorial: _fromFixstarResult(equ),
+              starData: data,
+            );
           } catch (e2) {
             _log.warning('fixstar calc failed for custom star $name: $e2');
           }
         } else {
           _log.warning('fixstar calc failed for custom star $name');
         }
-      }
-    }
-
-    // Star data (magnitude + rise/set).
-    final starDataMap = <Star, StarData>{};
-    final customStarDataMap = <String, StarData>{};
-    if (includeStarData) {
-      for (final star in sweConfig.stars) {
-        starDataMap[star] = _calcStarData(
-          sweNameFor(star), jdUt, loc, sweConfig,
-        );
-      }
-      for (final name in sweConfig.customStarNames) {
-        customStarDataMap[name] = _calcStarData(
-          name, jdUt, loc, sweConfig,
-        );
       }
     }
 
@@ -259,12 +260,8 @@ class SweFacade {
       nakAyanamsaValue: nakAyanamsaValue,
       bodiesEclipticBarycentric: baryEcl,
       bodiesEclipticHeliocentric: helioEcl,
-      starsEcliptic: starsEcl,
-      starsEquatorial: starsEqu,
-      customStarsEcliptic: customStarsEcl,
-      customStarsEquatorial: customStarsEqu,
-      starData: starDataMap,
-      customStarData: customStarDataMap,
+      stars: starsMap,
+      customStars: customStarsMap,
     );
   }
 

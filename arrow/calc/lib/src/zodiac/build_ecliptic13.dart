@@ -6,12 +6,12 @@ import 'ecliptic13.dart';
 
 /// Build an [Ecliptic13] from an [EphSnapshot].
 ///
-/// Extracts boundary star longitudes from [snap.starsEcliptic] and builds
+/// Extracts boundary star longitudes from [snap.stars] and builds
 /// the 13-constellation ecliptic. The snapshot must include [boundaryStars].
 Ecliptic13 buildEcliptic13(EphSnapshot snap) {
   final starLongitudes = <Star, double>{};
-  for (final entry in snap.starsEcliptic.entries) {
-    starLongitudes[entry.key] = entry.value.longitude;
+  for (final entry in snap.stars.entries) {
+    starLongitudes[entry.key] = entry.value.ecliptic.longitude;
   }
   return Ecliptic13.build(starLongitudes: starLongitudes);
 }
