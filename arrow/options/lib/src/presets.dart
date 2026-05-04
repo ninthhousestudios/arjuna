@@ -14,11 +14,11 @@ abstract final class ArrowPresets {
   static const ernst = ArrowOptions(
     sweConfig: SweConfig(
       signAyanamsa: Ayanamsa.tropical,
+      nakAyanamsa: Ayanamsa.dhruva,
       houseSystem: HouseSystem.campanus,
     ),
     calcConfig: CalcConfig(
       circle: Circle.aditya,
-      nakAyanamsa: Ayanamsa.dhruva,
       nakEquatorial: true,
       traditions: {Tradition.vedic},
       vedic: VedicConfig(),
@@ -29,11 +29,11 @@ abstract final class ArrowPresets {
   static const lahiriVedic = ArrowOptions(
     sweConfig: SweConfig(
       signAyanamsa: Ayanamsa.lahiri,
+      nakAyanamsa: Ayanamsa.lahiri,
       houseSystem: HouseSystem.wholeSigns,
     ),
     calcConfig: CalcConfig(
       circle: Circle.zodiac,
-      nakAyanamsa: Ayanamsa.lahiri,
       nakEquatorial: false,
       traditions: {Tradition.vedic},
       vedic: VedicConfig(),

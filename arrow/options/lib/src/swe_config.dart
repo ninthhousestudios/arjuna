@@ -37,6 +37,7 @@ abstract class SweConfig with _$SweConfig {
     @Default(<Star>{}) Set<Star> stars,
     @Default(<String>{}) Set<String> customStarNames,
     @Default(false) bool includeStarData,
+    @Default(Ayanamsa.dhruva) Ayanamsa nakAyanamsa,
   }) = _SweConfig;
 
   factory SweConfig.fromJson(Map<String, dynamic> json) =>

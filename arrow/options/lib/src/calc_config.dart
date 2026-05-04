@@ -1,6 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import 'ayanamsa.dart';
 import 'circle.dart';
 import 'tradition.dart';
 import 'vedic_config.dart';
@@ -17,7 +16,6 @@ part 'calc_config.g.dart';
 abstract class CalcConfig with _$CalcConfig {
   const factory CalcConfig({
     @Default(Circle.aditya) Circle circle,
-    @Default(Ayanamsa.dhruva) Ayanamsa nakAyanamsa,
     @Default(true) bool nakEquatorial,
     @Default({Tradition.vedic}) Set<Tradition> traditions,
     @Default(ZodiacSystem.sidereal12) ZodiacSystem zodiacSystem,

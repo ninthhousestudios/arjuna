@@ -27,7 +27,6 @@ void main() {
     test('defaults', () {
       const config = CalcConfig();
       expect(config.circle, Circle.aditya);
-      expect(config.nakAyanamsa, Ayanamsa.dhruva);
       expect(config.nakEquatorial, isTrue);
       expect(config.traditions, contains(Tradition.vedic));
       expect(config.vedic.charaKarakaCount, 7);
@@ -37,7 +36,7 @@ void main() {
       const config = CalcConfig();
       final zodiac = config.copyWith(circle: Circle.zodiac);
       expect(zodiac.circle, Circle.zodiac);
-      expect(zodiac.nakAyanamsa, Ayanamsa.dhruva);
+      expect(zodiac.nakEquatorial, isTrue);
     });
   });
 
@@ -57,8 +56,8 @@ void main() {
     test('defaults use ernst-like config', () {
       const options = ArrowOptions();
       expect(options.sweConfig.signAyanamsa, Ayanamsa.tropical);
+      expect(options.sweConfig.nakAyanamsa, Ayanamsa.dhruva);
       expect(options.calcConfig.circle, Circle.aditya);
-      expect(options.calcConfig.nakAyanamsa, Ayanamsa.dhruva);
     });
   });
 
@@ -80,16 +79,16 @@ void main() {
     test('ernst preset', () {
       const ernst = ArrowPresets.ernst;
       expect(ernst.sweConfig.signAyanamsa, Ayanamsa.tropical);
+      expect(ernst.sweConfig.nakAyanamsa, Ayanamsa.dhruva);
       expect(ernst.calcConfig.circle, Circle.aditya);
-      expect(ernst.calcConfig.nakAyanamsa, Ayanamsa.dhruva);
       expect(ernst.calcConfig.nakEquatorial, isTrue);
     });
 
     test('lahiriVedic preset', () {
       const lv = ArrowPresets.lahiriVedic;
       expect(lv.sweConfig.signAyanamsa, Ayanamsa.lahiri);
+      expect(lv.sweConfig.nakAyanamsa, Ayanamsa.lahiri);
       expect(lv.calcConfig.circle, Circle.zodiac);
-      expect(lv.calcConfig.nakAyanamsa, Ayanamsa.lahiri);
       expect(lv.calcConfig.nakEquatorial, isFalse);
     });
 
