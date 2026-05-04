@@ -4,6 +4,7 @@ import 'package:swisseph/swisseph.dart';
 
 import 'asc_mc_points.dart';
 import 'body_position.dart';
+import 'body_swe_id.dart';
 import 'cardinal_points.dart';
 import 'dhruva.dart';
 import 'eph_snapshot.dart';
@@ -109,7 +110,7 @@ class SweFacade {
 
       final sweId = body == Body.rahu
           ? (sweConfig.trueNode ? seTrueNode : seMeanNode)
-          : body.sweId;
+          : sweIdFor(body);
 
       _log.fine('calc body=$body sweId=$sweId');
 

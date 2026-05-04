@@ -3,22 +3,6 @@ import 'package:test/test.dart';
 
 void main() {
   group('Body', () {
-    test('sweIds are correct', () {
-      expect(Body.sun.sweId, 0);
-      expect(Body.moon.sweId, 1);
-      expect(Body.mercury.sweId, 2);
-      expect(Body.venus.sweId, 3);
-      expect(Body.mars.sweId, 4);
-      expect(Body.jupiter.sweId, 5);
-      expect(Body.saturn.sweId, 6);
-      expect(Body.uranus.sweId, 7);
-      expect(Body.neptune.sweId, 8);
-      expect(Body.pluto.sweId, 9);
-      expect(Body.chiron.sweId, 15);
-      expect(Body.rahu.sweId, 11);
-      expect(Body.ketu.sweId, -1);
-    });
-
     test('karakas has 7 bodies', () {
       expect(Body.karakas, hasLength(7));
       expect(Body.karakas, contains(Body.sun));
