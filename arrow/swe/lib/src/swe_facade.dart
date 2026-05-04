@@ -49,10 +49,9 @@ class SweFacade {
   EphSnapshot calcAll(
     double jdUt,
     Location location,
-    ArrowOptions options, {
+    SweConfig sweConfig, {
     bool includeStarData = false,
   }) {
-    final sweConfig = options.sweConfig;
     final loc = location;
 
     _log.info('calcAll jdUt=$jdUt bodies=${sweConfig.bodies.length} '
@@ -249,7 +248,7 @@ class SweFacade {
     return EphSnapshot(
       jdUt: jdUt,
       location: location,
-      options: options,
+      sweConfig: sweConfig,
       bodiesEcliptic: bodiesEcliptic,
       bodiesEquatorial: bodiesEquatorial,
       phenoData: phenoData,
@@ -504,7 +503,7 @@ class SweFacade {
   /// at which the Sun reaches tropical longitudes 0°, 90°, 180°, 270°.
   ///
   /// [source] selects the underlying ephemeris — defaults to Swiss Ephemeris.
-  /// Sidereal and topocentric settings from [ArrowOptions] are irrelevant:
+  /// Sidereal and topocentric settings from [SweConfig] are irrelevant:
   /// equinoxes and solstices are defined against the tropical frame.
   CardinalPoints calcCardinalPoints(
     int year, {

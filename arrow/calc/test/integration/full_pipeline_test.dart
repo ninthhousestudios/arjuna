@@ -10,7 +10,6 @@ import 'package:test/test.dart';
 /// per-unit tests. This exists to catch breakage at the seams.
 EphSnapshot _stubSnapshot() {
   const location = Location(latitude: 40.0, longitude: -74.0);
-  const options = ArrowOptions();
 
   final bodies = <Body, BodyPosition>{
     Body.sun: const BodyPosition(
@@ -79,7 +78,7 @@ EphSnapshot _stubSnapshot() {
   return EphSnapshot(
     jdUt: 2460000.5,
     location: location,
-    options: options,
+    sweConfig: const SweConfig(),
     bodiesEcliptic: bodies,
     bodiesEquatorial: bodies,
     phenoData: pheno,

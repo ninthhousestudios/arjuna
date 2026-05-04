@@ -16,7 +16,7 @@ abstract class EphSnapshot with _$EphSnapshot {
   const factory EphSnapshot({
     required double jdUt,
     required Location location,
-    required ArrowOptions options,
+    required SweConfig sweConfig,
     @BodyMapConverter() required Map<Body, BodyPosition> bodiesEcliptic,
     @BodyMapConverter() required Map<Body, BodyPosition> bodiesEquatorial,
     @BodyPhenoMapConverter() required Map<Body, PhenoData> phenoData,

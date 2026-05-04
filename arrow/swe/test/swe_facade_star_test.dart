@@ -29,17 +29,15 @@ void main() {
     });
 
     test('empty stars set produces empty star maps', () {
-      final options = ArrowOptions();
-      final snap = facade.calcAll(jdUt, _testLocation, options);
+      const sweConfig = SweConfig();
+      final snap = facade.calcAll(jdUt, _testLocation, sweConfig);
       expect(snap.starsEcliptic, isEmpty);
       expect(snap.starsEquatorial, isEmpty);
     });
 
     test('Aldebaran ecliptic longitude near 69° at J2000 (tropical)', () {
-      final options = ArrowOptions(
-        sweConfig: SweConfig(stars: {Star.aldebaran}),
-      );
-      final snap = facade.calcAll(jdUt, _testLocation, options);
+      final sweConfig = SweConfig(stars: {Star.aldebaran});
+      final snap = facade.calcAll(jdUt, _testLocation, sweConfig);
 
       expect(snap.starsEcliptic, contains(Star.aldebaran));
       expect(snap.starsEquatorial, contains(Star.aldebaran));
@@ -51,14 +49,12 @@ void main() {
     });
 
     test('multiple stars are all populated', () {
-      final options = ArrowOptions(
-        sweConfig: SweConfig(stars: {
-          Star.aldebaran,
-          Star.spica,
-          Star.regulus,
-        }),
-      );
-      final snap = facade.calcAll(jdUt, _testLocation, options);
+      final sweConfig = SweConfig(stars: {
+        Star.aldebaran,
+        Star.spica,
+        Star.regulus,
+      });
+      final snap = facade.calcAll(jdUt, _testLocation, sweConfig);
 
       expect(snap.starsEcliptic, hasLength(3));
       expect(snap.starsEquatorial, hasLength(3));
@@ -72,10 +68,8 @@ void main() {
     });
 
     test('Galactic Center is computable', () {
-      final options = ArrowOptions(
-        sweConfig: SweConfig(stars: {Star.galacticCenter}),
-      );
-      final snap = facade.calcAll(jdUt, _testLocation, options);
+      final sweConfig = SweConfig(stars: {Star.galacticCenter});
+      final snap = facade.calcAll(jdUt, _testLocation, sweConfig);
       expect(snap.starsEcliptic, contains(Star.galacticCenter));
       // GC tropical longitude is ~266° at J2000.
       final gcLon = snap.starsEcliptic[Star.galacticCenter]!.longitude;
@@ -83,23 +77,19 @@ void main() {
     });
 
     test('Spica ecliptic longitude near 203° at J2000 (tropical)', () {
-      final options = ArrowOptions(
-        sweConfig: SweConfig(stars: {Star.spica}),
-      );
-      final snap = facade.calcAll(jdUt, _testLocation, options);
+      final sweConfig = SweConfig(stars: {Star.spica});
+      final snap = facade.calcAll(jdUt, _testLocation, sweConfig);
       final eclPos = snap.starsEcliptic[Star.spica]!;
       // Spica tropical ecliptic longitude ~203.8° at J2000.
       expect(eclPos.longitude, closeTo(203.8, 0.5));
     });
 
     test('star positions unaffected by empty body set', () {
-      final options = ArrowOptions(
-        sweConfig: SweConfig(
-          bodies: {},
-          stars: {Star.sirius},
-        ),
+      final sweConfig = SweConfig(
+        bodies: {},
+        stars: {Star.sirius},
       );
-      final snap = facade.calcAll(jdUt, _testLocation, options);
+      final snap = facade.calcAll(jdUt, _testLocation, sweConfig);
       expect(snap.bodiesEcliptic, isEmpty);
       expect(snap.starsEcliptic, hasLength(1));
       expect(snap.starsEcliptic, contains(Star.sirius));
@@ -122,43 +112,37 @@ void main() {
     });
 
     test('exact custom name resolves', () {
-      final options = ArrowOptions(
-        sweConfig: SweConfig(
-          bodies: {},
-          customStarNames: {'Sirius'},
-        ),
+      final sweConfig = SweConfig(
+        bodies: {},
+        customStarNames: {'Sirius'},
       );
-      final snap = facade.calcAll(jdUt, _testLocation, options);
+      final snap = facade.calcAll(jdUt, _testLocation, sweConfig);
       expect(snap.customStarsEcliptic, contains('Sirius'));
       expect(snap.customStarsEquatorial, contains('Sirius'));
     });
 
     test('wildcard fallback resolves partial name', () {
-      final options = ArrowOptions(
-        sweConfig: SweConfig(
-          bodies: {},
-          customStarNames: {',alfCMa'},
-        ),
+      final sweConfig = SweConfig(
+        bodies: {},
+        customStarNames: {',alfCMa'},
       );
-      final snap = facade.calcAll(jdUt, _testLocation, options);
+      final snap = facade.calcAll(jdUt, _testLocation, sweConfig);
       expect(snap.customStarsEcliptic, contains(',alfCMa'));
     });
 
     test('invalid custom name is omitted without exception', () {
-      final options = ArrowOptions(
-        sweConfig: SweConfig(
-          bodies: {},
-          customStarNames: {'xyz_not_a_star'},
-        ),
+      final sweConfig = SweConfig(
+        bodies: {},
+        customStarNames: {'xyz_not_a_star'},
       );
-      final snap = facade.calcAll(jdUt, _testLocation, options);
+      final snap = facade.calcAll(jdUt, _testLocation, sweConfig);
       expect(snap.customStarsEcliptic, isEmpty);
       expect(snap.customStarsEquatorial, isEmpty);
     });
 
     test('empty customStarNames produces empty maps', () {
-      final options = ArrowOptions();
-      final snap = facade.calcAll(jdUt, _testLocation, options);
+      const sweConfig = SweConfig();
+      final snap = facade.calcAll(jdUt, _testLocation, sweConfig);
       expect(snap.customStarsEcliptic, isEmpty);
       expect(snap.customStarsEquatorial, isEmpty);
     });
@@ -180,24 +164,20 @@ void main() {
     });
 
     test('includeStarData=false produces empty starData', () {
-      final options = ArrowOptions(
-        sweConfig: SweConfig(
-          stars: {Star.aldebaran},
-        ),
+      final sweConfig = SweConfig(
+        stars: {Star.aldebaran},
       );
-      final snap = facade.calcAll(jdUt, _testLocation, options);
+      final snap = facade.calcAll(jdUt, _testLocation, sweConfig);
       expect(snap.starsEcliptic, contains(Star.aldebaran));
       expect(snap.starData, isEmpty);
     });
 
     test('includeStarData=true populates magnitude and rise/set', () {
-      final options = ArrowOptions(
-        sweConfig: SweConfig(
-          bodies: {},
-          stars: {Star.aldebaran, Star.sirius},
-        ),
+      final sweConfig = SweConfig(
+        bodies: {},
+        stars: {Star.aldebaran, Star.sirius},
       );
-      final snap = facade.calcAll(jdUt, _testLocation, options,
+      final snap = facade.calcAll(jdUt, _testLocation, sweConfig,
           includeStarData: true);
 
       expect(snap.starData, hasLength(2));
@@ -218,13 +198,11 @@ void main() {
     });
 
     test('custom star data populated when includeStarData is true', () {
-      final options = ArrowOptions(
-        sweConfig: SweConfig(
-          bodies: {},
-          customStarNames: {'Sirius'},
-        ),
+      final sweConfig = SweConfig(
+        bodies: {},
+        customStarNames: {'Sirius'},
       );
-      final snap = facade.calcAll(jdUt, _testLocation, options,
+      final snap = facade.calcAll(jdUt, _testLocation, sweConfig,
           includeStarData: true);
       expect(snap.customStarData, contains('Sirius'));
       expect(snap.customStarData['Sirius']!.apparentMagnitude, isNotNull);

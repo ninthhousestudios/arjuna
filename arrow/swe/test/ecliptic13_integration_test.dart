@@ -33,13 +33,11 @@ void main() {
         Star.antares,
         Star.regulus,
       };
-      final options = ArrowOptions(
-        sweConfig: SweConfig(
-          bodies: {},
-          stars: testStars,
-        ),
+      final sweConfig = SweConfig(
+        bodies: {},
+        stars: testStars,
       );
-      snap = facade.calcAll(jdUt, loc, options);
+      snap = facade.calcAll(jdUt, loc, sweConfig);
 
       ecliptic = buildEcliptic13(snap);
     });
@@ -83,13 +81,11 @@ void main() {
     });
 
     test('Sun on 2000-01-01 placed in Sagittarius (true sidereal)', () {
-      final sunOptions = ArrowOptions(
-        sweConfig: SweConfig(
-          bodies: {Body.sun},
-          stars: boundaryStars,
-        ),
+      final sunSweConfig = SweConfig(
+        bodies: {Body.sun},
+        stars: boundaryStars,
       );
-      final sunSnap = facade.calcAll(jdUt, loc, sunOptions);
+      final sunSnap = facade.calcAll(jdUt, loc, sunSweConfig);
 
       final sunLon = sunSnap.bodiesEcliptic[Body.sun]!.longitude;
       final e13 = buildEcliptic13(sunSnap);

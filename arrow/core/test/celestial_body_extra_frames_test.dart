@@ -28,7 +28,7 @@ void main() {
       EphSnapshot(
         jdUt: 2460000.5,
         location: const Location(latitude: 0, longitude: 0, altitude: 0),
-        options: const ArrowOptions(),
+        sweConfig: const SweConfig(),
         bodiesEcliptic: geoMap,
         bodiesEquatorial: geoMap,
         phenoData: const {},

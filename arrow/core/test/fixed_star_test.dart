@@ -30,19 +30,15 @@ void main() {
     });
 
     test('extends SkyObject', () {
-      final options = ArrowOptions(
-        sweConfig: SweConfig(stars: {Star.aldebaran}),
-      );
-      final snap = facade.calcAll(jdUt, _testLocation, options);
+      final sweConfig = SweConfig(stars: {Star.aldebaran});
+      final snap = facade.calcAll(jdUt, _testLocation, sweConfig);
       final fs = FixedStar.fromEnum(Star.aldebaran, snap, CalcConfig());
       expect(fs, isA<SkyObject>());
     });
 
     test('fromEnum resolves sign and nakshatra', () {
-      final options = ArrowOptions(
-        sweConfig: SweConfig(stars: {Star.aldebaran}),
-      );
-      final snap = facade.calcAll(jdUt, _testLocation, options);
+      final sweConfig = SweConfig(stars: {Star.aldebaran});
+      final snap = facade.calcAll(jdUt, _testLocation, sweConfig);
       final fs = FixedStar.fromEnum(Star.aldebaran, snap, CalcConfig());
 
       expect(fs.star, Star.aldebaran);
@@ -55,13 +51,11 @@ void main() {
     });
 
     test('custom star resolves', () {
-      final options = ArrowOptions(
-        sweConfig: SweConfig(
-          bodies: {},
-          customStarNames: {'Sirius'},
-        ),
+      final sweConfig = SweConfig(
+        bodies: {},
+        customStarNames: {'Sirius'},
       );
-      final snap = facade.calcAll(jdUt, _testLocation, options);
+      final snap = facade.calcAll(jdUt, _testLocation, sweConfig);
       final fs = FixedStar.custom('Sirius', snap, CalcConfig());
 
       expect(fs.star, isNull);
@@ -72,10 +66,8 @@ void main() {
     });
 
     test('Chart.fixedStars populated from snapshot', () {
-      final options = ArrowOptions(
-        sweConfig: SweConfig(stars: {Star.spica, Star.regulus}),
-      );
-      final snap = facade.calcAll(jdUt, _testLocation, options);
+      final sweConfig = SweConfig(stars: {Star.spica, Star.regulus});
+      final snap = facade.calcAll(jdUt, _testLocation, sweConfig);
       final chart = Chart(snap, CalcConfig());
 
       expect(chart.fixedStars, hasLength(2));
@@ -84,8 +76,8 @@ void main() {
     });
 
     test('Chart with no stars has empty fixedStars', () {
-      final options = ArrowOptions();
-      final snap = facade.calcAll(jdUt, _testLocation, options);
+      const sweConfig = SweConfig();
+      final snap = facade.calcAll(jdUt, _testLocation, sweConfig);
       final chart = Chart(snap, CalcConfig());
 
       expect(chart.fixedStars, isEmpty);
@@ -93,10 +85,8 @@ void main() {
     });
 
     test('varga always returns rashi for FixedStar', () {
-      final options = ArrowOptions(
-        sweConfig: SweConfig(stars: {Star.aldebaran}),
-      );
-      final snap = facade.calcAll(jdUt, _testLocation, options);
+      final sweConfig = SweConfig(stars: {Star.aldebaran});
+      final snap = facade.calcAll(jdUt, _testLocation, sweConfig);
       final fs = FixedStar.fromEnum(Star.aldebaran, snap, CalcConfig());
 
       expect(fs.vargaType, VargaType.rashi);

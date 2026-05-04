@@ -33,16 +33,14 @@ void main() {
     });
 
     test('barycentric Sun matches verified values (SwissEph, tropical)', () {
-      const options = ArrowOptions(
-        sweConfig: SweConfig(
-          bodies: {Body.sun},
-          signAyanamsa: Ayanamsa.tropical,
-          ephemerisSource: EphemerisSource.swissEph,
-          extraFrames: {ReferencePoint.barycentric},
-        ),
+      const sweConfig = SweConfig(
+        bodies: {Body.sun},
+        signAyanamsa: Ayanamsa.tropical,
+        ephemerisSource: EphemerisSource.swissEph,
+        extraFrames: {ReferencePoint.barycentric},
       );
 
-      final snap = facade.calcAll(jdUt, location, options);
+      final snap = facade.calcAll(jdUt, location, sweConfig);
       final bary = snap.bodiesEclipticBarycentric;
       expect(bary, isNotNull);
       final sun = bary![Body.sun]!;
@@ -59,16 +57,14 @@ void main() {
     });
 
     test('Moshier + barycentric throws ArgumentError naming both', () {
-      const options = ArrowOptions(
-        sweConfig: SweConfig(
-          bodies: {Body.sun},
-          ephemerisSource: EphemerisSource.moshier,
-          extraFrames: {ReferencePoint.barycentric},
-        ),
+      const sweConfig = SweConfig(
+        bodies: {Body.sun},
+        ephemerisSource: EphemerisSource.moshier,
+        extraFrames: {ReferencePoint.barycentric},
       );
 
       expect(
-        () => facade.calcAll(jdUt, location, options),
+        () => facade.calcAll(jdUt, location, sweConfig),
         throwsA(isA<ArgumentError>().having(
           (e) => e.message.toString().toLowerCase(),
           'message',
@@ -78,15 +74,13 @@ void main() {
     });
 
     test('heliocentric omits Sun (always at origin)', () {
-      const options = ArrowOptions(
-        sweConfig: SweConfig(
-          bodies: {Body.sun, Body.mars, Body.jupiter},
-          ephemerisSource: EphemerisSource.swissEph,
-          extraFrames: {ReferencePoint.heliocentric},
-        ),
+      const sweConfig = SweConfig(
+        bodies: {Body.sun, Body.mars, Body.jupiter},
+        ephemerisSource: EphemerisSource.swissEph,
+        extraFrames: {ReferencePoint.heliocentric},
       );
 
-      final snap = facade.calcAll(jdUt, location, options);
+      final snap = facade.calcAll(jdUt, location, sweConfig);
       final helio = snap.bodiesEclipticHeliocentric;
       expect(helio, isNotNull);
       expect(helio!.containsKey(Body.sun), isFalse);
@@ -95,21 +89,17 @@ void main() {
     });
 
     test('ayanamsa applies identically to geo and bary frames', () {
-      const tropCfg = ArrowOptions(
-        sweConfig: SweConfig(
-          bodies: {Body.sun},
-          signAyanamsa: Ayanamsa.tropical,
-          ephemerisSource: EphemerisSource.swissEph,
-          extraFrames: {ReferencePoint.barycentric},
-        ),
+      const tropCfg = SweConfig(
+        bodies: {Body.sun},
+        signAyanamsa: Ayanamsa.tropical,
+        ephemerisSource: EphemerisSource.swissEph,
+        extraFrames: {ReferencePoint.barycentric},
       );
-      const sidCfg = ArrowOptions(
-        sweConfig: SweConfig(
-          bodies: {Body.sun},
-          signAyanamsa: Ayanamsa.lahiri,
-          ephemerisSource: EphemerisSource.swissEph,
-          extraFrames: {ReferencePoint.barycentric},
-        ),
+      const sidCfg = SweConfig(
+        bodies: {Body.sun},
+        signAyanamsa: Ayanamsa.lahiri,
+        ephemerisSource: EphemerisSource.swissEph,
+        extraFrames: {ReferencePoint.barycentric},
       );
 
       final trop = facade.calcAll(jdUt, location, tropCfg);
@@ -130,18 +120,16 @@ void main() {
     });
 
     test('Ketu mirrors Rahu in every frame', () {
-      const options = ArrowOptions(
-        sweConfig: SweConfig(
-          bodies: {Body.rahu, Body.ketu},
-          ephemerisSource: EphemerisSource.swissEph,
-          extraFrames: {
-            ReferencePoint.barycentric,
-            ReferencePoint.heliocentric,
-          },
-        ),
+      const sweConfig = SweConfig(
+        bodies: {Body.rahu, Body.ketu},
+        ephemerisSource: EphemerisSource.swissEph,
+        extraFrames: {
+          ReferencePoint.barycentric,
+          ReferencePoint.heliocentric,
+        },
       );
 
-      final snap = facade.calcAll(jdUt, location, options);
+      final snap = facade.calcAll(jdUt, location, sweConfig);
 
       double wrap(double x) => ((x % 360) + 360) % 360;
 
@@ -162,14 +150,12 @@ void main() {
     });
 
     test('default config leaves extra-frame maps null', () {
-      const options = ArrowOptions(
-        sweConfig: SweConfig(
-          bodies: {Body.sun},
-          ephemerisSource: EphemerisSource.swissEph,
-        ),
+      const sweConfig = SweConfig(
+        bodies: {Body.sun},
+        ephemerisSource: EphemerisSource.swissEph,
       );
 
-      final snap = facade.calcAll(jdUt, location, options);
+      final snap = facade.calcAll(jdUt, location, sweConfig);
       expect(snap.bodiesEclipticBarycentric, isNull);
       expect(snap.bodiesEclipticHeliocentric, isNull);
     });

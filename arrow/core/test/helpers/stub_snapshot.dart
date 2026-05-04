@@ -7,7 +7,6 @@ import 'package:arrow_swe/arrow_swe.dart';
 /// Jupiter at 280°, Venus at 30°, Saturn at 310°, Rahu at 100°, Ketu at 280°.
 EphSnapshot stubSnapshot() {
   const location = Location(latitude: 40.0, longitude: -74.0);
-  const options = ArrowOptions();
 
   final bodies = <Body, BodyPosition>{
     Body.sun: const BodyPosition(
@@ -51,7 +50,7 @@ EphSnapshot stubSnapshot() {
   return EphSnapshot(
     jdUt: 2460000.5,
     location: location,
-    options: options,
+    sweConfig: const SweConfig(),
     bodiesEcliptic: bodies,
     bodiesEquatorial: bodies,
     phenoData: const {},

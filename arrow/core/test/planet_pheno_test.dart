@@ -19,7 +19,7 @@ void main() {
   EphSnapshot snap({required Map<Body, PhenoData> pheno}) => EphSnapshot(
         jdUt: 2460000.5,
         location: const Location(latitude: 0, longitude: 0, altitude: 0),
-        options: const ArrowOptions(),
+        sweConfig: const SweConfig(),
         bodiesEcliptic: {
           Body.sun: pos, Body.moon: pos, Body.mercury: pos, Body.venus: pos,
           Body.mars: pos, Body.jupiter: pos, Body.saturn: pos,

@@ -134,9 +134,7 @@ void main() {
     altitude: 216.0,
   );
 
-  final testOptions = ArrowOptions(
-    sweConfig: SweConfig(),
-  );
+  final testSweConfig = SweConfig();
 
   final testEcl = {Body.sun: testBp, Body.moon: testBp};
   final testEqu = {Body.sun: testBp, Body.moon: testBp};
@@ -147,7 +145,7 @@ void main() {
       final snap = EphSnapshot(
         jdUt: 2451545.0,
         location: testLocation,
-        options: testOptions,
+        sweConfig: testSweConfig,
         bodiesEcliptic: testEcl,
         bodiesEquatorial: testEqu,
         phenoData: const {},
@@ -167,7 +165,7 @@ void main() {
       final snap = EphSnapshot(
         jdUt: 2451545.0,
         location: testLocation,
-        options: testOptions,
+        sweConfig: testSweConfig,
         bodiesEcliptic: testEcl,
         bodiesEquatorial: testEqu,
         phenoData: const {},
