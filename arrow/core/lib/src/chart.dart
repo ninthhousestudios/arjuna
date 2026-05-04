@@ -3,7 +3,6 @@ import 'package:arrow_swe/arrow_swe.dart';
 
 import 'cusp.dart';
 import 'fixed_star.dart';
-import 'graha.dart';
 import 'karaka.dart';
 import 'motion_state.dart';
 import 'planet.dart';
@@ -60,11 +59,11 @@ class Chart {
   Karaka get jupiter => rashi.jupiter;
   Karaka get venus => rashi.venus;
   Karaka get saturn => rashi.saturn;
-  Graha get rahu => rashi.rahu;
-  Graha get ketu => rashi.ketu;
+  Planet get rahu => rashi.rahu;
+  Planet get ketu => rashi.ketu;
 
   List<Karaka> get karakas => rashi.karakas;
-  List<Graha> get grahas => rashi.grahas;
+  List<Planet> get grahas => rashi.grahas;
   List<Planet> get planets => rashi.planets;
 
   List<Cusp> get cusps => rashi.cusps;

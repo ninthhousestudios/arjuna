@@ -136,9 +136,9 @@ void main() {
       expect(chart.sun.sign, chart.rashi.sun.sign);
     });
 
-    test('chart.rahu returns Graha', () {
+    test('chart.rahu returns Planet', () {
       final chart = Chart(snapshot, config);
-      expect(chart.rahu, isA<Graha>());
+      expect(chart.rahu, isA<Planet>());
       expect(chart.rahu.body, Body.rahu);
     });
 
@@ -191,9 +191,9 @@ void main() {
       expect(nav.sun.body, Body.sun);
     });
 
-    test('varga.rahu returns Graha', () {
+    test('varga.rahu returns Planet', () {
       final chart = Chart(snapshot, config);
-      expect(chart.rashi.rahu, isA<Graha>());
+      expect(chart.rashi.rahu, isA<Planet>());
       expect(chart.rashi.rahu.body, Body.rahu);
     });
 

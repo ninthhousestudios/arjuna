@@ -1,14 +1,12 @@
 import 'package:arrow_options/arrow_options.dart';
 
 import 'dignity.dart';
-import 'graha.dart';
 import 'longitude.dart';
+import 'planet.dart';
 import 'sign_data.dart';
 
-/// A karaka — a graha eligible for Jaimini chara karaka assignment.
-///
-/// Extends [Graha] with dignity and combustion.
-class Karaka extends Graha {
+/// A karaka — one of the 7 embodied planets with dignity and combustion.
+class Karaka extends Planet {
   final double? _sunLongitude;
 
   Karaka(super.body, super.snapshot, super.config, super.vargaType,

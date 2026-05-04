@@ -2,14 +2,13 @@ import 'package:arrow_options/arrow_options.dart';
 import 'package:arrow_swe/arrow_swe.dart';
 
 import 'cusp.dart';
-import 'graha.dart';
 import 'karaka.dart';
 import 'planet.dart';
 import 'sign.dart';
 
 /// A divisional chart view over an [EphSnapshot].
 ///
-/// Constructs [Planet]/[Graha]/[Karaka] objects for each body in the snapshot,
+/// Constructs [Planet]/[Karaka] objects for each body in the snapshot,
 /// computes their positions in this varga's coordinate frame, and groups them
 /// into [Sign] objects for sign-based lookup.
 class Varga {
@@ -18,7 +17,6 @@ class Varga {
   final CalcConfig config;
 
   late final Map<Body, Planet> _planetMap;
-  late final Map<Body, Graha> _grahaMap;
   late final Map<Body, Karaka> _karakaMap;
   late final List<Cusp> cusps;
   late final Map<int, Sign> signs; // 1-12
@@ -34,7 +32,6 @@ class Varga {
     final sunLon = snapshot.bodiesEcliptic[Body.sun]?.longitude;
 
     _planetMap = {};
-    _grahaMap = {};
     _karakaMap = {};
 
     for (final body in snapshot.bodiesEcliptic.keys) {
@@ -42,12 +39,7 @@ class Varga {
         final k = Karaka(body, snapshot, config, vargaType,
             sunLongitude: sunLon);
         _karakaMap[body] = k;
-        _grahaMap[body] = k;
         _planetMap[body] = k;
-      } else if (body == Body.rahu || body == Body.ketu) {
-        final g = Graha(body, snapshot, config, vargaType);
-        _grahaMap[body] = g;
-        _planetMap[body] = g;
       } else {
         _planetMap[body] = Planet(body, snapshot, config, vargaType);
       }
@@ -76,7 +68,8 @@ class Varga {
   List<Karaka> get karakas => _karakaMap.values.toList();
 
   /// All grahas (karakas + Rahu/Ketu) in this varga.
-  List<Graha> get grahas => _grahaMap.values.toList();
+  List<Planet> get grahas =>
+      _planetMap.values.where((p) => Body.grahas.contains(p.body)).toList();
 
   /// All planets in this varga.
   List<Planet> get planets => _planetMap.values.toList();
@@ -92,8 +85,8 @@ class Varga {
   Karaka get jupiter => _karakaMap[Body.jupiter]!;
   Karaka get venus => _karakaMap[Body.venus]!;
   Karaka get saturn => _karakaMap[Body.saturn]!;
-  Graha get rahu => _grahaMap[Body.rahu]!;
-  Graha get ketu => _grahaMap[Body.ketu]!;
+  Planet get rahu => _planetMap[Body.rahu]!;
+  Planet get ketu => _planetMap[Body.ketu]!;
 
   @override
   String toString() => 'Varga(${vargaType.name})';

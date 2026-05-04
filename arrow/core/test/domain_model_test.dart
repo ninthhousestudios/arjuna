@@ -48,25 +48,8 @@ void main() {
     });
   });
 
-  group('Graha', () {
-    test('inherits from Planet', () {
-      final graha = Graha(Body.mercury, snapshot, config, VargaType.rashi);
-      expect(graha.body, Body.mercury);
-      expect(graha.rawLongitude, 55.0);
-      final planet = Planet(Body.mercury, snapshot, config, VargaType.rashi);
-      expect(graha.sign, planet.sign);
-      expect(graha.isRetrograde, planet.isRetrograde);
-    });
-
-    test('varga works', () {
-      final graha = Graha(Body.jupiter, snapshot, config, VargaType.rashi);
-      final nav = graha.varga(VargaType.navamsha);
-      expect(nav.vargaType, VargaType.navamsha);
-    });
-  });
-
   group('Karaka', () {
-    test('extends Graha', () {
+    test('extends Planet', () {
       final karaka = Karaka(Body.sun, snapshot, config, VargaType.rashi);
       expect(karaka.body, Body.sun);
       final planet = Planet(Body.sun, snapshot, config, VargaType.rashi);
