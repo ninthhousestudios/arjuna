@@ -45,8 +45,10 @@ class Varga {
       }
     }
 
+    final nakLons = snapshot.cuspsNakLon;
     cusps = List.generate(12, (i) {
-      return Cusp(i + 1, snapshot.cusps[i], config);
+      final nakLon = i < nakLons.length ? nakLons[i] : null;
+      return Cusp(i + 1, snapshot.cusps[i], config, nakLongitude: nakLon);
     });
 
     signs = {};

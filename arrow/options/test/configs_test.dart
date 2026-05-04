@@ -61,6 +61,32 @@ void main() {
     });
   });
 
+  group('ArrowOptions.validate', () {
+    test('dhruva with nakEquatorial=true passes', () {
+      const options = ArrowOptions(
+        sweConfig: SweConfig(nakAyanamsa: Ayanamsa.dhruva),
+        calcConfig: CalcConfig(nakEquatorial: true),
+      );
+      expect(() => options.validate(), returnsNormally);
+    });
+
+    test('dhruva with nakEquatorial=false throws ArgumentError', () {
+      const options = ArrowOptions(
+        sweConfig: SweConfig(nakAyanamsa: Ayanamsa.dhruva),
+        calcConfig: CalcConfig(nakEquatorial: false),
+      );
+      expect(() => options.validate(), throwsArgumentError);
+    });
+
+    test('non-dhruva with nakEquatorial=false passes', () {
+      const options = ArrowOptions(
+        sweConfig: SweConfig(nakAyanamsa: Ayanamsa.lahiri),
+        calcConfig: CalcConfig(nakEquatorial: false),
+      );
+      expect(() => options.validate(), returnsNormally);
+    });
+  });
+
   group('Location', () {
     test('altitude defaults to 0', () {
       const loc = Location(latitude: 40.0, longitude: -74.0);

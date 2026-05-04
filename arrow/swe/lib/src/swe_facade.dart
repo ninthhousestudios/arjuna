@@ -376,6 +376,25 @@ class SweFacade {
       }
     }
 
+    // ── Cusp nakshatra-frame longitudes ──
+    // For standard ayanamsas, recompute housesEx in the nak frame.
+    // For dhruva (equatorial-only), cusps have no meaningful nak longitude.
+    final List<double> cuspsNakLon;
+    if (nakAyanamsa == sweConfig.signAyanamsa) {
+      cuspsNakLon = cusps;
+    } else if (!nakAyanamsa.isTropical && nakAyanamsa.isStandard) {
+      _swe.setSidMode(nakAyanamsa.sweCode);
+      final nakHouse = _swe.housesEx(
+          jdUt, seFlgSidereal, loc.latitude, loc.longitude, hsys);
+      cuspsNakLon = List.generate(12, (i) => nakHouse.cusps[i + 1]);
+    } else if (nakAyanamsa.isTropical && isSidereal) {
+      final nakHouse =
+          _swe.housesEx(jdUt, 0, loc.latitude, loc.longitude, hsys);
+      cuspsNakLon = List.generate(12, (i) => nakHouse.cusps[i + 1]);
+    } else {
+      cuspsNakLon = const [];
+    }
+
     // Sunrise / sunset.
     final sunTimes = _calcSunTimes(jdUt, loc);
 
@@ -396,6 +415,7 @@ class SweFacade {
       starsNakEquLon: starsNakEquLon,
       customStarsNakEclLon: customStarsNakEclLon,
       customStarsNakEquLon: customStarsNakEquLon,
+      cuspsNakLon: cuspsNakLon,
       bodiesEclipticBarycentric: baryEcl,
       bodiesEclipticHeliocentric: helioEcl,
       stars: starsMap,

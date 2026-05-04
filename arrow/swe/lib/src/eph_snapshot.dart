@@ -30,6 +30,7 @@ abstract class EphSnapshot with _$EphSnapshot {
     @StarDoubleMapConverter() @Default(<Star, double>{}) Map<Star, double> starsNakEquLon,
     @StringDoubleMapConverter() @Default(<String, double>{}) Map<String, double> customStarsNakEclLon,
     @StringDoubleMapConverter() @Default(<String, double>{}) Map<String, double> customStarsNakEquLon,
+    @Default(<double>[]) List<double> cuspsNakLon,
     @BodyMapConverter() Map<Body, BodyPosition>? bodiesEclipticBarycentric,
     @BodyMapConverter() Map<Body, BodyPosition>? bodiesEclipticHeliocentric,
     @StarPositionMapConverter() @Default(<Star, StarPosition>{}) Map<Star, StarPosition> stars,

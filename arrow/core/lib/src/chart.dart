@@ -33,7 +33,12 @@ class Chart {
   late final Map<Star, FixedStar> fixedStars;
   late final Map<String, FixedStar> customFixedStars;
 
-  Chart(this.snapshot, this.config) {
+  Chart(this.snapshot, this.config)
+      : assert(
+          config.nakEquatorial ||
+              snapshot.sweConfig.nakAyanamsa != Ayanamsa.dhruva,
+          'Dhruva ayanamsa requires nakEquatorial=true',
+        ) {
     rashi = Rashi(snapshot, config);
     _vargaCache[VargaType.rashi] = rashi;
 

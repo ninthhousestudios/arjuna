@@ -10,8 +10,10 @@ class Cusp {
   /// The cusp longitude.
   final Longitude longitude;
 
-  Cusp(this.house, double eclipticLongitude, CalcConfig config)
-      : longitude = Longitude(eclipticLongitude, VargaType.rashi, config);
+  Cusp(this.house, double eclipticLongitude, CalcConfig config,
+      {double? nakLongitude})
+      : longitude = Longitude(eclipticLongitude, VargaType.rashi, config,
+            nakLongitude: nakLongitude);
 
   int get sign => longitude.sign;
   int get nakshatra => longitude.nakshatra;
