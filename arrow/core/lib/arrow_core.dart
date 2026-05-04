@@ -21,3 +21,4 @@ export 'src/sign.dart';
 export 'src/sign_data.dart';
 export 'src/varga.dart';
 export 'src/varga_deities.dart';
+export 'src/varga_math.dart';
