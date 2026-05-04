@@ -183,7 +183,6 @@ void main() {
       final options = ArrowOptions(
         sweConfig: SweConfig(
           stars: {Star.aldebaran},
-          includeStarData: false,
         ),
       );
       final snap = facade.calcAll(jdUt, _testLocation, options);
@@ -196,10 +195,10 @@ void main() {
         sweConfig: SweConfig(
           bodies: {},
           stars: {Star.aldebaran, Star.sirius},
-          includeStarData: true,
         ),
       );
-      final snap = facade.calcAll(jdUt, _testLocation, options);
+      final snap = facade.calcAll(jdUt, _testLocation, options,
+          includeStarData: true);
 
       expect(snap.starData, hasLength(2));
 
@@ -223,10 +222,10 @@ void main() {
         sweConfig: SweConfig(
           bodies: {},
           customStarNames: {'Sirius'},
-          includeStarData: true,
         ),
       );
-      final snap = facade.calcAll(jdUt, _testLocation, options);
+      final snap = facade.calcAll(jdUt, _testLocation, options,
+          includeStarData: true);
       expect(snap.customStarData, contains('Sirius'));
       expect(snap.customStarData['Sirius']!.apparentMagnitude, isNotNull);
     });

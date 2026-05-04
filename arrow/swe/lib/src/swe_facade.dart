@@ -44,7 +44,12 @@ class SweFacade {
   }
 
   /// Compute a complete ephemeris snapshot.
-  EphSnapshot calcAll(double jdUt, Location location, ArrowOptions options) {
+  EphSnapshot calcAll(
+    double jdUt,
+    Location location,
+    ArrowOptions options, {
+    bool includeStarData = false,
+  }) {
     final sweConfig = options.sweConfig;
     final loc = location;
 
@@ -196,7 +201,7 @@ class SweFacade {
     // Star data (magnitude + rise/set).
     final starDataMap = <Star, StarData>{};
     final customStarDataMap = <String, StarData>{};
-    if (sweConfig.includeStarData) {
+    if (includeStarData) {
       for (final star in sweConfig.stars) {
         starDataMap[star] = _calcStarData(
           star.sweName, jdUt, loc, sweConfig,

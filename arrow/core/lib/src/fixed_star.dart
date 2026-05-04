@@ -22,7 +22,7 @@ class FixedStar extends SkyObject {
   /// Nakshatra number (1-27) if this star is a junction star (yogatara).
   final int? junctionOf;
 
-  /// Magnitude and rise/set data. Null when [SweConfig.includeStarData] is off.
+  /// Magnitude and rise/set data. Null when `includeStarData` is not requested.
   final StarData? starData;
 
   /// Apparent magnitude — from [StarData] if available, else [Star.traditionalMag].

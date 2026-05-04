@@ -5,8 +5,8 @@ part 'star_data.g.dart';
 
 /// Magnitude and rise/set data for a fixed star.
 ///
-/// Rise/set fields require [SweConfig.includeStarData] — they are null
-/// when that flag is off (or when the star is circumpolar / never rises).
+/// Rise/set fields require `includeStarData: true` on [SweFacade.calcAll] —
+/// they are null when that flag is off (or when the star is circumpolar).
 @freezed
 abstract class StarData with _$StarData {
   const factory StarData({

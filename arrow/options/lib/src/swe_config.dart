@@ -36,7 +36,6 @@ abstract class SweConfig with _$SweConfig {
     @Default(<ReferencePoint>{}) Set<ReferencePoint> extraFrames,
     @Default(<Star>{}) Set<Star> stars,
     @Default(<String>{}) Set<String> customStarNames,
-    @Default(false) bool includeStarData,
     @Default(Ayanamsa.dhruva) Ayanamsa nakAyanamsa,
   }) = _SweConfig;
 
