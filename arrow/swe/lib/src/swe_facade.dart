@@ -36,14 +36,17 @@ class SweFacade {
   /// [jplFile] is the JPL ephemeris filename (e.g. `de431.eph`) resolved
   /// against [ephePath]. Required to use [EphemerisSource.jplEph].
   SweFacade(SwissEph swe, {this.ephePath, this.jplFile}) : _swe = swe {
-    if (ephePath != null) {
-      _log.info('setEphePath=$ephePath');
-      _swe.setEphePath(ephePath!);
-    }
-    if (jplFile != null) {
-      _log.info('setJplFile=$jplFile');
-      _swe.setJplFile(jplFile!);
-    }
+    _ensureConfig();
+  }
+
+  /// Re-apply ephePath and jplFile to the C-side globals.
+  ///
+  /// SwissEph's global state can drift across await points and is aggressively
+  /// cleared during Android background→resume. Cheap and idempotent — call
+  /// before every public entry point.
+  void _ensureConfig() {
+    if (ephePath != null) _swe.setEphePath(ephePath!);
+    if (jplFile != null) _swe.setJplFile(jplFile!);
   }
 
   /// Compute a complete ephemeris snapshot.
@@ -55,6 +58,7 @@ class SweFacade {
   }) {
     final loc = location;
 
+    _ensureConfig();
     _log.info('calcAll jdUt=$jdUt bodies=${sweConfig.bodies.length} '
         'extraFrames=${sweConfig.extraFrames}');
 
@@ -594,16 +598,20 @@ class SweFacade {
   ///
   /// Non-standard ayanamsas (custom `setSidModeEx` configurations) are not
   /// supported here; pass a standard [Ayanamsa].
-  double getAyanamsa(double jdEt, Ayanamsa ayanamsa) =>
-      _ayanamsaWith(ayanamsa, () => _swe.getAyanamsa(jdEt));
+  double getAyanamsa(double jdEt, Ayanamsa ayanamsa) {
+    _ensureConfig();
+    return _ayanamsaWith(ayanamsa, () => _swe.getAyanamsa(jdEt));
+  }
 
   /// Ayanamsa value (arc-degrees) for universal time [jdUt] under [ayanamsa].
   ///
   /// UT counterpart of [getAyanamsa]. Differs by roughly delta-T (~64s worth
   /// of precession ≈ 0.001°) — negligible for sign-level work, meaningful
   /// for sub-arcsecond calculations.
-  double getAyanamsaUt(double jdUt, Ayanamsa ayanamsa) =>
-      _ayanamsaWith(ayanamsa, () => _swe.getAyanamsaUt(jdUt));
+  double getAyanamsaUt(double jdUt, Ayanamsa ayanamsa) {
+    _ensureConfig();
+    return _ayanamsaWith(ayanamsa, () => _swe.getAyanamsaUt(jdUt));
+  }
 
   double _ayanamsaWith(Ayanamsa ayanamsa, double Function() compute) {
     if (ayanamsa.isTropical) return 0.0;
@@ -619,6 +627,7 @@ class SweFacade {
   /// rather than computing tropical and subtracting. Only for standard SWE
   /// ayanamsas (codes 0–96).
   double calcSiderealLongitude(double jdUt, int sweId, Ayanamsa ayanamsa) {
+    _ensureConfig();
     assert(ayanamsa.isStandard);
     _swe.setSidMode(ayanamsa.sweCode);
     final flags = ephemerisFlag(EphemerisSource.swissEph) |
@@ -632,8 +641,10 @@ class SweFacade {
   ///
   /// Delegates to the free function [dhruvaGcEquatorial] which anchors
   /// the nakshatra system equatorially on Sgr A*.
-  double calcDhruvaLongitude(double jdUt, int sweId) =>
-      dhruvaGcEquatorial(_swe, jdUt, sweId);
+  double calcDhruvaLongitude(double jdUt, int sweId) {
+    _ensureConfig();
+    return dhruvaGcEquatorial(_swe, jdUt, sweId);
+  }
 
   /// Find the four tropical cardinal points of calendar [year]: the JDs (UT)
   /// at which the Sun reaches tropical longitudes 0°, 90°, 180°, 270°.
@@ -645,6 +656,7 @@ class SweFacade {
     int year, {
     EphemerisSource source = EphemerisSource.swissEph,
   }) {
+    _ensureConfig();
     final jdStart = _swe.julday(year, 1, 1, 0.0);
     final flags = ephemerisFlag(source);
     _log.info('calcCardinalPoints year=$year jdStart=$jdStart');
