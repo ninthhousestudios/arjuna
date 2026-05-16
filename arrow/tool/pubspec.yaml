@@ -13,4 +13,4 @@ dependencies:
     path: ../options
   arrow_swe:
     path: ../swe
-  swisseph: ^0.4.6
+  swisseph: ^0.5.0
