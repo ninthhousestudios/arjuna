@@ -18,7 +18,9 @@ dependencies:
   arrow_options:
     path: ../arrow/options
   charts_dart:
-    path: ../../charts_dart
+    git:
+      url: https://gitlab.com/ninthhouse/charts_dart.git
+      ref: main
   grpc: ^5.0.0
   protobuf: ^6.0.0
   args: ^2.6.0

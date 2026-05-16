@@ -12,3 +12,7 @@ pubspec.lock
 # Generated
 *.freezed.dart
 *.g.dart
+!options/lib/**/*.freezed.dart
+!options/lib/**/*.g.dart
+!swe/lib/**/*.freezed.dart
+!swe/lib/**/*.g.dart
