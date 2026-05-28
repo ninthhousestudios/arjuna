@@ -6,6 +6,8 @@ build/
 .flutter-plugins-dependencies
 pubspec.lock
 
+doc/handoff.md
+
 # Melos
 .melos/
 
