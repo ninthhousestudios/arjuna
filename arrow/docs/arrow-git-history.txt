@@ -1,0 +1,410 @@
+commit fe82448850a6b5c2b92e6eaac47ad78e6513b533
+Author: josh <josh@ninthhouse.studio>
+Date:   Wed Apr 22 08:56:09 2026 -0400
+
+    Address code review findings: tests, DRY, and firstStrength sort bug
+    
+    Tests added:
+    - cheshtaBala: Sun/Moon exact values, inner/outer planet bounds, JD sensitivity
+    - saptavargajaBala: uniform dignity sums, mixed dignities, exalted/debilitated
+      natural-friendship fallback
+    - firstStrength: karaka count ranking, dignity ranking, modality ranking,
+      deterministic output, KN Rao tiebreaker
+    
+    Bug fixed:
+    - firstStrength comparator had ascending sort at levels 1, 4, 6, 7 where
+      descending was intended (higher dignity/distance/sign should rank stronger).
+      Levels 0, 2, 3, 5 correctly used reversed comparison; the others did not.
+    
+    Refactored:
+    - Vimshottari: extracted shared _durationDays helper from _calcCurrent and
+      _buildTree (~5 duplicated lines each), replaced _pow120 loop with math.pow
+    - Added cross-reference comments linking Jaimini._isMalefic (fixed natural
+      malefics for argala) and NabhasaYogaCalc benefic/malefic lists (conditional
+      Moon, no nodes) to clarify they are distinct classifications
+    
+    Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>
+
+commit b6740992d7056b0849a7d1c694225f4007645882
+Author: josh <josh@ninthhouse.studio>
+Date:   Wed Apr 22 08:46:44 2026 -0400
+
+    Add RashiAspectMode (quadrant/element/conventional) to VedicConfig
+    
+    Libaditya supports three rashi aspect tables; arrow only had the conventional
+    one hardcoded. Port all three tables, default to quadrant (matching libaditya),
+    and wire the mode through RashiAspect and Jaimini.secondStrength.
+    
+    Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>
+
+commit 76faa3fe9d22245277128b98cf7c93638ab4553b
+Author: josh <josh@ninthhouse.studio>
+Date:   Tue Apr 21 21:16:40 2026 -0400
+
+    Implement vimshottari, jaimini, shadbala, and nabhasa yogas in arrow_calc
+    
+    Port four major Vedic calculation modules from libaditya:
+    - Vimshottari dasha engine (seed, currentDasha, specificPeriod, fullTree)
+    - Jaimini system (rashi aspects, padas, argala, bandhana, three sign strengths)
+    - Shadbala six-fold strength (ucca, saptavargaja, sama-visama, kendradi,
+      drekkana, dig, ayana, cheshta, drig bala)
+    - Nabhasa yogas (32 nabhasa, 5 panchamahapurusha, 3 solar, 4 lunar)
+    
+    DashaYearLength enum moved to arrow_options with all 6 libaditya year
+    lengths (saura, nakshatra, savana, sidereal, chandra, lunar) and wired
+    into VedicConfig.
+    
+    Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>
+
+commit 1cf80d4e15343fb2335a85e3b46d4b6b85efffde
+Author: josh <josh@ninthhouse.studio>
+Date:   Tue Apr 21 09:44:35 2026 -0400
+
+    Address code review findings: decompose god functions, extract test helpers, unify dispatch
+    
+    - Decompose Lajjitaadi.compute (CC 41) into 8 focused static methods
+      (_scanInteractions, _checkDelighted/Starved/Agitated/Thirsty,
+      _checkSignLord, _checkDignity, _checkShamed, _buildResults)
+    - Unify _parivrittiDeity / lookupDeity parallel dispatch with
+      _deityVargaByAmsha map; cache reversed deity tables
+    - Extract shared _stubSnapshot (3 files) and _findEphePath (3 files)
+      into test helper modules
+    - DRY getAyanamsa/getAyanamsaUt via _ayanamsaWith helper
+    - Add table-driven lookupDeity tests (14 cases, exhaustive parity)
+    - Add 5 new lajjitaadi unit tests for edge cases
+    - Archive stale claude/ design sketches to claude/archived/
+    - Fix lint: rename generate-test-data.dart, remove unused imports,
+      fix doc-comment HTML
+    - Make karakas/grahas lists private, add Cusp equatorial comment,
+      rename Varga._init → _initMaps
+    
+    Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>
+
+commit 8bfe1e8423baa754977ec0b4c43f310e02fe5077
+Author: josh <josh@ninthhouse.studio>
+Date:   Tue Apr 21 08:20:14 2026 -0400
+
+    Implement arrow_core completion plan: inheritance, typed accessors, dignity, vargas
+    
+    Change Graha from composition to inheritance (Planet → Graha → Karaka).
+    Add typed accessors on Chart/Varga, wire dignity/combustion to Karaka,
+    retain cusps in Varga with nakshatra/pada, add D7 saptamsha and D30
+    trimsamsha dedicated methods. Step 6 (nakshatra ayanamsa) deferred.
+    
+    Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>
+
+commit 413b4b2134ae6701551d77829055cd44d1c5d8c2
+Author: josh <josh@ninthhouse.studio>
+Date:   Mon Apr 20 17:29:28 2026 -0400
+
+    Add libaditya port inventory and implementation plans
+    
+    Inventory of libaditya calculations not yet in Arrow (docs/to-implement.md)
+    and detailed implementation plans for the six most complete features:
+    vimshottari dasha, shadbala, yogas, jaimini + rashi aspects, human design,
+    and cards of truth.
+    
+    Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>
+
+commit c78f7815b90d64cfe60dd4146c88ac55cf23a6e3
+Author: josh <josh@ninthhouse.studio>
+Date:   Thu Apr 16 09:49:01 2026 -0400
+
+    Port libpanchanga to arrow_calc/vedic/panchanga
+    
+    Verbatim port of tithi, karana, nakshatra, yoga, vara, next-boundary
+    refiners, and the vedangaJyotisha offset helper. IAST names live in
+    panchanga_names.dart (not in the barrel — access via class fields).
+    
+    Arrow's Ayanamsa.eclipticVedangaJyotisha enum entry is not yet wired
+    through swe_facade; vedangaJyotishaEcliptic() is the pure utility
+    counterpart for ad-hoc tropical→sidereal conversion.
+    
+    Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>
+
+commit 39ae46a27771a5410192776fc07db4aabedc3f0b
+Author: josh <josh@ninthhouse.studio>
+Date:   Thu Apr 16 09:37:13 2026 -0400
+
+    Fix SynodicState.isWaxing using Sun-body longitude difference
+    
+    Phase angle alone (Swe returns it via acos in [0, 180]) cannot
+    distinguish waxing from waning. Switch to Sun-body Δλ with per-body
+    convention: Moon east of Sun, Mercury/Venus west of Sun. isWaxing is
+    now bool? — null for Sun, outers, and Chiron where it's not meaningful.
+    
+    Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>
+
+commit 757f1dee2beebd37b1d7ff58e432a8e07a02e4fb
+Author: josh <josh@ninthhouse.studio>
+Date:   Thu Apr 16 09:31:23 2026 -0400
+
+    Document SynodicState.isWaxing bug
+    
+    swe_pheno returns phase angle in [0, 180°] (acos output), but
+    SynodicState.from() assumes [0, 360°] and treats anything ≤180° as
+    waxing — so isWaxing is always true. Doc explains root cause, the
+    geometry of why phase angle alone can't determine waxing/waning, the
+    correct per-body longitude-difference formula, and a suggested fix.
+    
+    Discovered while wiring lunar phase from ephemeris in skybreath.
+    
+    Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>
+
+commit 02e273dbcddfa2e75c2a3ed22ed73ead7d383a71
+Author: josh <josh@ninthhouse.studio>
+Date:   Tue Apr 14 08:24:28 2026 -0400
+
+    Expose getAyanamsa / getAyanamsaUt on SweFacade
+    
+    Wraps swisseph.dart's ET and UT ayanamsa lookups for ad-hoc use outside
+    a full snapshot. Takes an Ayanamsa enum, applies setSidMode for standard
+    values, returns 0.0 for tropical. EphSnapshot.ayanamsaValue (UT) remains
+    the in-snapshot channel; these methods cover ET input and one-off calls.
+    
+    Integration-tested against raw SWE at J2000 (Lahiri match, UT/ET close
+    within delta-T, ayanamsa switching is stateless from caller view).
+    
+    Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>
+
+commit dacce36ec9becfccf7a1639c4c3f1c4181a582dd
+Author: josh <josh@ninthhouse.studio>
+Date:   Tue Apr 14 08:20:53 2026 -0400
+
+    Add Sun cardinal points + barycentric/heliocentric reference frames
+    
+    Two Arrow additions:
+    
+    - Sun domain model (core/lib/src/sun.dart) with static cardinalPointsOf(year)
+      returning the four tropical cardinal points (equinoxes + solstices) for a
+      calendar year. Calc lives in SweFacade.calcCardinalPoints via solCrossUt.
+    - ReferencePoint enum + SweConfig.extraFrames opt-in for barycentric and
+      heliocentric ecliptic positions. EphSnapshot now carries nullable per-frame
+      body maps; CelestialBody exposes bary/helio position + rashi-longitude
+      getters. Moshier+barycentric fails fast; Sun is skipped in heliocentric;
+      Ketu mirrors Rahu in every frame; topocentric flag is stripped from
+      extra-frame calls (meaningless against SSB/Sun origin).
+    
+    Implements arrow/claude/impl/reference-points.md end-to-end.
+    
+    Tests: unit coverage for ReferencePoint, CardinalPoints, and
+    CelestialBody extra-frame getters. Integration tests (tagged `integration`,
+    auto-skip when ARROW_EPHE_PATH is unset) verify bary-Sun reference values
+    from docs/reference-points.md, Moshier rejection, ayanamsa composition,
+    Ketu mirroring, and cardinal-point dates for 2000/2024/2026.
+    
+    Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>
+
+commit 5012d7d0a5db5d749428c7ee5e5d1ccc80fcb2c1
+Author: josh <josh@ninthhouse.studio>
+Date:   Tue Apr 14 07:20:41 2026 -0400
+
+    Arrow SWE plumbing: ephemeris source, ephe path, full ayanamsa coverage
+    
+    Options layer
+    - Add EphemerisSource enum (swissEph, moshier, jplEph).
+    - Add SweConfig.ephemerisSource (default swissEph — preserves behavior).
+    - Fix Ayanamsa bugs: ushashashi was coded 18 (actually J2000); djwhalKhul
+      was coded 4 (actually ushashashi). Rename galCenterBrand (was 34 =
+      galalignMardyks) to its correct SWE name; add separate galcentRgilbrand
+      at 30.
+    - Expand Ayanamsa enum to cover every standard SWE sid mode 0..46
+      (24 new entries: babylonian variants, epoch frames, galactic center /
+      equator variants, SS Revati/Citra, Aryabhata 522, Lahiri variants,
+      Krishnamurti VP291, Lahiri ICRC). User code 255 deferred (needs
+      t0/ayanT0 config).
+    
+    SWE layer
+    - SweFacade(swe, {ephePath, jplFile}) — constructor calls setEphePath /
+      setJplFile once. Drops the hardcoded seFlgSwiEph in calcAll; routes
+      through ephemerisFlag(source). JPL source now usable (no more throw)
+      when jplFile is supplied.
+    - Extract ephemerisFlag() to its own file so it's testable without
+      constructing a SwissEph instance.
+    
+    Tooling
+    - generate-test-data.dart gains --ephe-path, $ARROW_EPHE_PATH env, and
+      auto-discovery (libaditya/ephe, ~/.arrow/ephe, /usr/local/share/swisseph).
+    
+    Docs
+    - Update api-reference for the new SweFacade signature.
+    - Add claude/impl/stars.md — 5-wave plan for porting libaditya/stars
+      (Star enum, fixstar wiring, FixedStar domain, magnitude/rise-set,
+      13-constellation Ecliptic). Excludes Stellarium bridge and SIMBAD
+      catalog tooling.
+    - Add claude/impl/reference-points.md — 3-wave plan for barycentric /
+      heliocentric positions via SweConfig.extraFrames (driving consumer:
+      skybreath). Moshier+barycentric fails fast; Sun skipped in helio.
+    - docs/reference-points.md captures the underlying design.
+    
+    Tests
+    - New ephemeris_flag_test.dart: 6 tests covering flag mapping and
+      distinctness.
+    - enums_test.dart: 7 new ayanamsa tests covering the bug fixes and
+      full 0..46 coverage check.
+    
+    Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>
+
+commit 210ec81af3af9970f9ead71ed8685f409f24d7d1
+Author: josh <josh@ninthhouse.studio>
+Date:   Mon Apr 13 23:02:09 2026 -0400
+
+    Skybreath prep: add Body.chiron; move motion/synodic to core
+    
+    Body.chiron (sweId 15) slots between pluto and rahu — left out of
+    grahas/karakas (body, not a graha).
+    
+    Direction, SpeedClass, ElongationCategory, SynodicState move from
+    arrow_calc/vedic/{motion,synodic}.dart to arrow_core/src/motion_state.dart.
+    Planet exposes direction / speedClass / synodicState getters; Chart gets
+    a synodicStates map. Consumers no longer need arrow_calc for per-body
+    motion classification.
+    
+    No back-compat shim — no existing consumers.
+    
+    Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>
+
+commit 49214d810c69b633a491f5ce5be0fafe6434973f
+Author: josh <josh@ninthhouse.studio>
+Date:   Mon Apr 13 22:25:57 2026 -0400
+
+    Address Wave 5 code review: route calcSynodicAll through Planet; tighten doc + integration seams
+    
+    - synodic.dart: calcSynodicAll now iterates via chart.rashi.planet() +
+      calcSynodic, matching the per-Planet overload instead of reaching into
+      EphSnapshot internals.
+    - synodic.dart: drop dead `pa < 0` branch in SynodicState.from (Dart's
+      `double %` with positive divisor already normalizes to [0, 360)).
+    - synodic.dart: doc correction — gibbous bucket is a deliberate
+      deviation from plan's 5-bucket spec, not a match. Flagged inline.
+    - full_pipeline_test.dart: Lajjitaadi now derives lagnaSign + fifthCuspSign
+      from snapshot.ascmc.ascendant and snapshot.cusps[4] through Longitude —
+      exercises the Chart→cusps wiring instead of hardcoding 1/5.
+    - full_pipeline_test.dart: Motion assertion strengthened — Mars retrograde
+      stub must classify as Direction.retrograde (catches sign-flip regression).
+    
+    Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>
+
+commit 169266c7260eaf9da44d439a9f74d73af8ce6099
+Author: josh <josh@ninthhouse.studio>
+Date:   Mon Apr 13 22:19:06 2026 -0400
+
+    Implement arrow_calc SkyBreath wave 5: Synodic state + full-pipeline integration
+    
+    Issue 12 — Synodic state (calc/lib/src/vedic/synodic.dart):
+      - ElongationCategory enum (6 buckets: conjunction, nearConjunction,
+        earlyElongation, quadrature, gibbous, opposition).
+      - SynodicState wraps PhenoData with category + isWaxing derived from
+        phaseAngle (normalized mod 360).
+      - Synodic.calcSynodic(Planet) returns null for Rahu/Ketu.
+      - Synodic.calcSynodicAll(Chart) is sparse — nodes omitted.
+    
+    Issue 13 — Full-pipeline integration test:
+      - Builds stub Chart, exercises every unit (dignity, Baladi, Jagradadi,
+        Deeptadi, Lajjitaadi, Motion, Synodic, Aspect) end-to-end.
+      - Pure wiring check — golden comparisons stay in per-unit suites.
+    
+    Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>
+
+commit a6f13a9e6832a1ff255cd0bd4e02db850b0833a5
+Author: josh <josh@ninthhouse.studio>
+Date:   Mon Apr 13 22:11:19 2026 -0400
+
+    Implement arrow_calc SkyBreath wave 4: Lajjitaadi + Motion; Moon nature contextual
+    
+    Issue 10 (Lajjitaadi): port libaditya avasthas.py:43-206 to
+    calc/lib/src/vedic/lajjitaadi.dart. Seven states (delighted/starved/
+    agitated/thirsty/shamed/healthy/proud), LajjitaadiFactor data class, and
+    the bidirectional giving/receiving pass from :183-205.
+    
+    Issue 11 (Motion): SpeedClass {fast,mean,slow,stationary} + Direction
+    {direct,stationary,retrograde} in calc/lib/src/vedic/motion.dart. Uses
+    meanDailyMotion + stationThreshold from Issue 4. 0.8/1.2 bands documented
+    as heuristic (libaditya has no classifier).
+    
+    Nature: Moon is now contextual, ported from libaditya planets.py:1652.
+    Nature.of(Body.moon) requires sunLongitude + moonLongitude; throws
+    otherwise. Nature.ofMoon({sunLongitude, moonLongitude}) is the direct
+    API. Shukla Paksha (waxing, ≤180°) = benefic; Krishna Paksha = malefic.
+    Mercury/Jupiter/Venus stay fixed benefics per libaditya.
+    
+    Deeptadi + Lajjitaadi updated to use the contextual Moon path.
+    
+    Fixture generator (tool/bin/gen-libaditya-fixtures.py) now emits
+    lagna_sign + fifth_cusp_sign — needed for the Lajjitaadi shamed
+    trigger (5th-sign-from-lagna + 5th-cusp checks). All 5 libaditya-golden
+    fixtures regenerated with the new fields.
+    
+    Golden test (calc/test/vedic/avastha_golden_test.dart) now asserts full
+    Lajjitaadi structure per chart with 1e-6 strength tolerance. Factor
+    lists are sorted by canonical key so order doesn't drift between
+    libaditya's Python dict order and Dart's insertion order.
+    
+    Tests: calc 162 passing, core nature 16 passing, 0 analyze issues.
+    
+    Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>
+
+commit 9ff40465b7431a1883b14cd9c2691a322e144542
+Author: josh <josh@ninthhouse.studio>
+Date:   Mon Apr 13 21:54:52 2026 -0400
+
+    Implement arrow_calc SkyBreath waves 1-3: avasthas scaffold + Baladi/Jagradadi/Deeptadi
+    
+    Wave 1 — Prerequisites (Issues 1-5):
+    - `Nature.of(Body)` in arrow_core — 13-body benefic/malefic/neutral table
+    - `Aspect` in arrow_calc — degree-based Parashara drishti ported from
+      libaditya planets.py with Mars/Jupiter/Saturn overrides; exposes
+      `strength()`, `isConjunction()`, `doesAspect()`
+    - `PhenoData` freezed in arrow_swe + sparse `phenoData` map on EphSnapshot;
+      `SweFacade._safePheno()` skips Rahu/Ketu (mathematical nodes)
+    - `meanDailyMotion` + `stationThreshold` (10% heuristic) in arrow_core
+    - arrow_calc package scaffolded, wired into workspace
+    
+    Wave 2 — Fixtures (Issue 6):
+    - 5 libaditya golden fixtures under `arrow/calc/test/fixtures/libaditya-golden/`
+    - `tool/bin/gen-libaditya-fixtures.py` driver; fixtures now include
+      retrograde + dignities alongside bodies_ecliptic
+    
+    Wave 3 — Avasthas (Issues 7-9):
+    - `Baladi` — age-by-degree, even-sign reversal
+    - `Jagradadi` — alertness from DignityType
+    - `Deeptadi` — 9-state priority cascade; combustion via `Dignity.isCombust`;
+      step 6 Peedita uses conjunction-only (libaditya `aspect == "Y"`), not
+      strength-based aspect — this diverges from Lajjitaadi and caught two
+      golden-test regressions during the port
+    
+    Golden harness (`avastha_golden_test.dart`) runs all three avasthas
+    against all 5 fixtures — 105 assertions, all green. Totals: core 170,
+    swe 16, calc 135.
+
+commit 781884852c186565001f44edaf9059d2e543599e
+Author: josh <josh@ninthhouse.studio>
+Date:   Tue Apr 7 18:40:03 2026 -0400
+
+    Add Chart/Varga/Rashi views, Dignity tables, and CharaKaraka assignment (Issues 7-8)
+    
+    Issue 7: Sign, Nakshatra, Varga, Rashi, Chart classes providing chart-scoped
+    views over EphSnapshot with sign/nakshatra occupant grouping and lazy varga caching.
+    Issue 8: Dignity calculation ported from libaditya (exaltation, debilitation,
+    moolatrikona, own sign, natural/temporal/compound friendship, combustion) plus
+    Jaimini chara karaka assignment by in-sign longitude sorting.
+    
+    Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>
+
+commit 0659257ef70785a551d64fc1851cc57198168ff6
+Author: josh <josh@ninthhouse.studio>
+Date:   Tue Apr 7 18:28:31 2026 -0400
+
+    Implement Arrow Skybreath issues 1-6, 9: monorepo scaffold through domain model
+    
+    - Melos 7.x workspace with 4 packages: options, swe, core, tool
+    - arrow_options: enums (Body, Ayanamsa, HouseSystem, VargaType, etc.),
+      freezed configs (SweConfig, CalcConfig, ArrowOptions), presets
+    - arrow_swe: EphSnapshot, BodyPosition, SweFacade wrapping swisseph
+    - arrow_core: Longitude with 14 varga calculation methods, sign/nakshatra
+      data tables, domain model (CelestialBody → Planet → Graha → Karaka, Cusp)
+    - arrow_tool: chtk reader and test fixture generator scaffold
+    
+    134 tests passing, 0 analysis issues across all packages.
+    
+    Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>

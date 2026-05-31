@@ -19,7 +19,7 @@ Universal astrological calculation service.
 ## Architecture
 
 ```
-Flutter App (Celestial, etc.)              Remote Quiver (Dart gRPC)
+Flutter App (Aion, etc.)              Remote Quiver (Dart gRPC)
     │                                          │
     └── Vayu ─── Local Arrow (on-device)       ├── Arrow (server-side, isolates)
               └── gRPC to Remote Quiver        ├── Broadhead proxy
@@ -32,7 +32,7 @@ Arrow is the same Dart engine running on-device and server. One engine everywher
 ### Arrow — 3-Layer Pipeline
 
 ```
-arrow_swe    ← sweph.dart (dart:ffi) → EphSnapshot (immutable bridge)
+arrow_swe    ← swisseph.dart (dart:ffi) → EphSnapshot (immutable bridge)
 arrow_core   ← pure Dart: signs, nakshatras, vargas, dignities, karakas
 arrow_calc   ← pure Dart: dashas, yogas, shadbala, ashtakavarga
 ```
@@ -53,4 +53,4 @@ arjuna/
 
 ## Status
 
-Pre-implementation — architecture designed, code coming.
+basic implementation

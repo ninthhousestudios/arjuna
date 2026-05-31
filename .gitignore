@@ -5,6 +5,8 @@ build/
 .flutter-plugins
 .flutter-plugins-dependencies
 pubspec.lock
+.codex
+.sutra/
 
 doc/handoff.md
 
