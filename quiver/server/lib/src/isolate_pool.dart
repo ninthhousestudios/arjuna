@@ -257,7 +257,7 @@ void _workerEntryPoint(List<Object?> initMessage) {
   final log = Logger('Quiver.Server.IsolatePool.Worker${init.workerId}');
 
   // Each isolate gets its own SwissEph instance — dart:ffi state is per-isolate.
-  final swe = SweFacade(SwissEph.find(), ephePath: init.ephePath);
+  final swe = SweFacade.create(ephePath: init.ephePath);
   log.fine('Worker ${init.workerId} initialized');
 
   // Create a receive port for incoming requests and send it back.
@@ -275,7 +275,7 @@ void _workerEntryPoint(List<Object?> initMessage) {
       final location = Location.fromJson(locationMap);
       final options = ArrowOptions.fromJson(optionsMap);
 
-      final snapshot = swe.calcAll(request.jdUt, location, options);
+      final snapshot = swe.calcAll(request.jdUt, location, options.sweConfig);
       final response = _CalcResponse(
         id: request.id,
         snapshotJsonStr: jsonEncode(snapshot.toJson()),

@@ -39,6 +39,14 @@ class SweFacade {
     _ensureConfig();
   }
 
+  factory SweFacade.create({String? ephePath, String? jplFile}) {
+    return SweFacade(SwissEph.find(), ephePath: ephePath, jplFile: jplFile);
+  }
+
+  void dispose() {
+    _swe.close();
+  }
+
   /// Re-apply ephePath and jplFile to the C-side globals.
   ///
   /// SwissEph's global state can drift across await points and is aggressively

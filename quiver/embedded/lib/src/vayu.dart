@@ -15,21 +15,17 @@ final _log = Logger('Quiver.Embedded');
 /// - [recalculate] — re-derives a [Chart] from an existing snapshot with
 ///   a different [CalcConfig] (no SWE re-computation).
 ///
-/// Call [dispose] when finished to release the native SwissEph handle.
+/// Call [dispose] when finished to release the ephemeris handle.
 class Vayu {
   final SweFacade _swe;
-  final SwissEph _swissEph;
   bool _disposed = false;
 
-  Vayu._({required SwissEph swissEph, required SweFacade swe})
-      : _swissEph = swissEph,
-        _swe = swe;
+  Vayu._({required SweFacade swe}) : _swe = swe;
 
   factory Vayu({String? ephePath, String? jplFile}) {
-    final swe = SwissEph.find();
-    final facade = SweFacade(swe, ephePath: ephePath, jplFile: jplFile);
+    final facade = SweFacade.create(ephePath: ephePath, jplFile: jplFile);
     _log.info('Vayu created (ephePath=$ephePath, jplFile=$jplFile)');
-    return Vayu._(swissEph: swe, swe: facade);
+    return Vayu._(swe: facade);
   }
 
   /// Full pipeline: DateTime (UTC) → [Chart].
@@ -41,7 +37,7 @@ class Vayu {
     assert(dateTimeUtc.isUtc, 'dateTimeUtc must be in UTC');
     _checkNotDisposed();
     final jd = julianDay(dateTimeUtc);
-    final snapshot = _swe.calcAll(jd, location, options);
+    final snapshot = _swe.calcAll(jd, location, options.sweConfig);
     return Chart(snapshot, options.calcConfig);
   }
 
@@ -54,7 +50,7 @@ class Vayu {
     assert(dateTimeUtc.isUtc, 'dateTimeUtc must be in UTC');
     _checkNotDisposed();
     final jd = julianDay(dateTimeUtc);
-    return _swe.calcAll(jd, location, options);
+    return _swe.calcAll(jd, location, options.sweConfig);
   }
 
   /// Re-derive a [Chart] from an existing [snapshot] with a different config.
@@ -65,10 +61,10 @@ class Vayu {
     return Chart(snapshot, config);
   }
 
-  /// Release the native SwissEph handle. Subsequent calls throw [StateError].
+  /// Release the ephemeris handle. Subsequent calls throw [StateError].
   void dispose() {
     if (!_disposed) {
-      _swissEph.close();
+      _swe.dispose();
       _disposed = true;
       _log.info('Vayu disposed');
     }

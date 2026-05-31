@@ -53,8 +53,8 @@ void main() {
       final poolSnap = await pool.calculate(testJd, testLocation, testOptions);
 
       // Direct SweFacade result.
-      final swe = SweFacade(SwissEph.find());
-      final directSnap = swe.calcAll(testJd, testLocation, testOptions);
+      final swe = SweFacade.create();
+      final directSnap = swe.calcAll(testJd, testLocation, testOptions.sweConfig);
 
       // Compare body ecliptic longitudes.
       for (final body in directSnap.bodiesEcliptic.keys) {
