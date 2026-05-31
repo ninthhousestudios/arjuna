@@ -41,6 +41,17 @@ class Vayu {
     return Chart(snapshot, options.calcConfig);
   }
 
+  /// Full pipeline from Julian Day (UT) → [Chart].
+  Chart calculateChartFromJd(
+    double jd,
+    Location location,
+    ArrowOptions options,
+  ) {
+    _checkNotDisposed();
+    final snapshot = _swe.calcAll(jd, location, options.sweConfig);
+    return Chart(snapshot, options.calcConfig);
+  }
+
   /// Partial pipeline: DateTime (UTC) → [EphSnapshot] (no Chart layer).
   EphSnapshot calculateSnapshot(
     DateTime dateTimeUtc,

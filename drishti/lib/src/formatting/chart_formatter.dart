@@ -1,14 +1,24 @@
 import 'package:quiver_embedded/quiver_embedded.dart';
 
 /// Format a [Chart] into a structured map suitable for MCP structured content.
+///
+/// The output shape matches aion's ExpressionKeys contract:
+///   planets[*]: id, name, longitude, sign, sign_index, degree_in_sign,
+///               retrograde, nakshatra, nakshatra_pada, house
+///   ascendant: sign_index (0-based), longitude
+///   houses[*]: number, sign_index (0-based), cusp_longitude
 Map<String, dynamic> formatChart(Chart chart) {
   final cusps = chart.cusps;
+  final ascSignIndex = (chart.ascendant / 30).floor() % 12;
   return {
     'summary': {
       'jd': chart.snapshot.jdUt,
       'ayanamsa': chart.snapshot.ayanamsaValue,
-      'ascendant': chart.ascendant,
       'mc': chart.mc,
+    },
+    'ascendant': {
+      'sign_index': ascSignIndex,
+      'longitude': chart.ascendant,
     },
     'planets': [
       for (final planet in chart.planets) _formatPlanet(planet, cusps),
@@ -33,21 +43,21 @@ Map<String, dynamic> _formatPlanet(Planet planet, List<Cusp> cusps) {
   final nak = planet.longitude.nakshatra;
 
   final result = <String, dynamic>{
+    'id': planet.body.name,
     'name': planet.body.name,
-    // Ecliptic longitude after ayanamsa correction (sidereal for Vedic presets).
     'longitude': planet.rawLongitude,
     'sign': sign,
+    'sign_index': sign - 1,
     'sign_name': _signName(sign),
-    'degrees_in_sign': planet.longitude.inSignLongitude,
+    'degree_in_sign': planet.longitude.inSignLongitude,
     'nakshatra': nak,
     'nakshatra_name': _nakshatraName(nak),
-    'pada': planet.longitude.pada,
-    'is_retrograde': planet.isRetrograde,
+    'nakshatra_pada': planet.longitude.pada,
+    'retrograde': planet.isRetrograde,
     'speed_class': planet.speedClass.name,
-    'house_number': _houseNumber(planet.rawLongitude, cusps),
+    'house': _houseNumber(planet.rawLongitude, cusps),
   };
 
-  // Only Karaka has dignity; check type at runtime.
   if (planet is Karaka) {
     result['dignity'] = planet.dignity.name;
     result['is_combust'] = planet.isCombust;
@@ -61,8 +71,9 @@ Map<String, dynamic> _formatHouse(int number, Cusp cusp) {
   return {
     'number': number,
     'sign': sign,
+    'sign_index': sign - 1,
     'sign_name': _signName(sign),
-    'longitude': cusp.longitude.eclipticLongitude,
+    'cusp_longitude': cusp.longitude.eclipticLongitude,
   };
 }
 

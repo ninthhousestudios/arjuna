@@ -33,14 +33,24 @@ void main() {
       expect(result, contains('houses'));
     });
 
-    test('summary contains jd, ayanamsa, ascendant, mc', () {
+    test('summary contains jd, ayanamsa, mc', () {
       final result = formatChart(chart);
       final summary = result['summary'] as Map<String, dynamic>;
       expect(summary, contains('jd'));
       expect(summary, contains('ayanamsa'));
-      expect(summary, contains('ascendant'));
       expect(summary, contains('mc'));
       expect(summary['jd'], isA<double>());
+    });
+
+    test('ascendant is a map with sign_index and longitude', () {
+      final result = formatChart(chart);
+      final asc = result['ascendant'] as Map<String, dynamic>;
+      expect(asc, contains('sign_index'));
+      expect(asc, contains('longitude'));
+      expect(asc['sign_index'], isA<int>());
+      expect(asc['sign_index'] as int, greaterThanOrEqualTo(0));
+      expect(asc['sign_index'] as int, lessThanOrEqualTo(11));
+      expect(asc['longitude'], isA<double>());
     });
 
     test('planets list has 9 entries for ernst preset', () {
@@ -55,16 +65,19 @@ void main() {
       final planets = result['planets'] as List;
       for (final planet in planets) {
         final p = planet as Map<String, dynamic>;
+        expect(p, contains('id'));
         expect(p, contains('name'));
         expect(p, contains('longitude'));
         expect(p, contains('sign'));
+        expect(p, contains('sign_index'));
         expect(p, contains('sign_name'));
-        expect(p, contains('degrees_in_sign'));
+        expect(p, contains('degree_in_sign'));
         expect(p, contains('nakshatra'));
         expect(p, contains('nakshatra_name'));
-        expect(p, contains('pada'));
-        expect(p, contains('is_retrograde'));
+        expect(p, contains('nakshatra_pada'));
+        expect(p, contains('retrograde'));
         expect(p, contains('speed_class'));
+        expect(p, contains('house'));
       }
     });
 
@@ -103,8 +116,9 @@ void main() {
         final h = houses[i] as Map<String, dynamic>;
         expect(h['number'], equals(i + 1));
         expect(h, contains('sign'));
+        expect(h, contains('sign_index'));
         expect(h, contains('sign_name'));
-        expect(h, contains('longitude'));
+        expect(h, contains('cusp_longitude'));
       }
     });
 
@@ -127,15 +141,15 @@ void main() {
       }
     });
 
-    test('each planet has house_number in 1-12 range', () {
+    test('each planet has house in 1-12 range', () {
       final result = formatChart(chart);
       final planets = result['planets'] as List;
       for (final planet in planets) {
         final p = planet as Map<String, dynamic>;
-        expect(p, contains('house_number'));
-        expect(p['house_number'], isA<int>());
-        expect(p['house_number'] as int, greaterThanOrEqualTo(1));
-        expect(p['house_number'] as int, lessThanOrEqualTo(12));
+        expect(p, contains('house'));
+        expect(p['house'], isA<int>());
+        expect(p['house'] as int, greaterThanOrEqualTo(1));
+        expect(p['house'] as int, lessThanOrEqualTo(12));
       }
     });
 
@@ -172,13 +186,13 @@ void main() {
       }
     });
 
-    test('pada numbers are in 1-4 range', () {
+    test('nakshatra_pada numbers are in 1-4 range', () {
       final result = formatChart(chart);
       final planets = result['planets'] as List;
       for (final planet in planets) {
         final p = planet as Map<String, dynamic>;
-        expect(p['pada'] as int, greaterThanOrEqualTo(1));
-        expect(p['pada'] as int, lessThanOrEqualTo(4));
+        expect(p['nakshatra_pada'] as int, greaterThanOrEqualTo(1));
+        expect(p['nakshatra_pada'] as int, lessThanOrEqualTo(4));
       }
     });
   });
