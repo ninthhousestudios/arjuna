@@ -18,7 +18,7 @@ abstract class CalcConfig with _$CalcConfig {
     @Default(Circle.aditya) Circle circle,
     @Default(true) bool nakEquatorial,
     @Default({Tradition.vedic}) Set<Tradition> traditions,
-    @Default(ZodiacSystem.sidereal12) ZodiacSystem zodiacSystem,
+    @Default(ZodiacSystem.tropical12) ZodiacSystem zodiacSystem,
     @Default(VedicConfig()) VedicConfig vedic,
   }) = _CalcConfig;
 
