@@ -1,0 +1,1 @@
+enum Hora { sun, moon }

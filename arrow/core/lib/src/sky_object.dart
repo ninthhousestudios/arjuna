@@ -1,6 +1,7 @@
 import 'package:arrow_options/arrow_options.dart';
 import 'package:arrow_swe/arrow_swe.dart';
 
+import 'being_data.dart';
 import 'longitude.dart';
 
 /// Base class for all objects with a position in the sky.
@@ -40,4 +41,28 @@ abstract class SkyObject {
   int get sign => longitude.sign;
   int get nakshatra => longitude.nakshatra;
   int get pada => longitude.pada;
+
+  Hora get hora {
+    final firstHalf = longitude.inSignLongitude < 15;
+    return (firstHalf == sign.isOdd) ? Hora.sun : Hora.moon;
+  }
+
+  BeingType get beingType {
+    final deg = longitude.inSignLongitude;
+    if (sign.isOdd) {
+      if (deg < 5) return BeingType.gandharva;
+      if (deg < 10) return BeingType.rakshasa;
+      if (deg < 18) return BeingType.rishi;
+      if (deg < 25) return BeingType.yaksha;
+      return BeingType.apsara;
+    } else {
+      if (deg < 5) return BeingType.apsara;
+      if (deg < 12) return BeingType.yaksha;
+      if (deg < 20) return BeingType.rishi;
+      if (deg < 25) return BeingType.rakshasa;
+      return BeingType.gandharva;
+    }
+  }
+
+  Being get adityaBeing => BeingData.forSign(sign, beingType);
 }

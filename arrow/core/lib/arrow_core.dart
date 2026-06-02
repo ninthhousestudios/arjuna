@@ -1,6 +1,7 @@
 /// Core domain model for Arrow.
 library;
 
+export 'src/being_data.dart';
 export 'src/body_motion.dart';
 export 'src/celestial_body.dart';
 export 'src/chara_karaka.dart';
