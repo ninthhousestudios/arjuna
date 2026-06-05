@@ -17,7 +17,7 @@ const _planetGender = <Body, _Gender>{
   Body.mercury: _Gender.neutral,
   Body.jupiter: _Gender.male,
   Body.venus: _Gender.female,
-  Body.saturn: _Gender.male,
+  Body.saturn: _Gender.neutral,
 };
 
 /// Six-fold planetary strength (Shadbala). All virupas (1/60th of a rupa).
