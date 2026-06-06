@@ -164,3 +164,17 @@ Design documents and planning artifacts live in `claude/arch/`:
 - `tropical-aditya-distinction.md` — Circle enum and the 30° offset
 
 Implementation plans in `claude/impl/`. Feature gap inventory in `docs/to-implement.md`.
+
+## Agent skills
+
+### Issue tracker
+
+Yojana (`arjuna/arrow`). See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+Default vocabulary (needs-triage, needs-info, ready-for-agent, ready-for-human, wontfix). See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Single-context. See `docs/agents/domain.md`.

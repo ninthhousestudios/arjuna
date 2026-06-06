@@ -1,0 +1,51 @@
+# Arrow architectural constraints
+# Package dependency: options → swe → core → calc (left-to-right only)
+# See ADR-0002 for rationale.
+
+# --- Package boundary: options must not import anything to its right ---
+
+[[constraint]]
+kind = "forbidden_dep"
+from = "options/lib/**"
+to = "swe/lib/**"
+name = "options-must-not-import-swe"
+severity = "blocking"
+
+[[constraint]]
+kind = "forbidden_dep"
+from = "options/lib/**"
+to = "core/lib/**"
+name = "options-must-not-import-core"
+severity = "blocking"
+
+[[constraint]]
+kind = "forbidden_dep"
+from = "options/lib/**"
+to = "calc/lib/**"
+name = "options-must-not-import-calc"
+severity = "blocking"
+
+# --- Package boundary: swe must not import core or calc ---
+
+[[constraint]]
+kind = "forbidden_dep"
+from = "swe/lib/**"
+to = "core/lib/**"
+name = "swe-must-not-import-core"
+severity = "blocking"
+
+[[constraint]]
+kind = "forbidden_dep"
+from = "swe/lib/**"
+to = "calc/lib/**"
+name = "swe-must-not-import-calc"
+severity = "blocking"
+
+# --- Package boundary: core must not import calc ---
+
+[[constraint]]
+kind = "forbidden_dep"
+from = "core/lib/**"
+to = "calc/lib/**"
+name = "core-must-not-import-calc"
+severity = "blocking"
