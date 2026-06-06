@@ -1,6 +1,12 @@
 # AgentOps session artifacts
 .agents/
 
+# Sutra workspace data (track config, ignore indexes)
+.sutra/*/
+.sutra/acks/
+!.sutra/rules.toml
+!.sutra/owners.toml
+
 # Dart
 .dart_tool/
 pubspec.lock
