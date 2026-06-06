@@ -34,6 +34,33 @@ class Jaimini {
   static int signsApart(int from, int to) => ((to - from) % 12) + 1;
 
   // ---------------------------------------------------------------------------
+  // Private extraction helpers
+  // ---------------------------------------------------------------------------
+
+  static Map<int, List<Body>> _grahasPerSign(Varga varga) {
+    final map = <int, List<Body>>{};
+    for (final g in varga.grahas) {
+      (map[g.sign] ??= []).add(g.body);
+    }
+    return map;
+  }
+
+  static Map<int, List<Body>> _karakasPerSign(Varga varga) {
+    final map = <int, List<Body>>{};
+    for (final k in varga.karakas) {
+      (map[k.sign] ??= []).add(k.body);
+    }
+    return map;
+  }
+
+  static Map<int, int> _signToLordSign(Varga varga) {
+    return {
+      for (var s = 1; s <= 12; s++)
+        s: varga.karaka(SignData.lord(s)).sign,
+    };
+  }
+
+  // ---------------------------------------------------------------------------
   // Pada
   // ---------------------------------------------------------------------------
 
@@ -56,10 +83,8 @@ class Jaimini {
   static int upapada(int cuspSign, int lordSign) => pada(cuspSign, lordSign);
 
   /// Compute padas for all 12 houses.
-  ///
-  /// [signToLordSign] maps each house sign (1-12) to the sign occupied by its
-  /// lord.
-  static Map<int, int> allPadas(Map<int, int> signToLordSign) {
+  static Map<int, int> allPadas(Varga varga) {
+    final signToLordSign = _signToLordSign(varga);
     return {
       for (final e in signToLordSign.entries) e.key: pada(e.key, e.value),
     };
@@ -70,17 +95,10 @@ class Jaimini {
   // ---------------------------------------------------------------------------
 
   /// Argala (intervention) analysis on [targetSign].
-  ///
-  /// [grahasPerSign] — all 9 grahas (Sun-Ketu) distributed by sign.
-  /// [ketuSign] — sign occupied by Ketu (triggers direction reversal).
-  /// [firstStrengthRanking] — sign list ordered strongest-first, used as
-  ///   tiebreaker when argala and virodhina counts are equal.
-  static ArgalaResult argala({
-    required int targetSign,
-    required Map<int, List<Body>> grahasPerSign,
-    required int ketuSign,
-    required List<int> firstStrengthRanking,
-  }) {
+  static ArgalaResult argala(Varga varga, {required int targetSign}) {
+    final grahasPerSign = _grahasPerSign(varga);
+    final ketuSign = varga.planet(Body.ketu).sign;
+    final firstStrengthRanking = firstStrength(varga);
     // Step 1: Ketu in targetSign reverses house offsets.
     final ketuInTarget = ketuSign == targetSign;
     int offset(int n) {
@@ -154,10 +172,10 @@ class Jaimini {
   ///
   /// Returns a list of pairs `(List<Body>, List<Body>)` for each pair where
   /// both sides have the same non-zero number of grahas.
-  static List<(List<Body>, List<Body>)> bandhanaYogas({
-    required int lagnaSign,
-    required Map<int, List<Body>> grahasPerSign,
-  }) {
+  static List<(List<Body>, List<Body>)> bandhanaYogas(Varga varga) {
+    final lagnaSign = varga.cusps[0].sign;
+    final grahasPerSign = _grahasPerSign(varga);
+
     List<Body> at(int offset) =>
         grahasPerSign[signsForward(lagnaSign, offset)] ?? const [];
 
@@ -185,9 +203,8 @@ class Jaimini {
   /// - distance % 3 == 1 → Kendra (strength 2)
   /// - distance % 3 == 2 → Panapara (strength 1)
   /// - distance % 3 == 0 → Apoklima (strength 0)
-  static Map<int, ({int strength, String label})> thirdStrength({
-    required Map<int, int> signToLordSign,
-  }) {
+  static Map<int, ({int strength, String label})> thirdStrength(Varga varga) {
+    final signToLordSign = _signToLordSign(varga);
     return {
       for (final e in signToLordSign.entries)
         e.key: _thirdStrengthOf(signsApart(e.key, e.value)),
@@ -209,13 +226,14 @@ class Jaimini {
   ///
   /// For each sign, returns the list of bodies among Jupiter, Mercury, and the
   /// sign's own lord that either conjoin or rashi-aspect that sign.
-  static Map<int, List<Body>> secondStrength({
-    required int jupiterSign,
-    required int mercurySign,
-    required Map<int, int> signToLordSign,
-    required Map<int, List<Body>> grahasPerSign,
+  static Map<int, List<Body>> secondStrength(Varga varga, {
     RashiAspectMode rashiAspectMode = RashiAspectMode.quadrant,
   }) {
+    final signToLordSign = _signToLordSign(varga);
+    final grahasPerSign = _grahasPerSign(varga);
+    final jupiterSign = varga.karaka(Body.jupiter).sign;
+    final mercurySign = varga.karaka(Body.mercury).sign;
+
     final result = <int, List<Body>>{};
     for (var sign = 1; sign <= 12; sign++) {
       final lordSign = signToLordSign[sign]!;
@@ -245,19 +263,17 @@ class Jaimini {
   /// First strength: rank all 12 signs strongest-to-weakest by 8-level
   /// comparator.
   ///
-  /// [karakasPerSign] — map of sign → list of karakas (Sun-Saturn) present.
-  /// [dignities] — dignity of each body.
-  /// [signToLordSign] — sign → sign occupied by its lord.
-  /// [inSignLongitudes] — in-sign longitude (0-30) for each body.
   /// [knRao] — if true, tiebreaker uses lord's in-sign longitude (higher wins);
   ///   otherwise sign number (higher wins).
-  static List<int> firstStrength({
-    required Map<int, List<Body>> karakasPerSign,
-    required Map<Body, DignityType> dignities,
-    required Map<int, int> signToLordSign,
-    required Map<Body, double> inSignLongitudes,
-    bool knRao = false,
-  }) {
+  static List<int> firstStrength(Varga varga, {bool knRao = false}) {
+    final karakasPerSign = _karakasPerSign(varga);
+    final signToLordSign = _signToLordSign(varga);
+    final dignities = {
+      for (final k in varga.karakas) k.body: k.dignity,
+    };
+    final inSignLongitudes = {
+      for (final k in varga.karakas) k.body: k.rawLongitude % 30.0,
+    };
     final signs = List.generate(12, (i) => i + 1);
 
     List<Body> karakasOf(int sign) => karakasPerSign[sign] ?? const [];
