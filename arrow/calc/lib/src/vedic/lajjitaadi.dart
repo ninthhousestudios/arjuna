@@ -157,20 +157,22 @@ class Lajjitaadi {
   /// Compute Lajjitaadi for all seven karakas.
   ///
   /// [grahaLongitudes] must contain all nine grahas keyed by [Body]
-  /// (longitudes are ecliptic, same reference frame used by [Aspect]).
-  /// [karakaDignities] and [karakaSigns] cover the seven karakas.
-  /// [lagnaSign] is the ascendant sign (1..12). [fifthCuspSign] is the
-  /// sign occupied by the 5th house cusp.
+  /// Compute Lajjitaadi avasthas for all karakas in the given [varga].
   ///
   /// Returns a map keyed by karaka body. Karakas with no factors in any
   /// state are omitted entirely (matches libaditya's `if avasthas:` gate).
-  static Map<Body, LajjitaadiResult> compute({
-    required Map<Body, double> grahaLongitudes,
-    required Map<Body, DignityType> karakaDignities,
-    required Map<Body, int> karakaSigns,
-    required int lagnaSign,
-    required int fifthCuspSign,
-  }) {
+  static Map<Body, LajjitaadiResult> compute(Varga varga) {
+    final grahaLongitudes = {
+      for (final g in varga.grahas) g.body: g.rawLongitude,
+    };
+    final karakaDignities = {
+      for (final k in varga.karakas) k.body: k.dignity,
+    };
+    final karakaSigns = {
+      for (final k in varga.karakas) k.body: k.sign,
+    };
+    final lagnaSign = varga.cusps[0].sign;
+    final fifthCuspSign = varga.cusps[4].sign;
     final fifthSignFromLagna = ((lagnaSign - 1 + 4) % 12) + 1;
 
     final sunLon = grahaLongitudes[Body.sun]!;
