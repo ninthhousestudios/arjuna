@@ -2,6 +2,8 @@ import 'package:arrow_options/arrow_options.dart';
 import 'package:arrow_calc/src/vedic/shadbala.dart';
 import 'package:test/test.dart';
 
+import '../helpers/stub_varga.dart';
+
 void main() {
   // ---------------------------------------------------------------------------
   // virupasBetween
@@ -217,24 +219,16 @@ void main() {
     // Jupiter at 180° from body → full 7th-house aspect (strength=60).
     // Jupiter is full benefic → +60.
     test('Jupiter aspecting full (180°) → positive contribution', () {
-      const bodyLon = 0.0;
-      const jupiterLon = 180.0;
-      final lons = {
+      final v = stubVarga(longitudes: {
+        Body.moon: 0.0,
         Body.sun: 90.0,
-        Body.moon: 45.0,
         Body.mars: 30.0, // within 30° of body → strength=0 (same sign check)
         Body.mercury: 60.0,
-        Body.jupiter: jupiterLon,
+        Body.jupiter: 180.0,
         Body.venus: 120.0,
         Body.saturn: 90.0,
-      };
-      final result = ShadbalaCalc.drigBala(
-        Body.moon, // body being assessed
-        bodyLon,
-        lons,
-        sunLon: 90.0,
-        moonLon: 45.0,
-      );
+      });
+      final result = ShadbalaCalc.drigBala(Body.moon, v);
       // Jupiter at 180° has strength 60; contribution = +60.
       // Other planets will add/subtract, but jupiter's contribution is positive.
       expect(result, greaterThan(0.0));
@@ -242,25 +236,17 @@ void main() {
 
     // Saturn at 180° from body → full aspect, malefic → −strength/4.
     test('Saturn alone aspecting → negative contribution', () {
-      const bodyLon = 0.0;
-      final lons = {
-        Body.sun: 5.0,    // same sign as body → 0 strength
-        Body.moon: 5.0,   // same sign as body → 0 strength
-        Body.mars: 5.0,   // same sign as body → 0 strength
+      final v = stubVarga(longitudes: {
+        Body.sun: 0.0,     // body being assessed
+        Body.moon: 5.0,    // same sign as body → 0 strength
+        Body.mars: 5.0,    // same sign as body → 0 strength
         Body.mercury: 5.0, // same sign → 0
         Body.jupiter: 5.0, // same sign → 0
         Body.venus: 5.0,   // same sign → 0
         Body.saturn: 180.0, // opposite → strength=60
-      };
-      // waxing moon (moon=5, sun=5 → distance=0 ≤180 → benefic)
-      final result = ShadbalaCalc.drigBala(
-        Body.sun,
-        bodyLon,
-        lons,
-        sunLon: 5.0,
-        moonLon: 5.0,
-      );
+      });
       // Saturn: strength=60, malefic → -60/4 = -15
+      final result = ShadbalaCalc.drigBala(Body.sun, v);
       expect(result, closeTo(-15.0, 1e-9));
     });
   });

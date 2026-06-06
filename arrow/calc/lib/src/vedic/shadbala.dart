@@ -336,20 +336,15 @@ class ShadbalaCalc {
   /// Full benefics (Jupiter, Mercury): +strength.
   /// Partial benefics (Venus, waxing Moon): +strength / 4.
   /// Malefics (Sun, Mars, Saturn, waning Moon): −strength / 4.
-  ///
-  /// [allKarakaLons] must contain longitudes for all karakas except [body].
-  static double drigBala(
-    Body body,
-    double bodyLon,
-    Map<Body, double> allKarakaLons, {
-    required double sunLon,
-    required double moonLon,
-  }) {
+  static double drigBala(Body body, Varga varga) {
+    final bodyLon = varga.planet(body).rawLongitude;
+    final sunLon = varga.sun.rawLongitude;
+    final moonLon = varga.moon.rawLongitude;
+
     var total = 0.0;
     for (final aspector in Body.karakas) {
       if (aspector == body) continue;
-      final aspectorLon = allKarakaLons[aspector];
-      if (aspectorLon == null) continue;
+      final aspectorLon = varga.karaka(aspector).rawLongitude;
       final strength = Aspect.strength(aspector, aspectorLon, bodyLon);
       if (strength == 0.0) continue;
 
