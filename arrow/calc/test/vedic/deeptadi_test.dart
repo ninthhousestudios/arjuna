@@ -2,150 +2,92 @@ import 'package:arrow_calc/arrow_calc.dart';
 import 'package:arrow_options/arrow_options.dart';
 import 'package:test/test.dart';
 
-/// Minimal `Map` of 9 grahas at longitudes that keep each body far from
-/// the others (no conjunctions, no aspects) so the per-priority steps in
-/// Deeptadi can be tested in isolation.
-const Map<Body, double> _scattered = {
-  Body.sun: 0.0,
-  Body.moon: 40.0,
-  Body.mars: 80.0,
-  Body.mercury: 120.0,
-  Body.jupiter: 160.0,
-  Body.venus: 200.0,
-  Body.saturn: 240.0,
-  Body.rahu: 280.0,
-  Body.ketu: 100.0,
-};
+import '../helpers/stub_varga.dart';
 
 void main() {
   group('Deeptadi.of — priority cascade', () {
     test('step 1 — exalted → deepta', () {
-      expect(
-        Deeptadi.of(
-          body: Body.jupiter,
-          dignity: DignityType.exalted,
-          eclipticLongitude: 160.0,
-          isRetrograde: false,
-          sunLongitude: 0.0,
-          grahaLongitudes: _scattered,
-        ),
-        DeeptadiState.deepta,
-      );
+      // Jupiter in Cancer → exalted
+      final v = stubVarga(longitudes: {Body.jupiter: 100.0});
+      expect(Deeptadi.of(Body.jupiter, v), DeeptadiState.deepta);
     });
 
     test('step 2 — ownSign → swastha', () {
-      expect(
-        Deeptadi.of(
-          body: Body.jupiter,
-          dignity: DignityType.ownSign,
-          eclipticLongitude: 160.0,
-          isRetrograde: false,
-          sunLongitude: 0.0,
-          grahaLongitudes: _scattered,
-        ),
-        DeeptadiState.swastha,
-      );
+      // Jupiter in Sagittarius → own sign
+      final v = stubVarga(longitudes: {Body.jupiter: 260.0});
+      expect(Deeptadi.of(Body.jupiter, v), DeeptadiState.swastha);
     });
 
     test('step 3 — friend / greatFriend → mudita', () {
-      for (final d in [DignityType.friend, DignityType.greatFriend]) {
-        expect(
-          Deeptadi.of(
-            body: Body.jupiter,
-            dignity: d,
-            eclipticLongitude: 160.0,
-            isRetrograde: false,
-            sunLongitude: 0.0,
-            grahaLongitudes: _scattered,
-          ),
-          DeeptadiState.mudita,
-        );
-      }
+      // Jupiter in Aquarius (lord=Saturn, nat.neutral) + Saturn 1 sign away → friend
+      final v1 = stubVarga(longitudes: {
+        Body.jupiter: 310.0, // Aquarius (sign 11)
+        Body.saturn: 340.0, // Pisces (sign 12), apart=1 → temp friend
+      });
+      expect(Deeptadi.of(Body.jupiter, v1), DeeptadiState.mudita);
+
+      // Jupiter in Leo (lord=Sun, nat.friend) + Sun 1 sign away → greatFriend
+      final v2 = stubVarga(longitudes: {
+        Body.jupiter: 130.0, // Leo (sign 5)
+        Body.sun: 95.0, // Cancer (sign 4), apart=11 → temp friend
+      });
+      expect(Deeptadi.of(Body.jupiter, v2), DeeptadiState.mudita);
     });
 
     test('step 4 — benefic navamsa → shanta', () {
-      // lon=0 → navamsa sign 1 (not benefic). lon=10 → navamsa sign 4 (benefic).
-      expect(
-        Deeptadi.of(
-          body: Body.venus,
-          dignity: DignityType.neutral,
-          eclipticLongitude: 10.0,
-          isRetrograde: false,
-          sunLongitude: 180.0,
-          grahaLongitudes: {
-            ..._scattered,
-            Body.venus: 10.0,
-          },
-        ),
-        DeeptadiState.shanta,
-      );
+      // Jupiter neutral dignity + navamsa sign 4 (benefic).
+      // Leo (lord=Sun, nat.friend) + Sun far away → temp enemy → neutral.
+      // 130° → navamsa sign = floor(130/3.333)%12 + 1 = 39%12+1 = 4 (Cancer, benefic).
+      final v = stubVarga(longitudes: {
+        Body.jupiter: 130.0, // Leo
+        Body.sun: 280.0, // Capricorn (sign 10), apart=5 → temp enemy → neutral
+      });
+      expect(Deeptadi.of(Body.jupiter, v), DeeptadiState.shanta);
     });
 
     test('step 5 — retrograde → shakta (when earlier steps fail)', () {
-      // Non-benefic navamsa: pick sign 1 (lon 0–3.33° → nav sign 1).
-      expect(
-        Deeptadi.of(
-          body: Body.jupiter,
-          dignity: DignityType.neutral,
-          eclipticLongitude: 1.0,
-          isRetrograde: true,
-          sunLongitude: 180.0,
-          grahaLongitudes: {
-            ..._scattered,
-            Body.jupiter: 1.0,
-            // Keep other malefics far from Jupiter so no aspect fires.
-          },
-        ),
-        DeeptadiState.shakta,
+      // Neutral dignity + non-benefic navamsa (sign 1) + retrograde.
+      // Aries (lord=Mars, nat.friend) + Mars far → temp enemy → neutral.
+      // 1° → navamsa sign = floor(1/3.333)%12 + 1 = 0%12+1 = 1 (not benefic).
+      final v = stubVarga(
+        longitudes: {
+          Body.jupiter: 1.0,
+          Body.sun: 180.0, // far from Jupiter
+          Body.mars: 160.0, // Virgo (sign 6), apart=5 → temp enemy
+        },
+        speeds: {Body.jupiter: -0.3},
       );
+      expect(Deeptadi.of(Body.jupiter, v), DeeptadiState.shakta);
     });
 
     test('step 7 — debilitated (no earlier trigger) → deena', () {
-      expect(
-        Deeptadi.of(
-          body: Body.jupiter,
-          dignity: DignityType.debilitated,
-          eclipticLongitude: 1.0,
-          isRetrograde: false,
-          sunLongitude: 180.0,
-          grahaLongitudes: {
-            ..._scattered,
-            Body.jupiter: 1.0,
-            // Sun, Mars, Saturn, Rahu, Ketu all far from Jupiter (lon 1°).
-            Body.sun: 180.0,
-            Body.mars: 220.0,
-            Body.saturn: 100.0,
-            Body.rahu: 95.0,
-            Body.ketu: 275.0,
-          },
-        ),
-        DeeptadiState.deena,
-      );
+      // Jupiter in Capricorn → debilitated.
+      // 280° → navamsa sign = floor(280/3.333)%12 + 1 = 84%12+1 = 1 (not benefic).
+      // All malefics far from Capricorn (270-300°).
+      final v = stubVarga(longitudes: {
+        Body.jupiter: 280.0, // Capricorn → debilitated
+        Body.sun: 100.0,
+        Body.mars: 200.0,
+        Body.saturn: 40.0,
+        Body.rahu: 200.0,
+        Body.ketu: 20.0,
+      });
+      expect(Deeptadi.of(Body.jupiter, v), DeeptadiState.deena);
     });
 
     test('step 9 — enemy sign → khala', () {
-      expect(
-        Deeptadi.of(
-          body: Body.jupiter,
-          dignity: DignityType.greatEnemy,
-          eclipticLongitude: 1.0,
-          isRetrograde: false,
-          sunLongitude: 180.0,
-          grahaLongitudes: {
-            ..._scattered,
-            // Place every malefic behind Jupiter within ≤30° forward gap
-            // (sign 12), so Parashara diff from malefic → Jupiter is ≤30 and
-            // no aspect fires.
-            Body.jupiter: 1.0,
-            Body.sun: 331.0,
-            Body.mars: 335.0,
-            Body.saturn: 340.0,
-            Body.rahu: 345.0,
-            Body.ketu: 350.0,
-          },
-        ),
-        DeeptadiState.khala,
-      );
+      // Aquarius (lord=Saturn, nat.neutral) + Saturn far → temp enemy → enemy.
+      // 310° → navamsa sign 10 (not benefic). Not retrograde, not debilitated,
+      // no malefic conjunction, not combust.
+      final v = stubVarga(longitudes: {
+        Body.jupiter: 310.0, // Aquarius (sign 11)
+        Body.saturn: 100.0, // Cancer (sign 4), apart=5 → temp enemy → enemy
+        Body.sun: 100.0,
+        Body.mars: 200.0,
+        Body.rahu: 200.0,
+        Body.ketu: 20.0,
+      });
+      expect(Deeptadi.of(Body.jupiter, v), DeeptadiState.khala);
     });
   });
 }

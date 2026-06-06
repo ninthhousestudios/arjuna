@@ -40,26 +40,22 @@ const Set<int> _beneficNavamsaSigns = {2, 3, 4, 6, 7, 9, 12};
 class Deeptadi {
   const Deeptadi._();
 
-  /// Compute the Deeptadi state for [body].
+  /// Compute the Deeptadi state for [body] in the given [varga].
   ///
-  /// [eclipticLongitude] is the raw (non-sidereal, pre-ayanamsa) ecliptic
-  /// longitude that libaditya calls `ecliptic_longitude()`. This is used
-  /// to compute the navamsa sign inline (matching libaditya's formula) and
-  /// to check combustion against [sunLongitude].
-  ///
-  /// [grahaLongitudes] must contain all nine grahas (Sun, Moon, Mars,
-  /// Mercury, Jupiter, Venus, Saturn, Rahu, Ketu) keyed by [Body]. The
-  /// malefic-aspect check (step 6) iterates all grahas whose [Nature] is
-  /// malefic (Sun/Mars/Saturn/Rahu/Ketu) and tests
-  /// [Aspect.doesAspect] from the malefic to [body].
-  static DeeptadiState of({
-    required Body body,
-    required DignityType dignity,
-    required double eclipticLongitude,
-    required bool isRetrograde,
-    required double sunLongitude,
-    required Map<Body, double> grahaLongitudes,
-  }) {
+  /// Extracts dignity, ecliptic longitude, retrograde status, and all graha
+  /// longitudes from the [Varga]. The malefic-aspect check (step 6) iterates
+  /// all grahas whose [Nature] is malefic and tests conjunction.
+  static DeeptadiState of(Body body, Varga varga) {
+    final planet = varga.planet(body);
+    final dignity = Body.karakas.contains(body)
+        ? varga.karaka(body).dignity
+        : DignityType.neutral;
+    final eclipticLongitude = planet.rawLongitude;
+    final isRetrograde = planet.isRetrograde;
+    final sunLongitude = varga.sun.rawLongitude;
+    final grahaLongitudes = {
+      for (final g in varga.grahas) g.body: g.rawLongitude,
+    };
     // 1. Deepta — exalted
     if (dignity == DignityType.exalted) return DeeptadiState.deepta;
     // 2. Swastha — own sign
