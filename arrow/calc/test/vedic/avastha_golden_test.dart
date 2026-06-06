@@ -2,7 +2,9 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:arrow_calc/arrow_calc.dart';
+import 'package:arrow_core/arrow_core.dart';
 import 'package:arrow_options/arrow_options.dart';
+import 'package:arrow_swe/arrow_swe.dart';
 import 'package:test/test.dart';
 
 /// Libaditya dignity code → Arrow [DignityType].
@@ -24,6 +26,61 @@ const List<String> _karakaNames = [
 
 Body _bodyFor(String libadityaName) =>
     Body.values.firstWhere((b) => b.name == libadityaName.toLowerCase());
+
+Varga _vargaFromFixture(Map<String, dynamic> data) {
+  final bodies = data['bodies_ecliptic'] as Map<String, dynamic>;
+  final retrograde = data['retrograde'] as Map<String, dynamic>;
+  final lagnaSign = data['lagna_sign'] as int;
+
+  final bodyPositions = <Body, BodyPosition>{};
+  for (final entry in bodies.entries) {
+    final body = _bodyFor(entry.key);
+    final pos = entry.value as Map<String, dynamic>;
+    final lon = pos['longitude'] as double;
+    final isRetro = retrograde[entry.key] == true;
+    bodyPositions[body] = BodyPosition(
+      longitude: lon,
+      latitude: 0.0,
+      distance: 1.0,
+      speedLongitude: isRetro ? -1.0 : 1.0,
+      speedLatitude: 0.0,
+      speedDistance: 0.0,
+    );
+  }
+
+  final cusps = List.generate(12, (i) {
+    final sign = ((lagnaSign - 1 + i) % 12) + 1;
+    return ((sign + 10) % 12) * 30.0 + 15.0;
+  });
+
+  final nakLons = bodyPositions.map((k, v) => MapEntry(k, v.longitude));
+
+  final snapshot = EphSnapshot(
+    jdUt: 2460000.5,
+    location: const Location(latitude: 0.0, longitude: 0.0),
+    sweConfig: const SweConfig(),
+    bodiesEcliptic: bodyPositions,
+    bodiesEquatorial: bodyPositions,
+    phenoData: const {},
+    cusps: cusps,
+    ascmc: AscMcPoints(
+      ascendant: cusps[0],
+      mc: cusps[9],
+      armc: cusps[9],
+      vertex: 190.0,
+      equatorialAscendant: cusps[0],
+      coAscendantKoch: cusps[0],
+      coAscendantMunkasey: cusps[0],
+      polarAscendant: 190.0,
+    ),
+    sunTimes: const SunTimes(sunrise: 2460000.75, sunset: 2460001.25),
+    ayanamsaValue: 0.0,
+    bodiesNakEclLon: nakLons,
+    bodiesNakEquLon: nakLons,
+  );
+
+  return Varga(VargaType.rashi, snapshot, const CalcConfig());
+}
 
 String _pascal(String name) => name[0].toUpperCase() + name.substring(1);
 
@@ -92,16 +149,8 @@ void main() {
 
     group('libaditya golden: $slug', () {
       final bodies = data['bodies_ecliptic'] as Map<String, dynamic>;
-      final retrograde = data['retrograde'] as Map<String, dynamic>;
       final dignities = data['dignities'] as Map<String, dynamic>;
-
-      // Build Body-keyed graha longitude map (used by Deeptadi aspect check).
-      final grahaLongitudes = <Body, double>{
-        for (final entry in bodies.entries)
-          _bodyFor(entry.key): (entry.value as Map)['longitude'] as double,
-      };
-
-      final sunLongitude = (bodies['Sun'] as Map)['longitude'] as double;
+      final varga = _vargaFromFixture(data);
 
       for (final name in _karakaNames) {
         final body = _bodyFor(name);
@@ -110,7 +159,6 @@ void main() {
         final sign = pos['sign'] as int;
         final inSignDeg = lon % 30;
         final dignity = _dignityMap[dignities[name]]!;
-        final isRetro = retrograde[name] as bool;
 
         test('$name baladi', () {
           final expected = (data['baladi'] as Map)[name];
@@ -124,37 +172,13 @@ void main() {
 
         test('$name deeptadi', () {
           final expected = (data['deeptadi'] as Map)[name];
-          final got = Deeptadi.of(
-            body: body,
-            dignity: dignity,
-            eclipticLongitude: lon,
-            isRetrograde: isRetro,
-            sunLongitude: sunLongitude,
-            grahaLongitudes: grahaLongitudes,
-          );
+          final got = Deeptadi.of(body, varga);
           expect(got.libadityaName, expected);
         });
       }
 
       test('lajjitaadi full', () {
-        final karakaSigns = <Body, int>{
-          for (final n in _karakaNames)
-            _bodyFor(n): (bodies[n] as Map)['sign'] as int,
-        };
-        final karakaDignities = <Body, DignityType>{
-          for (final n in _karakaNames)
-            _bodyFor(n): _dignityMap[dignities[n]]!,
-        };
-        final lagnaSign = data['lagna_sign'] as int;
-        final fifthCuspSign = data['fifth_cusp_sign'] as int;
-
-        final got = Lajjitaadi.compute(
-          grahaLongitudes: grahaLongitudes,
-          karakaDignities: karakaDignities,
-          karakaSigns: karakaSigns,
-          lagnaSign: lagnaSign,
-          fifthCuspSign: fifthCuspSign,
-        );
+        final got = Lajjitaadi.compute(varga);
         final expected = data['lajjitaadi'] as Map<String, dynamic>;
 
         // Compare set of emitted karakas (both sides skip empty avasthas).

@@ -148,39 +148,14 @@ void main() {
     });
 
     test('Deeptadi runs for all karakas', () {
-      final sunLon = snapshot.bodiesEcliptic[Body.sun]!.longitude;
       for (final body in _karakas) {
-        final p = chart.rashi.planet(body);
-        final state = Deeptadi.of(
-          body: body,
-          dignity: dignities[body]!,
-          eclipticLongitude: p.rawLongitude,
-          isRetrograde: p.isRetrograde,
-          sunLongitude: sunLon,
-          grahaLongitudes: longitudes,
-        );
+        final state = Deeptadi.of(body, chart.rashi);
         expect(state.libadityaName, isNotEmpty);
       }
     });
 
     test('Lajjitaadi covers karaka set (none throw, each has ≥ 1 state)', () {
-      final signs = {
-        for (final body in _karakas) body: chart.rashi.planet(body).sign,
-      };
-      final karakaDignities = {
-        for (final body in _karakas) body: dignities[body]!,
-      };
-      final ascLon = Longitude(
-          snapshot.ascmc.ascendant, VargaType.rashi, config);
-      final fifthLon = Longitude(
-          snapshot.cusps[4], VargaType.rashi, config);
-      final result = Lajjitaadi.compute(
-        grahaLongitudes: longitudes,
-        karakaDignities: karakaDignities,
-        karakaSigns: signs,
-        lagnaSign: ascLon.sign,
-        fifthCuspSign: fifthLon.sign,
-      );
+      final result = Lajjitaadi.compute(chart.rashi);
       // Each returned karaka must have at least one non-empty state.
       for (final entry in result.entries) {
         expect(entry.value.avasthas, isNotEmpty,
