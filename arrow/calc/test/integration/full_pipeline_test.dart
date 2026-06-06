@@ -108,10 +108,6 @@ void main() {
   final chart = Chart(snapshot, config);
 
   group('full pipeline', () {
-    final longitudes = {
-      for (final e in snapshot.bodiesEcliptic.entries)
-        e.key: e.value.longitude,
-    };
     final dignities = <Body, DignityType>{
       for (final body in snapshot.bodiesEcliptic.keys)
         body: Dignity.calculate(

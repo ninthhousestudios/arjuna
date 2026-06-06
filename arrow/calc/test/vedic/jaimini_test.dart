@@ -1,5 +1,4 @@
 import 'package:arrow_calc/src/vedic/jaimini.dart';
-import 'package:arrow_core/arrow_core.dart';
 import 'package:arrow_options/arrow_options.dart';
 import 'package:test/test.dart';
 
