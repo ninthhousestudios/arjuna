@@ -4,20 +4,18 @@ import 'package:test/test.dart';
 
 import 'package:arrow_calc/src/vedic/nabhasa_yoga.dart';
 
-/// Build a karakasPerHouse with one karaka per house starting at house 1.
-Map<int, List<Body>> _scattered() {
-  final map = <int, List<Body>>{};
-  for (var i = 0; i < Body.karakas.length; i++) {
-    map[i + 1] = [Body.karakas[i]];
-  }
-  return map;
-}
+import '../helpers/stub_varga.dart';
 
-/// houseQualities where all 12 houses map to their natural sign quality
-/// (lagna = Aries, so house n occupies sign n).
-Map<int, Quality> _naturalHouseQualities() => {
-      for (var h = 1; h <= 12; h++) h: SignData.quality(h),
-    };
+/// One karaka per house 1-7, Moon benefic (ahead of Sun).
+Varga _scattered() => stubVarga(longitudes: {
+      Body.sun: 15.0, // house 1
+      Body.moon: 45.0, // house 2
+      Body.mars: 75.0, // house 3
+      Body.mercury: 105.0, // house 4
+      Body.jupiter: 135.0, // house 5
+      Body.venus: 165.0, // house 6
+      Body.saturn: 195.0, // house 7
+    });
 
 void main() {
   // ── houseFrom ────────────────────────────────────────────────────────────────
@@ -77,17 +75,13 @@ void main() {
 
   group('ashrayaYogas', () {
     test('all 7 karakas in cardinal houses → Rajju toMove=0', () {
-      // Cardinal houses with natural qualities (lagna=Aries): 1,4,7,10
-      final kph = <int, List<Body>>{
-        1: [Body.sun, Body.moon],
-        4: [Body.mars, Body.mercury],
-        7: [Body.jupiter, Body.venus],
-        10: [Body.saturn],
-      };
-      final yogas = NabhasaYogaCalc.ashrayaYogas(
-        karakasPerHouse: kph,
-        houseQualities: _naturalHouseQualities(),
-      );
+      final v = stubVarga(longitudes: {
+        Body.sun: 15.0, Body.moon: 20.0, // sign 1, house 1
+        Body.mars: 105.0, Body.mercury: 110.0, // sign 4, house 4
+        Body.jupiter: 195.0, Body.venus: 200.0, // sign 7, house 7
+        Body.saturn: 285.0, // sign 10, house 10
+      });
+      final yogas = NabhasaYogaCalc.ashrayaYogas(v);
       final rajju = yogas.firstWhere((y) => y.name == 'Rajju');
       expect(rajju.toMove, 0);
       expect(rajju.isPresent, isTrue);
@@ -97,33 +91,25 @@ void main() {
     });
 
     test('all 7 karakas in fixed houses → Musala toMove=0', () {
-      // Fixed houses: 2,5,8,11
-      final kph = <int, List<Body>>{
-        2: [Body.sun, Body.moon],
-        5: [Body.mars, Body.mercury],
-        8: [Body.jupiter, Body.venus],
-        11: [Body.saturn],
-      };
-      final yogas = NabhasaYogaCalc.ashrayaYogas(
-        karakasPerHouse: kph,
-        houseQualities: _naturalHouseQualities(),
-      );
+      final v = stubVarga(longitudes: {
+        Body.sun: 45.0, Body.moon: 50.0, // sign 2, house 2
+        Body.mars: 135.0, Body.mercury: 140.0, // sign 5, house 5
+        Body.jupiter: 225.0, Body.venus: 230.0, // sign 8, house 8
+        Body.saturn: 315.0, // sign 11, house 11
+      });
+      final yogas = NabhasaYogaCalc.ashrayaYogas(v);
       final musala = yogas.firstWhere((y) => y.name == 'Musala');
       expect(musala.toMove, 0);
     });
 
     test('all 7 karakas in mutable houses → Nala toMove=0', () {
-      // Mutable houses: 3,6,9,12
-      final kph = <int, List<Body>>{
-        3: [Body.sun, Body.moon],
-        6: [Body.mars, Body.mercury],
-        9: [Body.jupiter, Body.venus],
-        12: [Body.saturn],
-      };
-      final yogas = NabhasaYogaCalc.ashrayaYogas(
-        karakasPerHouse: kph,
-        houseQualities: _naturalHouseQualities(),
-      );
+      final v = stubVarga(longitudes: {
+        Body.sun: 75.0, Body.moon: 80.0, // sign 3, house 3
+        Body.mars: 165.0, Body.mercury: 170.0, // sign 6, house 6
+        Body.jupiter: 255.0, Body.venus: 260.0, // sign 9, house 9
+        Body.saturn: 345.0, // sign 12, house 12
+      });
+      final yogas = NabhasaYogaCalc.ashrayaYogas(v);
       final nala = yogas.firstWhere((y) => y.name == 'Nala');
       expect(nala.toMove, 0);
     });
@@ -133,37 +119,34 @@ void main() {
 
   group('dalaYogas', () {
     test('all benefics in kendras → Mala present', () {
-      // Benefics (moon benefic): moon, mercury, jupiter, venus → 4 bodies
-      final kph = <int, List<Body>>{
-        1: [Body.moon],
-        4: [Body.mercury],
-        7: [Body.jupiter],
-        10: [Body.venus],
-        // malefics scattered elsewhere
-        2: [Body.sun, Body.mars, Body.saturn],
-      };
-      final yogas = NabhasaYogaCalc.dalaYogas(
-        karakasPerHouse: kph,
-        moonIsBenefic: true,
-      );
+      // Moon benefic: moonLon(15) - sunLon(345) = 30 ≤ 180 → benefic.
+      final v = stubVarga(longitudes: {
+        Body.moon: 15.0, // house 1 (kendra)
+        Body.mercury: 105.0, // house 4 (kendra)
+        Body.jupiter: 195.0, // house 7 (kendra)
+        Body.venus: 285.0, // house 10 (kendra)
+        Body.sun: 345.0, // house 12
+        Body.mars: 350.0, // house 12
+        Body.saturn: 355.0, // house 12
+      });
+      final yogas = NabhasaYogaCalc.dalaYogas(v);
       final mala = yogas.firstWhere((y) => y.name == 'Mala');
       expect(mala.toMove, 0);
       expect(mala.isPresent, isTrue);
     });
 
     test('all malefics in kendras → Sarpa present', () {
-      // Malefics (moon malefic): sun, mars, saturn, moon → 4 bodies
-      final kph = <int, List<Body>>{
-        1: [Body.sun],
-        4: [Body.mars],
-        7: [Body.saturn],
-        10: [Body.moon],
-        2: [Body.mercury, Body.jupiter, Body.venus],
-      };
-      final yogas = NabhasaYogaCalc.dalaYogas(
-        karakasPerHouse: kph,
-        moonIsBenefic: false,
-      );
+      // Moon malefic: moonLon(285) - sunLon(15) = 270 > 180 → malefic.
+      final v = stubVarga(longitudes: {
+        Body.sun: 15.0, // house 1 (kendra)
+        Body.mars: 105.0, // house 4 (kendra)
+        Body.saturn: 195.0, // house 7 (kendra)
+        Body.moon: 285.0, // house 10 (kendra)
+        Body.mercury: 45.0, // house 2
+        Body.jupiter: 50.0, // house 2
+        Body.venus: 55.0, // house 2
+      });
+      final yogas = NabhasaYogaCalc.dalaYogas(v);
       final sarpa = yogas.firstWhere((y) => y.name == 'Sarpa');
       expect(sarpa.toMove, 0);
       expect(sarpa.isPresent, isTrue);
@@ -173,66 +156,65 @@ void main() {
   // ── Panchamahapurusha ─────────────────────────────────────────────────────────
 
   group('panchamahapurushaYogas', () {
-    test('Jupiter in house 1 exalted → Hamsa present', () {
-      final yogas = NabhasaYogaCalc.panchamahapurushaYogas(
-        karakaHouses: {
-          Body.jupiter: 1,
-          Body.mars: 2,
-          Body.mercury: 3,
-          Body.venus: 6,
-          Body.saturn: 8,
+    test('Jupiter exalted in kendra → Hamsa present', () {
+      // Jupiter at 100° = Cancer (sign 4), exalted. lagnaSign=4 → house 1.
+      final v = stubVarga(
+        longitudes: {
+          Body.jupiter: 100.0,
+          Body.sun: 45.0,
+          Body.moon: 135.0,
+          Body.mars: 165.0,
+          Body.mercury: 255.0,
+          Body.venus: 315.0,
+          Body.saturn: 225.0,
         },
-        karakaDignities: {
-          Body.jupiter: DignityType.exalted,
-          Body.mars: DignityType.neutral,
-          Body.mercury: DignityType.neutral,
-          Body.venus: DignityType.neutral,
-          Body.saturn: DignityType.neutral,
-        },
+        cusps: List.generate(12, (i) => (95.0 + i * 30.0) % 360),
       );
+      final yogas = NabhasaYogaCalc.panchamahapurushaYogas(v);
       final hamsa = yogas.firstWhere((y) => y.name == 'Hamsa');
       expect(hamsa.present, isTrue);
       expect(hamsa.house, 1);
       expect(hamsa.dignity, DignityType.exalted);
     });
 
-    test('Mars in house 2 → Ruchaka not present (not kendra)', () {
-      final yogas = NabhasaYogaCalc.panchamahapurushaYogas(
-        karakaHouses: {Body.mars: 2},
-        karakaDignities: {Body.mars: DignityType.exalted},
-      );
+    test('Mars not in kendra → Ruchaka not present', () {
+      // Mars at 45° = Taurus (sign 2), house 2 with lagnaSign=1. Not a kendra.
+      final v = stubVarga(longitudes: {Body.mars: 45.0});
+      final yogas = NabhasaYogaCalc.panchamahapurushaYogas(v);
       final ruchaka = yogas.firstWhere((y) => y.name == 'Ruchaka');
       expect(ruchaka.present, isFalse);
     });
 
-    test('Mars in kendra but neutral dignity → Ruchaka not present', () {
-      final yogas = NabhasaYogaCalc.panchamahapurushaYogas(
-        karakaHouses: {Body.mars: 1},
-        karakaDignities: {Body.mars: DignityType.neutral},
-      );
+    test('Mars in kendra without strong dignity → Ruchaka not present', () {
+      // Mars at 195° = Libra (sign 7), house 7 (kendra). Mars in Libra = enemy.
+      final v = stubVarga(longitudes: {Body.mars: 195.0});
+      final yogas = NabhasaYogaCalc.panchamahapurushaYogas(v);
       final ruchaka = yogas.firstWhere((y) => y.name == 'Ruchaka');
       expect(ruchaka.present, isFalse);
     });
 
     test('all 5 yogas always returned', () {
-      final yogas = NabhasaYogaCalc.panchamahapurushaYogas(
-        karakaHouses: {},
-        karakaDignities: {},
-      );
+      final v = stubVarga();
+      final yogas = NabhasaYogaCalc.panchamahapurushaYogas(v);
       expect(yogas.length, 5);
       final names = yogas.map((y) => y.name).toList();
-      expect(names, containsAll(['Ruchaka', 'Bhadra', 'Hamsa', 'Malavya', 'Sasa']));
+      expect(
+          names, containsAll(['Ruchaka', 'Bhadra', 'Hamsa', 'Malavya', 'Sasa']));
     });
 
     test('moolatrikona and ownSign also qualify', () {
-      for (final dig in [DignityType.moolatrikona, DignityType.ownSign]) {
-        final yogas = NabhasaYogaCalc.panchamahapurushaYogas(
-          karakaHouses: {Body.venus: 4},
-          karakaDignities: {Body.venus: dig},
-        );
-        final malavya = yogas.firstWhere((y) => y.name == 'Malavya');
-        expect(malavya.present, isTrue, reason: '$dig should qualify');
-      }
+      // Venus moolatrikona: Libra 0-15°. At 181° = sign 7, 1° in-sign. House 7 (kendra).
+      final vMt = stubVarga(longitudes: {Body.venus: 181.0});
+      final mtYogas = NabhasaYogaCalc.panchamahapurushaYogas(vMt);
+      final malavyaMt = mtYogas.firstWhere((y) => y.name == 'Malavya');
+      expect(malavyaMt.present, isTrue,
+          reason: 'moolatrikona should qualify');
+
+      // Venus ownSign: Libra ≥15°. At 196° = sign 7, 16° in-sign. House 7 (kendra).
+      final vOwn = stubVarga(longitudes: {Body.venus: 196.0});
+      final ownYogas = NabhasaYogaCalc.panchamahapurushaYogas(vOwn);
+      final malavyaOwn = ownYogas.firstWhere((y) => y.name == 'Malavya');
+      expect(malavyaOwn.present, isTrue, reason: 'ownSign should qualify');
     });
   });
 
@@ -240,69 +222,72 @@ void main() {
 
   group('solarYogas', () {
     test('eligible planet in 2nd from Sun → Vesi present', () {
-      // Sun in house 3, Jupiter in house 4 (2nd from Sun)
-      final kph = <int, List<Body>>{
-        3: [Body.sun],
-        4: [Body.jupiter],
-      };
-      final yogas = NabhasaYogaCalc.solarYogas(
-        karakasPerHouse: kph,
-        sunHouse: 3,
-      );
+      // Sun in house 3, Jupiter in house 4 (2nd from Sun).
+      final v = stubVarga(longitudes: {
+        Body.sun: 75.0, // house 3
+        Body.jupiter: 105.0, // house 4 (2nd from Sun)
+        Body.moon: 195.0,
+        Body.mars: 255.0,
+        Body.mercury: 315.0,
+        Body.venus: 135.0,
+        Body.saturn: 165.0,
+      });
+      final yogas = NabhasaYogaCalc.solarYogas(v);
       final vesi = yogas.firstWhere((y) => y.name == 'Vesi');
       expect(vesi.present, isTrue);
       expect(vesi.planets, contains(Body.jupiter));
     });
 
     test('eligible planet in 12th from Sun → Vosi present', () {
-      // Sun in house 5, Mars in house 4 (12th from Sun = 5-1=4)
-      final kph = <int, List<Body>>{
-        5: [Body.sun],
-        4: [Body.mars],
-      };
-      final yogas = NabhasaYogaCalc.solarYogas(
-        karakasPerHouse: kph,
-        sunHouse: 5,
-      );
+      // Sun in house 5, Mars in house 4 (12th from Sun).
+      final v = stubVarga(longitudes: {
+        Body.sun: 135.0, // house 5
+        Body.mars: 105.0, // house 4 (12th from Sun)
+        Body.moon: 15.0,
+        Body.mercury: 255.0,
+        Body.jupiter: 285.0,
+        Body.venus: 315.0,
+        Body.saturn: 345.0,
+      });
+      final yogas = NabhasaYogaCalc.solarYogas(v);
       final vosi = yogas.firstWhere((y) => y.name == 'Vosi');
       expect(vosi.present, isTrue);
     });
 
     test('eligible planets in both → Ubhayachari present', () {
-      // Sun in house 6, Venus in 7 (2nd), Saturn in 5 (12th)
-      final kph = <int, List<Body>>{
-        6: [Body.sun],
-        7: [Body.venus],
-        5: [Body.saturn],
-      };
-      final yogas = NabhasaYogaCalc.solarYogas(
-        karakasPerHouse: kph,
-        sunHouse: 6,
-      );
+      // Sun in house 6, Venus in 7 (2nd), Saturn in 5 (12th).
+      final v = stubVarga(longitudes: {
+        Body.sun: 165.0, // house 6
+        Body.venus: 195.0, // house 7 (2nd from Sun)
+        Body.saturn: 135.0, // house 5 (12th from Sun)
+        Body.moon: 15.0,
+        Body.mars: 255.0,
+        Body.mercury: 285.0,
+        Body.jupiter: 315.0,
+      });
+      final yogas = NabhasaYogaCalc.solarYogas(v);
       final ubhaya = yogas.firstWhere((y) => y.name == 'Ubhayachari');
       expect(ubhaya.present, isTrue);
     });
 
     test('Sun and Moon not eligible', () {
-      // Sun in house 1, Moon in house 2, Sun in house 12
-      final kph = <int, List<Body>>{
-        1: [Body.sun],
-        2: [Body.moon],
-        12: [Body.moon],
-      };
-      final yogas = NabhasaYogaCalc.solarYogas(
-        karakasPerHouse: kph,
-        sunHouse: 1,
-      );
+      // Sun in house 1, Moon in house 2 (2nd from Sun) — not eligible.
+      final v = stubVarga(longitudes: {
+        Body.sun: 15.0, // house 1
+        Body.moon: 45.0, // house 2, not eligible
+        Body.mars: 105.0,
+        Body.mercury: 195.0,
+        Body.jupiter: 255.0,
+        Body.venus: 285.0,
+        Body.saturn: 315.0,
+      });
+      final yogas = NabhasaYogaCalc.solarYogas(v);
       final vesi = yogas.firstWhere((y) => y.name == 'Vesi');
       expect(vesi.present, isFalse);
     });
 
     test('3 solar yogas always returned', () {
-      final yogas = NabhasaYogaCalc.solarYogas(
-        karakasPerHouse: {},
-        sunHouse: 1,
-      );
+      final yogas = NabhasaYogaCalc.solarYogas(stubVarga());
       expect(yogas.length, 3);
     });
   });
@@ -311,16 +296,17 @@ void main() {
 
   group('lunarYogas', () {
     test('no eligible planets near Moon → Kemadruma present', () {
-      // Moon in house 1, no eligible in 2 or 12
-      final kph = <int, List<Body>>{
-        1: [Body.moon],
-        2: [Body.sun], // not eligible
-        12: [Body.rahu], // not eligible
-      };
-      final yogas = NabhasaYogaCalc.lunarYogas(
-        karakasPerHouse: kph,
-        moonHouse: 1,
-      );
+      // Moon in house 1. No eligible in house 2 (2nd) or house 12 (12th).
+      final v = stubVarga(longitudes: {
+        Body.moon: 15.0, // house 1
+        Body.sun: 45.0, // house 2, not eligible
+        Body.mars: 105.0, // house 4
+        Body.mercury: 135.0, // house 5
+        Body.jupiter: 195.0, // house 7
+        Body.venus: 255.0, // house 9
+        Body.saturn: 285.0, // house 10
+      });
+      final yogas = NabhasaYogaCalc.lunarYogas(v);
       final kema = yogas.firstWhere((y) => y.name == 'Kemadruma');
       expect(kema.present, isTrue);
 
@@ -329,14 +315,17 @@ void main() {
     });
 
     test('eligible in 2nd from Moon → Sunapha present, Kemadruma absent', () {
-      final kph = <int, List<Body>>{
-        1: [Body.moon],
-        2: [Body.jupiter],
-      };
-      final yogas = NabhasaYogaCalc.lunarYogas(
-        karakasPerHouse: kph,
-        moonHouse: 1,
-      );
+      // Moon in house 1, Jupiter in house 2 (2nd from Moon).
+      final v = stubVarga(longitudes: {
+        Body.moon: 15.0, // house 1
+        Body.jupiter: 45.0, // house 2 (2nd from Moon)
+        Body.sun: 105.0,
+        Body.mars: 135.0,
+        Body.mercury: 195.0,
+        Body.venus: 255.0,
+        Body.saturn: 285.0,
+      });
+      final yogas = NabhasaYogaCalc.lunarYogas(v);
       final sunapha = yogas.firstWhere((y) => y.name == 'Sunapha');
       expect(sunapha.present, isTrue);
       final kema = yogas.firstWhere((y) => y.name == 'Kemadruma');
@@ -344,38 +333,39 @@ void main() {
     });
 
     test('eligible in 12th from Moon → Anapha present', () {
-      // Moon in house 3, eligible in house 2 (12th from 3)
-      final kph = <int, List<Body>>{
-        3: [Body.moon],
-        2: [Body.venus],
-      };
-      final yogas = NabhasaYogaCalc.lunarYogas(
-        karakasPerHouse: kph,
-        moonHouse: 3,
-      );
+      // Moon in house 3, Venus in house 2 (12th from house 3).
+      final v = stubVarga(longitudes: {
+        Body.moon: 75.0, // house 3
+        Body.venus: 45.0, // house 2 (12th from Moon)
+        Body.sun: 135.0,
+        Body.mars: 195.0,
+        Body.mercury: 255.0,
+        Body.jupiter: 285.0,
+        Body.saturn: 315.0,
+      });
+      final yogas = NabhasaYogaCalc.lunarYogas(v);
       final anapha = yogas.firstWhere((y) => y.name == 'Anapha');
       expect(anapha.present, isTrue);
     });
 
     test('eligible in both → Durudhara present', () {
-      final kph = <int, List<Body>>{
-        5: [Body.moon],
-        6: [Body.mercury],
-        4: [Body.saturn],
-      };
-      final yogas = NabhasaYogaCalc.lunarYogas(
-        karakasPerHouse: kph,
-        moonHouse: 5,
-      );
+      // Moon in house 5, Mercury in house 6 (2nd), Saturn in house 4 (12th).
+      final v = stubVarga(longitudes: {
+        Body.moon: 135.0, // house 5
+        Body.mercury: 165.0, // house 6 (2nd from Moon)
+        Body.saturn: 105.0, // house 4 (12th from Moon)
+        Body.sun: 15.0,
+        Body.mars: 225.0,
+        Body.jupiter: 285.0,
+        Body.venus: 315.0,
+      });
+      final yogas = NabhasaYogaCalc.lunarYogas(v);
       final duru = yogas.firstWhere((y) => y.name == 'Durudhara');
       expect(duru.present, isTrue);
     });
 
     test('4 lunar yogas always returned', () {
-      final yogas = NabhasaYogaCalc.lunarYogas(
-        karakasPerHouse: {},
-        moonHouse: 1,
-      );
+      final yogas = NabhasaYogaCalc.lunarYogas(stubVarga());
       expect(yogas.length, 4);
     });
   });
@@ -384,58 +374,46 @@ void main() {
 
   group('akritiYogas', () {
     test('all 7 karakas in kendras → Kamala present', () {
-      final kph = <int, List<Body>>{
-        1: [Body.sun, Body.moon],
-        4: [Body.mars, Body.mercury],
-        7: [Body.jupiter, Body.venus],
-        10: [Body.saturn],
-      };
-      final yogas = NabhasaYogaCalc.akritiYogas(
-        karakasPerHouse: kph,
-        moonIsBenefic: true,
-      );
+      final v = stubVarga(longitudes: {
+        Body.sun: 15.0, Body.moon: 20.0, // house 1
+        Body.mars: 105.0, Body.mercury: 110.0, // house 4
+        Body.jupiter: 195.0, Body.venus: 200.0, // house 7
+        Body.saturn: 285.0, // house 10
+      });
+      final yogas = NabhasaYogaCalc.akritiYogas(v);
       final kamala = yogas.firstWhere((y) => y.name == 'Kamala');
       expect(kamala.toMove, 0);
       expect(kamala.isPresent, isTrue);
     });
 
     test('all 7 karakas in trines → Sringataka present', () {
-      final kph = <int, List<Body>>{
-        1: [Body.sun, Body.moon, Body.mars],
-        5: [Body.mercury, Body.jupiter],
-        9: [Body.venus, Body.saturn],
-      };
-      final yogas = NabhasaYogaCalc.akritiYogas(
-        karakasPerHouse: kph,
-        moonIsBenefic: true,
-      );
+      final v = stubVarga(longitudes: {
+        Body.sun: 5.0, Body.moon: 10.0, Body.mars: 15.0, // house 1
+        Body.mercury: 125.0, Body.jupiter: 130.0, // house 5
+        Body.venus: 245.0, Body.saturn: 250.0, // house 9
+      });
+      final yogas = NabhasaYogaCalc.akritiYogas(v);
       final sringa = yogas.firstWhere((y) => y.name == 'Sringataka');
       expect(sringa.toMove, 0);
     });
 
     test('scattered karakas → Chakra uses tmDist', () {
-      // All 7 in odd houses 1,3,5,7,9,11 — Chakra should have toMove=0
-      final kph = <int, List<Body>>{
-        1: [Body.sun, Body.moon],
-        3: [Body.mars],
-        5: [Body.mercury],
-        7: [Body.jupiter],
-        9: [Body.venus],
-        11: [Body.saturn],
-      };
-      final yogas = NabhasaYogaCalc.akritiYogas(
-        karakasPerHouse: kph,
-        moonIsBenefic: true,
-      );
+      // All 7 in odd houses 1,3,5,7,9,11 — Chakra should have toMove=0.
+      final v = stubVarga(longitudes: {
+        Body.sun: 5.0, Body.moon: 10.0, // house 1
+        Body.mars: 75.0, // house 3
+        Body.mercury: 135.0, // house 5
+        Body.jupiter: 195.0, // house 7
+        Body.venus: 255.0, // house 9
+        Body.saturn: 315.0, // house 11
+      });
+      final yogas = NabhasaYogaCalc.akritiYogas(v);
       final chakra = yogas.firstWhere((y) => y.name == 'Chakra');
       expect(chakra.toMove, 0);
     });
 
     test('akriti returns expected yoga names', () {
-      final yogas = NabhasaYogaCalc.akritiYogas(
-        karakasPerHouse: _scattered(),
-        moonIsBenefic: true,
-      );
+      final yogas = NabhasaYogaCalc.akritiYogas(_scattered());
       final names = yogas.map((y) => y.name).toList();
       expect(names, contains('Kamala'));
       expect(names, contains('Sringataka'));
@@ -453,23 +431,13 @@ void main() {
 
   group('nabhasaYogas', () {
     test('returns all four categories', () {
-      final kph = _scattered();
-      final yogas = NabhasaYogaCalc.nabhasaYogas(
-        karakasPerHouse: kph,
-        houseQualities: _naturalHouseQualities(),
-        moonIsBenefic: true,
-      );
+      final yogas = NabhasaYogaCalc.nabhasaYogas(_scattered());
       final categories = yogas.map((y) => y.category).toSet();
       expect(categories, containsAll(['Ashraya', 'Dala', 'Sankhya', 'Akriti']));
     });
 
     test('isPresent matches toMove==0', () {
-      final kph = _scattered();
-      final yogas = NabhasaYogaCalc.nabhasaYogas(
-        karakasPerHouse: kph,
-        houseQualities: _naturalHouseQualities(),
-        moonIsBenefic: false,
-      );
+      final yogas = NabhasaYogaCalc.nabhasaYogas(_scattered());
       for (final y in yogas) {
         expect(y.isPresent, y.toMove == 0);
       }
@@ -480,16 +448,14 @@ void main() {
 
   group('toMove scoring', () {
     test('tm: karakas outside required houses counted correctly', () {
-      // 3 karakas in houses [1,7], 4 outside → toMove = 4
-      final kph = <int, List<Body>>{
-        1: [Body.sun, Body.moon],
-        7: [Body.mars],
-        2: [Body.mercury, Body.jupiter, Body.venus, Body.saturn],
-      };
-      final yogas = NabhasaYogaCalc.akritiYogas(
-        karakasPerHouse: kph,
-        moonIsBenefic: true,
-      );
+      // 3 karakas in houses [1,7], 4 outside → toMove = 4 for Sakata.
+      final v = stubVarga(longitudes: {
+        Body.sun: 5.0, Body.moon: 10.0, // house 1
+        Body.mars: 195.0, // house 7
+        Body.mercury: 35.0, Body.jupiter: 40.0, // house 2
+        Body.venus: 45.0, Body.saturn: 50.0, // house 2
+      });
+      final yogas = NabhasaYogaCalc.akritiYogas(v);
       final sakata = yogas.firstWhere((y) => y.name == 'Sakata');
       expect(sakata.toMove, 4);
     });
@@ -498,13 +464,12 @@ void main() {
       // All 7 in house 1 only; Chakra requires [1,3,5,7,9,11].
       // outside=0 (all 7 in house 1 which is in Chakra), emptyRequired=5
       // → tmDist = max(0, 5) = 5
-      final kph = <int, List<Body>>{
-        1: List.of(Body.karakas),
-      };
-      final yogas = NabhasaYogaCalc.akritiYogas(
-        karakasPerHouse: kph,
-        moonIsBenefic: true,
-      );
+      final v = stubVarga(longitudes: {
+        Body.sun: 1.0, Body.moon: 3.0, Body.mars: 5.0,
+        Body.mercury: 7.0, Body.jupiter: 9.0,
+        Body.venus: 11.0, Body.saturn: 13.0,
+      });
+      final yogas = NabhasaYogaCalc.akritiYogas(v);
       final chakra = yogas.firstWhere((y) => y.name == 'Chakra');
       expect(chakra.toMove, 5);
     });

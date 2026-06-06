@@ -77,6 +77,33 @@ class NabhasaYogaCalc {
   static int houseFrom(int lagnaSign, int signNum) =>
       ((signNum - lagnaSign + 12) % 12) + 1;
 
+  // ── Private extraction helpers ──────────────────────────────────────────────
+
+  static Map<int, List<Body>> _karakasPerHouse(Varga varga) {
+    final lagnaSign = varga.cusps[0].sign;
+    final map = <int, List<Body>>{};
+    for (final k in varga.karakas) {
+      final house = houseFrom(lagnaSign, k.sign);
+      (map[house] ??= []).add(k.body);
+    }
+    return map;
+  }
+
+  static Map<int, Quality> _houseQualities(Varga varga) {
+    final lagnaSign = varga.cusps[0].sign;
+    return {
+      for (var h = 1; h <= 12; h++)
+        h: SignData.quality(((lagnaSign - 1 + h - 1) % 12) + 1),
+    };
+  }
+
+  static bool _moonIsBenefic(Varga varga) =>
+      Nature.ofMoon(
+        sunLongitude: varga.sun.rawLongitude,
+        moonLongitude: varga.moon.rawLongitude,
+      ) ==
+      Nature.benefic;
+
   // ── toMove helpers ──────────────────────────────────────────────────────────
 
   /// 7 - (karakas in the given houses). How many karakas are outside.
@@ -104,13 +131,9 @@ class NabhasaYogaCalc {
   // ── Ashraya ─────────────────────────────────────────────────────────────────
 
   /// All 7 karakas in signs of one modality.
-  ///
-  /// [houseQualities] maps house number (1-12) to the quality of the sign
-  /// occupying that house.
-  static List<NabhasaYoga> ashrayaYogas({
-    required Map<int, List<Body>> karakasPerHouse,
-    required Map<int, Quality> houseQualities,
-  }) {
+  static List<NabhasaYoga> ashrayaYogas(Varga varga) {
+    final karakasPerHouse = _karakasPerHouse(varga);
+    final houseQualities = _houseQualities(varga);
     final cardinal = <int>[];
     final fixed = <int>[];
     final mutable = <int>[];
@@ -151,10 +174,9 @@ class NabhasaYogaCalc {
   // ── Dala ────────────────────────────────────────────────────────────────────
 
   /// Benefic/malefic in kendras (1,4,7,10).
-  static List<NabhasaYoga> dalaYogas({
-    required Map<int, List<Body>> karakasPerHouse,
-    required bool moonIsBenefic,
-  }) {
+  static List<NabhasaYoga> dalaYogas(Varga varga) {
+    final karakasPerHouse = _karakasPerHouse(varga);
+    final moonIsBenefic = _moonIsBenefic(varga);
     const kendras = [1, 4, 7, 10];
 
     // Conditional benefic/malefic: Moon classified by phase (moonIsBenefic).
@@ -219,10 +241,9 @@ class NabhasaYogaCalc {
 
   // ── Akriti ───────────────────────────────────────────────────────────────────
 
-  static List<NabhasaYoga> akritiYogas({
-    required Map<int, List<Body>> karakasPerHouse,
-    required bool moonIsBenefic,
-  }) {
+  static List<NabhasaYoga> akritiYogas(Varga varga) {
+    final karakasPerHouse = _karakasPerHouse(varga);
+    final moonIsBenefic = _moonIsBenefic(varga);
     final results = <NabhasaYoga>[];
 
     // 1. Trine patterns
@@ -391,25 +412,19 @@ class NabhasaYogaCalc {
 
   // ── Combined Nabhasa ─────────────────────────────────────────────────────────
 
-  static List<NabhasaYoga> nabhasaYogas({
-    required Map<int, List<Body>> karakasPerHouse,
-    required Map<int, Quality> houseQualities,
-    required bool moonIsBenefic,
-  }) {
-    final occupied = karakasPerHouse.entries
+  static List<NabhasaYoga> nabhasaYogas(Varga varga) {
+    final kph = _karakasPerHouse(varga);
+    final occupied = kph.entries
         .where((e) => e.value.isNotEmpty)
         .map((e) => e.key)
         .toSet()
         .length;
 
     return [
-      ...ashrayaYogas(
-          karakasPerHouse: karakasPerHouse, houseQualities: houseQualities),
-      ...dalaYogas(
-          karakasPerHouse: karakasPerHouse, moonIsBenefic: moonIsBenefic),
+      ...ashrayaYogas(varga),
+      ...dalaYogas(varga),
       ...sankhyaYogas(occupiedHouseCount: occupied),
-      ...akritiYogas(
-          karakasPerHouse: karakasPerHouse, moonIsBenefic: moonIsBenefic),
+      ...akritiYogas(varga),
     ];
   }
 
@@ -417,10 +432,8 @@ class NabhasaYogaCalc {
 
   /// Ruchaka (Mars), Bhadra (Mercury), Hamsa (Jupiter), Malavya (Venus),
   /// Sasa (Saturn): planet in kendra (1,4,7,10) with exalted/moolatrikona/ownSign.
-  static List<MahapurushaYoga> panchamahapurushaYogas({
-    required Map<Body, int> karakaHouses,
-    required Map<Body, DignityType> karakaDignities,
-  }) {
+  static List<MahapurushaYoga> panchamahapurushaYogas(Varga varga) {
+    final lagnaSign = varga.cusps[0].sign;
     const specs = [
       ('Ruchaka', Body.mars),
       ('Bhadra', Body.mercury),
@@ -438,11 +451,10 @@ class NabhasaYogaCalc {
     return [
       for (final (name, planet) in specs)
         () {
-          final house = karakaHouses[planet];
-          final dignity = karakaDignities[planet];
-          final present = house != null &&
-              kendras.contains(house) &&
-              dignity != null &&
+          final k = varga.karaka(planet);
+          final house = houseFrom(lagnaSign, k.sign);
+          final dignity = k.dignity;
+          final present = kendras.contains(house) &&
               strongDignities.contains(dignity);
           return MahapurushaYoga(
             name: name,
@@ -458,10 +470,10 @@ class NabhasaYogaCalc {
   // ── Solar yogas ──────────────────────────────────────────────────────────────
 
   /// Vesi, Vosi, Ubhayachari — planets in 2nd/12th from Sun's house.
-  static List<SolarLunarYoga> solarYogas({
-    required Map<int, List<Body>> karakasPerHouse,
-    required int sunHouse,
-  }) {
+  static List<SolarLunarYoga> solarYogas(Varga varga) {
+    final lagnaSign = varga.cusps[0].sign;
+    final karakasPerHouse = _karakasPerHouse(varga);
+    final sunHouse = houseFrom(lagnaSign, varga.sun.sign);
     return _solarLunarYogas(
       karakasPerHouse: karakasPerHouse,
       refHouse: sunHouse,
@@ -475,10 +487,10 @@ class NabhasaYogaCalc {
   // ── Lunar yogas ──────────────────────────────────────────────────────────────
 
   /// Sunapha, Anapha, Durudhara, Kemadruma — planets near Moon.
-  static List<SolarLunarYoga> lunarYogas({
-    required Map<int, List<Body>> karakasPerHouse,
-    required int moonHouse,
-  }) {
+  static List<SolarLunarYoga> lunarYogas(Varga varga) {
+    final lagnaSign = varga.cusps[0].sign;
+    final karakasPerHouse = _karakasPerHouse(varga);
+    final moonHouse = houseFrom(lagnaSign, varga.moon.sign);
     const eligible = [
       Body.mars,
       Body.mercury,
