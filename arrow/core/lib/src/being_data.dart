@@ -95,5 +95,33 @@ class BeingData {
     (12, BeingType.rishi):     Being(name: 'Bharadvaja',   type: BeingType.rishi,     signNumber: 12),
     (12, BeingType.yaksha):    Being(name: 'Senajit',      type: BeingType.yaksha,    signNumber: 12),
     (12, BeingType.apsara):    Being(name: 'Vishvaci',     type: BeingType.apsara,    signNumber: 12),
+
+    // Adityas (hora = sun)
+    (1, BeingType.aditya):  Being(name: 'Dhata',     type: BeingType.aditya, signNumber: 1),
+    (2, BeingType.aditya):  Being(name: 'Aryama',    type: BeingType.aditya, signNumber: 2),
+    (3, BeingType.aditya):  Being(name: 'Mitra',     type: BeingType.aditya, signNumber: 3),
+    (4, BeingType.aditya):  Being(name: 'Varuna',    type: BeingType.aditya, signNumber: 4),
+    (5, BeingType.aditya):  Being(name: 'Indra',     type: BeingType.aditya, signNumber: 5),
+    (6, BeingType.aditya):  Being(name: 'Vivasvan',  type: BeingType.aditya, signNumber: 6),
+    (7, BeingType.aditya):  Being(name: 'Tvashta',   type: BeingType.aditya, signNumber: 7),
+    (8, BeingType.aditya):  Being(name: 'Vishnu',    type: BeingType.aditya, signNumber: 8),
+    (9, BeingType.aditya):  Being(name: 'Amshu',     type: BeingType.aditya, signNumber: 9),
+    (10, BeingType.aditya): Being(name: 'Bhaga',     type: BeingType.aditya, signNumber: 10),
+    (11, BeingType.aditya): Being(name: 'Pusha',     type: BeingType.aditya, signNumber: 11),
+    (12, BeingType.aditya): Being(name: 'Parjanya',  type: BeingType.aditya, signNumber: 12),
+
+    // Nagas (hora = moon)
+    (1, BeingType.naga):  Being(name: 'Vasuki',       type: BeingType.naga, signNumber: 1),
+    (2, BeingType.naga):  Being(name: 'Kacchanira',   type: BeingType.naga, signNumber: 2),
+    (3, BeingType.naga):  Being(name: 'Takshaka',     type: BeingType.naga, signNumber: 3),
+    (4, BeingType.naga):  Being(name: 'Shukra',       type: BeingType.naga, signNumber: 4),
+    (5, BeingType.naga):  Being(name: 'Elapatra',     type: BeingType.naga, signNumber: 5),
+    (6, BeingType.naga):  Being(name: 'Shankhapala',  type: BeingType.naga, signNumber: 6),
+    (7, BeingType.naga):  Being(name: 'Kambala',      type: BeingType.naga, signNumber: 7),
+    (8, BeingType.naga):  Being(name: 'Ashvatara',    type: BeingType.naga, signNumber: 8),
+    (9, BeingType.naga):  Being(name: 'Mahashankha',  type: BeingType.naga, signNumber: 9),
+    (10, BeingType.naga): Being(name: 'Karkotaka',    type: BeingType.naga, signNumber: 10),
+    (11, BeingType.naga): Being(name: 'Dhananjaya',   type: BeingType.naga, signNumber: 11),
+    (12, BeingType.naga): Being(name: 'Airavata',     type: BeingType.naga, signNumber: 12),
   };
 }

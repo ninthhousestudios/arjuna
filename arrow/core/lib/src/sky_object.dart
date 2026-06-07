@@ -64,5 +64,10 @@ abstract class SkyObject {
     }
   }
 
-  Being get adityaBeing => BeingData.forSign(sign, beingType);
+  Being get trimsamsaBeing => BeingData.forSign(sign, beingType);
+
+  Being get horaBeing => BeingData.forSign(
+        sign,
+        hora == Hora.sun ? BeingType.aditya : BeingType.naga,
+      );
 }

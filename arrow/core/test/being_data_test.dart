@@ -5,7 +5,7 @@ import 'package:arrow_core/src/being_data.dart';
 
 void main() {
   group('BeingData', () {
-    test('all 60 beings defined (12 signs × 5 types)', () {
+    test('all 84 beings defined (12 signs × 7 types)', () {
       const types = BeingType.values;
       for (var sign = 1; sign <= 12; sign++) {
         for (final type in types) {
@@ -26,6 +26,16 @@ void main() {
       expect(BeingData.forSign(8, BeingType.apsara).name, 'Rambha');
       expect(BeingData.forSign(9, BeingType.apsara).name, 'Urvashi');
       expect(BeingData.forSign(12, BeingType.yaksha).name, 'Senajit');
+
+      // Adityas
+      expect(BeingData.forSign(1, BeingType.aditya).name, 'Dhata');
+      expect(BeingData.forSign(5, BeingType.aditya).name, 'Indra');
+      expect(BeingData.forSign(12, BeingType.aditya).name, 'Parjanya');
+
+      // Nagas
+      expect(BeingData.forSign(1, BeingType.naga).name, 'Vasuki');
+      expect(BeingData.forSign(3, BeingType.naga).name, 'Takshaka');
+      expect(BeingData.forSign(12, BeingType.naga).name, 'Airavata');
     });
 
     test('invalid sign throws', () {

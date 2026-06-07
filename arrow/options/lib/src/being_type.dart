@@ -1,1 +1,1 @@
-enum BeingType { gandharva, rakshasa, rishi, yaksha, apsara }
+enum BeingType { gandharva, rakshasa, rishi, yaksha, apsara, aditya, naga }
