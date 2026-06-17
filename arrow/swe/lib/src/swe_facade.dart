@@ -39,8 +39,13 @@ class SweFacade {
     _ensureConfig();
   }
 
-  factory SweFacade.create({String? ephePath, String? jplFile}) {
-    return SweFacade(SwissEph.find(), ephePath: ephePath, jplFile: jplFile);
+  factory SweFacade.create({
+    String? libPath,
+    String? ephePath,
+    String? jplFile,
+  }) {
+    final swe = libPath != null ? SwissEph(libPath) : SwissEph.find();
+    return SweFacade(swe, ephePath: ephePath, jplFile: jplFile);
   }
 
   void dispose() {
@@ -67,8 +72,10 @@ class SweFacade {
     final loc = location;
 
     _ensureConfig();
-    _log.info('calcAll jdUt=$jdUt bodies=${sweConfig.bodies.length} '
-        'extraFrames=${sweConfig.extraFrames}');
+    _log.info(
+      'calcAll jdUt=$jdUt bodies=${sweConfig.bodies.length} '
+      'extraFrames=${sweConfig.extraFrames}',
+    );
 
     // Fail-fast: barycentric is not supported under Moshier.
     if (sweConfig.extraFrames.contains(ReferencePoint.barycentric) &&
@@ -91,7 +98,8 @@ class SweFacade {
     }
 
     // Base flags.
-    final baseEclFlags = ephemerisFlag(sweConfig.ephemerisSource) |
+    final baseEclFlags =
+        ephemerisFlag(sweConfig.ephemerisSource) |
         seFlgSpeed |
         (isSidereal ? seFlgSidereal : 0) |
         (sweConfig.topocentric ? seFlgTopoCtr : 0);
@@ -159,7 +167,9 @@ class SweFacade {
     }
 
     // Compute Ketu from Rahu if both are requested.
-    if (sweConfig.bodies.contains(Body.ketu) && rahuEcl != null && rahuEqu != null) {
+    if (sweConfig.bodies.contains(Body.ketu) &&
+        rahuEcl != null &&
+        rahuEqu != null) {
       bodiesEcliptic[Body.ketu] = _ketuFrom(rahuEcl);
       bodiesEquatorial[Body.ketu] = _ketuFrom(rahuEqu);
       if (baryEcl != null && rahuBaryEcl != null) {
@@ -298,8 +308,7 @@ class SweFacade {
       }
       for (final star in sweConfig.stars) {
         try {
-          final equ =
-              dhruvaGcEquatorialStar(_swe, jdUt, sweNameFor(star));
+          final equ = dhruvaGcEquatorialStar(_swe, jdUt, sweNameFor(star));
           starsNakEclLon[star] = equ;
           starsNakEquLon[star] = equ;
         } catch (e) {
@@ -328,13 +337,15 @@ class SweFacade {
       final int nakEclFlags;
       final int nakEquFlags;
       if (nakAyanamsa.isTropical) {
-        nakEclFlags = ephemerisFlag(sweConfig.ephemerisSource) |
+        nakEclFlags =
+            ephemerisFlag(sweConfig.ephemerisSource) |
             seFlgSpeed |
             (sweConfig.topocentric ? seFlgTopoCtr : 0);
         nakEquFlags = nakEclFlags | seFlgEquatorial;
       } else {
         _swe.setSidMode(nakAyanamsa.sweCode);
-        nakEclFlags = ephemerisFlag(sweConfig.ephemerisSource) |
+        nakEclFlags =
+            ephemerisFlag(sweConfig.ephemerisSource) |
             seFlgSpeed |
             seFlgSidereal |
             (sweConfig.topocentric ? seFlgTopoCtr : 0);
@@ -346,42 +357,44 @@ class SweFacade {
         final sweId = body == Body.rahu
             ? (sweConfig.trueNode ? seTrueNode : seMeanNode)
             : sweIdFor(body);
-        bodiesNakEclLon[body] =
-            _swe.calcUt(jdUt, sweId, nakEclFlags).longitude;
-        bodiesNakEquLon[body] =
-            _swe.calcUt(jdUt, sweId, nakEquFlags).longitude;
+        bodiesNakEclLon[body] = _swe.calcUt(jdUt, sweId, nakEclFlags).longitude;
+        bodiesNakEquLon[body] = _swe.calcUt(jdUt, sweId, nakEquFlags).longitude;
       }
       if (sweConfig.bodies.contains(Body.ketu) &&
           bodiesNakEclLon.containsKey(Body.rahu)) {
-        bodiesNakEclLon[Body.ketu] =
-            (bodiesNakEclLon[Body.rahu]! + 180) % 360;
-        bodiesNakEquLon[Body.ketu] =
-            (bodiesNakEquLon[Body.rahu]! + 180) % 360;
+        bodiesNakEclLon[Body.ketu] = (bodiesNakEclLon[Body.rahu]! + 180) % 360;
+        bodiesNakEquLon[Body.ketu] = (bodiesNakEquLon[Body.rahu]! + 180) % 360;
       }
       for (final star in sweConfig.stars) {
         try {
           final sweName = sweNameFor(star);
-          starsNakEclLon[star] =
-              _swe.fixstar2Ut(sweName, jdUt, nakEclFlags).longitude;
-          starsNakEquLon[star] =
-              _swe.fixstar2Ut(sweName, jdUt, nakEquFlags).longitude;
+          starsNakEclLon[star] = _swe
+              .fixstar2Ut(sweName, jdUt, nakEclFlags)
+              .longitude;
+          starsNakEquLon[star] = _swe
+              .fixstar2Ut(sweName, jdUt, nakEquFlags)
+              .longitude;
         } catch (e) {
           _log.warning('fixstar nak calc failed for ${star.label}: $e');
         }
       }
       for (final name in sweConfig.customStarNames) {
         try {
-          customStarsNakEclLon[name] =
-              _swe.fixstar2Ut(name, jdUt, nakEclFlags).longitude;
-          customStarsNakEquLon[name] =
-              _swe.fixstar2Ut(name, jdUt, nakEquFlags).longitude;
+          customStarsNakEclLon[name] = _swe
+              .fixstar2Ut(name, jdUt, nakEclFlags)
+              .longitude;
+          customStarsNakEquLon[name] = _swe
+              .fixstar2Ut(name, jdUt, nakEquFlags)
+              .longitude;
         } catch (_) {
           if (!name.endsWith('%')) {
             try {
-              customStarsNakEclLon[name] =
-                  _swe.fixstar2Ut('$name%', jdUt, nakEclFlags).longitude;
-              customStarsNakEquLon[name] =
-                  _swe.fixstar2Ut('$name%', jdUt, nakEquFlags).longitude;
+              customStarsNakEclLon[name] = _swe
+                  .fixstar2Ut('$name%', jdUt, nakEclFlags)
+                  .longitude;
+              customStarsNakEquLon[name] = _swe
+                  .fixstar2Ut('$name%', jdUt, nakEquFlags)
+                  .longitude;
             } catch (_) {}
           }
         }
@@ -397,11 +410,21 @@ class SweFacade {
     } else if (!nakAyanamsa.isTropical && nakAyanamsa.isStandard) {
       _swe.setSidMode(nakAyanamsa.sweCode);
       final nakHouse = _swe.housesEx(
-          jdUt, seFlgSidereal, loc.latitude, loc.longitude, hsys);
+        jdUt,
+        seFlgSidereal,
+        loc.latitude,
+        loc.longitude,
+        hsys,
+      );
       cuspsNakLon = List.generate(12, (i) => nakHouse.cusps[i + 1]);
     } else if (nakAyanamsa.isTropical && isSidereal) {
-      final nakHouse =
-          _swe.housesEx(jdUt, 0, loc.latitude, loc.longitude, hsys);
+      final nakHouse = _swe.housesEx(
+        jdUt,
+        0,
+        loc.latitude,
+        loc.longitude,
+        hsys,
+      );
       cuspsNakLon = List.generate(12, (i) => nakHouse.cusps[i + 1]);
     } else {
       cuspsNakLon = const [];
@@ -436,22 +459,22 @@ class SweFacade {
   }
 
   BodyPosition _fromCalcResult(CalcResult r) => BodyPosition(
-        longitude: r.longitude,
-        latitude: r.latitude,
-        distance: r.distance,
-        speedLongitude: r.longitudeSpeed,
-        speedLatitude: r.latitudeSpeed,
-        speedDistance: r.distanceSpeed,
-      );
+    longitude: r.longitude,
+    latitude: r.latitude,
+    distance: r.distance,
+    speedLongitude: r.longitudeSpeed,
+    speedLatitude: r.latitudeSpeed,
+    speedDistance: r.distanceSpeed,
+  );
 
   BodyPosition _fromFixstarResult(FixstarResult r) => BodyPosition(
-        longitude: r.longitude,
-        latitude: r.latitude,
-        distance: r.distance,
-        speedLongitude: r.longitudeSpeed,
-        speedLatitude: r.latitudeSpeed,
-        speedDistance: r.distanceSpeed,
-      );
+    longitude: r.longitude,
+    latitude: r.latitude,
+    distance: r.distance,
+    speedLongitude: r.longitudeSpeed,
+    speedLatitude: r.latitudeSpeed,
+    speedDistance: r.distanceSpeed,
+  );
 
   /// Call `swe_pheno_ut` for [body]. Skips lunar nodes (mathematical points
   /// with no pheno output); logs and returns null on SWE error. Flags use
@@ -476,24 +499,24 @@ class SweFacade {
   }
 
   BodyPosition _ketuFrom(BodyPosition rahu) => BodyPosition(
-        longitude: (rahu.longitude + 180.0) % 360.0,
-        latitude: -rahu.latitude,
-        distance: rahu.distance,
-        speedLongitude: rahu.speedLongitude,
-        speedLatitude: -rahu.speedLatitude,
-        speedDistance: rahu.speedDistance,
-      );
+    longitude: (rahu.longitude + 180.0) % 360.0,
+    latitude: -rahu.latitude,
+    distance: rahu.distance,
+    speedLongitude: rahu.speedLongitude,
+    speedLatitude: -rahu.speedLatitude,
+    speedDistance: rahu.speedDistance,
+  );
 
   AscMcPoints _ascMcFromList(List<double> a) => AscMcPoints(
-        ascendant: a[0],
-        mc: a[1],
-        armc: a[2],
-        vertex: a[3],
-        equatorialAscendant: a[4],
-        coAscendantKoch: a[5],
-        coAscendantMunkasey: a[6],
-        polarAscendant: a[7],
-      );
+    ascendant: a[0],
+    mc: a[1],
+    armc: a[2],
+    vertex: a[3],
+    equatorialAscendant: a[4],
+    coAscendantKoch: a[5],
+    coAscendantMunkasey: a[6],
+    polarAscendant: a[7],
+  );
 
   StarData _calcStarData(
     String sweName,
@@ -638,9 +661,8 @@ class SweFacade {
     _ensureConfig();
     assert(ayanamsa.isStandard);
     _swe.setSidMode(ayanamsa.sweCode);
-    final flags = ephemerisFlag(EphemerisSource.swissEph) |
-        seFlgSpeed |
-        seFlgSidereal;
+    final flags =
+        ephemerisFlag(EphemerisSource.swissEph) | seFlgSpeed | seFlgSidereal;
     final r = _swe.calcUt(jdUt, sweId, flags);
     return r.longitude;
   }
