@@ -1,0 +1,17 @@
+services:
+  quiver:
+    build:
+      context: ..
+      dockerfile: quiver/Dockerfile
+    ports:
+      - "50051:50051"
+    environment:
+      QUIVER_PORT: "50051"
+      QUIVER_POOL_SIZE: "2"
+      QUIVER_EPHE_PATH: "/app/ephe"
+    healthcheck:
+      test: ["CMD", "grpc_health_probe", "-addr=:50051"]
+      interval: 5s
+      timeout: 3s
+      retries: 3
+      start_period: 10s

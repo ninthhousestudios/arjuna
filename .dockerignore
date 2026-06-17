@@ -1,0 +1,8 @@
+.dart_tool/
+.packages
+build/
+.git/
+**/*_test.dart
+**/test/
+**/doc/
+*.md
