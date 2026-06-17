@@ -1,132 +1,114 @@
 # libaditya calculations not yet in Arrow
 
-Inventory of calculation capabilities present in libaditya (Python) that Arrow (Dart) does not yet implement. Organized by category with notes on what libaditya provides.
+Inventory of calculation capabilities present in libaditya (Python) that Arrow (Dart) does not yet implement. Updated 2026-06-04 from a full side-by-side audit of both codebases.
+
+Arrow now implements: planetary positions (13 bodies, 4 coordinate frames), house cusps (15 systems), angles (8 points), nakshatras/padas, 51 ayanamsas (47 SWE + 4 custom), 29 varga types, full compound dignity, combustion, retrograde/direction/speed classification, pheno data (phase/elongation/magnitude), synodic state, Parashara drishti (0–60 virupas), rashi aspects (3 modes), all 4 avasthas (Baladi/Jagradadi/Deeptadi/Lajjitaadi), full Shadbala (6 balas), Vimshottari dasha engine, Jaimini (chara karakas, padas, argala, bandhana yogas, 3-level sign strength), Nabhasa yogas (32), Panchamahapurusha (5), solar yogas (3), lunar yogas (4), panchanga (5 limbs + next-boundary finders), sunrise/sunset, 64 named fixed stars + custom, 13-constellation true-sidereal zodiac, nature classification, hora, being type, aditya being.
 
 ---
 
-## Vimshottari Dasha — period arithmetic
+## Astronomical calculations
 
-Arrow has the nakshatra lord table but no dasha engine.
+### Eclipse calculations
+Solar and lunar eclipse finder (next/previous, local and global). Returns EphContext at eclipse maximum.
 
-libaditya provides:
-- Full dasha tree to arbitrary depth (mahadasha → antardasha → pratyantardasha → ...)
-- Current dasha lord(s) at any moment
-- Next dasha lords
-- Specific period lookup without computing the full tree
-- Multiple year-length options: Saura (365.2422 days), Savana, Chandra, Nakshatra
+### Heliacal events
+First/last rising and setting of planets. Mercury/Venus/Moon have evening-first and morning-last. Uses atmosphere and observer parameters.
 
-## Shadbala
+### Moonrise / Moonset
+`swe.rise_trans()` for Moon with Hindu rising bitflag.
 
-Nothing in Arrow. libaditya implements:
+### Planet rise / set / meridian transit
+Generic `rise_trans()` for any body — rise, set, upper meridian transit, lower meridian transit.
 
-- **Sthana Bala** — Ucca Bala, Saptavargaja Bala, Sama-Visama Bala, Kendradi Bala, Drekkana Bala
-- **Dig Bala** — directional strength from digbala cusp
-- **Kala Bala** — Ayana Bala (solstice proximity), Cheshta Bala (motional strength)
-- **Drig Bala** — aspectual strength (full for Mercury/Jupiter, 1/4 for others, subtracted for malefics)
+### Sun ingress finder
+`Sun.ingress(longitude)` — iterative solver for the next moment the Sun reaches a given ecliptic degree.
 
-## Yogas
+### Next new moon / full moon
+Exact conjunction (0°) and opposition (180°) of Sun and Moon.
 
-Nothing in Arrow. libaditya implements:
+### Planetary ingress to arbitrary degree
+Find the next moment any planet crosses a specific ecliptic longitude.
 
-- **Nabhasa Yogas (32):** Ashraya (3), Dala (2), Sankhya (7), Akriti (20) — all scored by `to_move` (planets that would need to move to complete)
-- **Panchamahapurusha (5):** Ruchaka, Bhadra, Hamsa, Malavya, Sasa
-- **Solar Yogas:** Vosi, Vesi, Ubhayachari
-- **Lunar Yogas:** Sunapha, Anapha, Durudhara, Kemadruma
+## Avasthas
 
-## Jaimini — padas, argala, sign strength
+### Shayanadi Avasthas (12 states)
+Shayana, Upavesha, Netrapani, Prakasha, Gamana, Agamana, Sabha, Agama, Bhojana, Nrityalipsa, Kautuka, Nidra. Based on nakshatra index × planet multiplier + navamsha number + birth ghatis since sunrise, mod 12.
 
-Arrow has chara karaka assignment. libaditya adds:
+Arrow has the other 4 avastha systems.
 
-- Pada (arudha lagna) for any sign
-- Upapada (arudha of 10th)
-- All 12 padas
-- Argala and Virodhina (planetary intervention and obstruction)
-- Rashi argala to lagna and 7th
-- Bandhana yogas (sign-pair combinations)
-- Jaimini First/Second/Third Strength (sign ranking tiebreakers)
-- Jaimini Kemadruma yoga (from multiple reference points)
+## Jaimini extensions
 
-## Rashi (sign-to-sign) aspects
+### Jaimini Kemadruma
+Checks from multiple reference points (lagna, AK in D1, pada, svamsha in D9) for malefics in 2nd/8th and Moon aspects.
 
-Arrow has Parashara drishti (planet aspects). libaditya also has:
+### JaiminiGet (declarative topic queries)
+`rashi.get(spec)` — computes sign influences (conjunctions + rashi aspects) for pre-defined topic specs (spirituality, home, dharma, spouse, etc.) across specified vargas.
 
-- Rashi aspects (Jaimini rules): movable aspects fixed, fixed aspects movable, dual aspects all except adjacent dual
+## Chart types
 
-## Shayanadi Avasthas
+### Solar return
+Full chart for the exact moment the Sun returns to its natal degree in any year of life.
 
-Arrow has Baladi, Jagradadi, Deeptadi, Lajjitaadi. libaditya additionally has:
+### Lunar return
+Framework exists but not fully implemented in libaditya either.
 
-- **Shayanadi (12 states):** Shayana, Upavesha, Netrapani, Prakasha, Gamana, Agamana, Sabha, Agama, Bhojana, Nrityalipsa, Kautuka, Nidra — based on nakshatra, navamsha, and birth ghatis since sunrise
+### Tajika annual chart
+Annual return / solar arc horary system. Partial in libaditya.
 
-## Solar/Lunar Returns
+## Coordinate systems
 
-- Solar return chart for any year of life (exact Sun-return-to-natal-degree moment)
-- Framework for lunar returns
+### Draconic
+Planets shifted by Rahu's longitude (sysflg = -8). A coordinate frame, not a separate calculation.
 
-## Panchanga — event finders
+### Altitude / Azimuth (local horizon)
+Per-body horizon coordinates. Arrow computes topocentric positions but not local alt/az.
 
-Arrow has all five limbs and next-boundary finders. libaditya additionally provides:
-
-- Next new moon / next full moon (exact conjunction/opposition)
-- Moon's next morning-last and evening-first visibility
-- First/last visibility of Mercury, Venus
-
-## Planetary ingress
-
-- `planet.ingress(longitude)` — find the next moment a planet crosses a given ecliptic degree
-
-## Fixed stars
-
-- Fixed star positions from Swiss Ephemeris star files
-- Star-to-sign boundary data
-
-## Ashtakavarga
-
-Not in either codebase, but worth noting as a standard Vedic calculation gap.
-
----
-
-## Non-Vedic systems (in libaditya, not in Arrow)
+## Non-Vedic systems
 
 ### Human Design
-- Conscious (natal) and unconscious (88-degree Sun prior) planetary positions
+- Conscious (natal) and unconscious (88° Sun prior) planetary positions
 - Gate, line, color, tone, base from hexagram wheel
 - Bodygraph channel and center activation
 - SVG bodygraph drawing
 
 ### Cards of Truth
 - Birth card from birth date
-- Birth spread (52-card layout)
-- Year spread at any age
+- Birth/year/day spreads (52-card layout)
 - Quadrations (Jack, Queen, King)
 
-### Hellenistic
-- Annual profections — declared but not yet implemented in libaditya either
+### Hellenistic profections
+Stub in libaditya (not implemented). Not in Arrow.
 
-### Tajika
-- Annual chart framework — partial in libaditya
+### Sarvatobhadra Chakra
+Base grid drawing (SVG). Transit overlay incomplete in libaditya.
 
-### Sarvatobhadra Chakra (SBC)
-- Base grid drawing (SVG); transit overlay incomplete in libaditya
+## Not in either codebase
+
+- **Ashtakavarga** — standard Vedic calculation, absent from both
 
 ---
 
-## Summary table
+## Summary
 
-| Calculation | libaditya | Arrow |
-|---|---|---|
-| Vimshottari dasha engine | full | lord table only |
-| Shadbala | 4 balas | none |
-| Yogas (Nabhasa, PMP, solar, lunar) | 32+ yogas | none |
-| Jaimini (padas, argala, sign strength) | full | chara karakas only |
-| Rashi aspects | yes | no |
-| Shayanadi avasthas | yes | no (4 other systems done) |
-| Solar/lunar returns | yes | no |
-| Panchanga event finders (new/full moon, visibility) | yes | next-boundary only |
-| Planetary ingress | yes | no |
-| Fixed stars | yes | no |
-| Human Design | yes | no |
-| Cards of Truth | yes | no |
-| Hellenistic profections | stub | no |
-| Tajika annual chart | partial | no |
-| SBC | partial | no |
+| Category | Calculation | libaditya | Arrow |
+|---|---|---|---|
+| Astronomical | Eclipse finder | full | — |
+| Astronomical | Heliacal events | full | — |
+| Astronomical | Moonrise/moonset | yes | — |
+| Astronomical | Planet rise/set/transit | yes | — |
+| Astronomical | Sun ingress | yes | — |
+| Astronomical | New/full moon finder | yes | — |
+| Astronomical | Planetary ingress | yes | — |
+| Avastha | Shayanadi (12 states) | yes | — |
+| Jaimini | Kemadruma | yes | — |
+| Jaimini | JaiminiGet topics | yes | — |
+| Chart types | Solar return | yes | — |
+| Chart types | Lunar return | stub | — |
+| Chart types | Tajika | partial | — |
+| Coordinates | Draconic frame | yes | — |
+| Coordinates | Alt/Az (horizon) | yes | — |
+| Non-Vedic | Human Design | full | — |
+| Non-Vedic | Cards of Truth | full | — |
+| Non-Vedic | Hellenistic profections | stub | — |
+| Non-Vedic | SBC | partial | — |
+| Both missing | Ashtakavarga | — | — |

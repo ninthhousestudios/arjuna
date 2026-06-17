@@ -1,42 +1,79 @@
 # Quiver
 
-Arrow's API server. The only way the outside world talks to Arrow.
+gRPC service layer over Arrow. Exposes astrological chart calculation as a protobuf API with two deployment modes: in-process embedded (`Vayu`) and multi-isolate gRPC server.
 
-## Architecture
-
-Two deployment modes, same core code:
-- **Remote Quiver** — standalone Dart gRPC server. Auth, routing, caching, Arrow via isolates.
-- **Local Quiver (Vayu)** — embedded in-process Dart library. No auth, no port. Direct Arrow calls + forwarding to Remote.
+## Package structure
 
 ```
-quiver/
-├── core/        # quiver_core: shared logic (arrow gateway, models)
-├── server/      # quiver_server: remote gRPC server
-└── embedded/    # quiver_embedded: local embedded library (Vayu)
+core/  ←  embedded/
+core/  ←  server/
 ```
 
-gRPC with JSON codec support on the same port. Protobuf default, JSON for debugging.
+| Package | Role |
+|---------|------|
+| `quiver_core` | Proto-generated types, `ArrowGateway`, request/response mappers. Shared by both deployment modes. |
+| `quiver_server` | gRPC server. `IsolatePool` runs one `SweFacade` per isolate (round-robin, 2–16). |
+| `quiver_embedded` | `Vayu` — in-process facade. Direct `SweFacade` calls, no isolates, no gRPC. |
 
-## Key architecture docs
+`embedded/` and `server/` do not depend on each other.
 
-- `claude/arch/base.md` — full feature and decision reference
-- `claude/arch/grpc-server-proposal.md` — gRPC topology and deployment
-- `claude/arch/grpc-with-json-includes-dart-examples.md` — JSON codec + Dart examples
-- `claude/arch/desktop.md` — desktop routing
-- `claude/arch/future.md` — deferred decisions (broadheads, abstraction)
+## Proto
 
-## Implementation guidance
+Source protos live at `proto/arrow/` and `proto/quiver/` (monorepo root). Generated Dart lands in `core/lib/src/generated/`. Regenerate with `melos protogen` from the monorepo root.
 
-### Current status
+- `chart.proto` — `ChartService.Calculate` RPC, `CalcRequest`, `CalcResponse`
+- `types.proto` — `Body`, `CalculationPreset`, `BeingType`, `Hora`, `Being`, `PlanetPlacement`, `EphSnapshot`, etc.
+- `health.proto` — `HealthService`
 
-Pre-implementation. Architecture docs exist. No code yet.
+Proto conventions: `_PRESET`, `_BEING`, `_HORA` suffixes avoid proto3 package-scoped name collisions (e.g. `ADITYA_PRESET` vs `Circle.ADITYA`, `SUN_HORA` vs `Body.SUN`).
 
-### Rules for Quiver
+## Preset-only API
 
-- **Start with a health check service.** Validate Dart gRPC works, JSON codec works, server starts/stops cleanly. See `arrow/claude/impl/one.md` Phase: Quiver.
-- **No broadhead system yet.** Integrate KalaBrain directly. The broadhead abstraction is deferred until a second external service exists. See `claude/arch/future.md`.
-- **No caching yet.** Deferred until real usage data shows what Remote Quiver handles and whether repeat calculations justify caching infrastructure.
-- **Auth is Supabase JWT.** Validate on every request in Remote. Skip in Local/embedded (same process). Broadheads re-validate independently.
-- **Arrow runs in isolates** on the server side. Each isolate gets its own sweph.dart C state. Isolate pool sizing is an open question.
-- **Vayu hides everything.** Frontends see only Vayu. Local vs remote routing, auth token forwarding, caching — all invisible to the caller.
-- **`package:logging`** with hierarchy: `Quiver.Server`, `Quiver.Core`, `Quiver.Embedded`.
+Clients send a `CalculationPreset` enum, not raw config fields. `RequestMapper` resolves presets to `ArrowOptions` via `ArrowPresets.aditya`, `.lahiriVedic`, `.westernTropical`. Unspecified defaults to Aditya.
+
+Raw config fields (ayanamsa, house system, circle, bodies) were removed and reserved in the proto.
+
+## ArrowGateway
+
+Abstracts over sync vs async calculation via `SnapshotCalculator` typedef:
+```
+Future<EphSnapshot> Function(double jdUt, Location, ArrowOptions)
+```
+- Server wraps `IsolatePool.calculate` (async, multi-isolate)
+- Embedded wraps `SweFacade.calcAll` (sync, in-process)
+
+`ResponseMapper` receives the snapshot and builds `Chart` (from `arrow_core`) to extract being/placement data. Chart construction is pure Dart computation — no FFI, no isolate boundary concerns.
+
+## IsolatePool
+
+Serializes across isolate boundaries via JSON (`jsonEncode`/`jsonDecode` of freezed models) because `dart:ffi` state is per-isolate. Each isolate owns its own `SweFacade` instance.
+
+## Testing
+
+```bash
+# from monorepo root
+dart test quiver/server/test/
+dart test quiver/embedded/test/
+```
+
+All server tests are integration tests that spin up `QuiverServer(port: 0)` with a real `IsolatePool`. Test fixture: J2000.0 (2451545.0), New York or New Delhi, `ADITYA_PRESET`.
+
+`quiver_core` has no tests — its logic is covered by server/embedded integration tests.
+
+## Server CLI
+
+```bash
+dart run quiver/server/bin/quiver_server.dart \
+  --port 50051 --ephe-path <path> --pool-size 4 --log-level info
+```
+
+## Key files
+
+| File | What |
+|------|------|
+| `core/lib/src/gateway/arrow_gateway.dart` | SnapshotCalculator abstraction |
+| `core/lib/src/mapping/request_mapper.dart` | Preset → ArrowOptions resolution |
+| `core/lib/src/mapping/response_mapper.dart` | EphSnapshot + CalcConfig → CalcResponse with placements |
+| `server/lib/src/isolate_pool.dart` | Multi-isolate SweFacade pool |
+| `server/lib/src/server.dart` | QuiverServer wiring |
+| `embedded/lib/src/vayu.dart` | In-process facade |

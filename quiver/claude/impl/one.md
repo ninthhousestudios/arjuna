@@ -305,7 +305,6 @@ Phase  Step   What                          Depends on                  Unlocks
 - **Phase 1** (scaffold + health check) has zero Arrow dependency. Start immediately.
 - **Phase 3** (auth) needs only the health check server — can proceed while Phase 2 waits for Arrow.
 - **Phase 2** gates on Arrow 2C (SweFacade). This is the critical dependency. While waiting, do Phase 1 and Phase 3.
-- **Phase 4** (KalaBrain) can proceed once auth works, independent of Arrow progress.
 
 ### Cross-project timeline
 
@@ -318,7 +317,6 @@ Arrow                    Quiver                 Nock              Bowyer        
 2B EphSnapshot           3A JWT validation      -                 -                4 astro schema
 2C SWE facade ─────────► 2A-2C chart service ──► 2A chart cmd ──► 2A debug calc   5 KalaNG adapter
 3A-3E core               2D isolates            2B display        2B logs          6 Arrow adapter
-4A-4G calc               4A-4B KalaBrain        3A more cmds      3A metrics       7+ later
 ```
 
 ---
