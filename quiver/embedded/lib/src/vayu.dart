@@ -2,6 +2,8 @@ import 'package:arrow_core/arrow_core.dart';
 import 'package:arrow_options/arrow_options.dart';
 import 'package:arrow_swe/arrow_swe.dart';
 import 'package:logging/logging.dart';
+import 'package:quiver_core/quiver_core.dart'
+    show CalculationPreset, RequestMapper;
 
 final _log = Logger('Quiver.Embedded');
 
@@ -32,10 +34,11 @@ class Vayu {
   Chart calculateChart(
     DateTime dateTimeUtc,
     Location location,
-    ArrowOptions options,
+    CalculationPreset preset,
   ) {
     assert(dateTimeUtc.isUtc, 'dateTimeUtc must be in UTC');
     _checkNotDisposed();
+    final options = RequestMapper.resolvePreset(preset);
     final jd = julianDay(dateTimeUtc);
     final snapshot = _swe.calcAll(jd, location, options.sweConfig);
     return Chart(snapshot, options.calcConfig);
@@ -45,9 +48,10 @@ class Vayu {
   Chart calculateChartFromJd(
     double jd,
     Location location,
-    ArrowOptions options,
+    CalculationPreset preset,
   ) {
     _checkNotDisposed();
+    final options = RequestMapper.resolvePreset(preset);
     final snapshot = _swe.calcAll(jd, location, options.sweConfig);
     return Chart(snapshot, options.calcConfig);
   }
@@ -56,10 +60,11 @@ class Vayu {
   EphSnapshot calculateSnapshot(
     DateTime dateTimeUtc,
     Location location,
-    ArrowOptions options,
+    CalculationPreset preset,
   ) {
     assert(dateTimeUtc.isUtc, 'dateTimeUtc must be in UTC');
     _checkNotDisposed();
+    final options = RequestMapper.resolvePreset(preset);
     final jd = julianDay(dateTimeUtc);
     return _swe.calcAll(jd, location, options.sweConfig);
   }

@@ -1,4 +1,3 @@
-import 'package:arrow_options/arrow_options.dart';
 import 'package:quiver_embedded/quiver_embedded.dart';
 import 'package:test/test.dart';
 
@@ -8,7 +7,7 @@ void main() {
   // New Delhi, 2000-01-01 12:00 UTC.
   final testDate = DateTime.utc(2000, 1, 1, 12, 0, 0);
   final testLocation = Location(latitude: 28.6139, longitude: 77.2090);
-  final testOptions = ArrowPresets.aditya;
+  const testPreset = CalculationPreset.ADITYA_PRESET;
 
   setUpAll(() {
     vayu = Vayu();
@@ -20,7 +19,7 @@ void main() {
 
   group('calculateChart', () {
     test('returns a Chart with grahas for a known date/location', () {
-      final chart = vayu.calculateChart(testDate, testLocation, testOptions);
+      final chart = vayu.calculateChart(testDate, testLocation, testPreset);
 
       // Chart should have a rashi with planets populated.
       expect(chart.rashi, isNotNull);
@@ -35,7 +34,7 @@ void main() {
       final snapshot = vayu.calculateSnapshot(
         testDate,
         testLocation,
-        testOptions,
+        testPreset,
       );
       expect(snapshot.jdUt, closeTo(2451545.0, 0.01));
       expect(snapshot.bodiesEcliptic, isNotEmpty);
@@ -47,10 +46,10 @@ void main() {
       final snapshot = vayu.calculateSnapshot(
         testDate,
         testLocation,
-        testOptions,
+        testPreset,
       );
 
-      final config1 = testOptions.calcConfig;
+      final config1 = RequestMapper.resolvePreset(testPreset).calcConfig;
       final config2 = config1.copyWith(circle: Circle.zodiac);
 
       final chart1 = vayu.recalculate(snapshot, config1);
@@ -65,23 +64,40 @@ void main() {
     });
   });
 
+  group('preset resolution', () {
+    test('different presets produce different chart configs', () {
+      final aditya = vayu.calculateChart(
+        testDate,
+        testLocation,
+        CalculationPreset.ADITYA_PRESET,
+      );
+      final western = vayu.calculateChart(
+        testDate,
+        testLocation,
+        CalculationPreset.WESTERN_PRESET,
+      );
+
+      expect(aditya.config.circle, isNot(western.config.circle));
+    });
+  });
+
   group('dispose', () {
     test('prevents subsequent calls with StateError', () {
       final disposable = Vayu();
       disposable.dispose();
 
       expect(
-        () => disposable.calculateChart(testDate, testLocation, testOptions),
+        () => disposable.calculateChart(testDate, testLocation, testPreset),
         throwsStateError,
       );
       expect(
-        () => disposable.calculateSnapshot(testDate, testLocation, testOptions),
+        () => disposable.calculateSnapshot(testDate, testLocation, testPreset),
         throwsStateError,
       );
       expect(
         () => disposable.recalculate(
-          vayu.calculateSnapshot(testDate, testLocation, testOptions),
-          testOptions.calcConfig,
+          vayu.calculateSnapshot(testDate, testLocation, testPreset),
+          RequestMapper.resolvePreset(testPreset).calcConfig,
         ),
         throwsStateError,
       );

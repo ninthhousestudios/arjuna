@@ -14,10 +14,10 @@ class RequestMapper {
   }
 
   static arrow.ArrowOptions toArrowOptions(pb.CalcRequest request) {
-    return _resolvePreset(request.preset);
+    return resolvePreset(request.preset);
   }
 
-  static arrow.ArrowOptions _resolvePreset(pbe.CalculationPreset preset) =>
+  static arrow.ArrowOptions resolvePreset(pbe.CalculationPreset preset) =>
       switch (preset) {
         pbe.CalculationPreset.ADITYA_PRESET => arrow.ArrowPresets.aditya,
         pbe.CalculationPreset.LAHIRI_PRESET => arrow.ArrowPresets.lahiriVedic,
