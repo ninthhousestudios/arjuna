@@ -85,6 +85,13 @@ enum Circle {
   ZODIAC = 2;
 }
 
+enum CalculationPreset {
+  CALCULATION_PRESET_UNSPECIFIED = 0;
+  ADITYA_PRESET = 1;
+  LAHIRI_PRESET = 2;
+  WESTERN_PRESET = 3;
+}
+
 message BodyPositionEntry {
   Body body = 1;
   BodyPosition position = 2;

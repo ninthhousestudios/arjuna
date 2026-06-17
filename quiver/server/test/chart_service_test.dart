@@ -15,9 +15,7 @@ void main() {
     channel = ClientChannel(
       'localhost',
       port: server.port,
-      options: const ChannelOptions(
-        credentials: ChannelCredentials.insecure(),
-      ),
+      options: const ChannelOptions(credentials: ChannelCredentials.insecure()),
     );
     client = ChartServiceClient(channel);
   });
@@ -31,6 +29,7 @@ void main() {
     final request = CalcRequest(
       jdUt: 2451545.0, // J2000.0 — 2000-01-01 12:00 UT
       location: Location(latitude: 40.7128, longitude: -74.006),
+      preset: CalculationPreset.ADITYA_PRESET,
     );
 
     final response = await client.calculate(request);
@@ -41,9 +40,7 @@ void main() {
     expect(snapshot.ascmc.ascendant, isNonZero);
     expect(snapshot.ascmc.mc, isNonZero);
 
-    final sun = snapshot.bodiesEcliptic.firstWhere(
-      (e) => e.body == Body.SUN,
-    );
+    final sun = snapshot.bodiesEcliptic.firstWhere((e) => e.body == Body.SUN);
     // Sun at J2000.0 should be near 280° ecliptic longitude (Capricorn)
     expect(sun.position.longitude, closeTo(280.0, 2.0));
   });

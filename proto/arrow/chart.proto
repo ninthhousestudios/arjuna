@@ -12,16 +12,12 @@ service ChartService {
 message CalcRequest {
   double jd_ut = 1;
   Location location = 2;
+  CalculationPreset preset = 11;
 
-  optional Ayanamsa sign_ayanamsa = 3;
-  optional HouseSystem house_system = 4;
-  optional bool true_node = 5;
-  optional bool topocentric = 6;
-  repeated Body bodies = 7;
-
-  optional Circle circle = 8;
-  optional Ayanamsa nak_ayanamsa = 9;
-  optional bool nak_equatorial = 10;
+  reserved 3, 4, 5, 6, 7, 8, 9, 10;
+  reserved "sign_ayanamsa", "house_system", "true_node",
+           "topocentric", "bodies", "circle",
+           "nak_ayanamsa", "nak_equatorial";
 }
 
 message CalcResponse {
