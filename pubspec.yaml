@@ -49,4 +49,5 @@ melos:
           --dart_out=grpc:quiver/core/lib/src/generated \
           proto/arrow/types.proto \
           proto/arrow/chart.proto \
-          proto/quiver/health.proto
+          proto/quiver/health.proto \
+          proto/grpc/health/v1/health.proto
