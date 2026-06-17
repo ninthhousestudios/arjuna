@@ -39,6 +39,6 @@ class ArrowGateway {
     );
 
     final snapshot = await _calculate(request.jdUt, location, options);
-    return ResponseMapper.fromSnapshot(snapshot);
+    return ResponseMapper.fromSnapshot(snapshot, options.calcConfig);
   }
 }

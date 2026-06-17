@@ -44,4 +44,30 @@ void main() {
     // Sun at J2000.0 should be near 280° ecliptic longitude (Capricorn)
     expect(sun.position.longitude, closeTo(280.0, 2.0));
   });
+
+  test('calculate chart returns being placements for all grahas', () async {
+    final request = CalcRequest(
+      jdUt: 2451545.0,
+      location: Location(latitude: 40.7128, longitude: -74.006),
+      preset: CalculationPreset.ADITYA_PRESET,
+    );
+
+    final response = await client.calculate(request);
+    final placements = response.placements;
+
+    // 9 grahas: Sun, Moon, Mercury, Venus, Mars, Jupiter, Saturn, Rahu, Ketu
+    expect(placements, hasLength(9));
+
+    for (final p in placements) {
+      expect(p.body, isNot(Body.BODY_UNSPECIFIED));
+      expect(p.trimsamsaBeing.name, isNotEmpty);
+      expect(p.trimsamsaBeing.type, isNot(BeingType.BEING_TYPE_UNSPECIFIED));
+      expect(p.horaBeing.name, isNotEmpty);
+      expect(p.hora, isNot(Hora.HORA_UNSPECIFIED));
+    }
+
+    final sunPlacement = placements.firstWhere((p) => p.body == Body.SUN);
+    expect(sunPlacement.trimsamsaBeing.signNumber, inInclusiveRange(1, 12));
+    expect(sunPlacement.horaBeing.signNumber, inInclusiveRange(1, 12));
+  });
 }
