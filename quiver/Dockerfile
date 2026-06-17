@@ -11,7 +11,7 @@ WORKDIR /app
 
 # Copy pubspecs first for layer caching.
 # All workspace members need a pubspec for `dart pub get` to succeed.
-COPY pubspec.yaml pubspec.lock ./
+COPY pubspec.yaml ./
 COPY arrow/pubspec.yaml arrow/
 COPY arrow/options/pubspec.yaml arrow/options/
 COPY arrow/swe/pubspec.yaml arrow/swe/
@@ -31,12 +31,26 @@ RUN dart pub get
 # --- Stage 2: Build AOT binary ---
 FROM deps AS build
 
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    protobuf-compiler && rm -rf /var/lib/apt/lists/* && \
+    dart pub global activate protoc_plugin
+
+COPY proto/ proto/
 COPY arrow/options/ arrow/options/
 COPY arrow/swe/ arrow/swe/
 COPY arrow/core/ arrow/core/
 COPY arrow/calc/ arrow/calc/
 COPY quiver/core/ quiver/core/
 COPY quiver/server/ quiver/server/
+
+RUN protoc \
+      --proto_path=proto \
+      --plugin=protoc-gen-dart=$HOME/.pub-cache/bin/protoc-gen-dart \
+      --dart_out=grpc:quiver/core/lib/src/generated \
+      proto/arrow/types.proto \
+      proto/arrow/chart.proto \
+      proto/quiver/health.proto \
+      proto/grpc/health/v1/health.proto
 
 RUN mkdir -p /app/bin && \
     dart compile exe quiver/server/bin/quiver_server.dart \
