@@ -6,7 +6,10 @@ build/
 .flutter-plugins-dependencies
 pubspec.lock
 .codex
-.sutra/
+.sutra/*/
+.sutra/acks/
+!.sutra/rules.toml
+!.sutra/aliases.toml
 
 doc/handoff.md
 
