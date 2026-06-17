@@ -19,15 +19,18 @@ class ResponseMapper {
   }
 
   static List<pb.PlanetPlacement> _mapPlacements(core.Chart chart) {
-    return chart.grahas.map((planet) {
-      return pb.PlanetPlacement(
-        body: _mapBody(planet.body),
-        trimsamsaBeing: _mapBeing(planet.trimsamsaBeing),
-        horaBeing: _mapBeing(planet.horaBeing),
-        beingType: _mapBeingType(planet.beingType),
-        hora: _mapHora(planet.hora),
-      );
-    }).toList();
+    return chart.planets
+        .where((p) => _mapBody(p.body) != pbe.Body.BODY_UNSPECIFIED)
+        .map(
+          (planet) => pb.PlanetPlacement(
+            body: _mapBody(planet.body),
+            trimsamsaBeing: _mapBeing(planet.trimsamsaBeing),
+            horaBeing: _mapBeing(planet.horaBeing),
+            beingType: _mapBeingType(planet.beingType),
+            hora: _mapHora(planet.hora),
+          ),
+        )
+        .toList();
   }
 
   static pb.Being _mapBeing(arrow.Being being) {
