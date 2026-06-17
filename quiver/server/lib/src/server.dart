@@ -21,7 +21,7 @@ class QuiverServer {
   int get port => _server.port ?? _requestedPort;
 
   QuiverServer({int port = 50051, this.ephePath, this.poolSize})
-      : _requestedPort = port;
+    : _requestedPort = port;
 
   Future<void> start() async {
     final pool = IsolatePool(size: poolSize, ephePath: ephePath);
@@ -30,12 +30,7 @@ class QuiverServer {
 
     final gateway = ArrowGateway.fromCalculator(pool.calculate);
 
-    _server = Server.create(
-      services: [
-        HealthService(),
-        ChartService(gateway),
-      ],
-    );
+    _server = Server.create(services: [HealthService(), ChartService(gateway)]);
 
     await _server.serve(port: _requestedPort);
     _log.info('Quiver listening on port $port (pool: ${pool.size} isolates)');
@@ -60,10 +55,13 @@ Future<QuiverServer> serve({
     poolSize: poolSize,
   );
 
-  ProcessSignal.sigint.watch().listen((_) async {
+  Future<void> shutdown() async {
     await server.stop();
     exit(0);
-  });
+  }
+
+  ProcessSignal.sigint.watch().listen((_) => shutdown());
+  ProcessSignal.sigterm.watch().listen((_) => shutdown());
 
   await server.start();
   return server;
