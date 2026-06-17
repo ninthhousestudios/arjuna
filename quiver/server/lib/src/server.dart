@@ -30,7 +30,9 @@ class QuiverServer {
 
     final gateway = ArrowGateway.fromCalculator(pool.calculate);
 
-    _server = Server.create(services: [HealthService(), ChartService(gateway)]);
+    _server = Server.create(
+      services: [GrpcHealthService(), HealthService(), ChartService(gateway)],
+    );
 
     await _server.serve(port: _requestedPort);
     _log.info('Quiver listening on port $port (pool: ${pool.size} isolates)');
