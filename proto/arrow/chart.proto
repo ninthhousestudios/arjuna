@@ -22,4 +22,5 @@ message CalcRequest {
 
 message CalcResponse {
   EphSnapshot snapshot = 1;
+  repeated PlanetPlacement placements = 2;
 }
