@@ -7,7 +7,7 @@ void main() {
   // J2000.0 — 2000-01-01 12:00 UT
   const testJd = 2451545.0;
   const testLocation = Location(latitude: 28.6139, longitude: 77.2090);
-  final testOptions = ArrowPresets.ernst;
+  final testOptions = ArrowPresets.aditya;
 
   group('IsolatePool', () {
     late IsolatePool pool;
@@ -54,7 +54,11 @@ void main() {
 
       // Direct SweFacade result.
       final swe = SweFacade.create();
-      final directSnap = swe.calcAll(testJd, testLocation, testOptions.sweConfig);
+      final directSnap = swe.calcAll(
+        testJd,
+        testLocation,
+        testOptions.sweConfig,
+      );
 
       // Compare body ecliptic longitudes.
       for (final body in directSnap.bodiesEcliptic.keys) {

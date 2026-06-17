@@ -10,7 +10,7 @@ Usage (from arjuna/ root):
         python arrow/tool/bin/gen-libaditya-fixtures.py
 
 Preset alignment: we use the libaditya default (Aditya circle, ayanamsa 98
-= dhruva, house system C = Campanus) to match arrow's ArrowPresets.ernst
+= dhruva, house system C = Campanus) to match arrow's ArrowPresets.aditya
 as closely as libaditya allows. If presets diverge, bodies_ecliptic output
 in the fixture lets arrow tests verify input alignment before asserting
 output equality.
@@ -32,7 +32,13 @@ FIXTURE_CHARTS = [
 ]
 
 CHART_DIR = Path.home() / "charts" / "mine"
-OUT_DIR = Path(__file__).resolve().parents[2] / "calc" / "test" / "fixtures" / "libaditya-golden"
+OUT_DIR = (
+    Path(__file__).resolve().parents[2]
+    / "calc"
+    / "test"
+    / "fixtures"
+    / "libaditya-golden"
+)
 
 
 def _jsonable(obj):
@@ -57,6 +63,7 @@ def _jsonable(obj):
 
 def _build_chart(chtk_path):
     from libaditya.read import chtk_to_context
+
     # Chart class lives at libaditya.charts.* — try common spellings.
     try:
         from libaditya.charts import Chart
@@ -92,8 +99,7 @@ def _extract(chart):
             for p in rashi.planets().grahas().values()
         },
         "dignities": {
-            p.identity(): p.dignity()
-            for p in rashi.planets().grahas().values()
+            p.identity(): p.dignity() for p in rashi.planets().grahas().values()
         },
         "lagna_sign": int(lagna_sign),
         "fifth_cusp_sign": int(fifth_cusp_sign),

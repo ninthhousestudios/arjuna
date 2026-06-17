@@ -102,12 +102,12 @@ void main() {
   });
 
   group('ArrowPresets', () {
-    test('ernst preset', () {
-      const ernst = ArrowPresets.ernst;
-      expect(ernst.sweConfig.signAyanamsa, Ayanamsa.tropical);
-      expect(ernst.sweConfig.nakAyanamsa, Ayanamsa.dhruva);
-      expect(ernst.calcConfig.circle, Circle.aditya);
-      expect(ernst.calcConfig.nakEquatorial, isTrue);
+    test('aditya preset', () {
+      const aditya = ArrowPresets.aditya;
+      expect(aditya.sweConfig.signAyanamsa, Ayanamsa.tropical);
+      expect(aditya.sweConfig.nakAyanamsa, Ayanamsa.dhruva);
+      expect(aditya.calcConfig.circle, Circle.aditya);
+      expect(aditya.calcConfig.nakEquatorial, isTrue);
     });
 
     test('lahiriVedic preset', () {
@@ -138,8 +138,8 @@ void main() {
       expect(restored, original);
     });
 
-    test('ArrowPresets.ernst', () {
-      const original = ArrowPresets.ernst;
+    test('ArrowPresets.aditya', () {
+      const original = ArrowPresets.aditya;
       final jsonString = jsonEncode(original.toJson());
       final restored = ArrowOptions.fromJson(
         jsonDecode(jsonString) as Map<String, dynamic>,

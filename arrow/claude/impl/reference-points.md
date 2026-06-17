@@ -325,7 +325,7 @@ pattern as `EphemerisSource` / `ephemerisFlag`.
 
 Default `SweConfig()` has `extraFrames = {}` → existing behavior
 unchanged. All existing tests should stay green with zero edits.
-Presets (`ArrowPresets.ernst` etc.) do not need updating unless we
+Presets (`ArrowPresets.aditya` etc.) do not need updating unless we
 want a preset to enable barycentric — defer.
 
 ---

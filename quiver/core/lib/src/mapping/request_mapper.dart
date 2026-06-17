@@ -19,10 +19,10 @@ class RequestMapper {
 
   static arrow.ArrowOptions _resolvePreset(pbe.CalculationPreset preset) =>
       switch (preset) {
-        pbe.CalculationPreset.ADITYA_PRESET => arrow.ArrowPresets.ernst,
+        pbe.CalculationPreset.ADITYA_PRESET => arrow.ArrowPresets.aditya,
         pbe.CalculationPreset.LAHIRI_PRESET => arrow.ArrowPresets.lahiriVedic,
         pbe.CalculationPreset.WESTERN_PRESET =>
           arrow.ArrowPresets.westernTropical,
-        _ => arrow.ArrowPresets.ernst,
+        _ => arrow.ArrowPresets.aditya,
       };
 }

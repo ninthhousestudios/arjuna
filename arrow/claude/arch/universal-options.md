@@ -593,7 +593,7 @@ Vedic calculations don't change at all. The new structure just makes room for ev
 ## What This Enables
 
 - **Single chart, multiple traditions**: A Hellenistic astrologer who also uses Vedic techniques gets both analyses from one EphSnapshot. No duplicate SWE calls.
-- **Clean defaults**: `ArrowPresets.ernst` gives you exactly what Kala does today. `ArrowPresets.hellenistic` gives a clean Hellenistic setup. Users start from a preset and customize.
+- **Clean defaults**: `ArrowPresets.aditya` gives you exactly what Kala does today. `ArrowPresets.hellenistic` gives a clean Hellenistic setup. Users start from a preset and customize.
 - **Tree-shaking**: A Vedic-only app never ships Uranian midpoint code. A Western-only app never ships dasha code.
 - **Type safety**: A Vedic function can't accidentally read a Hellenistic option. Each function takes exactly the config it needs.
 - **Future traditions**: Adding Chinese astrology means adding `ChineseConfig`, a `chinese/` directory in arrow_calc, and a `Tradition.chinese` enum value. Nothing else changes.

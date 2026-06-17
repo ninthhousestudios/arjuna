@@ -8,7 +8,7 @@ void main() {
   // New Delhi, 2000-01-01 12:00 UTC.
   final testDate = DateTime.utc(2000, 1, 1, 12, 0, 0);
   final testLocation = Location(latitude: 28.6139, longitude: 77.2090);
-  final testOptions = ArrowPresets.ernst;
+  final testOptions = ArrowPresets.aditya;
 
   setUpAll(() {
     vayu = Vayu();
@@ -32,8 +32,11 @@ void main() {
 
   group('calculateSnapshot', () {
     test('returns an EphSnapshot', () {
-      final snapshot =
-          vayu.calculateSnapshot(testDate, testLocation, testOptions);
+      final snapshot = vayu.calculateSnapshot(
+        testDate,
+        testLocation,
+        testOptions,
+      );
       expect(snapshot.jdUt, closeTo(2451545.0, 0.01));
       expect(snapshot.bodiesEcliptic, isNotEmpty);
     });
@@ -41,8 +44,11 @@ void main() {
 
   group('recalculate', () {
     test('reuses the same snapshot with a different CalcConfig', () {
-      final snapshot =
-          vayu.calculateSnapshot(testDate, testLocation, testOptions);
+      final snapshot = vayu.calculateSnapshot(
+        testDate,
+        testLocation,
+        testOptions,
+      );
 
       final config1 = testOptions.calcConfig;
       final config2 = config1.copyWith(circle: Circle.zodiac);
@@ -69,8 +75,7 @@ void main() {
         throwsStateError,
       );
       expect(
-        () =>
-            disposable.calculateSnapshot(testDate, testLocation, testOptions),
+        () => disposable.calculateSnapshot(testDate, testLocation, testOptions),
         throwsStateError,
       );
       expect(

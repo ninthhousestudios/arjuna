@@ -102,7 +102,7 @@ CalcConfig is modular from the start. Cards of Truth and Human Design both need 
 - `SweConfig` gains a `bodies` set (asteroids, hypotheticals, Lilith variants) and `fixedStars`
 - `CalcConfig` is modular: a small core (`Set<Tradition>`) + optional typed tradition configs (`VedicConfig`, `CardsOfTruthConfig`, `HumanDesignConfig`, and future configs like `HellenisticConfig`, `ModernWesternConfig`, etc.)
 - `ArrowOptions` composes `SweConfig` + `CalcConfig` instead of implementing both as interfaces
-- Named presets (`ArrowPresets.ernst`, `.cardsOfTruth`, `.humanDesign`) replace magic defaults
+- Named presets (`ArrowPresets.aditya`, `.cardsOfTruth`, `.humanDesign`) replace magic defaults
 - `arrow_calc` gets per-tradition subdirectories that are tree-shakeable
 - Functions take exactly the config they need: `calcVimshottari(snap, VedicConfig)`, `calcBirthCard(snap, CardsOfTruthConfig)`
 

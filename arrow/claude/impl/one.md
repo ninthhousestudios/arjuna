@@ -571,7 +571,7 @@ KalaNG values come from `KalaEngine.Api` (already running, `POST /api/chart`). E
 ## Done Criteria
 
 Arrow Phase 1-3 is complete when:
-- `ArrowPresets.ernst` produces a Chart that matches KalaNG for all reference charts
+- `ArrowPresets.aditya` produces a Chart that matches KalaNG for all reference charts
 - `chart.sun.sign`, `chart.sun.nakshatra`, `chart.sun.dignity` all return correct values
 - All 16 vargas produce correct placements for all bodies
 - Chara karakas match KalaNG assignments

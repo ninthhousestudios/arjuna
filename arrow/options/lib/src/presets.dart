@@ -10,8 +10,8 @@ import 'vedic_config.dart';
 
 /// Pre-built ArrowOptions for common use cases.
 abstract final class ArrowPresets {
-  /// Ernst system: tropical signs, Aditya circle, dhruva equatorial nakshatras.
-  static const ernst = ArrowOptions(
+  /// Aditya system: tropical signs, Aditya circle, dhruva equatorial nakshatras.
+  static const aditya = ArrowOptions(
     sweConfig: SweConfig(
       signAyanamsa: Ayanamsa.tropical,
       nakAyanamsa: Ayanamsa.dhruva,
@@ -58,9 +58,6 @@ abstract final class ArrowPresets {
         Body.pluto,
       },
     ),
-    calcConfig: CalcConfig(
-      circle: Circle.zodiac,
-      traditions: {},
-    ),
+    calcConfig: CalcConfig(circle: Circle.zodiac, traditions: {}),
   );
 }

@@ -346,7 +346,7 @@ EphSnapshot is greedy by design — grab everything SWE can give you in one call
 
 ### Presets
 
-- `ArrowPresets.ernst` — tropical signs + Aditya circle + dhruva nakshatras
+- `ArrowPresets.aditya` — tropical signs + Aditya circle + dhruva nakshatras
 - `ArrowPresets.lahiriVedic` — Lahiri sidereal, Zodiac circle
 - `ArrowPresets.westernTropical` — tropical, Zodiac circle
 

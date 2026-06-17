@@ -55,7 +55,9 @@ void main(List<String> args) {
   // 2. Compute Julian Day (UTC)
   final utc = chart.utcDateTime;
   final jdUt = _julianDay(
-    utc.year, utc.month, utc.day,
+    utc.year,
+    utc.month,
+    utc.day,
     utc.hour + utc.minute / 60.0 + utc.second / 3600.0,
   );
   print('JD (UT): $jdUt');
@@ -65,7 +67,7 @@ void main(List<String> args) {
     latitude: chart.birthLocation.latitude,
     longitude: chart.birthLocation.longitude,
   );
-  const options = ArrowPresets.ernst;
+  const options = ArrowPresets.aditya;
 
   // 4. Compute EphSnapshot
   final swe = SwissEph(sweLib);
@@ -161,7 +163,8 @@ double _julianDay(int year, int month, int day, double hour) {
   }
   final a = y ~/ 100;
   final b = 2 - a + a ~/ 4;
-  final jd = (365.25 * (y + 4716)).floor() +
+  final jd =
+      (365.25 * (y + 4716)).floor() +
       (30.6001 * (m + 1)).floor() +
       day +
       hour / 24.0 +
