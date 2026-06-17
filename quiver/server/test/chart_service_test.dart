@@ -55,19 +55,30 @@ void main() {
     final response = await client.calculate(request);
     final placements = response.placements;
 
-    // 9 grahas: Sun, Moon, Mercury, Venus, Mars, Jupiter, Saturn, Rahu, Ketu
     expect(placements, hasLength(9));
 
-    for (final p in placements) {
-      expect(p.body, isNot(Body.BODY_UNSPECIFIED));
-      expect(p.trimsamsaBeing.name, isNotEmpty);
-      expect(p.trimsamsaBeing.type, isNot(BeingType.BEING_TYPE_UNSPECIFIED));
-      expect(p.horaBeing.name, isNotEmpty);
-      expect(p.hora, isNot(Hora.HORA_UNSPECIFIED));
-    }
+    PlanetPlacement p(Body b) => placements.firstWhere((e) => e.body == b);
 
-    final sunPlacement = placements.firstWhere((p) => p.body == Body.SUN);
-    expect(sunPlacement.trimsamsaBeing.signNumber, inInclusiveRange(1, 12));
-    expect(sunPlacement.horaBeing.signNumber, inInclusiveRange(1, 12));
+    // Sun in Aquarius (sign 11): trimsamsa Rishi, sun hora → Aditya
+    expect(p(Body.SUN).trimsamsaBeing.name, 'Gautama');
+    expect(p(Body.SUN).trimsamsaBeing.type, BeingType.RISHI);
+    expect(p(Body.SUN).trimsamsaBeing.signNumber, 11);
+    expect(p(Body.SUN).horaBeing.name, 'Pusha');
+    expect(p(Body.SUN).horaBeing.type, BeingType.ADITYA_BEING);
+    expect(p(Body.SUN).hora, Hora.SUN_HORA);
+
+    // Venus in Capricorn (sign 10): trimsamsa Apsara, moon hora → Naga
+    expect(p(Body.VENUS).trimsamsaBeing.name, 'Purvacitti');
+    expect(p(Body.VENUS).trimsamsaBeing.type, BeingType.APSARA);
+    expect(p(Body.VENUS).horaBeing.name, 'Karkotaka');
+    expect(p(Body.VENUS).horaBeing.type, BeingType.NAGA);
+    expect(p(Body.VENUS).hora, Hora.MOON_HORA);
+
+    // Ketu in Pisces (sign 12): trimsamsa Apsara, moon hora → Naga
+    expect(p(Body.KETU).trimsamsaBeing.name, 'Vishvaci');
+    expect(p(Body.KETU).beingType, BeingType.APSARA);
+    expect(p(Body.KETU).horaBeing.name, 'Airavata');
+    expect(p(Body.KETU).horaBeing.type, BeingType.NAGA);
+    expect(p(Body.KETU).hora, Hora.MOON_HORA);
   });
 }
