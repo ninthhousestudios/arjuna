@@ -10,4 +10,15 @@ class Being {
     required this.type,
     required this.signNumber,
   });
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is Being &&
+          name == other.name &&
+          type == other.type &&
+          signNumber == other.signNumber;
+
+  @override
+  int get hashCode => Object.hash(name, type, signNumber);
 }

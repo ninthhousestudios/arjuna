@@ -1,6 +1,7 @@
 /// Arrow calculations layer: avasthas, aspects, panchanga.
 library;
 
+export 'src/being_uncertainty.dart';
 export 'src/vedic/aspect.dart';
 export 'src/vedic/baladi.dart';
 export 'src/vedic/deeptadi.dart';

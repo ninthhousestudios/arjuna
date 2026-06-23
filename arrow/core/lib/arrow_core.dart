@@ -2,6 +2,7 @@
 library;
 
 export 'src/being_data.dart';
+export 'src/being_uncertainty.dart';
 export 'src/body_motion.dart';
 export 'src/celestial_body.dart';
 export 'src/chara_karaka.dart';
@@ -18,6 +19,7 @@ export 'src/nakshatra_data.dart';
 export 'src/planet.dart';
 export 'src/rashi.dart';
 export 'src/sky_object.dart';
+export 'src/time_uncertainty.dart';
 export 'src/sign.dart';
 export 'src/sign_data.dart';
 export 'src/varga.dart';
