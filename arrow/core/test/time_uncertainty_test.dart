@@ -61,5 +61,33 @@ void main() {
       final p = const PeriodTime(startHour: 6, endHour: 12);
       expect(sampleTimes(morning, p), sampleTimes(evening, p));
     });
+
+    test('UnknownTime rejects zero interval', () {
+      expect(
+        () => UnknownTime(intervalHours: 0),
+        throwsA(isA<AssertionError>()),
+      );
+    });
+
+    test('UnknownTime rejects negative interval', () {
+      expect(
+        () => UnknownTime(intervalHours: -1),
+        throwsA(isA<AssertionError>()),
+      );
+    });
+
+    test('PeriodTime rejects negative hours', () {
+      expect(
+        () => PeriodTime(startHour: -1, endHour: 6),
+        throwsA(isA<AssertionError>()),
+      );
+    });
+
+    test('PeriodTime rejects hours above 23', () {
+      expect(
+        () => PeriodTime(startHour: 0, endHour: 25),
+        throwsA(isA<AssertionError>()),
+      );
+    });
   });
 }

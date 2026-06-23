@@ -10,13 +10,19 @@ class PeriodTime extends TimeUncertainty {
   final int startHour;
   final int endHour;
 
-  const PeriodTime({required this.startHour, required this.endHour});
+  const PeriodTime({required this.startHour, required this.endHour})
+    : assert(startHour >= 0 && startHour <= 23, 'startHour must be 0..23'),
+      assert(endHour >= 0 && endHour <= 23, 'endHour must be 0..23');
 }
 
 class UnknownTime extends TimeUncertainty {
   final int intervalHours;
 
-  const UnknownTime({this.intervalHours = 4});
+  const UnknownTime({this.intervalHours = 4})
+    : assert(
+        intervalHours >= 1 && intervalHours <= 24,
+        'intervalHours must be 1..24',
+      );
 }
 
 List<DateTime> sampleTimes(DateTime baseTime, TimeUncertainty uncertainty) {
