@@ -30,15 +30,16 @@ class ArrowGateway {
   );
 
   Future<CalcResponse> calculateChart(CalcRequest request) async {
+    final jdUt = RequestMapper.resolveJdUt(request);
     final location = RequestMapper.toLocation(request);
     final options = RequestMapper.toArrowOptions(request);
 
     _log.info(
-      'calculateChart jd=${request.jdUt} '
+      'calculateChart jd=$jdUt '
       'lat=${location.latitude} lon=${location.longitude}',
     );
 
-    final snapshot = await _calculate(request.jdUt, location, options);
+    final snapshot = await _calculate(jdUt, location, options);
     return ResponseMapper.fromSnapshot(snapshot, options.calcConfig);
   }
 }

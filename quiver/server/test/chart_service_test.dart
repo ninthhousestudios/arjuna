@@ -1,4 +1,5 @@
 import 'package:grpc/grpc.dart';
+import 'package:protobuf/well_known_types/google/protobuf/timestamp.pb.dart';
 import 'package:quiver_core/quiver_core.dart';
 import 'package:quiver_server/src/server.dart';
 import 'package:test/test.dart';
@@ -42,6 +43,34 @@ void main() {
 
     final sun = snapshot.bodiesEcliptic.firstWhere((e) => e.body == Body.SUN);
     // Sun at J2000.0 should be near 280° ecliptic longitude (Capricorn)
+    expect(sun.position.longitude, closeTo(280.0, 2.0));
+  });
+
+  test('calculate chart via Timestamp datetime field', () async {
+    final request = CalcRequest(
+      datetime: Timestamp.fromDateTime(DateTime.utc(2000, 1, 1, 12)),
+      location: Location(latitude: 40.7128, longitude: -74.006),
+      preset: CalculationPreset.ADITYA_PRESET,
+    );
+
+    final response = await client.calculate(request);
+    final sun = response.snapshot.bodiesEcliptic.firstWhere(
+      (e) => e.body == Body.SUN,
+    );
+    expect(sun.position.longitude, closeTo(280.0, 2.0));
+  });
+
+  test('calculate chart via datetime_iso field', () async {
+    final request = CalcRequest(
+      datetimeIso: '2000-01-01T12:00:00Z',
+      location: Location(latitude: 40.7128, longitude: -74.006),
+      preset: CalculationPreset.ADITYA_PRESET,
+    );
+
+    final response = await client.calculate(request);
+    final sun = response.snapshot.bodiesEcliptic.firstWhere(
+      (e) => e.body == Body.SUN,
+    );
     expect(sun.position.longitude, closeTo(280.0, 2.0));
   });
 
