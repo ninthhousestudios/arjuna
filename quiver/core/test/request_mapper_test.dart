@@ -91,5 +91,33 @@ void main() {
         ),
       );
     });
+
+    test('errors on ISO string without timezone designator', () {
+      final request = CalcRequest(datetimeIso: '2000-01-01T12:00:00');
+      expect(
+        () => RequestMapper.resolveJdUt(request),
+        throwsA(
+          isA<GrpcError>().having(
+            (e) => e.code,
+            'code',
+            StatusCode.invalidArgument,
+          ),
+        ),
+      );
+    });
+
+    test('errors when jd_ut set alongside empty datetime_iso', () {
+      final request = CalcRequest(jdUt: j2000Jd, datetimeIso: '');
+      expect(
+        () => RequestMapper.resolveJdUt(request),
+        throwsA(
+          isA<GrpcError>().having(
+            (e) => e.code,
+            'code',
+            StatusCode.invalidArgument,
+          ),
+        ),
+      );
+    });
   });
 }

@@ -74,6 +74,42 @@ void main() {
     expect(sun.position.longitude, closeTo(280.0, 2.0));
   });
 
+  test('returns INVALID_ARGUMENT when no time field is set', () async {
+    final request = CalcRequest(
+      location: Location(latitude: 40.7128, longitude: -74.006),
+    );
+
+    expect(
+      () => client.calculate(request),
+      throwsA(
+        isA<GrpcError>().having(
+          (e) => e.code,
+          'code',
+          StatusCode.invalidArgument,
+        ),
+      ),
+    );
+  });
+
+  test('returns INVALID_ARGUMENT when multiple time fields are set', () async {
+    final request = CalcRequest(
+      jdUt: 2451545.0,
+      datetimeIso: '2000-01-01T12:00:00Z',
+      location: Location(latitude: 40.7128, longitude: -74.006),
+    );
+
+    expect(
+      () => client.calculate(request),
+      throwsA(
+        isA<GrpcError>().having(
+          (e) => e.code,
+          'code',
+          StatusCode.invalidArgument,
+        ),
+      ),
+    );
+  });
+
   test('calculate chart returns being placements for all grahas', () async {
     final request = CalcRequest(
       jdUt: 2451545.0,

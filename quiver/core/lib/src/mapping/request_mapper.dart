@@ -8,7 +8,7 @@ import '../generated/arrow/types.pbenum.dart' as pbe;
 class RequestMapper {
   static double resolveJdUt(pb.CalcRequest request) {
     final hasTs = request.hasDatetime();
-    final hasIso = request.datetimeIso.isNotEmpty;
+    final hasIso = request.hasDatetimeIso();
     final hasJd = request.hasJdUt();
     final count = [hasTs, hasIso, hasJd].where((b) => b).length;
 
@@ -28,7 +28,14 @@ class RequestMapper {
     return request.jdUt;
   }
 
+  static final _tzPattern = RegExp(r'[Zz]$|[+-]\d{2}:\d{2}$');
+
   static double _parseIsoToJd(String iso) {
+    if (!_tzPattern.hasMatch(iso)) {
+      throw GrpcError.invalidArgument(
+        'datetime_iso must include a timezone designator (Z or +/-HH:MM): $iso',
+      );
+    }
     final dt = DateTime.tryParse(iso);
     if (dt == null) {
       throw GrpcError.invalidArgument(

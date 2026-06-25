@@ -10,14 +10,13 @@ class ChartService extends ChartServiceBase {
   ChartService(this._gateway);
 
   @override
-  Future<CalcResponse> calculate(
-    ServiceCall call,
-    CalcRequest request,
-  ) async {
+  Future<CalcResponse> calculate(ServiceCall call, CalcRequest request) async {
     _log.fine('Calculate request: jd=${request.jdUt}');
 
     try {
       return await _gateway.calculateChart(request);
+    } on GrpcError {
+      rethrow;
     } catch (e, stack) {
       _log.severe('Chart calculation failed', e, stack);
       throw GrpcError.internal('Chart calculation failed: $e');
