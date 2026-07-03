@@ -22,7 +22,7 @@ void main() {
       chart = vayu.calculateChart(
         DateTime.utc(2000, 1, 1, 12),
         const Location(latitude: 28.6139, longitude: 77.2090),
-        ArrowPresets.ernst,
+        CalculationPreset.ADITYA_PRESET,
       );
     });
 
@@ -53,10 +53,10 @@ void main() {
       expect(asc['longitude'], isA<double>());
     });
 
-    test('planets list has 9 entries for ernst preset', () {
+    test('planets list has 9 entries for aditya preset', () {
       final result = formatChart(chart);
       final planets = result['planets'] as List;
-      // Ernst is Vedic: Sun, Moon, Mars, Mercury, Jupiter, Venus, Saturn, Rahu, Ketu
+      // Aditya is Vedic: Sun, Moon, Mars, Mercury, Jupiter, Venus, Saturn, Rahu, Ketu
       expect(planets.length, equals(9));
     });
 
@@ -86,9 +86,11 @@ void main() {
       final planets = result['planets'] as List;
 
       // Find Sun (a Karaka) and verify it has dignity.
-      final sun = planets.firstWhere(
-        (p) => (p as Map<String, dynamic>)['name'] == 'sun',
-      ) as Map<String, dynamic>;
+      final sun =
+          planets.firstWhere(
+                (p) => (p as Map<String, dynamic>)['name'] == 'sun',
+              )
+              as Map<String, dynamic>;
       expect(sun, contains('dignity'));
       expect(sun, contains('is_combust'));
     });
@@ -97,9 +99,11 @@ void main() {
       final result = formatChart(chart);
       final planets = result['planets'] as List;
 
-      final rahu = planets.firstWhere(
-        (p) => (p as Map<String, dynamic>)['name'] == 'rahu',
-      ) as Map<String, dynamic>;
+      final rahu =
+          planets.firstWhere(
+                (p) => (p as Map<String, dynamic>)['name'] == 'rahu',
+              )
+              as Map<String, dynamic>;
       expect(rahu, isNot(contains('dignity')));
     });
 
@@ -157,8 +161,18 @@ void main() {
       final result = formatChart(chart);
       final planets = result['planets'] as List;
       const validSigns = [
-        'Aries', 'Taurus', 'Gemini', 'Cancer', 'Leo', 'Virgo',
-        'Libra', 'Scorpio', 'Sagittarius', 'Capricorn', 'Aquarius', 'Pisces',
+        'Aries',
+        'Taurus',
+        'Gemini',
+        'Cancer',
+        'Leo',
+        'Virgo',
+        'Libra',
+        'Scorpio',
+        'Sagittarius',
+        'Capricorn',
+        'Aquarius',
+        'Pisces',
       ];
       for (final planet in planets) {
         final p = planet as Map<String, dynamic>;
@@ -202,7 +216,7 @@ void main() {
       final chart = vayu.calculateChart(
         DateTime.utc(2000, 1, 1, 12),
         const Location(latitude: 28.6139, longitude: 77.2090),
-        ArrowPresets.westernTropical,
+        CalculationPreset.WESTERN_PRESET,
       );
       final result = formatChart(chart);
       final planets = result['planets'] as List;
@@ -213,59 +227,56 @@ void main() {
 
   group('handleCalculateChart error paths', () {
     test('missing date returns error', () {
-      final result = handleCalculateChart(
-        {'latitude': 28.6, 'longitude': 77.2},
-        vayu,
-      );
+      final result = handleCalculateChart({
+        'latitude': 28.6,
+        'longitude': 77.2,
+      }, vayu);
       expect(result.isError, isTrue);
     });
 
     test('invalid date format returns error', () {
-      final result = handleCalculateChart(
-        {'date': 'not-a-date', 'latitude': 28.6, 'longitude': 77.2},
-        vayu,
-      );
+      final result = handleCalculateChart({
+        'date': 'not-a-date',
+        'latitude': 28.6,
+        'longitude': 77.2,
+      }, vayu);
       expect(result.isError, isTrue);
     });
 
     test('latitude out of range returns error', () {
-      final result = handleCalculateChart(
-        {'date': '2000-01-01T12:00:00Z', 'latitude': 91.0, 'longitude': 77.2},
-        vayu,
-      );
+      final result = handleCalculateChart({
+        'date': '2000-01-01T12:00:00Z',
+        'latitude': 91.0,
+        'longitude': 77.2,
+      }, vayu);
       expect(result.isError, isTrue);
     });
 
     test('longitude out of range returns error', () {
-      final result = handleCalculateChart(
-        {'date': '2000-01-01T12:00:00Z', 'latitude': 28.6, 'longitude': 181.0},
-        vayu,
-      );
+      final result = handleCalculateChart({
+        'date': '2000-01-01T12:00:00Z',
+        'latitude': 28.6,
+        'longitude': 181.0,
+      }, vayu);
       expect(result.isError, isTrue);
     });
 
     test('unknown preset returns error', () {
-      final result = handleCalculateChart(
-        {
-          'date': '2000-01-01T12:00:00Z',
-          'latitude': 28.6,
-          'longitude': 77.2,
-          'preset': 'vedic',
-        },
-        vayu,
-      );
+      final result = handleCalculateChart({
+        'date': '2000-01-01T12:00:00Z',
+        'latitude': 28.6,
+        'longitude': 77.2,
+        'preset': 'vedic',
+      }, vayu);
       expect(result.isError, isTrue);
     });
 
     test('valid request succeeds', () {
-      final result = handleCalculateChart(
-        {
-          'date': '2000-01-01T12:00:00Z',
-          'latitude': 28.6,
-          'longitude': 77.2,
-        },
-        vayu,
-      );
+      final result = handleCalculateChart({
+        'date': '2000-01-01T12:00:00Z',
+        'latitude': 28.6,
+        'longitude': 77.2,
+      }, vayu);
       expect(result.isError, isFalse);
     });
   });

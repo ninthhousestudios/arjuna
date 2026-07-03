@@ -11,11 +11,13 @@ final _log = Logger('Drishti.CalculateChart');
 final _inputSchema = JsonObject(
   properties: {
     'jd': JsonNumber(
-      description: 'Julian Day (UT). Preferred for machine callers. '
+      description:
+          'Julian Day (UT). Preferred for machine callers. '
           'Provide either jd or date.',
     ),
     'date': JsonString(
-      description: 'ISO 8601 date-time in UTC (e.g. 2000-01-01T12:00:00Z). '
+      description:
+          'ISO 8601 date-time in UTC (e.g. 2000-01-01T12:00:00Z). '
           'Provide either date or jd.',
     ),
     'lat': JsonNumber(
@@ -43,9 +45,9 @@ final _inputSchema = JsonObject(
       defaultValue: 0,
     ),
     'preset': JsonString(
-      description: 'Calculation preset (default: ernst)',
-      enumValues: ['ernst', 'lahiri', 'western'],
-      defaultValue: 'ernst',
+      description: 'Calculation preset (default: aditya)',
+      enumValues: ['aditya', 'lahiri', 'western'],
+      defaultValue: 'aditya',
     ),
   },
   required: [],
@@ -55,7 +57,8 @@ final _inputSchema = JsonObject(
 void registerCalculateChart(McpServer server, Vayu vayu) {
   server.registerTool(
     'calculate_chart',
-    description: 'Calculate an astrological chart for a given date, time, and location. '
+    description:
+        'Calculate an astrological chart for a given date, time, and location. '
         'Returns planetary positions with sign, nakshatra, dignity, and house cusps.',
     inputSchema: _inputSchema,
     callback: (args, extra) => _handleCalculateChart(args, vayu),
@@ -63,16 +66,10 @@ void registerCalculateChart(McpServer server, Vayu vayu) {
 }
 
 @visibleForTesting
-CallToolResult handleCalculateChart(
-  Map<String, dynamic> args,
-  Vayu vayu,
-) =>
+CallToolResult handleCalculateChart(Map<String, dynamic> args, Vayu vayu) =>
     _handleCalculateChart(args, vayu);
 
-CallToolResult _handleCalculateChart(
-  Map<String, dynamic> args,
-  Vayu vayu,
-) {
+CallToolResult _handleCalculateChart(Map<String, dynamic> args, Vayu vayu) {
   // Parse time — accept jd (preferred) or date.
   final jdRaw = _parseNum(args['jd']);
   final dateStr = args['date'] as String?;
@@ -85,13 +82,15 @@ CallToolResult _handleCalculateChart(
     final dateTime = DateTime.tryParse(dateStr);
     if (dateTime == null) {
       return _errorResult(
-          'Invalid date format: $dateStr. Use ISO 8601 (e.g. 2000-01-01T12:00:00Z)');
+        'Invalid date format: $dateStr. Use ISO 8601 (e.g. 2000-01-01T12:00:00Z)',
+      );
     }
     if (!dateStr.endsWith('Z') &&
         !dateStr.contains('+') &&
         !RegExp(r'\d{2}-\d{2}$').hasMatch(dateStr)) {
       _log.info(
-          'Date "$dateStr" has no timezone indicator; interpreted as local time');
+        'Date "$dateStr" has no timezone indicator; interpreted as local time',
+      );
     }
     jd = julianDay(dateTime.toUtc());
   }
@@ -118,16 +117,17 @@ CallToolResult _handleCalculateChart(
   final alt = _parseNum(args['altitude']) ?? 0.0;
 
   // Parse preset.
-  final presetStr = args['preset'] as String? ?? 'ernst';
-  final options = switch (presetStr) {
-    'ernst' => ArrowPresets.ernst,
-    'lahiri' => ArrowPresets.lahiriVedic,
-    'western' => ArrowPresets.westernTropical,
+  final presetStr = args['preset'] as String? ?? 'aditya';
+  final preset = switch (presetStr) {
+    'aditya' => CalculationPreset.ADITYA_PRESET,
+    'lahiri' => CalculationPreset.LAHIRI_PRESET,
+    'western' => CalculationPreset.WESTERN_PRESET,
     _ => null,
   };
-  if (options == null) {
+  if (preset == null) {
     return _errorResult(
-        "Unknown preset: '$presetStr'. Valid values: ernst, lahiri, western");
+      "Unknown preset: '$presetStr'. Valid values: aditya, lahiri, western",
+    );
   }
 
   final location = Location(latitude: lat, longitude: lon, altitude: alt);
@@ -135,7 +135,7 @@ CallToolResult _handleCalculateChart(
   _log.fine('Calculating chart: jd=$jd, location=$location, preset=$presetStr');
 
   try {
-    final chart = vayu.calculateChartFromJd(jd, location, options);
+    final chart = vayu.calculateChartFromJd(jd, location, preset);
     final formatted = formatChart(chart);
     return CallToolResult.fromStructuredContent(formatted);
   } catch (e, st) {
@@ -151,8 +151,5 @@ double? _parseNum(Object? value) {
 }
 
 CallToolResult _errorResult(String message) {
-  return CallToolResult(
-    content: [TextContent(text: message)],
-    isError: true,
-  );
+  return CallToolResult(content: [TextContent(text: message)], isError: true);
 }

@@ -31,9 +31,10 @@ RUN dart pub get
 # --- Stage 2: Build AOT binary ---
 FROM deps AS build
 
+RUN dart pub global activate protoc_plugin
+
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    protobuf-compiler && rm -rf /var/lib/apt/lists/* && \
-    dart pub global activate protoc_plugin
+    protobuf-compiler libprotobuf-dev && rm -rf /var/lib/apt/lists/*
 
 COPY proto/ proto/
 COPY arrow/options/ arrow/options/
@@ -45,6 +46,7 @@ COPY quiver/server/ quiver/server/
 
 RUN protoc \
       --proto_path=proto \
+      -I/usr/include \
       --plugin=protoc-gen-dart=$HOME/.pub-cache/bin/protoc-gen-dart \
       --dart_out=grpc:quiver/core/lib/src/generated \
       proto/arrow/types.proto \
