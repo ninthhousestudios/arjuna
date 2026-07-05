@@ -54,7 +54,8 @@ class QuiverGateway {
   }
 
   List<double> _resolveTimes(qpb.CalcRequest request) {
-    final baseJd = _parseIsoToJd(request.datetimeIso);
+    final iso = request.datetimeIso;
+    final baseJd = _parseIsoToJd(iso);
 
     if (!request.hasTimeUncertainty() ||
         request.timeUncertainty.whichKind() == qt.TimeUncertainty_Kind.notSet ||
@@ -62,34 +63,59 @@ class QuiverGateway {
       return [baseJd];
     }
 
-    final baseDt = _parseIso(request.datetimeIso);
     final uncertainty = _mapUncertainty(request.timeUncertainty);
-    return sampleTimes(baseDt, uncertainty).map(julianDay).toList();
+    final offset = _parseUtcOffset(iso);
+    // sampleTimes needs local wall-clock date; pass a pseudo-UTC DateTime
+    // with the local y/m/d so hour boundaries are in local time.
+    final localDt = _parseLocalDateTime(iso);
+    final samples = sampleTimes(localDt, uncertainty);
+    // Each sample is local wall-clock as pseudo-UTC; subtract offset to get
+    // true UTC, then convert to Julian Day.
+    return samples
+        .map((local) => local.subtract(offset))
+        .map(julianDay)
+        .toList();
   }
 
   TimeUncertainty _mapUncertainty(qt.TimeUncertainty proto) {
     return switch (proto.whichKind()) {
       qt.TimeUncertainty_Kind.period => PeriodTime(
-        startHour: proto.period.startHour,
-        endHour: proto.period.endHour,
+        startHour: _validateHour(proto.period.startHour, 'start_hour'),
+        endHour: _validateHour(proto.period.endHour, 'end_hour'),
       ),
       qt.TimeUncertainty_Kind.unknown => UnknownTime(
-        intervalHours: proto.unknown.intervalHours > 0
-            ? proto.unknown.intervalHours
-            : 4,
+        intervalHours: _validateInterval(proto.unknown.intervalHours),
       ),
       _ => const ExactTime(),
     };
   }
 
+  int _validateHour(int hour, String field) {
+    if (hour < 0 || hour > 23) {
+      throw GrpcError.invalidArgument('$field must be 0..23, got $hour');
+    }
+    return hour;
+  }
+
+  int _validateInterval(int interval) {
+    if (interval < 1 || interval > 24) {
+      throw GrpcError.invalidArgument(
+        'interval_hours must be 1..24, got $interval',
+      );
+    }
+    return interval;
+  }
+
   static final _tzPattern = RegExp(r'[Zz]$|[+-]\d{2}:\d{2}$');
+  static final _offsetPattern = RegExp(r'([+-])(\d{2}):(\d{2})$');
 
   double _parseIsoToJd(String iso) {
-    final dt = _parseIso(iso);
+    final dt = _parseUtcDateTime(iso);
     return julianDay(dt);
   }
 
-  DateTime _parseIso(String iso) {
+  /// Parse as UTC (Dart's default: offset applied, result is UTC).
+  DateTime _parseUtcDateTime(String iso) {
     if (!_tzPattern.hasMatch(iso)) {
       throw GrpcError.invalidArgument(
         'datetime_iso must include a timezone designator (Z or +/-HH:MM): $iso',
@@ -102,6 +128,32 @@ class QuiverGateway {
       );
     }
     return dt;
+  }
+
+  /// Extract local wall-clock y/m/d as a pseudo-UTC DateTime (no offset
+  /// applied) so sampleTimes interprets hour boundaries in local time.
+  DateTime _parseLocalDateTime(String iso) {
+    final stripped = iso
+        .replaceAll(_offsetPattern, '')
+        .replaceAll(RegExp(r'[Zz]$'), '');
+    final dt = DateTime.tryParse('${stripped}Z');
+    if (dt == null) {
+      throw GrpcError.invalidArgument(
+        'datetime_iso is not a valid ISO 8601 string: $iso',
+      );
+    }
+    return dt;
+  }
+
+  /// Parse the UTC offset from the ISO string as a Duration.
+  Duration _parseUtcOffset(String iso) {
+    if (iso.endsWith('Z') || iso.endsWith('z')) return Duration.zero;
+    final match = _offsetPattern.firstMatch(iso);
+    if (match == null) return Duration.zero;
+    final sign = match.group(1) == '+' ? 1 : -1;
+    final hours = int.parse(match.group(2)!);
+    final minutes = int.parse(match.group(3)!);
+    return Duration(hours: sign * hours, minutes: sign * minutes);
   }
 
   Location _toLocation(qt.Location loc) {

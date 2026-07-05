@@ -160,4 +160,62 @@ void main() {
       ),
     );
   });
+
+  test('returns INVALID_ARGUMENT for out-of-range period hours', () async {
+    final request = CalcRequest(
+      datetimeIso: '2000-01-01T12:00:00Z',
+      location: Location(latitude: 40.7128, longitude: -74.006),
+      preset: CalculationPreset.ADITYA_PRESET,
+      timeUncertainty: TimeUncertainty(
+        period: PeriodTime(startHour: 25, endHour: 12),
+      ),
+    );
+
+    expect(
+      () => client.calculate(request),
+      throwsA(
+        isA<GrpcError>().having(
+          (e) => e.code,
+          'code',
+          StatusCode.invalidArgument,
+        ),
+      ),
+    );
+  });
+
+  test('non-Z offset with period uncertainty samples local hours', () async {
+    // 2000-01-01T17:30:00+05:30 = 2000-01-01T12:00:00Z (New Delhi)
+    // Period 6-12 local should sample at local 06:00 and 12:00 IST
+    final request = CalcRequest(
+      datetimeIso: '2000-01-01T17:30:00+05:30',
+      location: Location(latitude: 28.6139, longitude: 77.209),
+      preset: CalculationPreset.ADITYA_PRESET,
+      timeUncertainty: TimeUncertainty(
+        period: PeriodTime(startHour: 6, endHour: 12),
+      ),
+    );
+
+    final response = await client.calculate(request);
+
+    expect(response.timeCertain, isFalse);
+    expect(response.uncertainPlacements, hasLength(9));
+    // Verify it didn't crash and returned valid results
+    for (final up in response.uncertainPlacements) {
+      expect(up.trimsamsaOptions, isNotEmpty);
+    }
+  });
+
+  test('explicit ExactTime returns certain response', () async {
+    final request = CalcRequest(
+      datetimeIso: '2000-01-01T12:00:00Z',
+      location: Location(latitude: 40.7128, longitude: -74.006),
+      preset: CalculationPreset.ADITYA_PRESET,
+      timeUncertainty: TimeUncertainty(exact: ExactTime()),
+    );
+
+    final response = await client.calculate(request);
+
+    expect(response.timeCertain, isTrue);
+    expect(response.placements, hasLength(9));
+  });
 }

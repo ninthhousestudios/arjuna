@@ -1,4 +1,3 @@
-import 'package:arrow_calc/arrow_calc.dart' show computeBeingUncertainty;
 import 'package:arrow_core/arrow_core.dart' as core;
 import 'package:arrow_options/arrow_options.dart' as arrow;
 
@@ -21,10 +20,9 @@ class QuiverResponseMapper {
   }
 
   static qpb.CalcResponse _uncertain(List<core.Chart> charts) {
-    final uncertainty = computeBeingUncertainty(charts);
     return qpb.CalcResponse(
       timeCertain: false,
-      uncertainPlacements: _mapUncertainPlacements(charts, uncertainty),
+      uncertainPlacements: _mapUncertainPlacements(charts),
       uncertainAtmakaraka: _computeUncertainAtmakaraka(charts),
     );
   }
@@ -43,7 +41,6 @@ class QuiverResponseMapper {
 
   static List<qpb.UncertainPlacement> _mapUncertainPlacements(
     List<core.Chart> charts,
-    core.BeingUncertainty uncertainty,
   ) {
     final bodies = charts.first.grahas.map((p) => p.body).toList();
     return bodies.map((body) {
@@ -89,7 +86,8 @@ class QuiverResponseMapper {
 
     for (final chart in charts) {
       final result = _computeAtmakaraka(chart);
-      final key = '${result.body.value}:${result.signNumber}';
+      final key =
+          '${result.body.value}:${result.signNumber}:${result.trimsamsaBeing.name}';
       if (seen.add(key)) {
         options.add(result);
       }
