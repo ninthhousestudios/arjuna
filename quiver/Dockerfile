@@ -52,6 +52,8 @@ RUN protoc \
       proto/arrow/types.proto \
       proto/arrow/chart.proto \
       proto/quiver/health.proto \
+      proto/quiver/types.proto \
+      proto/quiver/chart.proto \
       proto/grpc/health/v1/health.proto
 
 RUN mkdir -p /app/bin && \
