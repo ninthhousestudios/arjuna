@@ -11,8 +11,6 @@ class ChartService extends ChartServiceBase {
 
   @override
   Future<CalcResponse> calculate(ServiceCall call, CalcRequest request) async {
-    _log.fine('Calculate request: ${request.datetimeIso}');
-
     try {
       return await _gateway.calculate(request);
     } on GrpcError {

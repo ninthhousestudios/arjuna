@@ -6,6 +6,7 @@ import 'package:logging/logging.dart';
 import 'package:quiver_core/quiver_core.dart';
 
 import 'isolate_pool.dart';
+import 'logging_interceptor.dart';
 import 'services/chart_service.dart';
 import 'services/health_service.dart';
 
@@ -32,6 +33,8 @@ class QuiverServer {
 
     _server = Server.create(
       services: [GrpcHealthService(), HealthService(), ChartService(gateway)],
+      interceptors: const [],
+      serverInterceptors: [LoggingInterceptor()],
     );
 
     await _server.serve(port: _requestedPort);
