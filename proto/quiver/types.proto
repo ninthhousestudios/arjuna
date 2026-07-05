@@ -1,0 +1,72 @@
+syntax = "proto3";
+package quiver;
+
+option java_package = "com.arjuna.quiver";
+
+message Location {
+  double latitude = 1;
+  double longitude = 2;
+  double altitude = 3;
+}
+
+enum Body {
+  BODY_UNSPECIFIED = 0;
+  SUN = 1;
+  MOON = 2;
+  MERCURY = 3;
+  VENUS = 4;
+  MARS = 5;
+  JUPITER = 6;
+  SATURN = 7;
+  RAHU = 8;
+  KETU = 9;
+}
+
+enum BeingType {
+  BEING_TYPE_UNSPECIFIED = 0;
+  GANDHARVA = 1;
+  RAKSHASA = 2;
+  RISHI = 3;
+  YAKSHA = 4;
+  APSARA = 5;
+  ADITYA_BEING = 6;
+  NAGA = 7;
+}
+
+enum Hora {
+  HORA_UNSPECIFIED = 0;
+  SUN_HORA = 1;
+  MOON_HORA = 2;
+}
+
+enum CalculationPreset {
+  CALCULATION_PRESET_UNSPECIFIED = 0;
+  ADITYA_PRESET = 1;
+  LAHIRI_PRESET = 2;
+  WESTERN_PRESET = 3;
+}
+
+message Being {
+  string name = 1;
+  BeingType type = 2;
+  int32 sign_number = 3;
+}
+
+message ExactTime {}
+
+message PeriodTime {
+  int32 start_hour = 1;
+  int32 end_hour = 2;
+}
+
+message UnknownTime {
+  int32 interval_hours = 1;
+}
+
+message TimeUncertainty {
+  oneof kind {
+    ExactTime exact = 1;
+    PeriodTime period = 2;
+    UnknownTime unknown = 3;
+  }
+}

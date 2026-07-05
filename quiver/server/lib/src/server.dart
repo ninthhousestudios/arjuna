@@ -28,7 +28,7 @@ class QuiverServer {
     await pool.start();
     _pool = pool;
 
-    final gateway = ArrowGateway.fromCalculator(pool.calculate);
+    final gateway = QuiverGateway.fromCalculator(pool.calculate);
 
     _server = Server.create(
       services: [GrpcHealthService(), HealthService(), ChartService(gateway)],

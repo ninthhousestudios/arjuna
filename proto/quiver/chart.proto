@@ -1,0 +1,51 @@
+syntax = "proto3";
+package quiver;
+
+option java_package = "com.arjuna.quiver";
+
+import "quiver/types.proto";
+
+service ChartService {
+  rpc Calculate (CalcRequest) returns (CalcResponse);
+}
+
+message CalcRequest {
+  string datetime_iso = 1;
+  Location location = 2;
+  CalculationPreset preset = 3;
+  TimeUncertainty time_uncertainty = 4;
+}
+
+message Placement {
+  Body body = 1;
+  Being trimsamsa_being = 2;
+  Being hora_being = 3;
+  BeingType being_type = 4;
+  Hora hora = 5;
+}
+
+message UncertainPlacement {
+  Body body = 1;
+  repeated Being trimsamsa_options = 2;
+  repeated Being hora_options = 3;
+  repeated BeingType being_type_options = 4;
+  repeated Hora hora_options_hora = 5;
+}
+
+message AtmakarakaResult {
+  Body body = 1;
+  Being trimsamsa_being = 2;
+  int32 sign_number = 3;
+}
+
+message UncertainAtmakaraka {
+  repeated AtmakarakaResult options = 1;
+}
+
+message CalcResponse {
+  bool time_certain = 1;
+  repeated Placement placements = 2;
+  repeated UncertainPlacement uncertain_placements = 3;
+  AtmakarakaResult atmakaraka = 4;
+  UncertainAtmakaraka uncertain_atmakaraka = 5;
+}

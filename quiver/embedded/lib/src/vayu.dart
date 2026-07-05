@@ -2,7 +2,7 @@ import 'package:arrow_core/arrow_core.dart';
 import 'package:arrow_options/arrow_options.dart';
 import 'package:arrow_swe/arrow_swe.dart';
 import 'package:logging/logging.dart';
-import 'package:quiver_core/quiver_core.dart'
+import 'package:quiver_core/arrow_internal.dart'
     show CalculationPreset, RequestMapper;
 
 final _log = Logger('Quiver.Embedded');

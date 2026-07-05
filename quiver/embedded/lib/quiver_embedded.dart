@@ -7,5 +7,5 @@ export 'src/vayu.dart';
 export 'package:arrow_core/arrow_core.dart';
 export 'package:arrow_options/arrow_options.dart';
 export 'package:arrow_swe/arrow_swe.dart';
-export 'package:quiver_core/quiver_core.dart'
+export 'package:quiver_core/arrow_internal.dart'
     show CalculationPreset, RequestMapper;

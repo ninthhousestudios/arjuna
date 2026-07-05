@@ -1,6 +1,7 @@
 import 'package:grpc/grpc.dart';
 import 'package:protobuf/well_known_types/google/protobuf/timestamp.pb.dart';
-import 'package:quiver_core/quiver_core.dart';
+import 'package:quiver_core/src/generated/arrow/chart.pb.dart';
+import 'package:quiver_core/src/mapping/request_mapper.dart';
 import 'package:test/test.dart';
 
 void main() {

@@ -1,5 +1,4 @@
 import 'package:grpc/grpc.dart';
-import 'package:protobuf/well_known_types/google/protobuf/timestamp.pb.dart';
 import 'package:quiver_core/quiver_core.dart';
 import 'package:quiver_server/src/server.dart';
 import 'package:test/test.dart';
@@ -26,41 +25,7 @@ void main() {
     await server.stop();
   });
 
-  test('calculate chart returns planet positions', () async {
-    final request = CalcRequest(
-      jdUt: 2451545.0, // J2000.0 — 2000-01-01 12:00 UT
-      location: Location(latitude: 40.7128, longitude: -74.006),
-      preset: CalculationPreset.ADITYA_PRESET,
-    );
-
-    final response = await client.calculate(request);
-    final snapshot = response.snapshot;
-
-    expect(snapshot.bodiesEcliptic, isNotEmpty);
-    expect(snapshot.cusps, isNotEmpty);
-    expect(snapshot.ascmc.ascendant, isNonZero);
-    expect(snapshot.ascmc.mc, isNonZero);
-
-    final sun = snapshot.bodiesEcliptic.firstWhere((e) => e.body == Body.SUN);
-    // Sun at J2000.0 should be near 280° ecliptic longitude (Capricorn)
-    expect(sun.position.longitude, closeTo(280.0, 2.0));
-  });
-
-  test('calculate chart via Timestamp datetime field', () async {
-    final request = CalcRequest(
-      datetime: Timestamp.fromDateTime(DateTime.utc(2000, 1, 1, 12)),
-      location: Location(latitude: 40.7128, longitude: -74.006),
-      preset: CalculationPreset.ADITYA_PRESET,
-    );
-
-    final response = await client.calculate(request);
-    final sun = response.snapshot.bodiesEcliptic.firstWhere(
-      (e) => e.body == Body.SUN,
-    );
-    expect(sun.position.longitude, closeTo(280.0, 2.0));
-  });
-
-  test('calculate chart via datetime_iso field', () async {
+  test('exact time returns placements and atmakaraka', () async {
     final request = CalcRequest(
       datetimeIso: '2000-01-01T12:00:00Z',
       location: Location(latitude: 40.7128, longitude: -74.006),
@@ -68,63 +33,24 @@ void main() {
     );
 
     final response = await client.calculate(request);
-    final sun = response.snapshot.bodiesEcliptic.firstWhere(
-      (e) => e.body == Body.SUN,
-    );
-    expect(sun.position.longitude, closeTo(280.0, 2.0));
+
+    expect(response.timeCertain, isTrue);
+    expect(response.placements, hasLength(9));
+    expect(response.atmakaraka.body, isNot(Body.BODY_UNSPECIFIED));
+    expect(response.atmakaraka.signNumber, greaterThan(0));
   });
 
-  test('returns INVALID_ARGUMENT when no time field is set', () async {
+  test('returns correct being placements for J2000.0 New York', () async {
     final request = CalcRequest(
-      location: Location(latitude: 40.7128, longitude: -74.006),
-    );
-
-    expect(
-      () => client.calculate(request),
-      throwsA(
-        isA<GrpcError>().having(
-          (e) => e.code,
-          'code',
-          StatusCode.invalidArgument,
-        ),
-      ),
-    );
-  });
-
-  test('returns INVALID_ARGUMENT when multiple time fields are set', () async {
-    final request = CalcRequest(
-      jdUt: 2451545.0,
       datetimeIso: '2000-01-01T12:00:00Z',
-      location: Location(latitude: 40.7128, longitude: -74.006),
-    );
-
-    expect(
-      () => client.calculate(request),
-      throwsA(
-        isA<GrpcError>().having(
-          (e) => e.code,
-          'code',
-          StatusCode.invalidArgument,
-        ),
-      ),
-    );
-  });
-
-  test('calculate chart returns being placements for all grahas', () async {
-    final request = CalcRequest(
-      jdUt: 2451545.0,
       location: Location(latitude: 40.7128, longitude: -74.006),
       preset: CalculationPreset.ADITYA_PRESET,
     );
 
     final response = await client.calculate(request);
-    final placements = response.placements;
 
-    expect(placements, hasLength(9));
+    Placement p(Body b) => response.placements.firstWhere((e) => e.body == b);
 
-    PlanetPlacement p(Body b) => placements.firstWhere((e) => e.body == b);
-
-    // Sun in Aquarius (sign 11): trimsamsa Rishi, sun hora → Aditya
     expect(p(Body.SUN).trimsamsaBeing.name, 'Gautama');
     expect(p(Body.SUN).trimsamsaBeing.type, BeingType.RISHI);
     expect(p(Body.SUN).trimsamsaBeing.signNumber, 11);
@@ -132,18 +58,106 @@ void main() {
     expect(p(Body.SUN).horaBeing.type, BeingType.ADITYA_BEING);
     expect(p(Body.SUN).hora, Hora.SUN_HORA);
 
-    // Venus in Capricorn (sign 10): trimsamsa Apsara, moon hora → Naga
     expect(p(Body.VENUS).trimsamsaBeing.name, 'Purvacitti');
     expect(p(Body.VENUS).trimsamsaBeing.type, BeingType.APSARA);
     expect(p(Body.VENUS).horaBeing.name, 'Karkotaka');
     expect(p(Body.VENUS).horaBeing.type, BeingType.NAGA);
     expect(p(Body.VENUS).hora, Hora.MOON_HORA);
 
-    // Ketu in Pisces (sign 12): trimsamsa Apsara, moon hora → Naga
     expect(p(Body.KETU).trimsamsaBeing.name, 'Vishvaci');
     expect(p(Body.KETU).beingType, BeingType.APSARA);
     expect(p(Body.KETU).horaBeing.name, 'Airavata');
     expect(p(Body.KETU).horaBeing.type, BeingType.NAGA);
     expect(p(Body.KETU).hora, Hora.MOON_HORA);
+  });
+
+  test('period uncertainty returns uncertain placements', () async {
+    final request = CalcRequest(
+      datetimeIso: '2000-01-01T12:00:00Z',
+      location: Location(latitude: 40.7128, longitude: -74.006),
+      preset: CalculationPreset.ADITYA_PRESET,
+      timeUncertainty: TimeUncertainty(
+        period: PeriodTime(startHour: 6, endHour: 12),
+      ),
+    );
+
+    final response = await client.calculate(request);
+
+    expect(response.timeCertain, isFalse);
+    expect(response.uncertainPlacements, hasLength(9));
+    for (final up in response.uncertainPlacements) {
+      expect(up.trimsamsaOptions, isNotEmpty);
+      expect(up.horaOptions, isNotEmpty);
+    }
+    expect(response.uncertainAtmakaraka.options, isNotEmpty);
+  });
+
+  test(
+    'unknown time returns uncertain placements with multiple samples',
+    () async {
+      final request = CalcRequest(
+        datetimeIso: '2000-01-01T12:00:00Z',
+        location: Location(latitude: 40.7128, longitude: -74.006),
+        preset: CalculationPreset.ADITYA_PRESET,
+        timeUncertainty: TimeUncertainty(
+          unknown: UnknownTime(intervalHours: 4),
+        ),
+      );
+
+      final response = await client.calculate(request);
+
+      expect(response.timeCertain, isFalse);
+      expect(response.uncertainPlacements, hasLength(9));
+    },
+  );
+
+  test('returns INVALID_ARGUMENT when datetime_iso is missing', () async {
+    final request = CalcRequest(
+      location: Location(latitude: 40.7128, longitude: -74.006),
+    );
+
+    expect(
+      () => client.calculate(request),
+      throwsA(
+        isA<GrpcError>().having(
+          (e) => e.code,
+          'code',
+          StatusCode.invalidArgument,
+        ),
+      ),
+    );
+  });
+
+  test('returns INVALID_ARGUMENT when location is missing', () async {
+    final request = CalcRequest(datetimeIso: '2000-01-01T12:00:00Z');
+
+    expect(
+      () => client.calculate(request),
+      throwsA(
+        isA<GrpcError>().having(
+          (e) => e.code,
+          'code',
+          StatusCode.invalidArgument,
+        ),
+      ),
+    );
+  });
+
+  test('returns INVALID_ARGUMENT for ISO without timezone', () async {
+    final request = CalcRequest(
+      datetimeIso: '2000-01-01T12:00:00',
+      location: Location(latitude: 40.7128, longitude: -74.006),
+    );
+
+    expect(
+      () => client.calculate(request),
+      throwsA(
+        isA<GrpcError>().having(
+          (e) => e.code,
+          'code',
+          StatusCode.invalidArgument,
+        ),
+      ),
+    );
   });
 }
