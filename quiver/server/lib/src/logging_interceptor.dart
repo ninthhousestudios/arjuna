@@ -21,30 +21,42 @@ class LoggingInterceptor extends ServerInterceptor {
 
     final stopwatch = Stopwatch()..start();
     final ip = call.remoteAddress?.address ?? 'unknown';
-    var failed = false;
+    var logged = false;
 
-    return invoker(call, method, requests).transform(
-      StreamTransformer.fromHandlers(
-        handleData: (data, sink) => sink.add(data),
-        handleError: (error, stackTrace, sink) {
-          failed = true;
-          stopwatch.stop();
-          final status = error is GrpcError ? error.codeName : 'INTERNAL';
-          _log.warning(
-            '${method.name} $ip $status ${stopwatch.elapsedMilliseconds}ms',
-          );
-          sink.addError(error, stackTrace);
-        },
-        handleDone: (sink) {
-          if (!failed) {
-            stopwatch.stop();
-            _log.info(
-              '${method.name} $ip OK ${stopwatch.elapsedMilliseconds}ms',
-            );
-          }
-          sink.close();
-        },
-      ),
+    void log(String status, Level level) {
+      if (logged) return;
+      logged = true;
+      stopwatch.stop();
+      _log.log(
+        level,
+        '${method.name} $ip $status ${stopwatch.elapsedMilliseconds}ms',
+      );
+    }
+
+    final upstream = invoker(call, method, requests);
+    late final StreamSubscription<R> sub;
+    final controller = StreamController<R>(
+      onPause: () => sub.pause(),
+      onResume: () => sub.resume(),
+      onCancel: () {
+        log('CANCELLED', Level.INFO);
+        return sub.cancel();
+      },
     );
+
+    sub = upstream.listen(
+      controller.add,
+      onError: (Object error, StackTrace st) {
+        final status = error is GrpcError ? error.codeName : 'INTERNAL';
+        log(status, Level.WARNING);
+        controller.addError(error, st);
+      },
+      onDone: () {
+        log('OK', Level.INFO);
+        controller.close();
+      },
+    );
+
+    return controller.stream;
   }
 }

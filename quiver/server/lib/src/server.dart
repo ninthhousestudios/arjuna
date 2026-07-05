@@ -33,7 +33,6 @@ class QuiverServer {
 
     _server = Server.create(
       services: [GrpcHealthService(), HealthService(), ChartService(gateway)],
-      interceptors: const [],
       serverInterceptors: [LoggingInterceptor()],
     );
 
