@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Ninth House Studios LLC
+
 import 'package:arrow_calc/arrow_calc.dart';
 import 'package:arrow_core/arrow_core.dart';
 import 'package:arrow_options/arrow_options.dart';
@@ -13,66 +16,130 @@ EphSnapshot _stubSnapshot() {
 
   final bodies = <Body, BodyPosition>{
     Body.sun: const BodyPosition(
-      longitude: 45.0, latitude: 0.5, distance: 1.0,
-      speedLongitude: 0.98, speedLatitude: 0.0, speedDistance: 0.0,
+      longitude: 45.0,
+      latitude: 0.5,
+      distance: 1.0,
+      speedLongitude: 0.98,
+      speedLatitude: 0.0,
+      speedDistance: 0.0,
     ),
     Body.moon: const BodyPosition(
-      longitude: 120.0, latitude: -1.2, distance: 0.0025,
-      speedLongitude: 13.2, speedLatitude: 0.0, speedDistance: 0.0,
+      longitude: 120.0,
+      latitude: -1.2,
+      distance: 0.0025,
+      speedLongitude: 13.2,
+      speedLatitude: 0.0,
+      speedDistance: 0.0,
     ),
     Body.mars: const BodyPosition(
-      longitude: 200.0, latitude: 1.5, distance: 1.8,
-      speedLongitude: -0.3, speedLatitude: 0.0, speedDistance: 0.0,
+      longitude: 200.0,
+      latitude: 1.5,
+      distance: 1.8,
+      speedLongitude: -0.3,
+      speedLatitude: 0.0,
+      speedDistance: 0.0,
     ),
     Body.mercury: const BodyPosition(
-      longitude: 55.0, latitude: -0.2, distance: 0.9,
-      speedLongitude: 1.5, speedLatitude: 0.0, speedDistance: 0.0,
+      longitude: 55.0,
+      latitude: -0.2,
+      distance: 0.9,
+      speedLongitude: 1.5,
+      speedLatitude: 0.0,
+      speedDistance: 0.0,
     ),
     Body.jupiter: const BodyPosition(
-      longitude: 280.0, latitude: 0.3, distance: 5.2,
-      speedLongitude: 0.08, speedLatitude: 0.0, speedDistance: 0.0,
+      longitude: 280.0,
+      latitude: 0.3,
+      distance: 5.2,
+      speedLongitude: 0.08,
+      speedLatitude: 0.0,
+      speedDistance: 0.0,
     ),
     Body.venus: const BodyPosition(
-      longitude: 30.0, latitude: -0.5, distance: 0.7,
-      speedLongitude: 1.2, speedLatitude: 0.0, speedDistance: 0.0,
+      longitude: 30.0,
+      latitude: -0.5,
+      distance: 0.7,
+      speedLongitude: 1.2,
+      speedLatitude: 0.0,
+      speedDistance: 0.0,
     ),
     Body.saturn: const BodyPosition(
-      longitude: 310.0, latitude: 0.1, distance: 9.5,
-      speedLongitude: 0.03, speedLatitude: 0.0, speedDistance: 0.0,
+      longitude: 310.0,
+      latitude: 0.1,
+      distance: 9.5,
+      speedLongitude: 0.03,
+      speedLatitude: 0.0,
+      speedDistance: 0.0,
     ),
     Body.rahu: const BodyPosition(
-      longitude: 100.0, latitude: 0.0, distance: 0.0,
-      speedLongitude: -0.05, speedLatitude: 0.0, speedDistance: 0.0,
+      longitude: 100.0,
+      latitude: 0.0,
+      distance: 0.0,
+      speedLongitude: -0.05,
+      speedLatitude: 0.0,
+      speedDistance: 0.0,
     ),
     Body.ketu: const BodyPosition(
-      longitude: 280.0, latitude: 0.0, distance: 0.0,
-      speedLongitude: -0.05, speedLatitude: 0.0, speedDistance: 0.0,
+      longitude: 280.0,
+      latitude: 0.0,
+      distance: 0.0,
+      speedLongitude: -0.05,
+      speedLatitude: 0.0,
+      speedDistance: 0.0,
     ),
   };
 
   // Pheno — sparse (nodes omitted, per EphSnapshot contract).
   final pheno = <Body, PhenoData>{
     Body.sun: const PhenoData(
-        phaseAngle: 0, phase: 1, elongation: 0,
-        apparentDiameter: 0.53, apparentMagnitude: -26.7),
+      phaseAngle: 0,
+      phase: 1,
+      elongation: 0,
+      apparentDiameter: 0.53,
+      apparentMagnitude: -26.7,
+    ),
     Body.moon: const PhenoData(
-        phaseAngle: 75, phase: 0.63, elongation: 75,
-        apparentDiameter: 0.52, apparentMagnitude: -10),
+      phaseAngle: 75,
+      phase: 0.63,
+      elongation: 75,
+      apparentDiameter: 0.52,
+      apparentMagnitude: -10,
+    ),
     Body.mars: const PhenoData(
-        phaseAngle: 30, phase: 0.93, elongation: 155,
-        apparentDiameter: 0.003, apparentMagnitude: -1),
+      phaseAngle: 30,
+      phase: 0.93,
+      elongation: 155,
+      apparentDiameter: 0.003,
+      apparentMagnitude: -1,
+    ),
     Body.mercury: const PhenoData(
-        phaseAngle: 110, phase: 0.32, elongation: 10,
-        apparentDiameter: 0.002, apparentMagnitude: 0),
+      phaseAngle: 110,
+      phase: 0.32,
+      elongation: 10,
+      apparentDiameter: 0.002,
+      apparentMagnitude: 0,
+    ),
     Body.jupiter: const PhenoData(
-        phaseAngle: 5, phase: 0.99, elongation: 125,
-        apparentDiameter: 0.01, apparentMagnitude: -2),
+      phaseAngle: 5,
+      phase: 0.99,
+      elongation: 125,
+      apparentDiameter: 0.01,
+      apparentMagnitude: -2,
+    ),
     Body.venus: const PhenoData(
-        phaseAngle: 90, phase: 0.5, elongation: 15,
-        apparentDiameter: 0.01, apparentMagnitude: -4),
+      phaseAngle: 90,
+      phase: 0.5,
+      elongation: 15,
+      apparentDiameter: 0.01,
+      apparentMagnitude: -4,
+    ),
     Body.saturn: const PhenoData(
-        phaseAngle: 3, phase: 0.99, elongation: 95,
-        apparentDiameter: 0.005, apparentMagnitude: 0.5),
+      phaseAngle: 3,
+      phase: 0.99,
+      elongation: 95,
+      apparentDiameter: 0.005,
+      apparentMagnitude: 0.5,
+    ),
   };
 
   final nakLons = bodies.map((k, v) => MapEntry(k, v.longitude));
@@ -86,9 +153,14 @@ EphSnapshot _stubSnapshot() {
     phenoData: pheno,
     cusps: List.generate(12, (i) => (i * 30.0 + 10.0) % 360),
     ascmc: const AscMcPoints(
-      ascendant: 10.0, mc: 280.0, armc: 280.0, vertex: 190.0,
-      equatorialAscendant: 10.0, coAscendantKoch: 10.0,
-      coAscendantMunkasey: 10.0, polarAscendant: 190.0,
+      ascendant: 10.0,
+      mc: 280.0,
+      armc: 280.0,
+      vertex: 190.0,
+      equatorialAscendant: 10.0,
+      coAscendantKoch: 10.0,
+      coAscendantMunkasey: 10.0,
+      polarAscendant: 190.0,
     ),
     sunTimes: const SunTimes(sunrise: 2460000.75, sunset: 2460001.25),
     ayanamsaValue: 0.0,
@@ -98,8 +170,13 @@ EphSnapshot _stubSnapshot() {
 }
 
 const _karakas = [
-  Body.sun, Body.moon, Body.mars, Body.mercury,
-  Body.jupiter, Body.venus, Body.saturn,
+  Body.sun,
+  Body.moon,
+  Body.mars,
+  Body.mercury,
+  Body.jupiter,
+  Body.venus,
+  Body.saturn,
 ];
 
 void main() {
@@ -114,9 +191,7 @@ void main() {
           body,
           chart.rashi.planet(body).sign,
           chart.rashi.planet(body).longitude.inSignLongitude,
-          chart.rashi
-              .planet(SignData.lord(chart.rashi.planet(body).sign))
-              .sign,
+          chart.rashi.planet(SignData.lord(chart.rashi.planet(body).sign)).sign,
         ),
     };
 
@@ -154,8 +229,11 @@ void main() {
       final result = Lajjitaadi.compute(chart.rashi);
       // Each returned karaka must have at least one non-empty state.
       for (final entry in result.entries) {
-        expect(entry.value.avasthas, isNotEmpty,
-            reason: '${entry.key.name} avasthas');
+        expect(
+          entry.value.avasthas,
+          isNotEmpty,
+          reason: '${entry.key.name} avasthas',
+        );
         for (final factors in entry.value.avasthas.values) {
           expect(factors, isNotEmpty);
         }
@@ -176,8 +254,11 @@ void main() {
 
     test('Synodic sparse — planets yes, nodes no', () {
       final all = chart.synodicStates;
-      expect(all.keys, containsAll(_karakas),
-          reason: 'karakas should have synodic state');
+      expect(
+        all.keys,
+        containsAll(_karakas),
+        reason: 'karakas should have synodic state',
+      );
       expect(all.containsKey(Body.rahu), isFalse);
       expect(all.containsKey(Body.ketu), isFalse);
       for (final s in all.values) {

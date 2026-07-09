@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Ninth House Studios LLC
+
 import 'dart:io';
 
 import 'package:charts_dart/charts_dart.dart';
@@ -15,7 +18,7 @@ class ReplSession {
   NockConfig config;
 
   ReplSession({required this.vayu, NockConfig? config})
-      : config = config ?? NockConfig();
+    : config = config ?? NockConfig();
 }
 
 class Evaluator {
@@ -24,27 +27,25 @@ class Evaluator {
   Evaluator(this.session);
 
   Future<NockValue?> execute(Stmt stmt) async => switch (stmt) {
-        ExprStmt(:final expr) => await _eval(expr),
-        Assignment(:final name, :final value) => await _assign(name, value),
-      };
+    ExprStmt(:final expr) => await _eval(expr),
+    Assignment(:final name, :final value) => await _assign(name, value),
+  };
 
   Future<NockValue> _eval(Expr expr) async => switch (expr) {
-        NumberLit(:final value) => NockNumber(value),
-        StringLit(:final value) => NockString(value),
-        Ident(:final name) => _resolveIdent(name),
-        Call(:final name, :final positional, :final named) =>
-          await _call(name, positional, named),
-        Access(:final object, :final field) =>
-          (await _eval(object)).access(field),
-        MethodCall(
-          :final object,
-          :final method,
-          :final positional,
-          :final named
-        ) =>
-          await (await _eval(object)).call(
-              method, await _evalList(positional), await _evalNamed(named)),
-      };
+    NumberLit(:final value) => NockNumber(value),
+    StringLit(:final value) => NockString(value),
+    Ident(:final name) => _resolveIdent(name),
+    Call(:final name, :final positional, :final named) => await _call(
+      name,
+      positional,
+      named,
+    ),
+    Access(:final object, :final field) => (await _eval(object)).access(field),
+    MethodCall(:final object, :final method, :final positional, :final named) =>
+      await (await _eval(
+        object,
+      )).call(method, await _evalList(positional), await _evalNamed(named)),
+  };
 
   NockValue _resolveIdent(String name) {
     if (name == 'help') return _help();
@@ -57,7 +58,10 @@ class Evaluator {
   }
 
   Future<NockValue> _call(
-      String name, List<Expr> positional, Map<String, Expr> named) async {
+    String name,
+    List<Expr> positional,
+    Map<String, Expr> named,
+  ) async {
     return switch (name) {
       'chart' => await _chartFn(positional, named),
       'config' => await _configFn(named),
@@ -68,14 +72,16 @@ class Evaluator {
   }
 
   Future<NockValue> _chartFn(
-      List<Expr> positional, Map<String, Expr> named) async {
+    List<Expr> positional,
+    Map<String, Expr> named,
+  ) async {
     if (positional.length < 3 || positional.length > 4) {
       throw NockError(
-          'chart() takes 3 or 4 arguments: date, lat, lon [, config]');
+        'chart() takes 3 or 4 arguments: date, lat, lon [, config]',
+      );
     }
 
-    final dateStr =
-        _expectString(await _eval(positional[0]), 'chart() date');
+    final dateStr = _expectString(await _eval(positional[0]), 'chart() date');
     final lat = _expectNumber(await _eval(positional[1]), 'chart() lat');
     final lon = _expectNumber(await _eval(positional[2]), 'chart() lon');
 
@@ -95,8 +101,10 @@ class Evaluator {
   Future<NockValue> _configFn(Map<String, Expr> named) async {
     final args = <String, String>{};
     for (final entry in named.entries) {
-      args[entry.key] =
-          _expectString(await _eval(entry.value), 'config() ${entry.key}');
+      args[entry.key] = _expectString(
+        await _eval(entry.value),
+        'config() ${entry.key}',
+      );
     }
     final cfg = NockConfig(
       ayanamsa: args['ayanamsa'] ?? session.config.ayanamsa,
@@ -110,10 +118,8 @@ class Evaluator {
 
   Future<NockValue> _nowFn(Map<String, Expr> named) async {
     if (named.containsKey('lat') && named.containsKey('lon')) {
-      final lat =
-          _expectNumber(await _eval(named['lat']!), 'now() lat');
-      final lon =
-          _expectNumber(await _eval(named['lon']!), 'now() lon');
+      final lat = _expectNumber(await _eval(named['lat']!), 'now() lat');
+      final lon = _expectNumber(await _eval(named['lon']!), 'now() lon');
       final dt = DateTime.now().toUtc();
       final location = Location(latitude: lat, longitude: lon);
       final options = session.config.toArrowOptions();
@@ -138,7 +144,8 @@ class Evaluator {
     const supported = {'.chtk', '.jhd', '.toml'};
     if (!supported.contains(ext)) {
       throw NockError(
-          'unsupported format: "$ext" (supported: ${supported.join(", ")})');
+        'unsupported format: "$ext" (supported: ${supported.join(", ")})',
+      );
     }
 
     final ChartData data;
@@ -152,7 +159,13 @@ class Evaluator {
     final utcDt = raw.isUtc
         ? raw
         : DateTime.utc(
-            raw.year, raw.month, raw.day, raw.hour, raw.minute, raw.second);
+            raw.year,
+            raw.month,
+            raw.day,
+            raw.hour,
+            raw.minute,
+            raw.second,
+          );
     final location = Location(
       latitude: data.birthLocation.latitude,
       longitude: data.birthLocation.longitude,
@@ -200,10 +213,17 @@ class Evaluator {
       if (dt.isUtc) return dt;
       // No timezone specified — treat the literal values as UTC, not local.
       return DateTime.utc(
-          dt.year, dt.month, dt.day, dt.hour, dt.minute, dt.second);
+        dt.year,
+        dt.month,
+        dt.day,
+        dt.hour,
+        dt.minute,
+        dt.second,
+      );
     } on FormatException {
       throw NockError(
-          'invalid date: "$dateStr" (expected YYYY-MM-DD or YYYY-MM-DD HH:MM)');
+        'invalid date: "$dateStr" (expected YYYY-MM-DD or YYYY-MM-DD HH:MM)',
+      );
     }
   }
 

@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Ninth House Studios LLC
+
 import 'panchanga_names.dart' as names;
 
 /// Span of one yoga in degrees: 13°20' = 13 + 20/60.
@@ -41,8 +44,7 @@ class Yoga {
 /// 13°20'. The caller must provide sidereal longitudes — or more precisely,
 /// longitudes measured from the start of the nakshatra cycle (Ashvini = 0°).
 Yoga calcYoga(double sunSiderealLongitude, double moonSiderealLongitude) {
-  final raw =
-      ((moonSiderealLongitude + sunSiderealLongitude) % 360) / yogaSpan;
+  final raw = ((moonSiderealLongitude + sunSiderealLongitude) % 360) / yogaSpan;
   final remainder = raw % 1;
   final elapsed = remainder * yogaSpan;
   final remaining = yogaSpan - elapsed;

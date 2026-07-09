@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Ninth House Studios LLC
+
 import 'dart:convert';
 
 import 'package:arrow_options/arrow_options.dart';
@@ -25,24 +28,18 @@ void main() {
 
     test('round-trips barycentric through JSON', () {
       const cfg = SweConfig(extraFrames: {ReferencePoint.barycentric});
-      final restored =
-          SweConfig.fromJson(jsonDecode(jsonEncode(cfg.toJson())));
+      final restored = SweConfig.fromJson(jsonDecode(jsonEncode(cfg.toJson())));
       expect(restored.extraFrames, equals({ReferencePoint.barycentric}));
     });
 
     test('round-trips both frames through JSON', () {
-      const cfg = SweConfig(extraFrames: {
-        ReferencePoint.barycentric,
-        ReferencePoint.heliocentric,
-      });
-      final restored =
-          SweConfig.fromJson(jsonDecode(jsonEncode(cfg.toJson())));
+      const cfg = SweConfig(
+        extraFrames: {ReferencePoint.barycentric, ReferencePoint.heliocentric},
+      );
+      final restored = SweConfig.fromJson(jsonDecode(jsonEncode(cfg.toJson())));
       expect(
         restored.extraFrames,
-        equals({
-          ReferencePoint.barycentric,
-          ReferencePoint.heliocentric,
-        }),
+        equals({ReferencePoint.barycentric, ReferencePoint.heliocentric}),
       );
     });
   });

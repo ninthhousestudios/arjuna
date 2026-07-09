@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Ninth House Studios LLC
+
 import 'package:arrow_core/arrow_core.dart';
 import 'package:arrow_options/arrow_options.dart';
 
@@ -80,7 +83,7 @@ class Ecliptic13 {
   /// Placement result for a longitude: constellation, degrees into it,
   /// and percentage through.
   ({Constellation constellation, double degreesInto, double percent})
-      longitudeToConstellation(double longitude) {
+  longitudeToConstellation(double longitude) {
     final c = constellationAt(longitude);
     final degreesInto = ((longitude % 360) - c.beginning + 360) % 360;
     final percent = (degreesInto / c.length) * 100;
@@ -144,8 +147,9 @@ class Ecliptic13 {
 
   @override
   String toString() {
-    final lines =
-        constellations.map((c) => '  ${c.id.label}: ${c.length.toStringAsFixed(2)}°');
+    final lines = constellations.map(
+      (c) => '  ${c.id.label}: ${c.length.toStringAsFixed(2)}°',
+    );
     return 'Ecliptic13(\n${lines.join('\n')}\n)';
   }
 }

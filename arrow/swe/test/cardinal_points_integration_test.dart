@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Ninth House Studios LLC
+
 @Tags(['integration'])
 library;
 
@@ -56,14 +59,25 @@ void main() {
         // All four fall in the requested calendar year, in chronological order.
         for (var i = 0; i < 4; i++) {
           final date = swe.revjul(jds[i]);
-          expect(date.year, equals(year),
-              reason: 'point $i of $year landed in ${date.year}');
-          expect(date.month, equals(expected[i].$1),
-              reason: 'point $i of $year: expected month ${expected[i].$1}, '
-                  'got ${date.month}');
-          expect(date.day, closeTo(expected[i].$2, 1),
-              reason: 'point $i of $year: expected day ~${expected[i].$2}, '
-                  'got ${date.day}');
+          expect(
+            date.year,
+            equals(year),
+            reason: 'point $i of $year landed in ${date.year}',
+          );
+          expect(
+            date.month,
+            equals(expected[i].$1),
+            reason:
+                'point $i of $year: expected month ${expected[i].$1}, '
+                'got ${date.month}',
+          );
+          expect(
+            date.day,
+            closeTo(expected[i].$2, 1),
+            reason:
+                'point $i of $year: expected day ~${expected[i].$2}, '
+                'got ${date.day}',
+          );
         }
 
         expect(cp.ascendingEquinox, lessThan(cp.northernSolstice));

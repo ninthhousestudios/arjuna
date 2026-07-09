@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Ninth House Studios LLC
+
 /// Ayanamsa systems for sidereal calculations.
 ///
 /// Standard codes (0–96) map to Swiss Ephemeris sid modes (SE_SIDM_*).

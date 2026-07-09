@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Ninth House Studios LLC
+
 import 'package:arrow_options/arrow_options.dart';
 
 class NakshatraData {
@@ -6,32 +9,32 @@ class NakshatraData {
   /// Vimshottari dasha lords (1-27 → Body)
   /// Cycle: Ketu, Venus, Sun, Moon, Mars, Rahu, Jupiter, Saturn, Mercury (repeats 3×)
   static const lords = <int, Body>{
-    1: Body.ketu,     // Ashwini
-    2: Body.venus,    // Bharani
-    3: Body.sun,      // Krittika
-    4: Body.moon,     // Rohini
-    5: Body.mars,     // Mrigashira
-    6: Body.rahu,     // Ardra
-    7: Body.jupiter,  // Punarvasu
-    8: Body.saturn,   // Pushya
-    9: Body.mercury,  // Ashlesha
-    10: Body.ketu,    // Magha
-    11: Body.venus,   // Purva Phalguni
-    12: Body.sun,     // Uttara Phalguni
-    13: Body.moon,    // Hasta
-    14: Body.mars,    // Chitra
-    15: Body.rahu,    // Swati
+    1: Body.ketu, // Ashwini
+    2: Body.venus, // Bharani
+    3: Body.sun, // Krittika
+    4: Body.moon, // Rohini
+    5: Body.mars, // Mrigashira
+    6: Body.rahu, // Ardra
+    7: Body.jupiter, // Punarvasu
+    8: Body.saturn, // Pushya
+    9: Body.mercury, // Ashlesha
+    10: Body.ketu, // Magha
+    11: Body.venus, // Purva Phalguni
+    12: Body.sun, // Uttara Phalguni
+    13: Body.moon, // Hasta
+    14: Body.mars, // Chitra
+    15: Body.rahu, // Swati
     16: Body.jupiter, // Vishakha
-    17: Body.saturn,  // Anuradha
+    17: Body.saturn, // Anuradha
     18: Body.mercury, // Jyeshtha
-    19: Body.ketu,    // Mula
-    20: Body.venus,   // Purva Ashadha
-    21: Body.sun,     // Uttara Ashadha
-    22: Body.moon,    // Shravana
-    23: Body.mars,    // Dhanishtha
-    24: Body.rahu,    // Shatabhisha
+    19: Body.ketu, // Mula
+    20: Body.venus, // Purva Ashadha
+    21: Body.sun, // Uttara Ashadha
+    22: Body.moon, // Shravana
+    23: Body.mars, // Dhanishtha
+    24: Body.rahu, // Shatabhisha
     25: Body.jupiter, // Purva Bhadrapada
-    26: Body.saturn,  // Uttara Bhadrapada
+    26: Body.saturn, // Uttara Bhadrapada
     27: Body.mercury, // Revati
   };
 
@@ -68,15 +71,33 @@ class NakshatraData {
 
   /// Nakshatra names
   static const names = <int, String>{
-    1: 'Ashwini',          2: 'Bharani',           3: 'Krittika',
-    4: 'Rohini',           5: 'Mrigashira',         6: 'Ardra',
-    7: 'Punarvasu',        8: 'Pushya',             9: 'Ashlesha',
-    10: 'Magha',          11: 'Purva Phalguni',    12: 'Uttara Phalguni',
-    13: 'Hasta',          14: 'Chitra',            15: 'Swati',
-    16: 'Vishakha',       17: 'Anuradha',          18: 'Jyeshtha',
-    19: 'Mula',           20: 'Purva Ashadha',     21: 'Uttara Ashadha',
-    22: 'Shravana',       23: 'Dhanishtha',        24: 'Shatabhisha',
-    25: 'Purva Bhadrapada', 26: 'Uttara Bhadrapada', 27: 'Revati',
+    1: 'Ashwini',
+    2: 'Bharani',
+    3: 'Krittika',
+    4: 'Rohini',
+    5: 'Mrigashira',
+    6: 'Ardra',
+    7: 'Punarvasu',
+    8: 'Pushya',
+    9: 'Ashlesha',
+    10: 'Magha',
+    11: 'Purva Phalguni',
+    12: 'Uttara Phalguni',
+    13: 'Hasta',
+    14: 'Chitra',
+    15: 'Swati',
+    16: 'Vishakha',
+    17: 'Anuradha',
+    18: 'Jyeshtha',
+    19: 'Mula',
+    20: 'Purva Ashadha',
+    21: 'Uttara Ashadha',
+    22: 'Shravana',
+    23: 'Dhanishtha',
+    24: 'Shatabhisha',
+    25: 'Purva Bhadrapada',
+    26: 'Uttara Bhadrapada',
+    27: 'Revati',
   };
 
   static Body lord(int nak) => lords[nak]!;

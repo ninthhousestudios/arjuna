@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Ninth House Studios LLC
+
 import 'package:arrow_options/arrow_options.dart';
 import 'package:arrow_core/src/longitude.dart';
 import 'package:test/test.dart';
@@ -122,21 +125,30 @@ void main() {
       expect(lon.nakshatra, 14);
     });
 
-    test('pre-computed nak longitude determines nakshatra (regression for #6)', () {
-      final tropical = Longitude(24.0, VargaType.rashi, defaultConfig);
-      expect(tropical.nakshatra, 2,
-          reason: 'tropical 24° is in Bharani (nakshatra 2)');
+    test(
+      'pre-computed nak longitude determines nakshatra (regression for #6)',
+      () {
+        final tropical = Longitude(24.0, VargaType.rashi, defaultConfig);
+        expect(
+          tropical.nakshatra,
+          2,
+          reason: 'tropical 24° is in Bharani (nakshatra 2)',
+        );
 
-      // nakLongitude 0° = sidereal Ashvini start
-      final sidereal = Longitude(
-        24.0,
-        VargaType.rashi,
-        defaultConfig,
-        nakLongitude: 0.0,
-      );
-      expect(sidereal.nakshatra, 1,
-          reason: 'nak-frame 0° is Ashvini (nakshatra 1)');
-    });
+        // nakLongitude 0° = sidereal Ashvini start
+        final sidereal = Longitude(
+          24.0,
+          VargaType.rashi,
+          defaultConfig,
+          nakLongitude: 0.0,
+        );
+        expect(
+          sidereal.nakshatra,
+          1,
+          reason: 'nak-frame 0° is Ashvini (nakshatra 1)',
+        );
+      },
+    );
 
     test('nak longitude near 360 wraps to correct nakshatra', () {
       // 341° in nak frame → Uttara Bhadrapada (nakshatra 26)

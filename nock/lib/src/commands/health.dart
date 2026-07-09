@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Ninth House Studios LLC
+
 import 'package:args/command_runner.dart';
 import 'package:grpc/grpc.dart';
 import 'package:quiver_core/quiver_core.dart';
@@ -23,9 +26,7 @@ class HealthCommand extends Command<void> {
     final channel = ClientChannel(
       host,
       port: port,
-      options: const ChannelOptions(
-        credentials: ChannelCredentials.insecure(),
-      ),
+      options: const ChannelOptions(credentials: ChannelCredentials.insecure()),
     );
 
     try {

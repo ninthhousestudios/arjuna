@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Ninth House Studios LLC
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'ayanamsa.dart';
@@ -18,8 +21,7 @@ abstract class ArrowOptions with _$ArrowOptions {
 
   /// Throws [ArgumentError] if the config combination is invalid.
   void validate() {
-    if (sweConfig.nakAyanamsa == Ayanamsa.dhruva &&
-        !calcConfig.nakEquatorial) {
+    if (sweConfig.nakAyanamsa == Ayanamsa.dhruva && !calcConfig.nakEquatorial) {
       throw ArgumentError('Dhruva ayanamsa requires nakEquatorial=true');
     }
   }

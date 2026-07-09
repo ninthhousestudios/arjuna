@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Ninth House Studios LLC
+
 import 'package:test/test.dart';
 import 'package:nock/src/repl/lexer.dart';
 import 'package:nock/src/repl/parser.dart';
@@ -58,7 +61,9 @@ void main() {
     });
 
     test('parses function call with named args only', () {
-      final stmt = parseInput('config(ayanamsa: "lahiri", houses: "whole_sign")');
+      final stmt = parseInput(
+        'config(ayanamsa: "lahiri", houses: "whole_sign")',
+      );
       final call = (stmt as ExprStmt).expr as Call;
       expect(call.name, 'config');
       expect(call.positional, isEmpty);

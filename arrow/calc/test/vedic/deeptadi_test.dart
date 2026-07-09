@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Ninth House Studios LLC
+
 import 'package:arrow_calc/arrow_calc.dart';
 import 'package:arrow_options/arrow_options.dart';
 import 'package:test/test.dart';
@@ -20,17 +23,21 @@ void main() {
 
     test('step 3 — friend / greatFriend → mudita', () {
       // Jupiter in Aquarius (lord=Saturn, nat.neutral) + Saturn 1 sign away → friend
-      final v1 = stubVarga(longitudes: {
-        Body.jupiter: 310.0, // Aquarius (sign 11)
-        Body.saturn: 340.0, // Pisces (sign 12), apart=1 → temp friend
-      });
+      final v1 = stubVarga(
+        longitudes: {
+          Body.jupiter: 310.0, // Aquarius (sign 11)
+          Body.saturn: 340.0, // Pisces (sign 12), apart=1 → temp friend
+        },
+      );
       expect(Deeptadi.of(Body.jupiter, v1), DeeptadiState.mudita);
 
       // Jupiter in Leo (lord=Sun, nat.friend) + Sun 1 sign away → greatFriend
-      final v2 = stubVarga(longitudes: {
-        Body.jupiter: 130.0, // Leo (sign 5)
-        Body.sun: 95.0, // Cancer (sign 4), apart=11 → temp friend
-      });
+      final v2 = stubVarga(
+        longitudes: {
+          Body.jupiter: 130.0, // Leo (sign 5)
+          Body.sun: 95.0, // Cancer (sign 4), apart=11 → temp friend
+        },
+      );
       expect(Deeptadi.of(Body.jupiter, v2), DeeptadiState.mudita);
     });
 
@@ -38,10 +45,13 @@ void main() {
       // Jupiter neutral dignity + navamsa sign 4 (benefic).
       // Leo (lord=Sun, nat.friend) + Sun far away → temp enemy → neutral.
       // 130° → navamsa sign = floor(130/3.333)%12 + 1 = 39%12+1 = 4 (Cancer, benefic).
-      final v = stubVarga(longitudes: {
-        Body.jupiter: 130.0, // Leo
-        Body.sun: 280.0, // Capricorn (sign 10), apart=5 → temp enemy → neutral
-      });
+      final v = stubVarga(
+        longitudes: {
+          Body.jupiter: 130.0, // Leo
+          Body.sun:
+              280.0, // Capricorn (sign 10), apart=5 → temp enemy → neutral
+        },
+      );
       expect(Deeptadi.of(Body.jupiter, v), DeeptadiState.shanta);
     });
 
@@ -64,14 +74,16 @@ void main() {
       // Jupiter in Capricorn → debilitated.
       // 280° → navamsa sign = floor(280/3.333)%12 + 1 = 84%12+1 = 1 (not benefic).
       // All malefics far from Capricorn (270-300°).
-      final v = stubVarga(longitudes: {
-        Body.jupiter: 280.0, // Capricorn → debilitated
-        Body.sun: 100.0,
-        Body.mars: 200.0,
-        Body.saturn: 40.0,
-        Body.rahu: 200.0,
-        Body.ketu: 20.0,
-      });
+      final v = stubVarga(
+        longitudes: {
+          Body.jupiter: 280.0, // Capricorn → debilitated
+          Body.sun: 100.0,
+          Body.mars: 200.0,
+          Body.saturn: 40.0,
+          Body.rahu: 200.0,
+          Body.ketu: 20.0,
+        },
+      );
       expect(Deeptadi.of(Body.jupiter, v), DeeptadiState.deena);
     });
 
@@ -79,14 +91,16 @@ void main() {
       // Aquarius (lord=Saturn, nat.neutral) + Saturn far → temp enemy → enemy.
       // 310° → navamsa sign 10 (not benefic). Not retrograde, not debilitated,
       // no malefic conjunction, not combust.
-      final v = stubVarga(longitudes: {
-        Body.jupiter: 310.0, // Aquarius (sign 11)
-        Body.saturn: 100.0, // Cancer (sign 4), apart=5 → temp enemy → enemy
-        Body.sun: 100.0,
-        Body.mars: 200.0,
-        Body.rahu: 200.0,
-        Body.ketu: 20.0,
-      });
+      final v = stubVarga(
+        longitudes: {
+          Body.jupiter: 310.0, // Aquarius (sign 11)
+          Body.saturn: 100.0, // Cancer (sign 4), apart=5 → temp enemy → enemy
+          Body.sun: 100.0,
+          Body.mars: 200.0,
+          Body.rahu: 200.0,
+          Body.ketu: 20.0,
+        },
+      );
       expect(Deeptadi.of(Body.jupiter, v), DeeptadiState.khala);
     });
   });

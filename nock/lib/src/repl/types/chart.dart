@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Ninth House Studios LLC
+
 import 'package:quiver_embedded/quiver_embedded.dart';
 
 import '../../format/chart.dart';
@@ -20,42 +23,53 @@ class NockChart extends NockValue {
 
   @override
   NockValue access(String field) => switch (field) {
-        'sun' => NockPlanet(chart.sun, chart),
-        'moon' => NockPlanet(chart.moon, chart),
-        'mars' => NockPlanet(chart.mars, chart),
-        'mercury' => NockPlanet(chart.mercury, chart),
-        'jupiter' => NockPlanet(chart.jupiter, chart),
-        'venus' => NockPlanet(chart.venus, chart),
-        'saturn' => NockPlanet(chart.saturn, chart),
-        'rahu' => NockPlanet(chart.rahu, chart),
-        'ketu' => NockPlanet(chart.ketu, chart),
-        'asc' => _ascendant(),
-        'mc' => _midheaven(),
-        'houses' => NockList(chart.cusps.map(NockCusp.new).toList()),
-        'planets' => NockList(chart.planets.map((p) => NockPlanet(p, chart)).toList()),
-        'grahas' => NockList(chart.grahas.map((g) => NockPlanet(g, chart)).toList()),
-        'karakas' => NockList(chart.karakas.map((k) => NockPlanet(k, chart)).toList()),
-        _ => throw NockError('chart has no property "$field"'),
-      };
+    'sun' => NockPlanet(chart.sun, chart),
+    'moon' => NockPlanet(chart.moon, chart),
+    'mars' => NockPlanet(chart.mars, chart),
+    'mercury' => NockPlanet(chart.mercury, chart),
+    'jupiter' => NockPlanet(chart.jupiter, chart),
+    'venus' => NockPlanet(chart.venus, chart),
+    'saturn' => NockPlanet(chart.saturn, chart),
+    'rahu' => NockPlanet(chart.rahu, chart),
+    'ketu' => NockPlanet(chart.ketu, chart),
+    'asc' => _ascendant(),
+    'mc' => _midheaven(),
+    'houses' => NockList(chart.cusps.map(NockCusp.new).toList()),
+    'planets' => NockList(
+      chart.planets.map((p) => NockPlanet(p, chart)).toList(),
+    ),
+    'grahas' => NockList(
+      chart.grahas.map((g) => NockPlanet(g, chart)).toList(),
+    ),
+    'karakas' => NockList(
+      chart.karakas.map((k) => NockPlanet(k, chart)).toList(),
+    ),
+    _ => throw NockError('chart has no property "$field"'),
+  };
 
   @override
-  Future<NockValue> call(String method, List<NockValue> positional,
-          Map<String, NockValue> named) async =>
-      switch (method) {
-        'navamsa' => _varga(VargaType.navamsha),
-        'varga' => _vargaFromArg(positional),
-        _ => throw NockError('chart has no method "$method"'),
-      };
+  Future<NockValue> call(
+    String method,
+    List<NockValue> positional,
+    Map<String, NockValue> named,
+  ) async => switch (method) {
+    'navamsa' => _varga(VargaType.navamsha),
+    'varga' => _vargaFromArg(positional),
+    _ => throw NockError('chart has no method "$method"'),
+  };
 
   NockValue _ascendant() {
     final lon = Longitude(
-        chart.ascendant, chart.ascendant, VargaType.rashi, chart.config);
+      chart.ascendant,
+      chart.ascendant,
+      VargaType.rashi,
+      chart.config,
+    );
     return NockSign(lon.sign, lon);
   }
 
   NockValue _midheaven() {
-    final lon =
-        Longitude(chart.mc, chart.mc, VargaType.rashi, chart.config);
+    final lon = Longitude(chart.mc, chart.mc, VargaType.rashi, chart.config);
     return NockSign(lon.sign, lon);
   }
 

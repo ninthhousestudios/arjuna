@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Ninth House Studios LLC
+
 import 'package:arrow_core/arrow_core.dart';
 import 'package:arrow_options/arrow_options.dart';
 
@@ -254,12 +257,14 @@ class NabhasaYogaCalc {
       ('Hala', [4, 8, 12]),
     ];
     for (final (name, houses) in trines) {
-      results.add(NabhasaYoga(
-        name: name,
-        category: 'Akriti',
-        toMove: _tm(karakasPerHouse, houses),
-        houses: houses,
-      ));
+      results.add(
+        NabhasaYoga(
+          name: name,
+          category: 'Akriti',
+          toMove: _tm(karakasPerHouse, houses),
+          houses: houses,
+        ),
+      );
     }
 
     // 2. Angle pairs (Gada variants)
@@ -270,12 +275,14 @@ class NabhasaYogaCalc {
       ('Gada', [10, 1]),
     ];
     for (final (name, houses) in gadaGroups) {
-      results.add(NabhasaYoga(
-        name: name,
-        category: 'Akriti',
-        toMove: _tm(karakasPerHouse, houses),
-        houses: houses,
-      ));
+      results.add(
+        NabhasaYoga(
+          name: name,
+          category: 'Akriti',
+          toMove: _tm(karakasPerHouse, houses),
+          houses: houses,
+        ),
+      );
     }
 
     // 3. Two-angle
@@ -284,12 +291,14 @@ class NabhasaYogaCalc {
       ('Vihaga', [4, 10]),
     ];
     for (final (name, houses) in twoAngle) {
-      results.add(NabhasaYoga(
-        name: name,
-        category: 'Akriti',
-        toMove: _tm(karakasPerHouse, houses),
-        houses: houses,
-      ));
+      results.add(
+        NabhasaYoga(
+          name: name,
+          category: 'Akriti',
+          toMove: _tm(karakasPerHouse, houses),
+          houses: houses,
+        ),
+      );
     }
 
     // 4. Four-angle
@@ -299,12 +308,14 @@ class NabhasaYogaCalc {
       ('Vapi', [3, 6, 9, 12]),
     ];
     for (final (name, houses) in fourAngle) {
-      results.add(NabhasaYoga(
-        name: name,
-        category: 'Akriti',
-        toMove: _tm(karakasPerHouse, houses),
-        houses: houses,
-      ));
+      results.add(
+        NabhasaYoga(
+          name: name,
+          category: 'Akriti',
+          toMove: _tm(karakasPerHouse, houses),
+          houses: houses,
+        ),
+      );
     }
 
     // 5. Vajra / Yava
@@ -326,25 +337,29 @@ class NabhasaYogaCalc {
       return n;
     }
 
-    final vajraScore = 7 -
-        (countIn(benefics, const [1, 7]) +
-            countIn(malefics, const [4, 10]));
-    results.add(NabhasaYoga(
-      name: 'Vajra',
-      category: 'Akriti',
-      toMove: vajraScore,
-      houses: const [1, 4, 7, 10],
-    ));
+    final vajraScore =
+        7 -
+        (countIn(benefics, const [1, 7]) + countIn(malefics, const [4, 10]));
+    results.add(
+      NabhasaYoga(
+        name: 'Vajra',
+        category: 'Akriti',
+        toMove: vajraScore,
+        houses: const [1, 4, 7, 10],
+      ),
+    );
 
-    final yavaScore = 7 -
-        (countIn(benefics, const [4, 10]) +
-            countIn(malefics, const [1, 7]));
-    results.add(NabhasaYoga(
-      name: 'Yava',
-      category: 'Akriti',
-      toMove: yavaScore,
-      houses: const [1, 4, 7, 10],
-    ));
+    final yavaScore =
+        7 -
+        (countIn(benefics, const [4, 10]) + countIn(malefics, const [1, 7]));
+    results.add(
+      NabhasaYoga(
+        name: 'Yava',
+        category: 'Akriti',
+        toMove: yavaScore,
+        houses: const [1, 4, 7, 10],
+      ),
+    );
 
     // 6. Four-consecutive
     const fourConsec = [
@@ -354,12 +369,14 @@ class NabhasaYogaCalc {
       ('Danda', [10, 11, 12, 1]),
     ];
     for (final (name, houses) in fourConsec) {
-      results.add(NabhasaYoga(
-        name: name,
-        category: 'Akriti',
-        toMove: _tm(karakasPerHouse, houses),
-        houses: houses,
-      ));
+      results.add(
+        NabhasaYoga(
+          name: name,
+          category: 'Akriti',
+          toMove: _tm(karakasPerHouse, houses),
+          houses: houses,
+        ),
+      );
     }
 
     // 7. Seven-consecutive
@@ -370,27 +387,29 @@ class NabhasaYogaCalc {
       ('Chapa', [10, 11, 12, 1, 2, 3, 4]),
     ];
     for (final (name, houses) in sevenConsec) {
-      results.add(NabhasaYoga(
-        name: name,
-        category: 'Akriti',
-        toMove: _tmDist(karakasPerHouse, houses),
-        houses: houses,
-      ));
+      results.add(
+        NabhasaYoga(
+          name: name,
+          category: 'Akriti',
+          toMove: _tmDist(karakasPerHouse, houses),
+          houses: houses,
+        ),
+      );
     }
 
     // 8. Ardha Chandra — 7-house runs from non-angle houses (2,3,5,6,8,9,11,12)
     const ardhaStarts = [2, 3, 5, 6, 8, 9, 11, 12];
     for (var i = 0; i < ardhaStarts.length; i++) {
       final start = ardhaStarts[i];
-      final houses = [
-        for (var k = 0; k < 7; k++) ((start - 1 + k) % 12) + 1,
-      ];
-      results.add(NabhasaYoga(
-        name: 'ArdhaChandra${i + 1}',
-        category: 'Akriti',
-        toMove: _tmDist(karakasPerHouse, houses),
-        houses: houses,
-      ));
+      final houses = [for (var k = 0; k < 7; k++) ((start - 1 + k) % 12) + 1];
+      results.add(
+        NabhasaYoga(
+          name: 'ArdhaChandra${i + 1}',
+          category: 'Akriti',
+          toMove: _tmDist(karakasPerHouse, houses),
+          houses: houses,
+        ),
+      );
     }
 
     // 9. Alternate-6
@@ -399,12 +418,14 @@ class NabhasaYogaCalc {
       ('Samudra', [2, 4, 6, 8, 10, 12]),
     ];
     for (final (name, houses) in altSix) {
-      results.add(NabhasaYoga(
-        name: name,
-        category: 'Akriti',
-        toMove: _tmDist(karakasPerHouse, houses),
-        houses: houses,
-      ));
+      results.add(
+        NabhasaYoga(
+          name: name,
+          category: 'Akriti',
+          toMove: _tmDist(karakasPerHouse, houses),
+          houses: houses,
+        ),
+      );
     }
 
     return results;
@@ -454,8 +475,8 @@ class NabhasaYogaCalc {
           final k = varga.karaka(planet);
           final house = houseFrom(lagnaSign, k.sign);
           final dignity = k.dignity;
-          final present = kendras.contains(house) &&
-              strongDignities.contains(dignity);
+          final present =
+              kendras.contains(house) && strongDignities.contains(dignity);
           return MahapurushaYoga(
             name: name,
             planet: planet,

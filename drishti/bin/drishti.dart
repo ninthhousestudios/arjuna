@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Ninth House Studios LLC
+
 import 'dart:io';
 
 import 'package:drishti/drishti.dart';
@@ -31,7 +34,8 @@ void main(List<String> args) async {
   Logger.root.level = Level.INFO;
   Logger.root.onRecord.listen((record) {
     stderr.writeln(
-        '[${record.level.name}] ${record.loggerName}: ${record.message}');
+      '[${record.level.name}] ${record.loggerName}: ${record.message}',
+    );
   });
 
   String? ephePath;

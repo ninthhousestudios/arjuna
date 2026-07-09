@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Ninth House Studios LLC
+
 import 'package:arrow_options/arrow_options.dart';
 import 'package:test/test.dart';
 
@@ -12,12 +15,12 @@ void main() {
     });
 
     test('specific lords', () {
-      expect(SignData.lord(1), Body.mars);     // Aries
-      expect(SignData.lord(2), Body.venus);    // Taurus
-      expect(SignData.lord(4), Body.moon);     // Cancer
-      expect(SignData.lord(5), Body.sun);      // Leo
-      expect(SignData.lord(9), Body.jupiter);  // Sagittarius
-      expect(SignData.lord(10), Body.saturn);  // Capricorn
+      expect(SignData.lord(1), Body.mars); // Aries
+      expect(SignData.lord(2), Body.venus); // Taurus
+      expect(SignData.lord(4), Body.moon); // Cancer
+      expect(SignData.lord(5), Body.sun); // Leo
+      expect(SignData.lord(9), Body.jupiter); // Sagittarius
+      expect(SignData.lord(10), Body.saturn); // Capricorn
     });
 
     test('dual rulerships', () {

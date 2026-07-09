@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Ninth House Studios LLC
+
 import 'package:arrow_calc/arrow_calc.dart';
 import 'package:arrow_options/arrow_options.dart';
 import 'package:test/test.dart';
@@ -56,7 +59,10 @@ void main() {
   group('Aspect.strength — Jupiter override', () {
     double s(double diff) => Aspect.strength(Body.jupiter, 0.0, diff);
     test('5th/9th (120°/240°) full aspects', () {
-      expect(s(120.0), closeTo(45.0, 1e-9)); // boundary hits (120-90]→lower branch
+      expect(
+        s(120.0),
+        closeTo(45.0, 1e-9),
+      ); // boundary hits (120-90]→lower branch
       expect(s(121.0), closeTo(58.0, 1e-9)); // 60-((121-120)*2)
       expect(s(180.0), closeTo(60.0, 1e-9));
       expect(s(240.0), closeTo(60.0, 1e-9)); // ((240-210)/2)+45

@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Ninth House Studios LLC
+
 import 'package:arrow_core/arrow_core.dart';
 import 'package:arrow_options/arrow_options.dart';
 import 'package:test/test.dart';
@@ -19,11 +22,13 @@ void main() {
       Body.chiron: Nature.neutral,
     };
 
-    test('covers every Body enum value except Moon (detects new additions)',
-        () {
-      final fixedBodies = {...expected.keys, Body.moon};
-      expect(fixedBodies, equals(Body.values.toSet()));
-    });
+    test(
+      'covers every Body enum value except Moon (detects new additions)',
+      () {
+        final fixedBodies = {...expected.keys, Body.moon};
+        expect(fixedBodies, equals(Body.values.toSet()));
+      },
+    );
 
     for (final entry in expected.entries) {
       test('${entry.key.name} → ${entry.value.name}', () {
@@ -35,39 +40,51 @@ void main() {
   group('Nature.of — Moon (contextual)', () {
     test('requires sun + moon longitudes', () {
       expect(() => Nature.of(Body.moon), throwsArgumentError);
-      expect(() => Nature.of(Body.moon, sunLongitude: 10.0),
-          throwsArgumentError);
+      expect(
+        () => Nature.of(Body.moon, sunLongitude: 10.0),
+        throwsArgumentError,
+      );
     });
 
     test('Shukla paksha (waxing, 0..180°) → benefic', () {
       expect(
-          Nature.of(Body.moon, sunLongitude: 0.0, moonLongitude: 5.0),
-          Nature.benefic);
+        Nature.of(Body.moon, sunLongitude: 0.0, moonLongitude: 5.0),
+        Nature.benefic,
+      );
       expect(
-          Nature.of(Body.moon, sunLongitude: 0.0, moonLongitude: 180.0),
-          Nature.benefic);
+        Nature.of(Body.moon, sunLongitude: 0.0, moonLongitude: 180.0),
+        Nature.benefic,
+      );
       expect(
-          Nature.of(Body.moon, sunLongitude: 350.0, moonLongitude: 10.0),
-          Nature.benefic);
+        Nature.of(Body.moon, sunLongitude: 350.0, moonLongitude: 10.0),
+        Nature.benefic,
+      );
     });
 
     test('Krishna paksha (waning, 180..360°) → malefic', () {
       expect(
-          Nature.of(Body.moon, sunLongitude: 0.0, moonLongitude: 200.0),
-          Nature.malefic);
+        Nature.of(Body.moon, sunLongitude: 0.0, moonLongitude: 200.0),
+        Nature.malefic,
+      );
       expect(
-          Nature.of(Body.moon, sunLongitude: 0.0, moonLongitude: 350.0),
-          Nature.malefic);
+        Nature.of(Body.moon, sunLongitude: 0.0, moonLongitude: 350.0),
+        Nature.malefic,
+      );
       expect(
-          Nature.of(Body.moon, sunLongitude: 10.0, moonLongitude: 355.0),
-          Nature.malefic);
+        Nature.of(Body.moon, sunLongitude: 10.0, moonLongitude: 355.0),
+        Nature.malefic,
+      );
     });
 
     test('Nature.ofMoon direct API mirrors Nature.of', () {
-      expect(Nature.ofMoon(sunLongitude: 0.0, moonLongitude: 90.0),
-          Nature.benefic);
-      expect(Nature.ofMoon(sunLongitude: 0.0, moonLongitude: 270.0),
-          Nature.malefic);
+      expect(
+        Nature.ofMoon(sunLongitude: 0.0, moonLongitude: 90.0),
+        Nature.benefic,
+      );
+      expect(
+        Nature.ofMoon(sunLongitude: 0.0, moonLongitude: 270.0),
+        Nature.malefic,
+      );
     });
   });
 }

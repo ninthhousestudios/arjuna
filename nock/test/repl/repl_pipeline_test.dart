@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Ninth House Studios LLC
+
 import 'package:nock/src/repl/error.dart';
 import 'package:nock/src/repl/evaluator.dart';
 import 'package:nock/src/repl/lexer.dart';
@@ -35,7 +38,9 @@ void main() {
   group('full REPL pipeline', () {
     test('multi-line session: assign, query, display', () async {
       final chart = await _pipeline(
-          eval, 'josh = chart("1990-06-15 14:30", 39.76, -86.15)');
+        eval,
+        'josh = chart("1990-06-15 14:30", 39.76, -86.15)',
+      );
       expect(chart, isA<NockChart>());
       expect((chart as NockChart).label, 'josh');
 
@@ -53,7 +58,9 @@ void main() {
       expect(session.config.ayanamsa, 'lahiri');
 
       final chart = await _pipeline(
-          eval, 'j = chart("1990-06-15 14:30", 39.76, -86.15)');
+        eval,
+        'j = chart("1990-06-15 14:30", 39.76, -86.15)',
+      );
       expect(chart, isA<NockChart>());
     });
 
@@ -81,39 +88,40 @@ void main() {
       ]) {
         final result = await _pipeline(eval, expr);
         expect(result, isNotNull, reason: '$expr should return a value');
-        expect(result!.display(), isNotEmpty,
-            reason: '$expr display should be non-empty');
+        expect(
+          result!.display(),
+          isNotEmpty,
+          reason: '$expr display should be non-empty',
+        );
       }
     });
 
     test('error recovery: bad input does not corrupt session', () async {
       await _pipeline(eval, 'x = 42');
 
-      expect(
-        () => _pipeline(eval, 'undefined_var'),
-        throwsA(isA<NockError>()),
-      );
+      expect(() => _pipeline(eval, 'undefined_var'), throwsA(isA<NockError>()));
 
       final result = await _pipeline(eval, 'x');
       expect((result as NockNumber).value, 42.0);
     });
 
     test('quit is not a function', () async {
-      expect(
-        () => _pipeline(eval, 'quit()'),
-        throwsA(isA<NockError>()),
-      );
+      expect(() => _pipeline(eval, 'quit()'), throwsA(isA<NockError>()));
     });
 
     test('date-only format works (no time)', () async {
       final result = await _pipeline(
-          eval, 'chart("1990-06-15", 39.76, -86.15)');
+        eval,
+        'chart("1990-06-15", 39.76, -86.15)',
+      );
       expect(result, isA<NockChart>());
     });
 
     test('iso format with T separator works', () async {
       final result = await _pipeline(
-          eval, 'chart("1990-06-15T14:30:00", 39.76, -86.15)');
+        eval,
+        'chart("1990-06-15T14:30:00", 39.76, -86.15)',
+      );
       expect(result, isA<NockChart>());
     });
 
@@ -122,8 +130,10 @@ void main() {
       await _pipeline(eval, 'b = chart("2000-01-01", 40.71, -74.00)');
       final lonA = await _pipeline(eval, 'a.sun.longitude');
       final lonB = await _pipeline(eval, 'b.sun.longitude');
-      expect((lonA as NockNumber).value,
-          isNot(equals((lonB as NockNumber).value)));
+      expect(
+        (lonA as NockNumber).value,
+        isNot(equals((lonB as NockNumber).value)),
+      );
     });
 
     test('navamsa planet differs from rashi planet', () async {

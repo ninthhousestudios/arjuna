@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Ninth House Studios LLC
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'sun_times.freezed.dart';
@@ -7,10 +10,7 @@ part 'sun_times.g.dart';
 /// (e.g. circumpolar locations).
 @freezed
 abstract class SunTimes with _$SunTimes {
-  const factory SunTimes({
-    double? sunrise,
-    double? sunset,
-  }) = _SunTimes;
+  const factory SunTimes({double? sunrise, double? sunset}) = _SunTimes;
 
   factory SunTimes.fromJson(Map<String, dynamic> json) =>
       _$SunTimesFromJson(json);

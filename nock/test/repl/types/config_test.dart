@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Ninth House Studios LLC
+
 import 'package:arrow_options/arrow_options.dart';
 import 'package:nock/src/repl/error.dart';
 import 'package:nock/src/repl/types/config.dart';
@@ -31,38 +34,23 @@ void main() {
     });
 
     test('access unknown field throws', () {
-      expect(
-        () => NockConfig().access('foo'),
-        throwsA(isA<NockError>()),
-      );
+      expect(() => NockConfig().access('foo'), throwsA(isA<NockError>()));
     });
 
     test('unknown ayanamsa throws', () {
-      expect(
-        () => NockConfig(ayanamsa: 'garbage'),
-        throwsA(isA<NockError>()),
-      );
+      expect(() => NockConfig(ayanamsa: 'garbage'), throwsA(isA<NockError>()));
     });
 
     test('unknown house system throws', () {
-      expect(
-        () => NockConfig(houses: 'garbage'),
-        throwsA(isA<NockError>()),
-      );
+      expect(() => NockConfig(houses: 'garbage'), throwsA(isA<NockError>()));
     });
 
     test('unknown circle throws', () {
-      expect(
-        () => NockConfig(circle: 'garbage'),
-        throwsA(isA<NockError>()),
-      );
+      expect(() => NockConfig(circle: 'garbage'), throwsA(isA<NockError>()));
     });
 
     test('unknown node type throws', () {
-      expect(
-        () => NockConfig(node: 'garbage'),
-        throwsA(isA<NockError>()),
-      );
+      expect(() => NockConfig(node: 'garbage'), throwsA(isA<NockError>()));
     });
 
     test('toArrowOptions produces correct SweConfig', () {

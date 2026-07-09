@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Ninth House Studios LLC
+
 import 'package:logging/logging.dart';
 import 'package:mcp_dart/mcp_dart.dart' hide Logger;
 import 'package:meta/meta.dart';

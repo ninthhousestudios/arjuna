@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Ninth House Studios LLC
+
 import 'dart:io';
 
 import 'package:args/args.dart';
@@ -8,7 +11,10 @@ void main(List<String> args) async {
   final parser = ArgParser()
     ..addOption('port', abbr: 'p', defaultsTo: '50051')
     ..addOption('ephe-path', help: 'Swiss Ephemeris data directory')
-    ..addOption('pool-size', help: 'Number of worker isolates (default: CPU count, clamped 2-16)')
+    ..addOption(
+      'pool-size',
+      help: 'Number of worker isolates (default: CPU count, clamped 2-16)',
+    )
     ..addOption('log-level', defaultsTo: 'info')
     ..addFlag('help', abbr: 'h', negatable: false);
 
@@ -46,7 +52,9 @@ void main(List<String> args) async {
     orElse: () => Level.INFO,
   );
   Logger.root.onRecord.listen((record) {
-    stderr.writeln('${record.level.name}: ${record.loggerName}: ${record.message}');
+    stderr.writeln(
+      '${record.level.name}: ${record.loggerName}: ${record.message}',
+    );
   });
 
   await serve(port: port, ephePath: ephePath, poolSize: poolSize);

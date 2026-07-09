@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Ninth House Studios LLC
+
 import 'package:arrow_options/arrow_options.dart';
 import 'package:arrow_core/arrow_core.dart';
 import 'package:test/test.dart';
@@ -214,8 +217,9 @@ void main() {
     test('Mercury retrograde uses tighter orb', () {
       // 13° apart: > retrograde orb (12) but < normal orb (14)
       expect(
-          Dignity.isCombust(Body.mercury, 58.0, 45.0, isRetrograde: true),
-          isFalse);
+        Dignity.isCombust(Body.mercury, 58.0, 45.0, isRetrograde: true),
+        isFalse,
+      );
       expect(Dignity.isCombust(Body.mercury, 58.0, 45.0), isTrue);
     });
 
@@ -252,8 +256,9 @@ void main() {
     test('8 karaka mode includes all 8 roles', () {
       final karakas = _makeKarakas();
       final snapshot = stubSnapshot();
-      karakas.add(Karaka(Body.rahu, snapshot, const CalcConfig(),
-          VargaType.rashi));
+      karakas.add(
+        Karaka(Body.rahu, snapshot, const CalcConfig(), VargaType.rashi),
+      );
 
       final result = CharaKaraka.assign(karakas, count: 8);
       expect(result.length, 8);
@@ -264,8 +269,10 @@ void main() {
       final result = CharaKaraka.assign(_makeKarakas());
       final ak = result[CharaKarakaRole.atmakaraka]!;
       for (final entry in result.entries) {
-        expect(ak.inSignLongitude,
-            greaterThanOrEqualTo(entry.value.inSignLongitude));
+        expect(
+          ak.inSignLongitude,
+          greaterThanOrEqualTo(entry.value.inSignLongitude),
+        );
       }
     });
   });
@@ -277,7 +284,9 @@ List<Karaka> _makeKarakas() {
   const config = CalcConfig();
   final sunLon = snapshot.bodiesEcliptic[Body.sun]?.longitude;
   return Body.karakas
-      .map((b) =>
-          Karaka(b, snapshot, config, VargaType.rashi, sunLongitude: sunLon))
+      .map(
+        (b) =>
+            Karaka(b, snapshot, config, VargaType.rashi, sunLongitude: sunLon),
+      )
       .toList();
 }

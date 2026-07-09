@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Ninth House Studios LLC
+
 // Quiver public API
 export 'src/generated/quiver/chart.pb.dart';
 export 'src/generated/quiver/chart.pbgrpc.dart';

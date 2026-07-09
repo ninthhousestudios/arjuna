@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Ninth House Studios LLC
+
 /// IAST name tables for panchanga elements.
 ///
 /// Primary set is IAST transliteration; abbreviated variants follow.
@@ -35,19 +38,37 @@ const List<String> nakshatras = [
 ];
 
 const List<String> nakshatrasAbbreviated = [
-  'aśv', 'bha', 'kṛt', 'roh', 'mṛg', 'ārd', 'pun', 'puṣ', 'āśl',
-  'mag', 'pph', 'uph', 'has', 'cit', 'svā', 'viś', 'anu', 'jye',
-  'mūl', 'pāṣ', 'uāṣ', 'śra', 'dha', 'śat', 'pdā', 'udā', 'rev',
+  'aśv',
+  'bha',
+  'kṛt',
+  'roh',
+  'mṛg',
+  'ārd',
+  'pun',
+  'puṣ',
+  'āśl',
+  'mag',
+  'pph',
+  'uph',
+  'has',
+  'cit',
+  'svā',
+  'viś',
+  'anu',
+  'jye',
+  'mūl',
+  'pāṣ',
+  'uāṣ',
+  'śra',
+  'dha',
+  'śat',
+  'pdā',
+  'udā',
+  'rev',
 ];
 
 /// Tithi types cycle every 5 tithis: 1/6/11 = nanda, 2/7/12 = bhadra, etc.
-const List<String> tithiTypes = [
-  'nanda',
-  'bhadra',
-  'jāya',
-  'ṛkta',
-  'pūrṇa',
-];
+const List<String> tithiTypes = ['nanda', 'bhadra', 'jāya', 'ṛkta', 'pūrṇa'];
 
 /// Karanas indexed by tithi (0-29). Each tithi has two karanas [first, second].
 const List<List<String>> karanas = [
@@ -124,5 +145,11 @@ const List<String> varas = [
 ];
 
 const List<String> varasAbbreviated = [
-  'rav', 'som', 'maṅ', 'bud', 'gur', 'śuk', 'śan',
+  'rav',
+  'som',
+  'maṅ',
+  'bud',
+  'gur',
+  'śuk',
+  'śan',
 ];

@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Ninth House Studios LLC
+
 /// Julian Day conversion utilities using the Meeus formula.
 ///
 /// Ported from libaditya's generate_test_data tooling.
@@ -7,7 +10,10 @@
 /// Uses the Meeus formula (Astronomical Algorithms, Jean Meeus).
 double julianDay(DateTime dt) {
   final utc = dt.toUtc();
-  final hour = utc.hour + utc.minute / 60.0 + utc.second / 3600.0 +
+  final hour =
+      utc.hour +
+      utc.minute / 60.0 +
+      utc.second / 3600.0 +
       utc.millisecond / 3600000.0;
   return _meeus(utc.year, utc.month, utc.day, hour);
 }
@@ -58,7 +64,8 @@ double _meeus(int year, int month, int day, double hour) {
   }
   final a = y ~/ 100;
   final b = 2 - a + a ~/ 4;
-  final jd = (365.25 * (y + 4716)).floor() +
+  final jd =
+      (365.25 * (y + 4716)).floor() +
       (30.6001 * (m + 1)).floor() +
       day +
       hour / 24.0 +

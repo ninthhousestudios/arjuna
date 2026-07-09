@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Ninth House Studios LLC
+
 import 'package:arrow_core/arrow_core.dart';
 import 'package:arrow_options/arrow_options.dart';
 
@@ -24,7 +27,13 @@ enum LajjitaadiState {
   proud;
 
   static const _names = [
-    'delighted', 'starved', 'agitated', 'thirsty', 'shamed', 'healthy', 'proud',
+    'delighted',
+    'starved',
+    'agitated',
+    'thirsty',
+    'shamed',
+    'healthy',
+    'proud',
   ];
 
   /// libaditya's dict key (see `avasthas.py:88+`).
@@ -76,14 +85,14 @@ class LajjitaadiFactor {
   });
 
   LajjitaadiFactor toGiving(Body recipient) => LajjitaadiFactor(
-        source: source,
-        planet: planet,
-        lord: lord,
-        strength: strength,
-        dignity: dignity,
-        detail: detail,
-        to: recipient,
-      );
+    source: source,
+    planet: planet,
+    lord: lord,
+    strength: strength,
+    dignity: dignity,
+    detail: detail,
+    to: recipient,
+  );
 
   @override
   String toString() {
@@ -165,20 +174,18 @@ class Lajjitaadi {
     final grahaLongitudes = {
       for (final g in varga.grahas) g.body: g.rawLongitude,
     };
-    final karakaDignities = {
-      for (final k in varga.karakas) k.body: k.dignity,
-    };
-    final karakaSigns = {
-      for (final k in varga.karakas) k.body: k.sign,
-    };
+    final karakaDignities = {for (final k in varga.karakas) k.body: k.dignity};
+    final karakaSigns = {for (final k in varga.karakas) k.body: k.sign};
     final lagnaSign = varga.cusps[0].sign;
     final fifthCuspSign = varga.cusps[4].sign;
     final fifthSignFromLagna = ((lagnaSign - 1 + 4) % 12) + 1;
 
     final sunLon = grahaLongitudes[Body.sun]!;
     final moonLon = grahaLongitudes[Body.moon]!;
-    final moonNature =
-        Nature.ofMoon(sunLongitude: sunLon, moonLongitude: moonLon);
+    final moonNature = Nature.ofMoon(
+      sunLongitude: sunLon,
+      moonLongitude: moonLon,
+    );
 
     final raw = <Body, Map<LajjitaadiState, List<LajjitaadiFactor>>>{};
 
@@ -189,12 +196,25 @@ class Lajjitaadi {
       final dignity = karakaDignities[name]!;
       final signLord = SignData.lord(signNum);
 
-      _scanInteractions(avasthas, name, planetLon, signNum, grahaLongitudes,
-          moonNature);
+      _scanInteractions(
+        avasthas,
+        name,
+        planetLon,
+        signNum,
+        grahaLongitudes,
+        moonNature,
+      );
       _checkSignLord(avasthas, name, signLord);
       _checkDignity(avasthas, dignity);
-      _checkShamed(avasthas, name, planetLon, signNum, grahaLongitudes,
-          fifthSignFromLagna, fifthCuspSign);
+      _checkShamed(
+        avasthas,
+        name,
+        planetLon,
+        signNum,
+        grahaLongitudes,
+        fifthSignFromLagna,
+        fifthCuspSign,
+      );
 
       raw[name] = avasthas;
     }
@@ -217,15 +237,23 @@ class Lajjitaadi {
       final isConj = Aspect.isConjunction(otherLon, planetLon);
       final aspectStr = Aspect.strength(otherName, otherLon, planetLon);
 
-      final isFriend = _karakas.contains(otherName) &&
+      final isFriend =
+          _karakas.contains(otherName) &&
           Dignity.isNaturalFriend(name, otherName);
-      final isEnemy = _karakas.contains(otherName) &&
+      final isEnemy =
+          _karakas.contains(otherName) &&
           Dignity.isNaturalEnemy(name, otherName);
 
       _checkDelighted(avasthas, otherName, isConj, aspectStr, isFriend);
       _checkStarved(avasthas, otherName, isConj, aspectStr, isEnemy);
       _checkAgitated(
-          avasthas, otherName, isConj, aspectStr, isEnemy, moonNature);
+        avasthas,
+        otherName,
+        isConj,
+        aspectStr,
+        isEnemy,
+        moonNature,
+      );
       _checkThirsty(avasthas, otherName, signNum, aspectStr, isEnemy);
     }
   }
@@ -238,19 +266,25 @@ class Lajjitaadi {
     bool isFriend,
   ) {
     if (isConj && other == Body.jupiter) {
-      _add(avasthas, LajjitaadiState.delighted, LajjitaadiFactor(
-        source: 'conjunction', planet: other, strength: 60,
-      ));
+      _add(
+        avasthas,
+        LajjitaadiState.delighted,
+        LajjitaadiFactor(source: 'conjunction', planet: other, strength: 60),
+      );
     }
     if (isConj && isFriend && other != Body.saturn) {
-      _add(avasthas, LajjitaadiState.delighted, LajjitaadiFactor(
-        source: 'conjunction', planet: other, strength: 60,
-      ));
+      _add(
+        avasthas,
+        LajjitaadiState.delighted,
+        LajjitaadiFactor(source: 'conjunction', planet: other, strength: 60),
+      );
     }
     if (aspectStr > 0 && isFriend) {
-      _add(avasthas, LajjitaadiState.delighted, LajjitaadiFactor(
-        source: 'aspect', planet: other, strength: aspectStr,
-      ));
+      _add(
+        avasthas,
+        LajjitaadiState.delighted,
+        LajjitaadiFactor(source: 'aspect', planet: other, strength: aspectStr),
+      );
     }
   }
 
@@ -262,20 +296,30 @@ class Lajjitaadi {
     bool isEnemy,
   ) {
     if (isConj && isEnemy) {
-      _add(avasthas, LajjitaadiState.starved, LajjitaadiFactor(
-        source: 'conjunction', planet: other, strength: 60,
-      ));
+      _add(
+        avasthas,
+        LajjitaadiState.starved,
+        LajjitaadiFactor(source: 'conjunction', planet: other, strength: 60),
+      );
     }
     // avasthas.py:101 — Saturn conjunction always starves.
     if (isConj && other == Body.saturn) {
-      _add(avasthas, LajjitaadiState.starved, LajjitaadiFactor(
-        source: 'conjunction', planet: Body.saturn, strength: 60,
-      ));
+      _add(
+        avasthas,
+        LajjitaadiState.starved,
+        LajjitaadiFactor(
+          source: 'conjunction',
+          planet: Body.saturn,
+          strength: 60,
+        ),
+      );
     }
     if (aspectStr > 0 && isEnemy) {
-      _add(avasthas, LajjitaadiState.starved, LajjitaadiFactor(
-        source: 'aspect', planet: other, strength: aspectStr,
-      ));
+      _add(
+        avasthas,
+        LajjitaadiState.starved,
+        LajjitaadiFactor(source: 'aspect', planet: other, strength: aspectStr),
+      );
     }
   }
 
@@ -288,17 +332,20 @@ class Lajjitaadi {
     Nature moonNature,
   ) {
     if (isConj && other == Body.sun) {
-      _add(avasthas, LajjitaadiState.agitated, LajjitaadiFactor(
-        source: 'conjunction', planet: Body.sun, strength: 60,
-      ));
+      _add(
+        avasthas,
+        LajjitaadiState.agitated,
+        LajjitaadiFactor(source: 'conjunction', planet: Body.sun, strength: 60),
+      );
     }
     // avasthas.py:112 — aspected by natural enemy who is a malefic.
-    final otherNature =
-        other == Body.moon ? moonNature : Nature.of(other);
+    final otherNature = other == Body.moon ? moonNature : Nature.of(other);
     if (aspectStr > 0 && isEnemy && otherNature == Nature.malefic) {
-      _add(avasthas, LajjitaadiState.agitated, LajjitaadiFactor(
-        source: 'aspect', planet: other, strength: aspectStr,
-      ));
+      _add(
+        avasthas,
+        LajjitaadiState.agitated,
+        LajjitaadiFactor(source: 'aspect', planet: other, strength: aspectStr),
+      );
     }
   }
 
@@ -310,9 +357,11 @@ class Lajjitaadi {
     bool isEnemy,
   ) {
     if (_waterSigns.contains(signNum) && aspectStr > 0 && isEnemy) {
-      _add(avasthas, LajjitaadiState.thirsty, LajjitaadiFactor(
-        source: 'aspect', planet: other, strength: aspectStr,
-      ));
+      _add(
+        avasthas,
+        LajjitaadiState.thirsty,
+        LajjitaadiFactor(source: 'aspect', planet: other, strength: aspectStr),
+      );
     }
   }
 
@@ -324,14 +373,18 @@ class Lajjitaadi {
   ) {
     if (signLord == name || !_karakas.contains(signLord)) return;
     if (Dignity.isNaturalFriend(name, signLord)) {
-      _add(avasthas, LajjitaadiState.delighted, LajjitaadiFactor(
-        source: 'sign', lord: signLord, strength: 60,
-      ));
+      _add(
+        avasthas,
+        LajjitaadiState.delighted,
+        LajjitaadiFactor(source: 'sign', lord: signLord, strength: 60),
+      );
     }
     if (Dignity.isNaturalEnemy(name, signLord)) {
-      _add(avasthas, LajjitaadiState.starved, LajjitaadiFactor(
-        source: 'sign', lord: signLord, strength: 60,
-      ));
+      _add(
+        avasthas,
+        LajjitaadiState.starved,
+        LajjitaadiFactor(source: 'sign', lord: signLord, strength: 60),
+      );
     }
   }
 
@@ -341,17 +394,23 @@ class Lajjitaadi {
     DignityType dignity,
   ) {
     if (dignity == DignityType.ownSign) {
-      _add(avasthas, LajjitaadiState.healthy, const LajjitaadiFactor(
-        source: 'sign', strength: 60,
-      ));
+      _add(
+        avasthas,
+        LajjitaadiState.healthy,
+        const LajjitaadiFactor(source: 'sign', strength: 60),
+      );
     } else if (dignity == DignityType.exalted) {
-      _add(avasthas, LajjitaadiState.proud, const LajjitaadiFactor(
-        source: 'dignity', dignity: 'EX', strength: 60,
-      ));
+      _add(
+        avasthas,
+        LajjitaadiState.proud,
+        const LajjitaadiFactor(source: 'dignity', dignity: 'EX', strength: 60),
+      );
     } else if (dignity == DignityType.moolatrikona) {
-      _add(avasthas, LajjitaadiState.proud, const LajjitaadiFactor(
-        source: 'dignity', dignity: 'MT', strength: 60,
-      ));
+      _add(
+        avasthas,
+        LajjitaadiState.proud,
+        const LajjitaadiFactor(source: 'dignity', dignity: 'MT', strength: 60),
+      );
     }
   }
 
@@ -388,24 +447,38 @@ class Lajjitaadi {
     if (!conjRahuKetu && !inFifthSign && !conjFifthCusp) return;
 
     for (final trigger in conjSunMarsSaturn) {
-      _add(avasthas, LajjitaadiState.shamed, LajjitaadiFactor(
-        source: 'conjunction', planet: trigger, strength: 60,
-      ));
+      _add(
+        avasthas,
+        LajjitaadiState.shamed,
+        LajjitaadiFactor(source: 'conjunction', planet: trigger, strength: 60),
+      );
     }
     if (conjRahuKetu) {
-      _add(avasthas, LajjitaadiState.shamed, const LajjitaadiFactor(
-        source: 'condition', detail: 'conjunct Rahu/Ketu',
-      ));
+      _add(
+        avasthas,
+        LajjitaadiState.shamed,
+        const LajjitaadiFactor(
+          source: 'condition',
+          detail: 'conjunct Rahu/Ketu',
+        ),
+      );
     }
     if (inFifthSign) {
-      _add(avasthas, LajjitaadiState.shamed, const LajjitaadiFactor(
-        source: 'condition', detail: 'in 5th sign',
-      ));
+      _add(
+        avasthas,
+        LajjitaadiState.shamed,
+        const LajjitaadiFactor(source: 'condition', detail: 'in 5th sign'),
+      );
     }
     if (conjFifthCusp && !inFifthSign) {
-      _add(avasthas, LajjitaadiState.shamed, const LajjitaadiFactor(
-        source: 'condition', detail: 'conjunct 5th cusp',
-      ));
+      _add(
+        avasthas,
+        LajjitaadiState.shamed,
+        const LajjitaadiFactor(
+          source: 'condition',
+          detail: 'conjunct 5th cusp',
+        ),
+      );
     }
   }
 
@@ -420,8 +493,9 @@ class Lajjitaadi {
 
       final receiving = <LajjitaadiState, List<LajjitaadiFactor>>{};
       for (final entry in avasthas.entries) {
-        final planetFactors =
-            entry.value.where((f) => f.planet != null).toList();
+        final planetFactors = entry.value
+            .where((f) => f.planet != null)
+            .toList();
         if (planetFactors.isNotEmpty) receiving[entry.key] = planetFactors;
       }
 

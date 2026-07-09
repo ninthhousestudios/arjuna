@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Ninth House Studios LLC
+
 import 'package:arrow_options/arrow_options.dart';
 import 'package:arrow_calc/src/vedic/shadbala.dart';
 import 'package:test/test.dart';
@@ -32,7 +35,10 @@ void main() {
 
     test('wraps across 360', () {
       // 350° to 10° = 20° apart → (1 - 20/180) * 60 ≈ 53.33
-      expect(ShadbalaCalc.virupasBetween(350.0, 10.0), closeTo((1.0 - 20.0 / 180.0) * 60.0, 1e-9));
+      expect(
+        ShadbalaCalc.virupasBetween(350.0, 10.0),
+        closeTo((1.0 - 20.0 / 180.0) * 60.0, 1e-9),
+      );
     });
   });
 
@@ -110,13 +116,22 @@ void main() {
   // ---------------------------------------------------------------------------
 
   group('ShadbalaCalc.samaVisamaBala', () {
-    test('Sun (male) in sign 1 (odd=male) rashi, sign 2 (even=female) navamsha → 15', () {
-      expect(ShadbalaCalc.samaVisamaBala(Body.sun, 1, 2), closeTo(15.0, 1e-9));
-    });
+    test(
+      'Sun (male) in sign 1 (odd=male) rashi, sign 2 (even=female) navamsha → 15',
+      () {
+        expect(
+          ShadbalaCalc.samaVisamaBala(Body.sun, 1, 2),
+          closeTo(15.0, 1e-9),
+        );
+      },
+    );
 
-    test('Sun (male) in sign 2 (female) rashi → 0 from rashi, 0 from navamsha', () {
-      expect(ShadbalaCalc.samaVisamaBala(Body.sun, 2, 4), closeTo(0.0, 1e-9));
-    });
+    test(
+      'Sun (male) in sign 2 (female) rashi → 0 from rashi, 0 from navamsha',
+      () {
+        expect(ShadbalaCalc.samaVisamaBala(Body.sun, 2, 4), closeTo(0.0, 1e-9));
+      },
+    );
 
     test('Sun (male) in odd rashi AND odd navamsha → 30', () {
       expect(ShadbalaCalc.samaVisamaBala(Body.sun, 1, 3), closeTo(30.0, 1e-9));
@@ -127,8 +142,14 @@ void main() {
     });
 
     test('Mercury (neutral) matches male (odd) signs', () {
-      expect(ShadbalaCalc.samaVisamaBala(Body.mercury, 1, 1), closeTo(30.0, 1e-9));
-      expect(ShadbalaCalc.samaVisamaBala(Body.mercury, 2, 2), closeTo(0.0, 1e-9));
+      expect(
+        ShadbalaCalc.samaVisamaBala(Body.mercury, 1, 1),
+        closeTo(30.0, 1e-9),
+      );
+      expect(
+        ShadbalaCalc.samaVisamaBala(Body.mercury, 2, 2),
+        closeTo(0.0, 1e-9),
+      );
     });
   });
 
@@ -154,7 +175,10 @@ void main() {
     });
 
     test('Mercury (neutral) at 15° — 2nd decan (neutral) → 15', () {
-      expect(ShadbalaCalc.drekkanaBala(Body.mercury, 15.0), closeTo(15.0, 1e-9));
+      expect(
+        ShadbalaCalc.drekkanaBala(Body.mercury, 15.0),
+        closeTo(15.0, 1e-9),
+      );
     });
   });
 
@@ -219,15 +243,17 @@ void main() {
     // Jupiter at 180° from body → full 7th-house aspect (strength=60).
     // Jupiter is full benefic → +60.
     test('Jupiter aspecting full (180°) → positive contribution', () {
-      final v = stubVarga(longitudes: {
-        Body.moon: 0.0,
-        Body.sun: 90.0,
-        Body.mars: 30.0, // within 30° of body → strength=0 (same sign check)
-        Body.mercury: 60.0,
-        Body.jupiter: 180.0,
-        Body.venus: 120.0,
-        Body.saturn: 90.0,
-      });
+      final v = stubVarga(
+        longitudes: {
+          Body.moon: 0.0,
+          Body.sun: 90.0,
+          Body.mars: 30.0, // within 30° of body → strength=0 (same sign check)
+          Body.mercury: 60.0,
+          Body.jupiter: 180.0,
+          Body.venus: 120.0,
+          Body.saturn: 90.0,
+        },
+      );
       final result = ShadbalaCalc.drigBala(Body.moon, v);
       // Jupiter at 180° has strength 60; contribution = +60.
       // Other planets will add/subtract, but jupiter's contribution is positive.
@@ -236,15 +262,17 @@ void main() {
 
     // Saturn at 180° from body → full aspect, malefic → −strength/4.
     test('Saturn alone aspecting → negative contribution', () {
-      final v = stubVarga(longitudes: {
-        Body.sun: 0.0,     // body being assessed
-        Body.moon: 5.0,    // same sign as body → 0 strength
-        Body.mars: 5.0,    // same sign as body → 0 strength
-        Body.mercury: 5.0, // same sign → 0
-        Body.jupiter: 5.0, // same sign → 0
-        Body.venus: 5.0,   // same sign → 0
-        Body.saturn: 180.0, // opposite → strength=60
-      });
+      final v = stubVarga(
+        longitudes: {
+          Body.sun: 0.0, // body being assessed
+          Body.moon: 5.0, // same sign as body → 0 strength
+          Body.mars: 5.0, // same sign as body → 0 strength
+          Body.mercury: 5.0, // same sign → 0
+          Body.jupiter: 5.0, // same sign → 0
+          Body.venus: 5.0, // same sign → 0
+          Body.saturn: 180.0, // opposite → strength=60
+        },
+      );
       // Saturn: strength=60, malefic → -60/4 = -15
       final result = ShadbalaCalc.drigBala(Body.sun, v);
       expect(result, closeTo(-15.0, 1e-9));
@@ -372,12 +400,12 @@ void main() {
     test('mixed dignities sum correctly', () {
       final vargas = [
         (sign: 1, dignity: DignityType.moolatrikona), // 45
-        (sign: 5, dignity: DignityType.ownSign),       // 30
-        (sign: 3, dignity: DignityType.friend),         // 15
-        (sign: 7, dignity: DignityType.neutral),        // 10
-        (sign: 9, dignity: DignityType.enemy),          // 4
-        (sign: 2, dignity: DignityType.greatFriend),    // 20
-        (sign: 4, dignity: DignityType.greatEnemy),     // 2
+        (sign: 5, dignity: DignityType.ownSign), // 30
+        (sign: 3, dignity: DignityType.friend), // 15
+        (sign: 7, dignity: DignityType.neutral), // 10
+        (sign: 9, dignity: DignityType.enemy), // 4
+        (sign: 2, dignity: DignityType.greatFriend), // 20
+        (sign: 4, dignity: DignityType.greatEnemy), // 2
       ];
       expect(
         ShadbalaCalc.saptavargajaBala(Body.jupiter, vargas),

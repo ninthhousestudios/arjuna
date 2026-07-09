@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Ninth House Studios LLC
+
 import 'package:arrow_options/arrow_options.dart';
 import 'package:arrow_core/src/longitude.dart';
 import 'package:arrow_core/src/varga_deities.dart';
@@ -308,8 +311,7 @@ void main() {
     });
 
     test('parashara even sign goes forward', () {
-      final lon = Longitude(
-          30.0, VargaType.parasharaChaturvimshamsha, config);
+      final lon = Longitude(30.0, VargaType.parasharaChaturvimshamsha, config);
       expect(lon.sign, 4);
     });
   });
@@ -319,8 +321,7 @@ void main() {
       // D2 parivritti: amshaSize = 30/2 = 15
       // 0deg: position = 0/15 = 0, amshaElapsed=0, currentInAmsha=0
       // newLon = 0+0+0 = 0
-      final lon =
-          Longitude(0.0, VargaType.horaParivritti, config);
+      final lon = Longitude(0.0, VargaType.horaParivritti, config);
       expect(lon.sign, 1);
     });
   });

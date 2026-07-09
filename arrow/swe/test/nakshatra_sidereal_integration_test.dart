@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Ninth House Studios LLC
+
 @Tags(['integration'])
 library;
 
@@ -41,8 +44,11 @@ void main() {
       for (final body in sweConfig.bodies) {
         final eclLon = snap.bodiesEcliptic[body]!.longitude;
         final nakEclLon = snap.bodiesNakEclLon[body]!;
-        expect(nakEclLon, closeTo(eclLon, 1e-6),
-            reason: '${body.name} nak ecl lon should match sign ecl lon');
+        expect(
+          nakEclLon,
+          closeTo(eclLon, 1e-6),
+          reason: '${body.name} nak ecl lon should match sign ecl lon',
+        );
       }
     });
 
@@ -62,8 +68,11 @@ void main() {
         final planet = chart.rashi.planet(body);
         final nakLon = snap.bodiesNakEclLon[body]!;
         final expectedNak = ((nakLon % 360) / (360 / 27)).floor() + 1;
-        expect(planet.nakshatra, expectedNak,
-            reason: '${body.name} at ${nakLon.toStringAsFixed(2)}°');
+        expect(
+          planet.nakshatra,
+          expectedNak,
+          reason: '${body.name} at ${nakLon.toStringAsFixed(2)}°',
+        );
       }
     });
 
@@ -79,16 +88,16 @@ void main() {
         final eclLon = snap.bodiesEcliptic[body]!.longitude;
         final nakEclLon = snap.bodiesNakEclLon[body]!;
         final diff = (eclLon - nakEclLon) % 360;
-        expect(diff, closeTo(ayanamsa, 0.01),
-            reason: '${body.name} tropical−sidereal diff');
+        expect(
+          diff,
+          closeTo(ayanamsa, 0.01),
+          reason: '${body.name} tropical−sidereal diff',
+        );
       }
     });
 
     test('body at sidereal 0° gets nakshatra 1 (Ashvini)', () {
-      const config = CalcConfig(
-        circle: Circle.zodiac,
-        nakEquatorial: false,
-      );
+      const config = CalcConfig(circle: Circle.zodiac, nakEquatorial: false);
       // 0.5° nak → Ashvini (span = 360/27 ≈ 13.333°)
       expect(
         Longitude(100.0, VargaType.rashi, config, nakLongitude: 0.5).nakshatra,
@@ -106,8 +115,12 @@ void main() {
       );
       // 359.9° → Revati
       expect(
-        Longitude(100.0, VargaType.rashi, config, nakLongitude: 359.9)
-            .nakshatra,
+        Longitude(
+          100.0,
+          VargaType.rashi,
+          config,
+          nakLongitude: 359.9,
+        ).nakshatra,
         27,
       );
     });
@@ -123,8 +136,11 @@ void main() {
       final ayanamsa = facade.getAyanamsaUt(jdUt, Ayanamsa.lahiri);
       for (var i = 0; i < 12; i++) {
         final diff = (snap.cusps[i] - snap.cuspsNakLon[i]) % 360;
-        expect(diff, closeTo(ayanamsa, 0.01),
-            reason: 'cusp ${i + 1} tropical−sidereal diff');
+        expect(
+          diff,
+          closeTo(ayanamsa, 0.01),
+          reason: 'cusp ${i + 1} tropical−sidereal diff',
+        );
       }
     });
 
@@ -136,8 +152,11 @@ void main() {
       final snap = facade.calcAll(jdUt, location, sweConfig);
       expect(snap.cuspsNakLon, hasLength(12));
       for (var i = 0; i < 12; i++) {
-        expect(snap.cuspsNakLon[i], snap.cusps[i],
-            reason: 'cusp ${i + 1} nak should equal sign cusp');
+        expect(
+          snap.cuspsNakLon[i],
+          snap.cusps[i],
+          reason: 'cusp ${i + 1} nak should equal sign cusp',
+        );
       }
     });
   });

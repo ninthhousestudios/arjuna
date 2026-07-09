@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Ninth House Studios LLC
+
 import 'package:quiver_embedded/quiver_embedded.dart';
 
 /// Format a [Chart] into a structured map suitable for MCP structured content.
@@ -16,16 +19,12 @@ Map<String, dynamic> formatChart(Chart chart) {
       'ayanamsa': chart.snapshot.ayanamsaValue,
       'mc': chart.mc,
     },
-    'ascendant': {
-      'sign_index': ascSignIndex,
-      'longitude': chart.ascendant,
-    },
+    'ascendant': {'sign_index': ascSignIndex, 'longitude': chart.ascendant},
     'planets': [
       for (final planet in chart.planets) _formatPlanet(planet, cusps),
     ],
     'houses': [
-      for (var i = 0; i < cusps.length; i++)
-        _formatHouse(i + 1, cusps[i]),
+      for (var i = 0; i < cusps.length; i++) _formatHouse(i + 1, cusps[i]),
     ],
     'ascmc': {
       'armc': chart.snapshot.ascmc.armc,

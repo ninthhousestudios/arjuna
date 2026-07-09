@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Ninth House Studios LLC
+
 import 'package:arrow_options/arrow_options.dart';
 
 import 'varga_deities.dart';
@@ -146,8 +149,11 @@ VargaResult chaturthamsha(double lon, int adityaOffset) {
   return (newLon, deity);
 }
 
-VargaResult dashamsha(double lon, int adityaOffset,
-    {bool evenReversed = false}) {
+VargaResult dashamsha(
+  double lon,
+  int adityaOffset, {
+  bool evenReversed = false,
+}) {
   final realSign = _eclipticSignNum(lon, adityaOffset);
   final realInSign = _eclipticInSign(lon);
 
@@ -160,8 +166,11 @@ VargaResult dashamsha(double lon, int adityaOffset,
   final amshaElapsed = position.floor();
   final currentInAmsha = position % 1;
 
-  final deity = lookupDeity(VargaType.dashamsha, amshaElapsed % 10,
-      signNum: realSign);
+  final deity = lookupDeity(
+    VargaType.dashamsha,
+    amshaElapsed % 10,
+    signNum: realSign,
+  );
 
   double baseLon;
   int direction = 1;
@@ -188,8 +197,11 @@ VargaResult dvadashamsha(double lon, int adityaOffset) {
   final amshaElapsed = position.floor();
   final currentInAmsha = position % 1;
 
-  final deity = lookupDeity(VargaType.dvadashamsha, amshaElapsed % 4,
-      signNum: realSign);
+  final deity = lookupDeity(
+    VargaType.dvadashamsha,
+    amshaElapsed % 4,
+    signNum: realSign,
+  );
 
   final newLon = baseLon + (amshaElapsed * 30) + (currentInAmsha * 30);
   return (newLon, deity);
@@ -218,8 +230,11 @@ VargaResult shodashamsha(double lon, int adityaOffset) {
     baseLon = baseLonDual;
   }
 
-  final deity = lookupDeity(VargaType.shodashamsha, amshaElapsed % 4,
-      signNum: realSign);
+  final deity = lookupDeity(
+    VargaType.shodashamsha,
+    amshaElapsed % 4,
+    signNum: realSign,
+  );
 
   final newLon = baseLon + (amshaElapsed * 30) + (currentInAmsha * 30);
   return (newLon, deity);
@@ -248,15 +263,17 @@ VargaResult vimshamsha(double lon, int adityaOffset) {
     baseLon = baseLonDual;
   }
 
-  final deity = lookupDeity(VargaType.vimshamsha, amshaElapsed,
-      signNum: realSign);
+  final deity = lookupDeity(
+    VargaType.vimshamsha,
+    amshaElapsed,
+    signNum: realSign,
+  );
 
   final newLon = baseLon + (amshaElapsed * 30) + (currentInAmsha * 30);
   return (newLon, deity);
 }
 
-VargaResult siddhamsha(double lon, int adityaOffset,
-    {bool parashara = false}) {
+VargaResult siddhamsha(double lon, int adityaOffset, {bool parashara = false}) {
   final realSign = _eclipticSignNum(lon, adityaOffset);
   final realInSign = _eclipticInSign(lon);
 
@@ -269,17 +286,18 @@ VargaResult siddhamsha(double lon, int adityaOffset,
   final currentInAmsha = position % 1;
 
   final deity = lookupDeity(
-      VargaType.parasharaChaturvimshamsha, amshaElapsed % 12,
-      signNum: realSign);
+    VargaType.parasharaChaturvimshamsha,
+    amshaElapsed % 12,
+    signNum: realSign,
+  );
 
   double newLon;
   if (_isOdd(realSign)) {
     newLon = baseLonOdd + (amshaElapsed * 30) + (currentInAmsha * 30);
   } else {
     final direction = parashara ? 1 : -1;
-    newLon = baseLonEven +
-        (direction * amshaElapsed * 30) +
-        (currentInAmsha * 30);
+    newLon =
+        baseLonEven + (direction * amshaElapsed * 30) + (currentInAmsha * 30);
   }
 
   return (newLon, deity);
@@ -304,8 +322,7 @@ VargaResult bhamsha(double lon, int adityaOffset) {
   final amshaElapsed = position.floor();
   final currentInAmsha = position % 1;
 
-  final deity =
-      lookupDeity(VargaType.bhamsha, amshaElapsed, signNum: realSign);
+  final deity = lookupDeity(VargaType.bhamsha, amshaElapsed, signNum: realSign);
 
   final newLon = baseLon + (amshaElapsed * 30) + (currentInAmsha * 30);
   return (newLon, deity);
@@ -324,8 +341,11 @@ VargaResult khavedamsha(double lon, int adityaOffset) {
   final amshaElapsed = position.floor();
   final currentInAmsha = position % 1;
 
-  final deity = lookupDeity(VargaType.khavedamsha, amshaElapsed % 12,
-      signNum: realSign);
+  final deity = lookupDeity(
+    VargaType.khavedamsha,
+    amshaElapsed % 12,
+    signNum: realSign,
+  );
 
   final newLon = baseLon + (amshaElapsed * 30) + (currentInAmsha * 30);
   return (newLon, deity);
@@ -349,8 +369,11 @@ VargaResult akshavedamsha(double lon, int adityaOffset) {
   final amshaElapsed = position.floor();
   final currentInAmsha = position % 1;
 
-  final deity = lookupDeity(VargaType.akshavedamsha, amshaElapsed % 3,
-      signNum: realSign);
+  final deity = lookupDeity(
+    VargaType.akshavedamsha,
+    amshaElapsed % 3,
+    signNum: realSign,
+  );
 
   final newLon = baseLon + (amshaElapsed * 30) + (currentInAmsha * 30);
   return (newLon, deity);
@@ -365,14 +388,15 @@ VargaResult saptamsha(double lon, int adityaOffset) {
   final amshaElapsed = position.floor();
   final currentInAmsha = position % 1;
 
-  final startSign = _isOdd(realSign)
-      ? realSign
-      : ((realSign - 1 + 6) % 12) + 1;
+  final startSign = _isOdd(realSign) ? realSign : ((realSign - 1 + 6) % 12) + 1;
 
   final baseLon = _baseLon(startSign, adityaOffset);
 
-  final deity = lookupDeity(VargaType.saptamsha, amshaElapsed,
-      signNum: realSign);
+  final deity = lookupDeity(
+    VargaType.saptamsha,
+    amshaElapsed,
+    signNum: realSign,
+  );
 
   final newLon = baseLon + (amshaElapsed * 30) + (currentInAmsha * 30);
   return (newLon, deity);
@@ -382,21 +406,9 @@ VargaResult trimsamsha(double lon, int adityaOffset) {
   final realSign = _eclipticSignNum(lon, adityaOffset);
   final realInSign = _eclipticInSign(lon);
 
-  const oddTable = [
-    (5.0, 1),
-    (10.0, 11),
-    (18.0, 9),
-    (25.0, 3),
-    (30.0, 2),
-  ];
+  const oddTable = [(5.0, 1), (10.0, 11), (18.0, 9), (25.0, 3), (30.0, 2)];
 
-  const evenTable = [
-    (5.0, 2),
-    (12.0, 3),
-    (20.0, 9),
-    (25.0, 11),
-    (30.0, 1),
-  ];
+  const evenTable = [(5.0, 2), (12.0, 3), (20.0, 9), (25.0, 11), (30.0, 1)];
 
   final table = _isOdd(realSign) ? oddTable : evenTable;
 
@@ -436,8 +448,11 @@ VargaResult shashtyamsha(double lon, int adityaOffset) {
   final amshaElapsed = position.floor();
   final currentInAmsha = position % 1;
 
-  final deity = lookupDeity(VargaType.shashtyamsha, amshaElapsed,
-      signNum: realSign);
+  final deity = lookupDeity(
+    VargaType.shashtyamsha,
+    amshaElapsed,
+    signNum: realSign,
+  );
 
   final newLon = baseLon + (currentInAmsha * 30);
   return (newLon, deity);

@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Ninth House Studios LLC
+
 import 'dart:convert';
 import 'dart:io';
 
@@ -21,7 +24,13 @@ const Map<String, DignityType> _dignityMap = {
 };
 
 const List<String> _karakaNames = [
-  'Sun', 'Moon', 'Mars', 'Mercury', 'Jupiter', 'Venus', 'Saturn',
+  'Sun',
+  'Moon',
+  'Mars',
+  'Mercury',
+  'Jupiter',
+  'Venus',
+  'Saturn',
 ];
 
 Body _bodyFor(String libadityaName) =>
@@ -100,8 +109,11 @@ String _factorKey(Map<String, dynamic> f) =>
     '${f['source']}|${f['planet'] ?? ''}|${f['lord'] ?? ''}|'
     '${f['dignity'] ?? ''}|${f['detail'] ?? ''}';
 
-void _expectFactorsMatch(List<Map<String, dynamic>> got,
-    List<Map<String, dynamic>> expected, String reason) {
+void _expectFactorsMatch(
+  List<Map<String, dynamic>> got,
+  List<Map<String, dynamic>> expected,
+  String reason,
+) {
   expect(got.length, expected.length, reason: '$reason length');
   got.sort((a, b) => _factorKey(a).compareTo(_factorKey(b)));
   expected.sort((a, b) => _factorKey(a).compareTo(_factorKey(b)));
@@ -119,8 +131,11 @@ void _expectFactorsMatch(List<Map<String, dynamic>> got,
       final es = (e['strength'] as num?)?.toDouble();
       expect(gs, isNotNull, reason: '$reason[$i].strength missing on got');
       expect(es, isNotNull, reason: '$reason[$i].strength missing on exp');
-      expect((gs! - es!).abs() < 1e-6, isTrue,
-          reason: '$reason[$i].strength $gs vs $es');
+      expect(
+        (gs! - es!).abs() < 1e-6,
+        isTrue,
+        reason: '$reason[$i].strength $gs vs $es',
+      );
     }
   }
 }
@@ -131,16 +146,18 @@ void main() {
       ? Directory('test/fixtures/libaditya-golden')
       : Directory('calc/test/fixtures/libaditya-golden');
 
-  final fixtures = fixturesDir
-      .listSync()
-      .whereType<File>()
-      .where((f) => f.path.endsWith('.json'))
-      .toList()
-    ..sort((a, b) => a.path.compareTo(b.path));
+  final fixtures =
+      fixturesDir
+          .listSync()
+          .whereType<File>()
+          .where((f) => f.path.endsWith('.json'))
+          .toList()
+        ..sort((a, b) => a.path.compareTo(b.path));
 
   if (fixtures.isEmpty) {
     throw StateError(
-        'No libaditya-golden fixtures found at ${fixturesDir.path}');
+      'No libaditya-golden fixtures found at ${fixturesDir.path}',
+    );
   }
 
   for (final file in fixtures) {
@@ -182,32 +199,42 @@ void main() {
         final expected = data['lajjitaadi'] as Map<String, dynamic>;
 
         // Compare set of emitted karakas (both sides skip empty avasthas).
-        final gotNames =
-            got.keys.map((b) => _pascal(b.name)).toSet();
-        expect(gotNames, equals(expected.keys.toSet()),
-            reason: '$slug lajjitaadi karaka set');
+        final gotNames = got.keys.map((b) => _pascal(b.name)).toSet();
+        expect(
+          gotNames,
+          equals(expected.keys.toSet()),
+          reason: '$slug lajjitaadi karaka set',
+        );
 
         for (final name in expected.keys) {
           final body = _bodyFor(name);
           final expStates = expected[name] as Map<String, dynamic>;
           final result = got[body]!;
           final gotStateKeys = {
-            for (final e in result.avasthas.entries) e.key.libadityaName
+            for (final e in result.avasthas.entries) e.key.libadityaName,
           };
-          expect(gotStateKeys, equals(expStates.keys.toSet()),
-              reason: '$slug $name state set');
+          expect(
+            gotStateKeys,
+            equals(expStates.keys.toSet()),
+            reason: '$slug $name state set',
+          );
 
           for (final stateName in expStates.keys) {
-            final state = LajjitaadiState.values
-                .firstWhere((s) => s.libadityaName == stateName);
-            final gotFactors =
-                result.avasthas[state]!.map(_factorJson).toList();
+            final state = LajjitaadiState.values.firstWhere(
+              (s) => s.libadityaName == stateName,
+            );
+            final gotFactors = result.avasthas[state]!
+                .map(_factorJson)
+                .toList();
             final expFactors = (expStates[stateName] as List)
                 .cast<Map>()
                 .map((m) => m.map((k, v) => MapEntry(k.toString(), v)))
                 .toList();
             _expectFactorsMatch(
-                gotFactors, expFactors, '$slug $name $stateName');
+              gotFactors,
+              expFactors,
+              '$slug $name $stateName',
+            );
           }
         }
       });

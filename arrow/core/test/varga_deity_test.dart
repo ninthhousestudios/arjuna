@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Ninth House Studios LLC
+
 import 'package:arrow_core/src/varga_deities.dart';
 import 'package:arrow_options/arrow_options.dart';
 import 'package:test/test.dart';
@@ -42,15 +45,25 @@ void main() {
 
   group('lookupDeity D7 (saptamsha)', () {
     test('odd sign uses forward table', () {
-      expect(lookupDeity(VargaType.saptamsha, 0, signNum: 1), VargaDeity.kshara);
       expect(
-          lookupDeity(VargaType.saptamsha, 6, signNum: 3), VargaDeity.shuddhaJala);
+        lookupDeity(VargaType.saptamsha, 0, signNum: 1),
+        VargaDeity.kshara,
+      );
+      expect(
+        lookupDeity(VargaType.saptamsha, 6, signNum: 3),
+        VargaDeity.shuddhaJala,
+      );
     });
 
     test('even sign uses reversed table', () {
       expect(
-          lookupDeity(VargaType.saptamsha, 0, signNum: 2), VargaDeity.shuddhaJala);
-      expect(lookupDeity(VargaType.saptamsha, 6, signNum: 4), VargaDeity.kshara);
+        lookupDeity(VargaType.saptamsha, 0, signNum: 2),
+        VargaDeity.shuddhaJala,
+      );
+      expect(
+        lookupDeity(VargaType.saptamsha, 6, signNum: 4),
+        VargaDeity.kshara,
+      );
     });
 
     test('odd and even sign index 0 are opposites', () {
@@ -90,36 +103,50 @@ void main() {
 
     test('covers all 20 entries without error', () {
       for (var i = 0; i < 20; i++) {
-        expect(lookupDeity(VargaType.vimshamsha, i, signNum: 1), isNotNull,
-            reason: 'odd sign index $i');
-        expect(lookupDeity(VargaType.vimshamsha, i, signNum: 2), isNotNull,
-            reason: 'even sign index $i');
+        expect(
+          lookupDeity(VargaType.vimshamsha, i, signNum: 1),
+          isNotNull,
+          reason: 'odd sign index $i',
+        );
+        expect(
+          lookupDeity(VargaType.vimshamsha, i, signNum: 2),
+          isNotNull,
+          reason: 'even sign index $i',
+        );
       }
     });
   });
 
   group('lookupDeity D45 (akshavedamsha)', () {
     test('moveable sign (Aries=1)', () {
-      expect(lookupDeity(VargaType.akshavedamsha, 0, signNum: 1),
-          VargaDeity.vidhi);
+      expect(
+        lookupDeity(VargaType.akshavedamsha, 0, signNum: 1),
+        VargaDeity.vidhi,
+      );
     });
 
     test('fixed sign (Taurus=2)', () {
-      expect(lookupDeity(VargaType.akshavedamsha, 0, signNum: 2),
-          VargaDeity.isha);
+      expect(
+        lookupDeity(VargaType.akshavedamsha, 0, signNum: 2),
+        VargaDeity.isha,
+      );
     });
 
     test('dual sign (Gemini=3)', () {
-      expect(lookupDeity(VargaType.akshavedamsha, 0, signNum: 3),
-          VargaDeity.vishnu);
+      expect(
+        lookupDeity(VargaType.akshavedamsha, 0, signNum: 3),
+        VargaDeity.vishnu,
+      );
     });
 
     test('all 12 signs produce valid modality', () {
       for (var sign = 1; sign <= 12; sign++) {
         for (var i = 0; i < 3; i++) {
-          expect(lookupDeity(VargaType.akshavedamsha, i, signNum: sign),
-              isNotNull,
-              reason: 'sign $sign index $i');
+          expect(
+            lookupDeity(VargaType.akshavedamsha, i, signNum: sign),
+            isNotNull,
+            reason: 'sign $sign index $i',
+          );
         }
       }
     });
@@ -134,10 +161,16 @@ void main() {
 
     test('covers all 60 entries', () {
       for (var i = 0; i < 60; i++) {
-        expect(lookupDeity(VargaType.shashtyamsha, i, signNum: 1), isNotNull,
-            reason: 'odd sign index $i');
-        expect(lookupDeity(VargaType.shashtyamsha, i, signNum: 2), isNotNull,
-            reason: 'even sign index $i');
+        expect(
+          lookupDeity(VargaType.shashtyamsha, i, signNum: 1),
+          isNotNull,
+          reason: 'odd sign index $i',
+        );
+        expect(
+          lookupDeity(VargaType.shashtyamsha, i, signNum: 2),
+          isNotNull,
+          reason: 'even sign index $i',
+        );
       }
     });
   });
@@ -166,8 +199,11 @@ void main() {
         for (var i = 0; i < size; i++) {
           final odd = lookupDeity(type, i, signNum: 1);
           final even = lookupDeity(type, size - 1 - i, signNum: 2);
-          expect(odd, even,
-              reason: '${type.name} odd[$i] vs even[${size - 1 - i}]');
+          expect(
+            odd,
+            even,
+            reason: '${type.name} odd[$i] vs even[${size - 1 - i}]',
+          );
         }
       });
     }

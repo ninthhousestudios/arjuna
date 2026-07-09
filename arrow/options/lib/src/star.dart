@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Ninth House Studios LLC
+
 /// Fixed stars supported by Arrow.
 ///
 /// Each entry carries a human-readable label, an optional visual magnitude,
@@ -89,18 +92,13 @@ enum Star {
 
   // ── Deep-sky / special ───────────────────────────────────────────
 
-  galacticCenter(label: 'Galactic Center', traditionalMag: null),
-  ;
+  galacticCenter(label: 'Galactic Center', traditionalMag: null);
 
   final String label;
   final double? traditionalMag;
   final int? nakshatra;
 
-  const Star({
-    required this.label,
-    this.traditionalMag,
-    this.nakshatra,
-  });
+  const Star({required this.label, this.traditionalMag, this.nakshatra});
 
   /// Junction stars only — the 27 yogatara, one per nakshatra.
   static List<Star> get junctionStars =>

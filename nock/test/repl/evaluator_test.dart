@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Ninth House Studios LLC
+
 import 'package:nock/src/repl/ast.dart';
 import 'package:nock/src/repl/error.dart';
 import 'package:nock/src/repl/evaluator.dart';
@@ -74,32 +77,49 @@ void main() {
     test('undefined variable throws', () async {
       expect(
         () => _runExpr(eval, 'undefined_var'),
-        throwsA(isA<NockError>().having(
-            (e) => e.message, 'message', contains('undefined'))),
+        throwsA(
+          isA<NockError>().having(
+            (e) => e.message,
+            'message',
+            contains('undefined'),
+          ),
+        ),
       );
     });
 
     test('cannot assign to reserved name', () async {
       expect(
         () => _run(eval, 'chart = 42'),
-        throwsA(isA<NockError>().having(
-            (e) => e.message, 'message', contains('reserved'))),
+        throwsA(
+          isA<NockError>().having(
+            (e) => e.message,
+            'message',
+            contains('reserved'),
+          ),
+        ),
       );
     });
 
     test('cannot assign to quit', () async {
       expect(
         () => _run(eval, 'quit = 42'),
-        throwsA(isA<NockError>().having(
-            (e) => e.message, 'message', contains('reserved'))),
+        throwsA(
+          isA<NockError>().having(
+            (e) => e.message,
+            'message',
+            contains('reserved'),
+          ),
+        ),
       );
     });
   });
 
   group('chart()', () {
     test('creates a chart with date, lat, lon', () async {
-      final result =
-          await _runExpr(eval, 'chart("1990-06-15 14:30", 39.76, -86.15)');
+      final result = await _runExpr(
+        eval,
+        'chart("1990-06-15 14:30", 39.76, -86.15)',
+      );
       expect(result, isA<NockChart>());
     });
 
@@ -112,31 +132,48 @@ void main() {
     test('chart with config argument', () async {
       await _run(eval, 'cfg = config(ayanamsa: "lahiri")');
       final result = await _runExpr(
-          eval, 'chart("1990-06-15 14:30", 39.76, -86.15, cfg)');
+        eval,
+        'chart("1990-06-15 14:30", 39.76, -86.15, cfg)',
+      );
       expect(result, isA<NockChart>());
     });
 
     test('wrong arg count throws', () async {
       expect(
         () => _runExpr(eval, 'chart("1990-06-15")'),
-        throwsA(isA<NockError>().having(
-            (e) => e.message, 'message', contains('3 or 4 arguments'))),
+        throwsA(
+          isA<NockError>().having(
+            (e) => e.message,
+            'message',
+            contains('3 or 4 arguments'),
+          ),
+        ),
       );
     });
 
     test('wrong arg type throws', () async {
       expect(
         () => _runExpr(eval, 'chart(42, 39.76, -86.15)'),
-        throwsA(isA<NockError>().having(
-            (e) => e.message, 'message', contains('expected string'))),
+        throwsA(
+          isA<NockError>().having(
+            (e) => e.message,
+            'message',
+            contains('expected string'),
+          ),
+        ),
       );
     });
 
     test('invalid date throws', () async {
       expect(
         () => _runExpr(eval, 'chart("not-a-date", 39.76, -86.15)'),
-        throwsA(isA<NockError>().having(
-            (e) => e.message, 'message', contains('invalid date'))),
+        throwsA(
+          isA<NockError>().having(
+            (e) => e.message,
+            'message',
+            contains('invalid date'),
+          ),
+        ),
       );
     });
 
@@ -144,22 +181,28 @@ void main() {
       // "14:30" with no timezone should mean 14:30 UTC,
       // same as explicitly appending Z.
       final bare = await _runExpr(
-          eval, 'chart("1990-06-15 14:30", 39.76, -86.15)');
+        eval,
+        'chart("1990-06-15 14:30", 39.76, -86.15)',
+      );
       final withZ = await _runExpr(
-          eval, 'chart("1990-06-15T14:30:00Z", 39.76, -86.15)');
-      final bareLon = (bare as NockChart)
-          .chart.sun.rawLongitude;
-      final zLon = (withZ as NockChart)
-          .chart.sun.rawLongitude;
+        eval,
+        'chart("1990-06-15T14:30:00Z", 39.76, -86.15)',
+      );
+      final bareLon = (bare as NockChart).chart.sun.rawLongitude;
+      final zLon = (withZ as NockChart).chart.sun.rawLongitude;
       expect(bareLon, equals(zLon));
     });
 
     test('explicit UTC offset shifts the time', () async {
       // 14:30+05:30 = 09:00 UTC, different from 14:30 UTC
       final utc = await _runExpr(
-          eval, 'chart("1990-06-15 14:30", 39.76, -86.15)');
+        eval,
+        'chart("1990-06-15 14:30", 39.76, -86.15)',
+      );
       final offset = await _runExpr(
-          eval, 'chart("1990-06-15T14:30:00+05:30", 39.76, -86.15)');
+        eval,
+        'chart("1990-06-15T14:30:00+05:30", 39.76, -86.15)',
+      );
       final utcLon = (utc as NockChart).chart.sun.rawLongitude;
       final offsetLon = (offset as NockChart).chart.sun.rawLongitude;
       expect(utcLon, isNot(equals(offsetLon)));
@@ -225,10 +268,7 @@ void main() {
 
     test('invalid property throws', () async {
       await _run(eval, 'j = chart("1990-06-15 14:30", 39.76, -86.15)');
-      expect(
-        () => _runExpr(eval, 'j.nonexistent'),
-        throwsA(isA<NockError>()),
-      );
+      expect(() => _runExpr(eval, 'j.nonexistent'), throwsA(isA<NockError>()));
     });
   });
 
@@ -274,8 +314,10 @@ void main() {
 
     test('chart uses session config by default', () async {
       await _run(eval, 'config(ayanamsa: "lahiri")');
-      final result =
-          await _runExpr(eval, 'chart("1990-06-15 14:30", 39.76, -86.15)');
+      final result = await _runExpr(
+        eval,
+        'chart("1990-06-15 14:30", 39.76, -86.15)',
+      );
       expect(result, isA<NockChart>());
     });
 
@@ -303,8 +345,9 @@ void main() {
     test('now without args throws', () async {
       expect(
         () => _runExpr(eval, 'now()'),
-        throwsA(isA<NockError>().having(
-            (e) => e.message, 'message', contains('lat'))),
+        throwsA(
+          isA<NockError>().having((e) => e.message, 'message', contains('lat')),
+        ),
       );
     });
   });
@@ -336,8 +379,13 @@ void main() {
     test('throws on unknown function', () async {
       expect(
         () => _runExpr(eval, 'bogus()'),
-        throwsA(isA<NockError>().having(
-            (e) => e.message, 'message', contains('unknown function'))),
+        throwsA(
+          isA<NockError>().having(
+            (e) => e.message,
+            'message',
+            contains('unknown function'),
+          ),
+        ),
       );
     });
   });
@@ -354,8 +402,10 @@ void main() {
       await _run(eval, 'b = chart("2000-01-01 12:00", 40.71, -74.00)');
       final sunA = await _runExpr(eval, 'a.sun.longitude');
       final sunB = await _runExpr(eval, 'b.sun.longitude');
-      expect((sunA as NockNumber).value,
-          isNot(equals((sunB as NockNumber).value)));
+      expect(
+        (sunA as NockNumber).value,
+        isNot(equals((sunB as NockNumber).value)),
+      );
     });
 
     test('reassign variable', () async {
@@ -369,7 +419,9 @@ void main() {
       await _run(eval, 'vedic = config(ayanamsa: "lahiri")');
       await _run(eval, 'config(ayanamsa: "tropical")');
       final result = await _runExpr(
-          eval, 'chart("1990-06-15 14:30", 39.76, -86.15, vedic)');
+        eval,
+        'chart("1990-06-15 14:30", 39.76, -86.15, vedic)',
+      );
       expect(result, isA<NockChart>());
     });
 
@@ -383,8 +435,13 @@ void main() {
       await _run(eval, 'j = chart("1990-06-15 14:30", 39.76, -86.15)');
       expect(
         () => _runExpr(eval, 'j.rahu.dignity'),
-        throwsA(isA<NockError>().having(
-            (e) => e.message, 'message', contains('not a karaka'))),
+        throwsA(
+          isA<NockError>().having(
+            (e) => e.message,
+            'message',
+            contains('not a karaka'),
+          ),
+        ),
       );
     });
   });

@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Ninth House Studios LLC
+
 /// The 13 astronomical constellations of the ecliptic.
 ///
 /// Ordered by ecliptic longitude of the first boundary star. Includes
@@ -16,8 +19,7 @@ enum ConstellationId {
   sagittarius('Sagittarius'),
   capricorn('Capricorn'),
   aquarius('Aquarius'),
-  pisces('Pisces'),
-  ;
+  pisces('Pisces');
 
   final String label;
 

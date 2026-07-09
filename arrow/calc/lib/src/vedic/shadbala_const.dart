@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Ninth House Studios LLC
+
 import 'package:arrow_options/arrow_options.dart';
 
 /// Constants for Shadbala calculations. All values ported from libaditya.
@@ -53,12 +56,42 @@ class ShadbalaCon {
   // from J2000 = JD 2451545.0). Coefficients: [a0, a1, a2, a3].
   // ---------------------------------------------------------------------------
 
-  static const _sunCoeffs = [280.466449, 36000.7698231, 0.00030368, 0.000000021];
-  static const _marsCoeffs = [355.433275, 19141.6964746, 0.00031097, 0.000000015];
-  static const _mercuryCoeffs = [252.250906, 149474.0722491, 0.00030397, -0.000000018];
-  static const _jupiterCoeffs = [34.351484, 3036.3027889, 0.00022374, 0.000000025];
-  static const _venusCoeffs = [181.979801, 58519.2130302, 0.00031060, 0.000000015];
-  static const _saturnCoeffs = [50.07741, 1223.5110141, 0.00051952, -0.000000003];
+  static const _sunCoeffs = [
+    280.466449,
+    36000.7698231,
+    0.00030368,
+    0.000000021,
+  ];
+  static const _marsCoeffs = [
+    355.433275,
+    19141.6964746,
+    0.00031097,
+    0.000000015,
+  ];
+  static const _mercuryCoeffs = [
+    252.250906,
+    149474.0722491,
+    0.00030397,
+    -0.000000018,
+  ];
+  static const _jupiterCoeffs = [
+    34.351484,
+    3036.3027889,
+    0.00022374,
+    0.000000025,
+  ];
+  static const _venusCoeffs = [
+    181.979801,
+    58519.2130302,
+    0.00031060,
+    0.000000015,
+  ];
+  static const _saturnCoeffs = [
+    50.07741,
+    1223.5110141,
+    0.00051952,
+    -0.000000003,
+  ];
 
   static const meanLonCoeffs = <Body, List<double>>{
     Body.sun: _sunCoeffs,
@@ -95,4 +128,3 @@ class ShadbalaCon {
     FriendshipLevel.greatEnemy: 2.0,
   };
 }
-

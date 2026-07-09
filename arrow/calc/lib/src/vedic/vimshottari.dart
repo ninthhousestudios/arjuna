@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Ninth House Studios LLC
+
 import 'dart:math' as math;
 
 import 'package:arrow_options/arrow_options.dart';
@@ -228,14 +231,16 @@ class Vimshottari {
       result.add(period);
 
       if (level + 1 < maxLevel) {
-        result.addAll(_buildTree(
-          dlist: [...dlist, thisDasha],
-          periodStartJd: thisStartJd,
-          level: level + 1,
-          maxLevel: maxLevel,
-          yrlen: yrlen,
-          lordChain: chain,
-        ));
+        result.addAll(
+          _buildTree(
+            dlist: [...dlist, thisDasha],
+            periodStartJd: thisStartJd,
+            level: level + 1,
+            maxLevel: maxLevel,
+            yrlen: yrlen,
+            lordChain: chain,
+          ),
+        );
       }
 
       thisStartJd += durationDays;
@@ -247,7 +252,11 @@ class Vimshottari {
   static int _lordIndex(Body b) => _lordOrder.indexOf(b);
 
   static double _durationDays(
-      List<int> dlist, int thisDasha, int level, double yrlen) {
+    List<int> dlist,
+    int thisDasha,
+    int level,
+    double yrlen,
+  ) {
     var years = 1.0;
     for (var i = 1; i < dlist.length; i++) {
       years *= _dashaYears[dlist[i]];

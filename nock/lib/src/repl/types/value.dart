@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Ninth House Studios LLC
+
 import '../error.dart';
 
 abstract class NockValue {
@@ -7,8 +10,10 @@ abstract class NockValue {
       throw NockError('${typeName()} has no property "$field"');
 
   Future<NockValue> call(
-          String method, List<NockValue> positional, Map<String, NockValue> named) =>
-      throw NockError('${typeName()} has no method "$method"');
+    String method,
+    List<NockValue> positional,
+    Map<String, NockValue> named,
+  ) => throw NockError('${typeName()} has no method "$method"');
 
   String typeName();
 }
@@ -29,8 +34,9 @@ class NockNumber extends NockValue {
   NockNumber(this.value);
 
   @override
-  String display() =>
-      value == value.truncateToDouble() ? value.toInt().toString() : value.toString();
+  String display() => value == value.truncateToDouble()
+      ? value.toInt().toString()
+      : value.toString();
 
   @override
   String typeName() => 'number';

@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Ninth House Studios LLC
+
 import 'package:arrow_options/arrow_options.dart';
 
 import 'sign_data.dart';
@@ -73,32 +76,60 @@ class Dignity {
 
   static const _friendshipTable = <Body, Map<Body, _NatRel>>{
     Body.sun: {
-      Body.moon: _NatRel.f, Body.mars: _NatRel.f, Body.mercury: _NatRel.n,
-      Body.jupiter: _NatRel.f, Body.venus: _NatRel.e, Body.saturn: _NatRel.e,
+      Body.moon: _NatRel.f,
+      Body.mars: _NatRel.f,
+      Body.mercury: _NatRel.n,
+      Body.jupiter: _NatRel.f,
+      Body.venus: _NatRel.e,
+      Body.saturn: _NatRel.e,
     },
     Body.moon: {
-      Body.sun: _NatRel.f, Body.mars: _NatRel.n, Body.mercury: _NatRel.f,
-      Body.jupiter: _NatRel.n, Body.venus: _NatRel.n, Body.saturn: _NatRel.n,
+      Body.sun: _NatRel.f,
+      Body.mars: _NatRel.n,
+      Body.mercury: _NatRel.f,
+      Body.jupiter: _NatRel.n,
+      Body.venus: _NatRel.n,
+      Body.saturn: _NatRel.n,
     },
     Body.mars: {
-      Body.sun: _NatRel.f, Body.moon: _NatRel.f, Body.mercury: _NatRel.e,
-      Body.jupiter: _NatRel.f, Body.venus: _NatRel.n, Body.saturn: _NatRel.n,
+      Body.sun: _NatRel.f,
+      Body.moon: _NatRel.f,
+      Body.mercury: _NatRel.e,
+      Body.jupiter: _NatRel.f,
+      Body.venus: _NatRel.n,
+      Body.saturn: _NatRel.n,
     },
     Body.mercury: {
-      Body.sun: _NatRel.f, Body.moon: _NatRel.e, Body.mars: _NatRel.n,
-      Body.jupiter: _NatRel.n, Body.venus: _NatRel.f, Body.saturn: _NatRel.n,
+      Body.sun: _NatRel.f,
+      Body.moon: _NatRel.e,
+      Body.mars: _NatRel.n,
+      Body.jupiter: _NatRel.n,
+      Body.venus: _NatRel.f,
+      Body.saturn: _NatRel.n,
     },
     Body.jupiter: {
-      Body.sun: _NatRel.f, Body.moon: _NatRel.f, Body.mars: _NatRel.f,
-      Body.mercury: _NatRel.e, Body.venus: _NatRel.e, Body.saturn: _NatRel.n,
+      Body.sun: _NatRel.f,
+      Body.moon: _NatRel.f,
+      Body.mars: _NatRel.f,
+      Body.mercury: _NatRel.e,
+      Body.venus: _NatRel.e,
+      Body.saturn: _NatRel.n,
     },
     Body.venus: {
-      Body.sun: _NatRel.e, Body.moon: _NatRel.e, Body.mars: _NatRel.n,
-      Body.mercury: _NatRel.f, Body.jupiter: _NatRel.n, Body.saturn: _NatRel.f,
+      Body.sun: _NatRel.e,
+      Body.moon: _NatRel.e,
+      Body.mars: _NatRel.n,
+      Body.mercury: _NatRel.f,
+      Body.jupiter: _NatRel.n,
+      Body.saturn: _NatRel.f,
     },
     Body.saturn: {
-      Body.sun: _NatRel.e, Body.moon: _NatRel.e, Body.mars: _NatRel.e,
-      Body.mercury: _NatRel.f, Body.jupiter: _NatRel.n, Body.venus: _NatRel.f,
+      Body.sun: _NatRel.e,
+      Body.moon: _NatRel.e,
+      Body.mars: _NatRel.e,
+      Body.mercury: _NatRel.f,
+      Body.jupiter: _NatRel.n,
+      Body.venus: _NatRel.f,
     },
   };
 
@@ -194,7 +225,11 @@ class Dignity {
 
   /// Combined (compound) friendship from natural + temporary.
   static FriendshipLevel compoundFriendship(
-      Body body, Body lord, int bodySign, int lordSign) {
+    Body body,
+    Body lord,
+    int bodySign,
+    int lordSign,
+  ) {
     final nat = _naturalRelationship(body, lord);
     if (nat == null) return FriendshipLevel.neutral;
     final tempFriend = isTemporaryFriend(bodySign, lordSign);
@@ -216,7 +251,11 @@ class Dignity {
   /// 1. Compute compound friendship → base dignity
   /// 2. Override: exalted, moolatrikona, own sign, debilitated
   static DignityType calculate(
-      Body body, int sign, double inSignDeg, int lordSign) {
+    Body body,
+    int sign,
+    double inSignDeg,
+    int lordSign,
+  ) {
     // Rahu/Ketu: use sign lord's dignity
     if (body == Body.rahu || body == Body.ketu) {
       final lord = SignData.lord(sign);
@@ -247,8 +286,11 @@ class Dignity {
 
   /// Whether a planet is combust (too close to the Sun).
   static bool isCombust(
-      Body body, double bodyLongitude, double sunLongitude,
-      {bool isRetrograde = false}) {
+    Body body,
+    double bodyLongitude,
+    double sunLongitude, {
+    bool isRetrograde = false,
+  }) {
     if (body == Body.sun || body == Body.rahu || body == Body.ketu) {
       return false;
     }
@@ -261,4 +303,3 @@ class Dignity {
     return angularSep < orb;
   }
 }
-

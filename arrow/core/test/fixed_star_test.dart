@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Ninth House Studios LLC
+
 @Tags(['integration'])
 library;
 
@@ -11,8 +14,9 @@ import 'helpers/find_ephe_path.dart';
 
 void main() {
   final ephePath = findEphePath();
-  final skipReason =
-      ephePath == null ? 'no ephe path found; set ARROW_EPHE_PATH' : null;
+  final skipReason = ephePath == null
+      ? 'no ephe path found; set ARROW_EPHE_PATH'
+      : null;
 
   group('FixedStar', skip: skipReason, () {
     const jdUt = 2451545.0; // J2000
@@ -51,10 +55,7 @@ void main() {
     });
 
     test('custom star resolves', () {
-      final sweConfig = SweConfig(
-        bodies: {},
-        customStarNames: {'Sirius'},
-      );
+      final sweConfig = SweConfig(bodies: {}, customStarNames: {'Sirius'});
       final snap = facade.calcAll(jdUt, _testLocation, sweConfig);
       final fs = FixedStar.custom('Sirius', snap, CalcConfig());
 

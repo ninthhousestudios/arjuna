@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Ninth House Studios LLC
+
 import 'karana.dart';
 import 'nakshatra.dart';
 import 'tithi.dart';
@@ -8,25 +11,20 @@ import 'yoga.dart';
 typedef SunriseAt = double Function(double jd);
 
 /// Ecliptic positions and speeds at a Julian Day. Speeds in °/day.
-typedef EclipticStateAt = ({
-  double sun,
-  double moon,
-  double sunSpeed,
-  double moonSpeed,
-}) Function(double jd);
+typedef EclipticStateAt =
+    ({double sun, double moon, double sunSpeed, double moonSpeed}) Function(
+      double jd,
+    );
 
 /// Sidereal positions and speeds at a Julian Day. Speeds in °/day.
-typedef SiderealStateAt = ({
-  double sun,
-  double moon,
-  double sunSpeed,
-  double moonSpeed,
-}) Function(double jd);
+typedef SiderealStateAt =
+    ({double sun, double moon, double sunSpeed, double moonSpeed}) Function(
+      double jd,
+    );
 
 /// Moon sidereal longitude and speed at a Julian Day. Speed in °/day.
-typedef MoonSiderealStateAt = ({double longitude, double speed}) Function(
-  double jd,
-);
+typedef MoonSiderealStateAt =
+    ({double longitude, double speed}) Function(double jd);
 
 /// Find the JD when the current tithi ends and the next one begins.
 ///
@@ -66,7 +64,8 @@ typedef MoonSiderealStateAt = ({double longitude, double speed}) Function(
     current += remaining / relSpeed;
   }
 
-  var upper = hi ??
+  var upper =
+      hi ??
       ((tithiAt(current).number != startNumber)
           ? current
           : current + 1.0); // generous fallback: 1 day
@@ -120,8 +119,8 @@ typedef MoonSiderealStateAt = ({double longitude, double speed}) Function(
     current += remaining / relSpeed;
   }
 
-  var upper = hi ??
-      ((karanaAt(current).name != startName) ? current : current + 0.5);
+  var upper =
+      hi ?? ((karanaAt(current).name != startName) ? current : current + 0.5);
 
   for (var i = 0; i < maxBisections && (upper - lo) > toleranceDays; i++) {
     final mid = (lo + upper) / 2;
@@ -163,8 +162,8 @@ typedef MoonSiderealStateAt = ({double longitude, double speed}) Function(
     current += remaining / s.speed;
   }
 
-  var upper = hi ??
-      ((nakAt(current).index != startIndex) ? current : current + 1.5);
+  var upper =
+      hi ?? ((nakAt(current).index != startIndex) ? current : current + 1.5);
 
   for (var i = 0; i < maxBisections && (upper - lo) > toleranceDays; i++) {
     final mid = (lo + upper) / 2;
@@ -211,8 +210,8 @@ typedef MoonSiderealStateAt = ({double longitude, double speed}) Function(
     current += remaining / combinedSpeed;
   }
 
-  var upper = hi ??
-      ((yogaAt(current).number != startNumber) ? current : current + 1.0);
+  var upper =
+      hi ?? ((yogaAt(current).number != startNumber) ? current : current + 1.0);
 
   for (var i = 0; i < maxBisections && (upper - lo) > toleranceDays; i++) {
     final mid = (lo + upper) / 2;

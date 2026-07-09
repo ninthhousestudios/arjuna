@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Ninth House Studios LLC
+
 import 'package:arrow_options/arrow_options.dart';
 import 'package:arrow_calc/src/vedic/vimshottari.dart';
 import 'package:test/test.dart';
@@ -16,14 +19,17 @@ void main() {
     test('Sun mahadasha = 6 saura years', () {
       // Sun is index 2 in _lordOrder / _dashaYears (years=6).
       const sunIdx = 2;
-      final days = Vimshottari.periodDuration([sunIdx], DashaYearLength.saura.days);
+      final days = Vimshottari.periodDuration([
+        sunIdx,
+      ], DashaYearLength.saura.days);
       expect(days, closeTo(6 * 365.2422, 1e-9));
     });
 
     test('Venus mahadasha = 20 saura years', () {
       const venusIdx = 1;
-      final days =
-          Vimshottari.periodDuration([venusIdx], DashaYearLength.saura.days);
+      final days = Vimshottari.periodDuration([
+        venusIdx,
+      ], DashaYearLength.saura.days);
       expect(days, closeTo(20 * 365.2422, 1e-9));
     });
 
@@ -31,8 +37,10 @@ void main() {
       // Sun=idx2 (6yr), Moon=idx3 (10yr). Antardasha = 6*10/120 yr.
       const sunIdx = 2;
       const moonIdx = 3;
-      final days =
-          Vimshottari.periodDuration([sunIdx, moonIdx], DashaYearLength.saura.days);
+      final days = Vimshottari.periodDuration([
+        sunIdx,
+        moonIdx,
+      ], DashaYearLength.saura.days);
       final expectedYears = 6.0 * 10.0 / 120.0;
       expect(days, closeTo(expectedYears * 365.2422, 1e-9));
     });
@@ -41,41 +49,51 @@ void main() {
       const sunIdx = 2;
       const moonIdx = 3;
       const marsIdx = 4;
-      final days = Vimshottari.periodDuration(
-          [sunIdx, moonIdx, marsIdx], DashaYearLength.saura.days);
+      final days = Vimshottari.periodDuration([
+        sunIdx,
+        moonIdx,
+        marsIdx,
+      ], DashaYearLength.saura.days);
       final expectedYears = 6.0 * 10.0 * 7.0 / (120.0 * 120.0);
       expect(days, closeTo(expectedYears * 365.2422, 1e-9));
     });
 
     test('savana year length changes result', () {
       const sunIdx = 2;
-      final saura =
-          Vimshottari.periodDuration([sunIdx], DashaYearLength.saura.days);
-      final savana =
-          Vimshottari.periodDuration([sunIdx], DashaYearLength.savana.days);
+      final saura = Vimshottari.periodDuration([
+        sunIdx,
+      ], DashaYearLength.saura.days);
+      final savana = Vimshottari.periodDuration([
+        sunIdx,
+      ], DashaYearLength.savana.days);
       expect(savana, closeTo(6 * 360.0, 1e-9));
       expect(savana, isNot(equals(saura)));
     });
   });
 
   group('Vimshottari.seed', () {
-    test('Moon at nakshatra boundary → elapsedFraction=0, dashaStartJd=birthJd',
-        () {
-      // Nakshatra 1 starts at 0°. If Moon is exactly at 0°, elapsed=0,
-      // so dashaStartJd should equal birthJd.
-      const moonLon = 0.0;
-      const birthJd = _j2000;
-      final s = Vimshottari.seed(moonLon, birthJd, DashaYearLength.saura.days);
-      expect(s.firstIndex, 0); // nindex=0, 0%9=0 → Ketu
-      expect(s.dashaStartJd, closeTo(birthJd, 1e-9));
-    });
+    test(
+      'Moon at nakshatra boundary → elapsedFraction=0, dashaStartJd=birthJd',
+      () {
+        // Nakshatra 1 starts at 0°. If Moon is exactly at 0°, elapsed=0,
+        // so dashaStartJd should equal birthJd.
+        const moonLon = 0.0;
+        const birthJd = _j2000;
+        final s = Vimshottari.seed(
+          moonLon,
+          birthJd,
+          DashaYearLength.saura.days,
+        );
+        expect(s.firstIndex, 0); // nindex=0, 0%9=0 → Ketu
+        expect(s.dashaStartJd, closeTo(birthJd, 1e-9));
+      },
+    );
 
     test('Moon at start of nakshatra 10 (index 9) → firstIndex=0 (Ketu)', () {
       // Nakshatra 10 (Magha) starts at 9 * (360/27) = 120°.
       final nakSize = 360.0 / 27.0;
       final moonLon = 9 * nakSize; // exactly start of nak 10
-      final s =
-          Vimshottari.seed(moonLon, _j2000, DashaYearLength.saura.days);
+      final s = Vimshottari.seed(moonLon, _j2000, DashaYearLength.saura.days);
       // nindex=9, 9%9=0 → Ketu
       expect(s.firstIndex, 0);
       expect(s.dashaStartJd, closeTo(_j2000, 1e-9));
@@ -87,8 +105,7 @@ void main() {
       final nakSize = 360.0 / 27.0;
       // Put Moon halfway through nak 3
       final moonLon = 2 * nakSize + nakSize / 2.0;
-      final s =
-          Vimshottari.seed(moonLon, _j2000, DashaYearLength.saura.days);
+      final s = Vimshottari.seed(moonLon, _j2000, DashaYearLength.saura.days);
       expect(s.firstIndex, 2); // Sun
       // Half of Sun's 6 years elapsed → dashaStartJd is 3 saura years before birth
       final expectedStart = _j2000 - 3.0 * 365.2422;
@@ -252,8 +269,11 @@ void main() {
         Body.venus,
       ];
       for (var i = 0; i < 9; i++) {
-        expect(sunSubs[i].lords[1], expectedOrder[i],
-            reason: 'antardasha $i should be ${expectedOrder[i].name}');
+        expect(
+          sunSubs[i].lords[1],
+          expectedOrder[i],
+          reason: 'antardasha $i should be ${expectedOrder[i].name}',
+        );
       }
     });
   });
@@ -345,26 +365,31 @@ void main() {
       expect(tree.length, 9 + 9 * 9);
     });
 
-    test('antardasha durations within each mahadasha sum to that mahadasha', () {
-      const moonLon = 0.0;
-      const birthJd = _j2000;
-      final tree = Vimshottari.fullTree(
-        moonSiderealLon: moonLon,
-        birthJd: birthJd,
-        levels: 2,
-      );
-      final mahadashas = tree.where((p) => p.lords.length == 1).toList();
-      for (final maha in mahadashas) {
-        final subs = tree
-            .where((p) => p.lords.length == 2 && p.lords[0] == maha.lords[0])
-            .toList();
-        expect(subs.length, 9);
-        final subTotal =
-            subs.fold<double>(0.0, (s, p) => s + p.durationDays);
-        expect(subTotal, closeTo(maha.durationDays, 1e-6),
-            reason: '${maha.lords[0].name} sub-periods should sum to mahadasha');
-      }
-    });
+    test(
+      'antardasha durations within each mahadasha sum to that mahadasha',
+      () {
+        const moonLon = 0.0;
+        const birthJd = _j2000;
+        final tree = Vimshottari.fullTree(
+          moonSiderealLon: moonLon,
+          birthJd: birthJd,
+          levels: 2,
+        );
+        final mahadashas = tree.where((p) => p.lords.length == 1).toList();
+        for (final maha in mahadashas) {
+          final subs = tree
+              .where((p) => p.lords.length == 2 && p.lords[0] == maha.lords[0])
+              .toList();
+          expect(subs.length, 9);
+          final subTotal = subs.fold<double>(0.0, (s, p) => s + p.durationDays);
+          expect(
+            subTotal,
+            closeTo(maha.durationDays, 1e-6),
+            reason: '${maha.lords[0].name} sub-periods should sum to mahadasha',
+          );
+        }
+      },
+    );
 
     test('mahadashas cover the full 9-lord cycle starting from seed lord', () {
       // Moon at 0° → firstIndex=0 (Ketu). Mahadasha sequence should be:

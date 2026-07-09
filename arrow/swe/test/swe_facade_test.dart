@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Ninth House Studios LLC
+
 import 'dart:convert';
 
 import 'package:arrow_options/arrow_options.dart';
@@ -183,10 +186,11 @@ void main() {
       expect(restored.jdUt, closeTo(snap.jdUt, 1e-9));
       expect(restored.ayanamsaValue, closeTo(snap.ayanamsaValue, 1e-9));
       expect(restored.cusps.length, 12);
-      expect(restored.bodiesEcliptic[Body.sun]!.longitude,
-          closeTo(45.0, 1e-9));
-      expect(restored.bodiesEquatorial[Body.moon]!.latitude,
-          closeTo(0.5, 1e-9));
+      expect(restored.bodiesEcliptic[Body.sun]!.longitude, closeTo(45.0, 1e-9));
+      expect(
+        restored.bodiesEquatorial[Body.moon]!.latitude,
+        closeTo(0.5, 1e-9),
+      );
       expect(restored.sunTimes.sunrise, closeTo(2451545.25, 1e-9));
     });
   });
@@ -195,13 +199,13 @@ void main() {
 
   group('Ketu from Rahu', () {
     BodyPosition ketuFrom(BodyPosition rahu) => BodyPosition(
-          longitude: (rahu.longitude + 180.0) % 360.0,
-          latitude: -rahu.latitude,
-          distance: rahu.distance,
-          speedLongitude: rahu.speedLongitude,
-          speedLatitude: -rahu.speedLatitude,
-          speedDistance: rahu.speedDistance,
-        );
+      longitude: (rahu.longitude + 180.0) % 360.0,
+      latitude: -rahu.latitude,
+      distance: rahu.distance,
+      speedLongitude: rahu.speedLongitude,
+      speedLatitude: -rahu.speedLatitude,
+      speedDistance: rahu.speedDistance,
+    );
 
     test('Rahu at 45° → Ketu at 225°', () {
       final rahu = BodyPosition(

@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Ninth House Studios LLC
+
 import 'package:arrow_options/arrow_options.dart';
 
 /// First and last boundary stars for each of the 13 ecliptic constellations.
@@ -12,7 +15,10 @@ const constellationStarMap = <ConstellationId, ({Star first, Star last})>{
   ConstellationId.cancer: (first: Star.chiCancri, last: Star.acubens),
   ConstellationId.leo: (first: Star.kappaLeonis, last: Star.denebola),
   ConstellationId.virgo: (first: Star.nuVirginis, last: Star.muVirginis),
-  ConstellationId.libra: (first: Star.zubenelgenubi, last: Star.fortyEightLibrae),
+  ConstellationId.libra: (
+    first: Star.zubenelgenubi,
+    last: Star.fortyEightLibrae,
+  ),
   ConstellationId.scorpio: (first: Star.dschubba, last: Star.tauScorpii),
   ConstellationId.ophiuchus: (first: Star.sabik, last: Star.fortyFiveOphiuchi),
   ConstellationId.sagittarius: (first: Star.nash, last: Star.omegaSagittarii),

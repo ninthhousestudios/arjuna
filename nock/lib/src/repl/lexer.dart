@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Ninth House Studios LLC
+
 import 'error.dart';
 
 enum TokenType {
@@ -43,7 +46,10 @@ class Lexer {
 
       if (c == '"') {
         tokens.add(_string());
-      } else if (_isDigit(c) || (c == '-' && _pos + 1 < source.length && _isDigit(source[_pos + 1]))) {
+      } else if (_isDigit(c) ||
+          (c == '-' &&
+              _pos + 1 < source.length &&
+              _isDigit(source[_pos + 1]))) {
         tokens.add(_number());
       } else if (_isIdentStart(c)) {
         tokens.add(_ident());
@@ -74,7 +80,8 @@ class Lexer {
   }
 
   void _skipWhitespace() {
-    while (_pos < source.length && (source[_pos] == ' ' || source[_pos] == '\t')) {
+    while (_pos < source.length &&
+        (source[_pos] == ' ' || source[_pos] == '\t')) {
       _pos++;
     }
   }

@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Ninth House Studios LLC
+
 import 'dart:math' as math;
 
 import 'package:arrow_core/arrow_core.dart';
@@ -56,10 +59,15 @@ class Shadbala {
 
   /// Sthana Bala = sum of five positional sub-balas.
   double get sthanaBala =>
-      uccaBala + saptavargajaBala + samaVisamaBala + kendradiBala + drekkanaBala;
+      uccaBala +
+      saptavargajaBala +
+      samaVisamaBala +
+      kendradiBala +
+      drekkanaBala;
 
   /// Total in virupas.
-  double get totalVirupas => sthanaBala + digBala + ayanaBala + cheshtaBala + drigBala;
+  double get totalVirupas =>
+      sthanaBala + digBala + ayanaBala + cheshtaBala + drigBala;
 
   /// Total in rupas (virupas / 60).
   double get totalRupas => totalVirupas / 60.0;
@@ -114,10 +122,12 @@ class ShadbalaCalc {
 
   // Mercury: range 150–165° = 60, range 330–345° = 0, otherwise proportional.
   static double _mercuryUccaBala(double lon) {
-    if (lon >= ShadbalaCon.mercuryExaltStart && lon <= ShadbalaCon.mercuryExaltEnd) {
+    if (lon >= ShadbalaCon.mercuryExaltStart &&
+        lon <= ShadbalaCon.mercuryExaltEnd) {
       return 60.0;
     }
-    if (lon >= ShadbalaCon.mercuryDebilStart && lon <= ShadbalaCon.mercuryDebilEnd) {
+    if (lon >= ShadbalaCon.mercuryDebilStart &&
+        lon <= ShadbalaCon.mercuryDebilEnd) {
       return 0.0;
     }
     return virupasBetween(lon, ShadbalaCon.mercuryExaltEnd);
@@ -138,7 +148,10 @@ class ShadbalaCalc {
     Body body,
     List<({int sign, DignityType dignity})> sevenVargas,
   ) {
-    assert(sevenVargas.length == 7, 'saptavargajaBala requires exactly 7 vargas');
+    assert(
+      sevenVargas.length == 7,
+      'saptavargajaBala requires exactly 7 vargas',
+    );
     var total = 0.0;
     for (final varga in sevenVargas) {
       total += _saptavargajaPoints(body, varga.sign, varga.dignity);
@@ -159,8 +172,8 @@ class ShadbalaCalc {
       final level = isNatFriend
           ? FriendshipLevel.friend
           : isNatEnemy
-              ? FriendshipLevel.enemy
-              : FriendshipLevel.neutral;
+          ? FriendshipLevel.enemy
+          : FriendshipLevel.neutral;
       return ShadbalaCon.compoundFriendshipPoints[level] ?? 10.0;
     }
     return ShadbalaCon.saptavargajaPoints[dignity] ?? 10.0;
@@ -203,7 +216,7 @@ class ShadbalaCalc {
     return switch (h) {
       1 || 4 || 7 || 10 => 60.0, // kendra
       2 || 5 || 8 || 11 => 30.0, // panaphara
-      _ => 15.0,                  // apoklima (3, 6, 9, 12)
+      _ => 15.0, // apoklima (3, 6, 9, 12)
     };
   }
 
@@ -219,7 +232,11 @@ class ShadbalaCalc {
     final gender = _planetGender[body];
     if (gender == null) return 0.0;
     final decan = (inSignLon / 10.0).floor().clamp(0, 2);
-    final decanGender = const [_Gender.male, _Gender.neutral, _Gender.female][decan];
+    final decanGender = const [
+      _Gender.male,
+      _Gender.neutral,
+      _Gender.female,
+    ][decan];
     return gender == decanGender ? 15.0 : 0.0;
   }
 
@@ -348,7 +365,11 @@ class ShadbalaCalc {
       final strength = Aspect.strength(aspector, aspectorLon, bodyLon);
       if (strength == 0.0) continue;
 
-      final nature = Nature.of(aspector, sunLongitude: sunLon, moonLongitude: moonLon);
+      final nature = Nature.of(
+        aspector,
+        sunLongitude: sunLon,
+        moonLongitude: moonLon,
+      );
 
       switch (aspector) {
         case Body.jupiter:

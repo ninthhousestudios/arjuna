@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Ninth House Studios LLC
+
 import 'karaka.dart';
 
 /// Jaimini chara karaka role names (descending in-sign longitude order).
@@ -23,11 +26,12 @@ class CharaKaraka {
   ///
   /// [count] is 7 (default) or 8 (includes Rahu as potential 8th karaka).
   /// Returns a map from role to the karaka assigned that role.
-  static Map<CharaKarakaRole, Karaka> assign(List<Karaka> karakas,
-      {int count = 7}) {
+  static Map<CharaKarakaRole, Karaka> assign(
+    List<Karaka> karakas, {
+    int count = 7,
+  }) {
     final sorted = [...karakas]
-      ..sort(
-          (a, b) => b.inSignLongitude.compareTo(a.inSignLongitude));
+      ..sort((a, b) => b.inSignLongitude.compareTo(a.inSignLongitude));
 
     final roles = CharaKarakaRole.values;
     return {

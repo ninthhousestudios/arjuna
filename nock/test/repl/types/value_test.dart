@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Ninth House Studios LLC
+
 import 'package:nock/src/repl/error.dart';
 import 'package:nock/src/repl/types/value.dart';
 import 'package:test/test.dart';
@@ -30,10 +33,7 @@ void main() {
     });
 
     test('access throws', () {
-      expect(
-        () => NockNumber(1.0).access('foo'),
-        throwsA(isA<NockError>()),
-      );
+      expect(() => NockNumber(1.0).access('foo'), throwsA(isA<NockError>()));
     });
   });
 
@@ -49,7 +49,11 @@ void main() {
 
   group('NockList', () {
     test('display joins items with newlines', () {
-      final list = NockList([NockString('a'), NockString('b'), NockString('c')]);
+      final list = NockList([
+        NockString('a'),
+        NockString('b'),
+        NockString('c'),
+      ]);
       expect(list.display(), 'a\nb\nc');
     });
 

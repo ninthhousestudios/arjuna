@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Ninth House Studios LLC
+
 import 'package:arrow_core/arrow_core.dart';
 
 import '../../format/cusp.dart';
@@ -15,12 +18,12 @@ class NockCusp extends NockValue {
 
   @override
   NockValue access(String field) => switch (field) {
-        'longitude' => NockNumber(cusp.longitude.eclipticLongitude),
-        'sign' => NockSign(cusp.sign, cusp.longitude),
-        'nakshatra' => NockNakshatra(cusp.nakshatra, cusp.pada),
-        'house' => NockNumber(cusp.house.toDouble()),
-        _ => throw NockError('cusp has no property "$field"'),
-      };
+    'longitude' => NockNumber(cusp.longitude.eclipticLongitude),
+    'sign' => NockSign(cusp.sign, cusp.longitude),
+    'nakshatra' => NockNakshatra(cusp.nakshatra, cusp.pada),
+    'house' => NockNumber(cusp.house.toDouble()),
+    _ => throw NockError('cusp has no property "$field"'),
+  };
 
   @override
   String typeName() => 'cusp';

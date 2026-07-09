@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Ninth House Studios LLC
+
 @Tags(['integration'])
 library;
 
@@ -10,8 +13,9 @@ import 'helpers/find_ephe_path.dart';
 
 void main() {
   final ephePath = findEphePath();
-  final skipReason =
-      ephePath == null ? 'no ephe path found; set ARROW_EPHE_PATH' : null;
+  final skipReason = ephePath == null
+      ? 'no ephe path found; set ARROW_EPHE_PATH'
+      : null;
 
   group('SweFacade fixed stars', skip: skipReason, () {
     const jdUt = 2451545.0; // J2000
@@ -50,18 +54,19 @@ void main() {
     });
 
     test('multiple stars are all populated', () {
-      final sweConfig = SweConfig(stars: {
-        Star.aldebaran,
-        Star.spica,
-        Star.regulus,
-      });
+      final sweConfig = SweConfig(
+        stars: {Star.aldebaran, Star.spica, Star.regulus},
+      );
       final snap = facade.calcAll(jdUt, _testLocation, sweConfig);
 
       expect(snap.stars, hasLength(3));
 
       for (final s in [Star.aldebaran, Star.spica, Star.regulus]) {
-        expect(snap.stars.containsKey(s), isTrue,
-            reason: '${s.label} missing from stars');
+        expect(
+          snap.stars.containsKey(s),
+          isTrue,
+          reason: '${s.label} missing from stars',
+        );
       }
     });
 
@@ -83,10 +88,7 @@ void main() {
     });
 
     test('star positions unaffected by empty body set', () {
-      final sweConfig = SweConfig(
-        bodies: {},
-        stars: {Star.sirius},
-      );
+      final sweConfig = SweConfig(bodies: {}, stars: {Star.sirius});
       final snap = facade.calcAll(jdUt, _testLocation, sweConfig);
       expect(snap.bodiesEcliptic, isEmpty);
       expect(snap.stars, hasLength(1));
@@ -110,20 +112,14 @@ void main() {
     });
 
     test('exact custom name resolves', () {
-      final sweConfig = SweConfig(
-        bodies: {},
-        customStarNames: {'Sirius'},
-      );
+      final sweConfig = SweConfig(bodies: {}, customStarNames: {'Sirius'});
       final snap = facade.calcAll(jdUt, _testLocation, sweConfig);
       expect(snap.customStars, contains('Sirius'));
       expect(snap.customStars['Sirius']!.equatorial, isNotNull);
     });
 
     test('wildcard fallback resolves partial name', () {
-      final sweConfig = SweConfig(
-        bodies: {},
-        customStarNames: {',alfCMa'},
-      );
+      final sweConfig = SweConfig(bodies: {}, customStarNames: {',alfCMa'});
       final snap = facade.calcAll(jdUt, _testLocation, sweConfig);
       expect(snap.customStars, contains(',alfCMa'));
     });
@@ -160,9 +156,7 @@ void main() {
     });
 
     test('includeStarData=false produces null starData', () {
-      final sweConfig = SweConfig(
-        stars: {Star.aldebaran},
-      );
+      final sweConfig = SweConfig(stars: {Star.aldebaran});
       final snap = facade.calcAll(jdUt, _testLocation, sweConfig);
       expect(snap.stars, contains(Star.aldebaran));
       expect(snap.stars[Star.aldebaran]!.starData, isNull);
@@ -173,8 +167,12 @@ void main() {
         bodies: {},
         stars: {Star.aldebaran, Star.sirius},
       );
-      final snap = facade.calcAll(jdUt, _testLocation, sweConfig,
-          includeStarData: true);
+      final snap = facade.calcAll(
+        jdUt,
+        _testLocation,
+        sweConfig,
+        includeStarData: true,
+      );
 
       expect(snap.stars, hasLength(2));
 
@@ -194,15 +192,19 @@ void main() {
     });
 
     test('custom star data populated when includeStarData is true', () {
-      final sweConfig = SweConfig(
-        bodies: {},
-        customStarNames: {'Sirius'},
+      final sweConfig = SweConfig(bodies: {}, customStarNames: {'Sirius'});
+      final snap = facade.calcAll(
+        jdUt,
+        _testLocation,
+        sweConfig,
+        includeStarData: true,
       );
-      final snap = facade.calcAll(jdUt, _testLocation, sweConfig,
-          includeStarData: true);
       expect(snap.customStars, contains('Sirius'));
       expect(snap.customStars['Sirius']!.starData, isNotNull);
-      expect(snap.customStars['Sirius']!.starData!.apparentMagnitude, isNotNull);
+      expect(
+        snap.customStars['Sirius']!.starData!.apparentMagnitude,
+        isNotNull,
+      );
     });
   });
 }

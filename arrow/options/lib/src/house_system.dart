@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Ninth House Studios LLC
+
 /// House systems supported by Swiss Ephemeris.
 enum HouseSystem {
   placidus(sweChar: 'P', label: 'Placidus'),

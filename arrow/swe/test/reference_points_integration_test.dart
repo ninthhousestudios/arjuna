@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Ninth House Studios LLC
+
 @Tags(['integration'])
 library;
 
@@ -14,8 +17,7 @@ void main() {
       ? 'no ephe path found; set ARROW_EPHE_PATH'
       : null;
 
-  group('reference points — integration',
-      skip: skipReason, () {
+  group('reference points — integration', skip: skipReason, () {
     // JD 2026-04-14 12:00 UTC per docs/reference-points.md §Verified numbers.
     const jdUt = 2461145.0;
     const location = Location(latitude: 0.0, longitude: 0.0, altitude: 0.0);
@@ -65,11 +67,13 @@ void main() {
 
       expect(
         () => facade.calcAll(jdUt, location, sweConfig),
-        throwsA(isA<ArgumentError>().having(
-          (e) => e.message.toString().toLowerCase(),
-          'message',
-          allOf(contains('barycentric'), contains('moshier')),
-        )),
+        throwsA(
+          isA<ArgumentError>().having(
+            (e) => e.message.toString().toLowerCase(),
+            'message',
+            allOf(contains('barycentric'), contains('moshier')),
+          ),
+        ),
       );
     });
 
@@ -123,10 +127,7 @@ void main() {
       const sweConfig = SweConfig(
         bodies: {Body.rahu, Body.ketu},
         ephemerisSource: EphemerisSource.swissEph,
-        extraFrames: {
-          ReferencePoint.barycentric,
-          ReferencePoint.heliocentric,
-        },
+        extraFrames: {ReferencePoint.barycentric, ReferencePoint.heliocentric},
       );
 
       final snap = facade.calcAll(jdUt, location, sweConfig);

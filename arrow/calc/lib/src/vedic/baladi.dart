@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Ninth House Studios LLC
+
 import 'dart:math' as math;
 
 /// Baladi Avastha — age/strength of a planet based on its position in its

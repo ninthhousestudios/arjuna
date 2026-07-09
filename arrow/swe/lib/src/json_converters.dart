@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Ninth House Studios LLC
+
 import 'package:arrow_options/arrow_options.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -49,17 +52,14 @@ class StarPositionMapConverter
 }
 
 class StringStarPositionMapConverter
-    implements
-        JsonConverter<Map<String, StarPosition>, Map<String, dynamic>> {
+    implements JsonConverter<Map<String, StarPosition>, Map<String, dynamic>> {
   const StringStarPositionMapConverter();
 
   @override
   Map<String, StarPosition> fromJson(Map<String, dynamic> json) {
     return json.map(
-      (key, value) => MapEntry(
-        key,
-        StarPosition.fromJson(value as Map<String, dynamic>),
-      ),
+      (key, value) =>
+          MapEntry(key, StarPosition.fromJson(value as Map<String, dynamic>)),
     );
   }
 
@@ -117,8 +117,7 @@ class StarDoubleMapConverter
       (key, value) => MapEntry(
         Star.values.firstWhere(
           (s) => s.name == key,
-          orElse: () =>
-              throw FormatException('Unknown Star enum value: $key'),
+          orElse: () => throw FormatException('Unknown Star enum value: $key'),
         ),
         (value as num).toDouble(),
       ),
@@ -137,8 +136,7 @@ class StringDoubleMapConverter
 
   @override
   Map<String, double> fromJson(Map<String, dynamic> json) {
-    return json.map(
-        (key, value) => MapEntry(key, (value as num).toDouble()));
+    return json.map((key, value) => MapEntry(key, (value as num).toDouble()));
   }
 
   @override

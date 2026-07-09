@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Ninth House Studios LLC
+
 import 'package:arrow_core/arrow_core.dart';
 import 'package:arrow_options/arrow_options.dart';
 
@@ -27,8 +30,15 @@ enum DeeptadiState {
   khala;
 
   static const _names = [
-    'Deepta', 'Swastha', 'Mudita', 'Shanta', 'Shakta',
-    'Peedita', 'Deena', 'Vikala', 'Khala',
+    'Deepta',
+    'Swastha',
+    'Mudita',
+    'Shanta',
+    'Shakta',
+    'Peedita',
+    'Deena',
+    'Vikala',
+    'Khala',
   ];
 
   String get libadityaName => _names[index];
@@ -61,8 +71,7 @@ class Deeptadi {
     // 2. Swastha — own sign
     if (dignity == DignityType.ownSign) return DeeptadiState.swastha;
     // 3. Mudita — friend's sign (F or GF)
-    if (dignity == DignityType.friend ||
-        dignity == DignityType.greatFriend) {
+    if (dignity == DignityType.friend || dignity == DignityType.greatFriend) {
       return DeeptadiState.mudita;
     }
     // 4. Shanta — navamsa sign is benefic.
@@ -92,13 +101,16 @@ class Deeptadi {
     // 7. Deena — debilitated
     if (dignity == DignityType.debilitated) return DeeptadiState.deena;
     // 8. Vikala — combust (skip Sun, Rahu, Ketu — handled by Dignity.isCombust)
-    if (Dignity.isCombust(body, eclipticLongitude, sunLongitude,
-        isRetrograde: isRetrograde)) {
+    if (Dignity.isCombust(
+      body,
+      eclipticLongitude,
+      sunLongitude,
+      isRetrograde: isRetrograde,
+    )) {
       return DeeptadiState.vikala;
     }
     // 9. Khala — enemy's sign (E or GE)
-    if (dignity == DignityType.enemy ||
-        dignity == DignityType.greatEnemy) {
+    if (dignity == DignityType.enemy || dignity == DignityType.greatEnemy) {
       return DeeptadiState.khala;
     }
     // Fallback — libaditya returns Shanta.

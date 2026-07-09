@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Ninth House Studios LLC
+
 import 'package:arrow_options/arrow_options.dart';
 import 'package:arrow_swe/arrow_swe.dart';
 
@@ -24,19 +27,11 @@ abstract class SkyObject {
   /// [CalcConfig.nakEquatorial].
   double get nakLongitude => 0.0;
 
-  Longitude get longitude => Longitude(
-        rawLongitude,
-        vargaType,
-        config,
-        nakLongitude: nakLongitude,
-      );
+  Longitude get longitude =>
+      Longitude(rawLongitude, vargaType, config, nakLongitude: nakLongitude);
 
-  Longitude varga(VargaType type) => Longitude(
-        rawLongitude,
-        type,
-        config,
-        nakLongitude: nakLongitude,
-      );
+  Longitude varga(VargaType type) =>
+      Longitude(rawLongitude, type, config, nakLongitude: nakLongitude);
 
   int get sign => longitude.sign;
   int get nakshatra => longitude.nakshatra;
@@ -67,7 +62,7 @@ abstract class SkyObject {
   Being get trimsamsaBeing => BeingData.forSign(sign, beingType);
 
   Being get horaBeing => BeingData.forSign(
-        sign,
-        hora == Hora.sun ? BeingType.aditya : BeingType.naga,
-      );
+    sign,
+    hora == Hora.sun ? BeingType.aditya : BeingType.naga,
+  );
 }

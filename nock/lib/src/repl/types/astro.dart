@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Ninth House Studios LLC
+
 import 'package:arrow_core/arrow_core.dart';
 import 'package:arrow_options/arrow_options.dart';
 
@@ -45,16 +48,16 @@ class NockDignity extends NockValue {
 
   @override
   String display() => switch (type) {
-        DignityType.exalted => 'Exalted',
-        DignityType.moolatrikona => 'Moolatrikona',
-        DignityType.ownSign => 'Own Sign',
-        DignityType.greatFriend => 'Great Friend',
-        DignityType.friend => 'Friend',
-        DignityType.neutral => 'Neutral',
-        DignityType.enemy => 'Enemy',
-        DignityType.greatEnemy => 'Great Enemy',
-        DignityType.debilitated => 'Debilitated',
-      };
+    DignityType.exalted => 'Exalted',
+    DignityType.moolatrikona => 'Moolatrikona',
+    DignityType.ownSign => 'Own Sign',
+    DignityType.greatFriend => 'Great Friend',
+    DignityType.friend => 'Friend',
+    DignityType.neutral => 'Neutral',
+    DignityType.enemy => 'Enemy',
+    DignityType.greatEnemy => 'Great Enemy',
+    DignityType.debilitated => 'Debilitated',
+  };
 
   @override
   String typeName() => 'dignity';

@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Ninth House Studios LLC
+
 /// Core data model for astrological chart data.
 ///
 /// Copied from charts_dart — the common denominator across chart file formats.
@@ -22,9 +25,9 @@ class ChartData {
   });
 
   /// UTC datetime.
-  DateTime get utcDateTime => dateTime.subtract(Duration(
-        minutes: ((utcOffsetHours + dstOffsetHours) * 60).round(),
-      ));
+  DateTime get utcDateTime => dateTime.subtract(
+    Duration(minutes: ((utcOffsetHours + dstOffsetHours) * 60).round()),
+  );
 
   /// Decimal hours of the local time (e.g. 14:30 -> 14.5).
   double get decimalHours =>

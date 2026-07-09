@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Ninth House Studios LLC
+
 import 'package:arrow_calc/arrow_calc.dart';
 import 'package:arrow_options/arrow_options.dart';
 import 'package:test/test.dart';
@@ -27,8 +30,7 @@ void main() {
     });
 
     test('constellation lengths sum to 360°', () {
-      final sum =
-          ecliptic.constellations.fold(0.0, (s, c) => s + c.length);
+      final sum = ecliptic.constellations.fold(0.0, (s, c) => s + c.length);
       expect(sum, closeTo(360.0, 0.01));
     });
 
@@ -43,8 +45,11 @@ void main() {
         // A point in the middle of each constellation should resolve to it.
         final mid = (c.beginning + c.length / 2) % 360;
         final found = ecliptic.constellationAt(mid);
-        expect(found.id, c.id,
-            reason: '${mid.toStringAsFixed(1)}° should be in ${c.id.label}');
+        expect(
+          found.id,
+          c.id,
+          reason: '${mid.toStringAsFixed(1)}° should be in ${c.id.label}',
+        );
       }
     });
 

@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Ninth House Studios LLC
+
 import 'package:arrow_core/arrow_core.dart';
 import 'package:arrow_options/arrow_options.dart';
 
@@ -17,17 +20,28 @@ String formatChart(Chart chart, {String? label}) {
   // Header
   buf.writeln(topBorder(_chartWidth));
   final headerLabel = label != null ? '  $label' : '';
-  buf.writeln(row('Chart @ JD ${chart.snapshot.jdUt.toStringAsFixed(4)}$headerLabel', _chartWidth));
+  buf.writeln(
+    row(
+      'Chart @ JD ${chart.snapshot.jdUt.toStringAsFixed(4)}$headerLabel',
+      _chartWidth,
+    ),
+  );
   buf.writeln(midBorder(_chartWidth));
 
   // Ascendant / MC
-  final ascLon = Longitude(chart.ascendant, chart.ascendant,
-      VargaType.rashi, chart.config);
-  final mcLon = Longitude(chart.mc, chart.mc,
-      VargaType.rashi, chart.config);
-  buf.writeln(row(
+  final ascLon = Longitude(
+    chart.ascendant,
+    chart.ascendant,
+    VargaType.rashi,
+    chart.config,
+  );
+  final mcLon = Longitude(chart.mc, chart.mc, VargaType.rashi, chart.config);
+  buf.writeln(
+    row(
       'Asc ${formatLongitude(ascLon)}  MC ${formatLongitude(mcLon)}',
-      _chartWidth));
+      _chartWidth,
+    ),
+  );
   buf.writeln(midBorder(_chartWidth));
 
   // Planet table header

@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Ninth House Studios LLC
+
 /// Planetary dignity levels (combined natural + compound).
 enum DignityType {
   exalted,
@@ -12,17 +15,7 @@ enum DignityType {
 }
 
 /// Types of planetary friendship.
-enum FriendshipType {
-  natural,
-  temporal,
-  compound,
-}
+enum FriendshipType { natural, temporal, compound }
 
 /// Compound friendship levels (natural + temporal combined).
-enum FriendshipLevel {
-  greatFriend,
-  friend,
-  neutral,
-  enemy,
-  greatEnemy,
-}
+enum FriendshipLevel { greatFriend, friend, neutral, enemy, greatEnemy }

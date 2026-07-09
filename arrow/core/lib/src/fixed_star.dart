@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Ninth House Studios LLC
+
 import 'package:arrow_options/arrow_options.dart';
 import 'package:arrow_swe/arrow_swe.dart';
 
@@ -52,9 +55,9 @@ class FixedStar extends SkyObject {
     required this.starData,
     required this.config,
     required double nakLongitude,
-  })  : _eclipticPos = eclipticPos,
-        _equatorialPos = equatorialPos,
-        _nakLongitude = nakLongitude;
+  }) : _eclipticPos = eclipticPos,
+       _equatorialPos = equatorialPos,
+       _nakLongitude = nakLongitude;
 
   /// Construct from a [Star] enum entry and snapshot data.
   factory FixedStar.fromEnum(
@@ -99,6 +102,5 @@ class FixedStar extends SkyObject {
   }
 
   @override
-  String toString() =>
-      'FixedStar($name, ${rawLongitude.toStringAsFixed(2)}°)';
+  String toString() => 'FixedStar($name, ${rawLongitude.toStringAsFixed(2)}°)';
 }

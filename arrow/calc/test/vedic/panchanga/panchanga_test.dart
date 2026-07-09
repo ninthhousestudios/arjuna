@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Ninth House Studios LLC
+
 import 'package:arrow_calc/arrow_calc.dart';
 import 'package:test/test.dart';
 
@@ -7,30 +10,22 @@ import 'package:test/test.dart';
 // With a linear model Newton is exact in one step, so bisection
 // refines to floating-point precision.
 
-({
-  double sun,
-  double moon,
-  double sunSpeed,
-  double moonSpeed,
-}) _linearEcliptic(double jd) => (
-      sun: (jd * 1.0) % 360,
-      moon: (jd * 13.2) % 360,
-      sunSpeed: 1.0,
-      moonSpeed: 13.2,
-    );
+({double sun, double moon, double sunSpeed, double moonSpeed}) _linearEcliptic(
+  double jd,
+) => (
+  sun: (jd * 1.0) % 360,
+  moon: (jd * 13.2) % 360,
+  sunSpeed: 1.0,
+  moonSpeed: 13.2,
+);
 
 // Sidereal — same values (pretend zero ayanamsa).
-({
-  double sun,
-  double moon,
-  double sunSpeed,
-  double moonSpeed,
-}) _linearSidereal(double jd) => _linearEcliptic(jd);
+({double sun, double moon, double sunSpeed, double moonSpeed}) _linearSidereal(
+  double jd,
+) => _linearEcliptic(jd);
 
-({double longitude, double speed}) _linearMoonSidereal(double jd) => (
-      longitude: (jd * 13.2) % 360,
-      speed: 13.2,
-    );
+({double longitude, double speed}) _linearMoonSidereal(double jd) =>
+    (longitude: (jd * 13.2) % 360, speed: 13.2);
 
 void main() {
   group('Tithi', () {
@@ -269,10 +264,7 @@ void main() {
 
     test('elapsed + remaining = yogaSpan', () {
       final y = calcYoga(100.0, 200.0);
-      expect(
-        y.degreesElapsed + y.degreesRemaining,
-        closeTo(yogaSpan, 1e-10),
-      );
+      expect(y.degreesElapsed + y.degreesRemaining, closeTo(yogaSpan, 1e-10));
     });
 
     test('wraps at 360', () {

@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Ninth House Studios LLC
+
 import 'package:arrow_options/arrow_options.dart';
 
 import 'varga_deities.dart';
@@ -70,8 +73,7 @@ class Longitude {
   /// Nakshatra (1-27).
   ///
   /// Uses nakshatra-specific ayanamsa and optionally equatorial longitude.
-  int get nakshatra =>
-      ((_nakshatraLon() % 360) / (360 / 27)).floor() + 1;
+  int get nakshatra => ((_nakshatraLon() % 360) / (360 / 27)).floor() + 1;
 
   /// Pada (1-4) within nakshatra.
   int get pada {
@@ -115,13 +117,15 @@ class Longitude {
       VargaType.chaturthamsha => chaturthamsha(lon, offset),
       VargaType.saptamsha => saptamsha(lon, offset),
       VargaType.dashamsha => dashamsha(lon, offset),
-      VargaType.dashamshaReversed =>
-        dashamsha(lon, offset, evenReversed: true),
+      VargaType.dashamshaReversed => dashamsha(lon, offset, evenReversed: true),
       VargaType.dvadashamsha => dvadashamsha(lon, offset),
       VargaType.shodashamsha => shodashamsha(lon, offset),
       VargaType.vimshamsha => vimshamsha(lon, offset),
-      VargaType.parasharaChaturvimshamsha =>
-        siddhamsha(lon, offset, parashara: true),
+      VargaType.parasharaChaturvimshamsha => siddhamsha(
+        lon,
+        offset,
+        parashara: true,
+      ),
       VargaType.siddhamsha => siddhamsha(lon, offset),
       VargaType.trimsamsha => trimsamsha(lon, offset),
       VargaType.bhamsha => bhamsha(lon, offset),

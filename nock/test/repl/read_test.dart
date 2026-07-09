@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Ninth House Studios LLC
+
 import 'dart:io';
 
 import 'package:nock/src/repl/error.dart';
@@ -113,8 +116,13 @@ void main() {
     test('missing file throws', () async {
       expect(
         () => _runExpr(eval, 'read("nonexistent.chtk")'),
-        throwsA(isA<NockError>().having(
-            (e) => e.message, 'message', contains('file not found'))),
+        throwsA(
+          isA<NockError>().having(
+            (e) => e.message,
+            'message',
+            contains('file not found'),
+          ),
+        ),
       );
     });
 
@@ -126,24 +134,39 @@ void main() {
       addTearDown(() => File(tmpPath).deleteSync());
       expect(
         () => _runExpr(eval, 'read("$tmpPath")'),
-        throwsA(isA<NockError>().having(
-            (e) => e.message, 'message', contains('unsupported format'))),
+        throwsA(
+          isA<NockError>().having(
+            (e) => e.message,
+            'message',
+            contains('unsupported format'),
+          ),
+        ),
       );
     });
 
     test('wrong arg count throws', () async {
       expect(
         () => _runExpr(eval, 'read()'),
-        throwsA(isA<NockError>().having(
-            (e) => e.message, 'message', contains('1 argument'))),
+        throwsA(
+          isA<NockError>().having(
+            (e) => e.message,
+            'message',
+            contains('1 argument'),
+          ),
+        ),
       );
     });
 
     test('wrong arg type throws', () async {
       expect(
         () => _runExpr(eval, 'read(42)'),
-        throwsA(isA<NockError>().having(
-            (e) => e.message, 'message', contains('expected string'))),
+        throwsA(
+          isA<NockError>().having(
+            (e) => e.message,
+            'message',
+            contains('expected string'),
+          ),
+        ),
       );
     });
   });

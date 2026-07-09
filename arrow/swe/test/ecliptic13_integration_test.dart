@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Ninth House Studios LLC
+
 @Tags(['integration'])
 library;
 
@@ -11,8 +14,9 @@ import 'helpers/find_ephe_path.dart';
 
 void main() {
   final ephePath = findEphePath();
-  final skipReason =
-      ephePath == null ? 'no ephe path found; set ARROW_EPHE_PATH' : null;
+  final skipReason = ephePath == null
+      ? 'no ephe path found; set ARROW_EPHE_PATH'
+      : null;
 
   group('Ecliptic13 with real star positions', skip: skipReason, () {
     const jdUt = 2451545.0; // J2000
@@ -33,10 +37,7 @@ void main() {
         Star.antares,
         Star.regulus,
       };
-      final sweConfig = SweConfig(
-        bodies: {},
-        stars: testStars,
-      );
+      final sweConfig = SweConfig(bodies: {}, stars: testStars);
       snap = facade.calcAll(jdUt, loc, sweConfig);
 
       ecliptic = buildEcliptic13(snap);
@@ -75,16 +76,16 @@ void main() {
 
     test('all constellations have positive length', () {
       for (final c in ecliptic.constellations) {
-        expect(c.length, greaterThan(0),
-            reason: '${c.id.label} has non-positive length');
+        expect(
+          c.length,
+          greaterThan(0),
+          reason: '${c.id.label} has non-positive length',
+        );
       }
     });
 
     test('Sun on 2000-01-01 placed in Sagittarius (true sidereal)', () {
-      final sunSweConfig = SweConfig(
-        bodies: {Body.sun},
-        stars: boundaryStars,
-      );
+      final sunSweConfig = SweConfig(bodies: {Body.sun}, stars: boundaryStars);
       final sunSnap = facade.calcAll(jdUt, loc, sunSweConfig);
 
       final sunLon = sunSnap.bodiesEcliptic[Body.sun]!.longitude;

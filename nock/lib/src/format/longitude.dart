@@ -1,13 +1,23 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Ninth House Studios LLC
+
 import 'package:arrow_core/arrow_core.dart';
 
-const signGlyphs = [
-  '♈', '♉', '♊', '♋', '♌', '♍',
-  '♎', '♏', '♐', '♑', '♒', '♓',
-];
+const signGlyphs = ['♈', '♉', '♊', '♋', '♌', '♍', '♎', '♏', '♐', '♑', '♒', '♓'];
 
 const signAbbreviations = [
-  'Ari', 'Tau', 'Gem', 'Can', 'Leo', 'Vir',
-  'Lib', 'Sco', 'Sag', 'Cap', 'Aqu', 'Pis',
+  'Ari',
+  'Tau',
+  'Gem',
+  'Can',
+  'Leo',
+  'Vir',
+  'Lib',
+  'Sco',
+  'Sag',
+  'Cap',
+  'Aqu',
+  'Pis',
 ];
 
 /// Format a [Longitude] as "DD°MM' ♊" (degrees, arcminutes, sign glyph).

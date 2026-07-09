@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Ninth House Studios LLC
+
 import 'package:arrow_options/arrow_options.dart';
 
 import 'dignity.dart';
@@ -9,9 +12,13 @@ import 'sign_data.dart';
 class Karaka extends Planet {
   final double? _sunLongitude;
 
-  Karaka(super.body, super.snapshot, super.config, super.vargaType,
-      {double? sunLongitude})
-      : _sunLongitude = sunLongitude;
+  Karaka(
+    super.body,
+    super.snapshot,
+    super.config,
+    super.vargaType, {
+    double? sunLongitude,
+  }) : _sunLongitude = sunLongitude;
 
   double get inSignLongitude => longitude.inSignLongitude;
 
@@ -21,16 +28,23 @@ class Karaka extends Planet {
     if (lordPos == null) {
       return Dignity.calculate(body, sign, longitude.inSignLongitude, sign);
     }
-    final lordLon =
-        Longitude(lordPos.longitude, VargaType.rashi, config);
+    final lordLon = Longitude(lordPos.longitude, VargaType.rashi, config);
     return Dignity.calculate(
-        body, sign, longitude.inSignLongitude, lordLon.sign);
+      body,
+      sign,
+      longitude.inSignLongitude,
+      lordLon.sign,
+    );
   }
 
   bool get isCombust {
     if (_sunLongitude == null) return false;
     return Dignity.isCombust(
-        body, rawLongitude, _sunLongitude, isRetrograde: isRetrograde);
+      body,
+      rawLongitude,
+      _sunLongitude,
+      isRetrograde: isRetrograde,
+    );
   }
 
   @override

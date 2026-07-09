@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Ninth House Studios LLC
+
 import 'package:arrow_options/arrow_options.dart';
 import 'package:arrow_swe/arrow_swe.dart';
 
@@ -12,7 +15,7 @@ class Rashi extends Varga {
   late final Map<int, Nakshatra> nakshatras; // 1-27
 
   Rashi(EphSnapshot snapshot, CalcConfig config)
-      : super(VargaType.rashi, snapshot, config) {
+    : super(VargaType.rashi, snapshot, config) {
     _initNakshatras();
   }
 
@@ -23,9 +26,7 @@ class Rashi extends Varga {
 
     nakshatras = {};
     for (var n = 1; n <= 27; n++) {
-      final nakPlanets = allPlanets
-          .where((p) => p.nakshatra == n)
-          .toList();
+      final nakPlanets = allPlanets.where((p) => p.nakshatra == n).toList();
       nakshatras[n] = Nakshatra(n, nakPlanets);
     }
   }

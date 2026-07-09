@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Ninth House Studios LLC
+
 import 'package:arrow_core/arrow_core.dart';
 
 import '../../format/planet.dart';
@@ -40,24 +43,27 @@ class NockVarga extends NockValue {
 
   @override
   NockValue access(String field) => switch (field) {
-        'sun' => NockPlanet(varga.sun, chart),
-        'moon' => NockPlanet(varga.moon, chart),
-        'mars' => NockPlanet(varga.mars, chart),
-        'mercury' => NockPlanet(varga.mercury, chart),
-        'jupiter' => NockPlanet(varga.jupiter, chart),
-        'venus' => NockPlanet(varga.venus, chart),
-        'saturn' => NockPlanet(varga.saturn, chart),
-        'rahu' => NockPlanet(varga.rahu, chart),
-        'ketu' => NockPlanet(varga.ketu, chart),
-        'houses' => NockList(varga.cusps.map(NockCusp.new).toList()),
-        'planets' =>
-          NockList(varga.planets.map((p) => NockPlanet(p, chart)).toList()),
-        'grahas' =>
-          NockList(varga.grahas.map((g) => NockPlanet(g, chart)).toList()),
-        'karakas' =>
-          NockList(varga.karakas.map((k) => NockPlanet(k, chart)).toList()),
-        _ => throw NockError('varga has no property "$field"'),
-      };
+    'sun' => NockPlanet(varga.sun, chart),
+    'moon' => NockPlanet(varga.moon, chart),
+    'mars' => NockPlanet(varga.mars, chart),
+    'mercury' => NockPlanet(varga.mercury, chart),
+    'jupiter' => NockPlanet(varga.jupiter, chart),
+    'venus' => NockPlanet(varga.venus, chart),
+    'saturn' => NockPlanet(varga.saturn, chart),
+    'rahu' => NockPlanet(varga.rahu, chart),
+    'ketu' => NockPlanet(varga.ketu, chart),
+    'houses' => NockList(varga.cusps.map(NockCusp.new).toList()),
+    'planets' => NockList(
+      varga.planets.map((p) => NockPlanet(p, chart)).toList(),
+    ),
+    'grahas' => NockList(
+      varga.grahas.map((g) => NockPlanet(g, chart)).toList(),
+    ),
+    'karakas' => NockList(
+      varga.karakas.map((k) => NockPlanet(k, chart)).toList(),
+    ),
+    _ => throw NockError('varga has no property "$field"'),
+  };
 
   @override
   String typeName() => 'varga';

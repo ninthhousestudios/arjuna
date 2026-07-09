@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Ninth House Studios LLC
+
 import 'package:arrow_calc/arrow_calc.dart';
 import 'package:arrow_core/arrow_core.dart';
 import 'package:arrow_options/arrow_options.dart';
@@ -8,94 +11,109 @@ import '../helpers/stub_varga.dart';
 /// Scattered positions — 40° apart, no two in the same sign.
 /// Default cusps give lagnaSign=1 (Aries), fifthCuspSign=5 (Leo).
 Varga _scattered({Map<Body, double> override = const {}}) {
-  return stubVarga(longitudes: {
-    Body.sun: 10.0,
-    Body.moon: 50.0,
-    Body.mars: 90.0,
-    Body.mercury: 130.0,
-    Body.jupiter: 170.0,
-    Body.venus: 210.0,
-    Body.saturn: 250.0,
-    Body.rahu: 290.0,
-    Body.ketu: 110.0,
-    ...override,
-  });
+  return stubVarga(
+    longitudes: {
+      Body.sun: 10.0,
+      Body.moon: 50.0,
+      Body.mars: 90.0,
+      Body.mercury: 130.0,
+      Body.jupiter: 170.0,
+      Body.venus: 210.0,
+      Body.saturn: 250.0,
+      Body.rahu: 290.0,
+      Body.ketu: 110.0,
+      ...override,
+    },
+  );
 }
 
 void main() {
   group('Lajjitaadi — per-state unit tests', () {
     test('delighted — karaka conjunct Jupiter', () {
       // Venus conjunct Jupiter in Leo.
-      final v = _scattered(override: {
-        Body.venus: 120.0, // Leo (sign 5)
-        Body.jupiter: 125.0, // same sign
-      });
+      final v = _scattered(
+        override: {
+          Body.venus: 120.0, // Leo (sign 5)
+          Body.jupiter: 125.0, // same sign
+        },
+      );
       final got = Lajjitaadi.compute(v);
       final venus = got[Body.venus]!;
       expect(venus.avasthas[LajjitaadiState.delighted], isNotEmpty);
-      final f = venus.avasthas[LajjitaadiState.delighted]!
-          .firstWhere((f) => f.planet == Body.jupiter);
+      final f = venus.avasthas[LajjitaadiState.delighted]!.firstWhere(
+        (f) => f.planet == Body.jupiter,
+      );
       expect(f.source, 'conjunction');
       expect(f.strength, 60);
     });
 
     test('starved — karaka conjunct Saturn', () {
       // Mercury conjunct Saturn.
-      final v = _scattered(override: {
-        Body.mercury: 250.0, // Sagittarius
-        Body.saturn: 255.0, // same sign
-      });
+      final v = _scattered(
+        override: {
+          Body.mercury: 250.0, // Sagittarius
+          Body.saturn: 255.0, // same sign
+        },
+      );
       final got = Lajjitaadi.compute(v);
       final mercury = got[Body.mercury]!;
       final starved = mercury.avasthas[LajjitaadiState.starved]!;
-      expect(starved.any((f) => f.planet == Body.saturn),
-          isTrue, reason: 'Mercury should be starved by Saturn conj');
+      expect(
+        starved.any((f) => f.planet == Body.saturn),
+        isTrue,
+        reason: 'Mercury should be starved by Saturn conj',
+      );
     });
 
     test('agitated — karaka conjunct Sun', () {
       // Moon conjunct Sun.
-      final v = _scattered(override: {
-        Body.sun: 60.0,
-        Body.moon: 65.0,
-      });
+      final v = _scattered(override: {Body.sun: 60.0, Body.moon: 65.0});
       final got = Lajjitaadi.compute(v);
       final moon = got[Body.moon]!;
       expect(
-          moon.avasthas[LajjitaadiState.agitated]!
-              .any((f) => f.planet == Body.sun),
-          isTrue);
+        moon.avasthas[LajjitaadiState.agitated]!.any(
+          (f) => f.planet == Body.sun,
+        ),
+        isTrue,
+      );
     });
 
     test('thirsty — karaka in water sign aspected by natural enemy', () {
       // Mercury in Cancer (water, sign 4) aspected by Moon (enemy).
       // Place Moon 180° away to hit the opposition aspect slot.
-      final v = _scattered(override: {
-        Body.mercury: 100.0, // Cancer
-        Body.moon: 280.0, // 180° away
-      });
+      final v = _scattered(
+        override: {
+          Body.mercury: 100.0, // Cancer
+          Body.moon: 280.0, // 180° away
+        },
+      );
       final got = Lajjitaadi.compute(v);
       final mercury = got[Body.mercury]!;
       expect(mercury.avasthas[LajjitaadiState.thirsty], isNotEmpty);
       expect(
-          mercury.avasthas[LajjitaadiState.thirsty]!
-              .any((f) => f.planet == Body.moon),
-          isTrue);
+        mercury.avasthas[LajjitaadiState.thirsty]!.any(
+          (f) => f.planet == Body.moon,
+        ),
+        isTrue,
+      );
     });
 
     test('shamed — conj Sun/Mars/Saturn AND in 5th sign from lagna', () {
       // Lagna = Aries (1) → 5th sign = Leo (5). Put Jupiter conj Saturn in Leo.
-      final v = _scattered(override: {
-        Body.jupiter: 120.0, // Leo
-        Body.saturn: 125.0, // conj in Leo
-      });
+      final v = _scattered(
+        override: {
+          Body.jupiter: 120.0, // Leo
+          Body.saturn: 125.0, // conj in Leo
+        },
+      );
       final got = Lajjitaadi.compute(v);
       final jupiter = got[Body.jupiter]!;
       final shamed = jupiter.avasthas[LajjitaadiState.shamed]!;
       expect(shamed.any((f) => f.planet == Body.saturn), isTrue);
       expect(
-          shamed.any((f) =>
-              f.source == 'condition' && f.detail == 'in 5th sign'),
-          isTrue);
+        shamed.any((f) => f.source == 'condition' && f.detail == 'in 5th sign'),
+        isTrue,
+      );
     });
 
     test('healthy — karaka in own sign', () {
@@ -130,84 +148,89 @@ void main() {
     test('giving/receiving — bidirectional pass populates both sides', () {
       // Sun and Jupiter are mutual natural friends, so conjunction makes
       // each delighted by the other.
-      final v = _scattered(override: {
-        Body.sun: 120.0,
-        Body.jupiter: 125.0,
-      });
+      final v = _scattered(override: {Body.sun: 120.0, Body.jupiter: 125.0});
       final got = Lajjitaadi.compute(v);
       final sun = got[Body.sun]!;
       expect(
-          sun.receiving[LajjitaadiState.delighted]!
-              .any((f) => f.planet == Body.jupiter),
-          isTrue,
-          reason: 'Sun should receive delight from Jupiter');
+        sun.receiving[LajjitaadiState.delighted]!.any(
+          (f) => f.planet == Body.jupiter,
+        ),
+        isTrue,
+        reason: 'Sun should receive delight from Jupiter',
+      );
       expect(
-          sun.giving[LajjitaadiState.delighted]!
-              .any((f) => f.to == Body.jupiter),
-          isTrue,
-          reason: 'Sun should give delight to Jupiter');
+        sun.giving[LajjitaadiState.delighted]!.any((f) => f.to == Body.jupiter),
+        isTrue,
+        reason: 'Sun should give delight to Jupiter',
+      );
     });
 
     test('karaka with no factors is omitted from the result map', () {
       final v = _scattered();
       final got = Lajjitaadi.compute(v);
       for (final entry in got.entries) {
-        expect(entry.value.avasthas, isNotEmpty,
-            reason: '${entry.key.name} present but empty');
+        expect(
+          entry.value.avasthas,
+          isNotEmpty,
+          reason: '${entry.key.name} present but empty',
+        );
       }
     });
 
     test('starved — karaka conjunct natural enemy', () {
       // Sun and Saturn are natural enemies.
-      final v = _scattered(override: {
-        Body.sun: 250.0,
-        Body.saturn: 255.0,
-      });
+      final v = _scattered(override: {Body.sun: 250.0, Body.saturn: 255.0});
       final got = Lajjitaadi.compute(v);
       final sun = got[Body.sun]!;
       final starved = sun.avasthas[LajjitaadiState.starved]!;
-      expect(starved.where((f) => f.planet == Body.saturn).length,
-          greaterThanOrEqualTo(2),
-          reason: 'enemy conj + Saturn-always-starves both fire');
+      expect(
+        starved.where((f) => f.planet == Body.saturn).length,
+        greaterThanOrEqualTo(2),
+        reason: 'enemy conj + Saturn-always-starves both fire',
+      );
     });
 
     test('delighted — sign lord is natural friend', () {
       // Mars in Leo (sign 5). Lord of Leo = Sun. Mars ↔ Sun = friend.
-      final v = stubVarga(longitudes: {
-        Body.sun: 10.0,
-        Body.moon: 50.0,
-        Body.mars: 140.0, // Leo
-        Body.mercury: 130.0,
-        Body.jupiter: 170.0,
-        Body.venus: 210.0,
-        Body.saturn: 250.0,
-        Body.rahu: 290.0,
-        Body.ketu: 110.0,
-      }, cusps: List.generate(12, (i) => (i * 30.0 + 10.0) % 360));
+      final v = stubVarga(
+        longitudes: {
+          Body.sun: 10.0,
+          Body.moon: 50.0,
+          Body.mars: 140.0, // Leo
+          Body.mercury: 130.0,
+          Body.jupiter: 170.0,
+          Body.venus: 210.0,
+          Body.saturn: 250.0,
+          Body.rahu: 290.0,
+          Body.ketu: 110.0,
+        },
+        cusps: List.generate(12, (i) => (i * 30.0 + 10.0) % 360),
+      );
       final got = Lajjitaadi.compute(v);
       final mars = got[Body.mars]!;
       final delighted = mars.avasthas[LajjitaadiState.delighted] ?? [];
       expect(
-          delighted.any((f) => f.source == 'sign' && f.lord == Body.sun),
-          isTrue,
-          reason: 'Mars should be delighted by Sun as lord of Leo');
+        delighted.any((f) => f.source == 'sign' && f.lord == Body.sun),
+        isTrue,
+        reason: 'Mars should be delighted by Sun as lord of Leo',
+      );
     });
 
     test('shamed — conj Sun/Mars/Saturn AND conjunct Rahu/Ketu', () {
       // Venus conj Mars conj Rahu — triggers shamed via Rahu path.
-      final v = _scattered(override: {
-        Body.venus: 200.0,
-        Body.mars: 205.0,
-        Body.rahu: 203.0,
-      });
+      final v = _scattered(
+        override: {Body.venus: 200.0, Body.mars: 205.0, Body.rahu: 203.0},
+      );
       final got = Lajjitaadi.compute(v);
       final venus = got[Body.venus]!;
       final shamed = venus.avasthas[LajjitaadiState.shamed]!;
       expect(shamed.any((f) => f.planet == Body.mars), isTrue);
       expect(
-          shamed.any(
-              (f) => f.source == 'condition' && f.detail == 'conjunct Rahu/Ketu'),
-          isTrue);
+        shamed.any(
+          (f) => f.source == 'condition' && f.detail == 'conjunct Rahu/Ketu',
+        ),
+        isTrue,
+      );
     });
 
     test('shamed — conjunct 5th cusp (not in 5th sign from lagna)', () {
@@ -233,28 +256,30 @@ void main() {
       final jupiter = got[Body.jupiter]!;
       final shamed = jupiter.avasthas[LajjitaadiState.shamed]!;
       expect(
-          shamed.any(
-              (f) => f.source == 'condition' && f.detail == 'conjunct 5th cusp'),
-          isTrue);
+        shamed.any(
+          (f) => f.source == 'condition' && f.detail == 'conjunct 5th cusp',
+        ),
+        isTrue,
+      );
       expect(
-          shamed.any(
-              (f) => f.source == 'condition' && f.detail == 'in 5th sign'),
-          isFalse,
-          reason: '5th sign from lagna 6 is 10, not 8');
+        shamed.any((f) => f.source == 'condition' && f.detail == 'in 5th sign'),
+        isFalse,
+        reason: '5th sign from lagna 6 is 10, not 8',
+      );
     });
 
     test('agitated — aspected by malefic natural enemy', () {
       // Sun and Saturn are natural enemies. Saturn is a natural malefic.
       // Place Saturn 180° from Sun for opposition aspect.
-      final v = _scattered(override: {
-        Body.sun: 100.0,
-        Body.saturn: 280.0,
-      });
+      final v = _scattered(override: {Body.sun: 100.0, Body.saturn: 280.0});
       final got = Lajjitaadi.compute(v);
       final sun = got[Body.sun]!;
       final agitated = sun.avasthas[LajjitaadiState.agitated] ?? [];
-      expect(agitated.any((f) => f.planet == Body.saturn), isTrue,
-          reason: 'Sun agitated by malefic enemy Saturn aspect');
+      expect(
+        agitated.any((f) => f.planet == Body.saturn),
+        isTrue,
+        reason: 'Sun agitated by malefic enemy Saturn aspect',
+      );
     });
   });
 }

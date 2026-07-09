@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Ninth House Studios LLC
+
 import 'package:arrow_options/arrow_options.dart';
 import 'package:arrow_core/arrow_core.dart';
 
@@ -55,8 +58,7 @@ class Jaimini {
 
   static Map<int, int> _signToLordSign(Varga varga) {
     return {
-      for (var s = 1; s <= 12; s++)
-        s: varga.karaka(SignData.lord(s)).sign,
+      for (var s = 1; s <= 12; s++) s: varga.karaka(SignData.lord(s)).sign,
     };
   }
 
@@ -111,12 +113,7 @@ class Jaimini {
     int count(int sign) => grahasAt(sign).length;
 
     // Argala/virodhina offset pairs (forward offsets from target).
-    const pairs = [
-      (2, 12),
-      (11, 3),
-      (4, 10),
-      (9, 5),
-    ];
+    const pairs = [(2, 12), (11, 3), (4, 10), (9, 5)];
 
     final unobstructed = <int, List<Body>>{};
     final obstructed = <int, List<Body>>{};
@@ -154,8 +151,9 @@ class Jaimini {
     final thirdBodies = grahasAt(thirdSign);
     final malefics = thirdBodies.where(_isMalefic).toList();
     final benefics = thirdBodies.where((b) => !_isMalefic(b)).toList();
-    final thirdMaleficArgala =
-        malefics.length > benefics.length ? malefics : <Body>[];
+    final thirdMaleficArgala = malefics.length > benefics.length
+        ? malefics
+        : <Body>[];
 
     return ArgalaResult(
       unobstructed: unobstructed,
@@ -226,7 +224,8 @@ class Jaimini {
   ///
   /// For each sign, returns the list of bodies among Jupiter, Mercury, and the
   /// sign's own lord that either conjoin or rashi-aspect that sign.
-  static Map<int, List<Body>> secondStrength(Varga varga, {
+  static Map<int, List<Body>> secondStrength(
+    Varga varga, {
     RashiAspectMode rashiAspectMode = RashiAspectMode.quadrant,
   }) {
     final signToLordSign = _signToLordSign(varga);
@@ -247,8 +246,11 @@ class Jaimini {
       ]) {
         final conjoins = bodySign == sign;
         final aspects = RashiAspect.doesAspectWithOccupants(
-            bodySign, sign, (grahasPerSign[bodySign] ?? const []).isNotEmpty,
-            rashiAspectMode);
+          bodySign,
+          sign,
+          (grahasPerSign[bodySign] ?? const []).isNotEmpty,
+          rashiAspectMode,
+        );
         if (conjoins || aspects) influencers.add(body);
       }
       if (influencers.isNotEmpty) result[sign] = influencers;
@@ -268,9 +270,7 @@ class Jaimini {
   static List<int> firstStrength(Varga varga, {bool knRao = false}) {
     final karakasPerSign = _karakasPerSign(varga);
     final signToLordSign = _signToLordSign(varga);
-    final dignities = {
-      for (final k in varga.karakas) k.body: k.dignity,
-    };
+    final dignities = {for (final k in varga.karakas) k.body: k.dignity};
     final inSignLongitudes = {
       for (final k in varga.karakas) k.body: k.rawLongitude % 30.0,
     };
@@ -300,7 +300,8 @@ class Jaimini {
       // Level 0: karaka count
       final karakaA = karakasOf(a).length;
       final karakaB = karakasOf(b).length;
-      if (karakaA != karakaB) return karakaB.compareTo(karakaA); // more = better
+      if (karakaA != karakaB)
+        return karakaB.compareTo(karakaA); // more = better
 
       // Level 1: dignity scores (descending sorted, lexicographic)
       final dA = dignityScores(a);
@@ -357,15 +358,24 @@ class Jaimini {
 
   static int _dignityScore(DignityType d) {
     switch (d) {
-      case DignityType.exalted:      return 8;
-      case DignityType.moolatrikona: return 7;
-      case DignityType.ownSign:      return 6;
-      case DignityType.greatFriend:  return 5;
-      case DignityType.friend:       return 4;
-      case DignityType.neutral:      return 3;
-      case DignityType.enemy:        return 2;
-      case DignityType.greatEnemy:   return 1;
-      case DignityType.debilitated:  return 0;
+      case DignityType.exalted:
+        return 8;
+      case DignityType.moolatrikona:
+        return 7;
+      case DignityType.ownSign:
+        return 6;
+      case DignityType.greatFriend:
+        return 5;
+      case DignityType.friend:
+        return 4;
+      case DignityType.neutral:
+        return 3;
+      case DignityType.enemy:
+        return 2;
+      case DignityType.greatEnemy:
+        return 1;
+      case DignityType.debilitated:
+        return 0;
     }
   }
 

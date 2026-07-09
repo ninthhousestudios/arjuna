@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Ninth House Studios LLC
+
 import 'package:arrow_calc/arrow_calc.dart';
 import 'package:arrow_options/arrow_options.dart';
 import 'package:test/test.dart';
@@ -10,8 +13,11 @@ void main() {
 
     test('every ConstellationId is present', () {
       for (final id in ConstellationId.values) {
-        expect(constellationStarMap.containsKey(id), isTrue,
-            reason: '${id.label} missing from star map');
+        expect(
+          constellationStarMap.containsKey(id),
+          isTrue,
+          reason: '${id.label} missing from star map',
+        );
       }
     });
 
@@ -20,8 +26,11 @@ void main() {
           .expand((e) => [e.first, e.last])
           .toList();
       final unique = all.toSet();
-      expect(unique.length, all.length,
-          reason: 'duplicate boundary star found');
+      expect(
+        unique.length,
+        all.length,
+        reason: 'duplicate boundary star found',
+      );
     });
   });
 

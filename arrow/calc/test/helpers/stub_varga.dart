@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Ninth House Studios LLC
+
 import 'package:arrow_core/arrow_core.dart';
 import 'package:arrow_options/arrow_options.dart';
 import 'package:arrow_swe/arrow_swe.dart';
@@ -22,20 +25,21 @@ Varga stubVarga({
   };
   final merged = {...defaultLons, ...longitudes};
 
-  final bodies = merged.map((body, lon) => MapEntry(
-        body,
-        BodyPosition(
-          longitude: lon,
-          latitude: 0.0,
-          distance: 1.0,
-          speedLongitude: speeds[body] ?? 1.0,
-          speedLatitude: 0.0,
-          speedDistance: 0.0,
-        ),
-      ));
+  final bodies = merged.map(
+    (body, lon) => MapEntry(
+      body,
+      BodyPosition(
+        longitude: lon,
+        latitude: 0.0,
+        distance: 1.0,
+        speedLongitude: speeds[body] ?? 1.0,
+        speedLatitude: 0.0,
+        speedDistance: 0.0,
+      ),
+    ),
+  );
 
-  final cuspList =
-      cusps ?? List.generate(12, (i) => (i * 30.0 + 10.0) % 360);
+  final cuspList = cusps ?? List.generate(12, (i) => (i * 30.0 + 10.0) % 360);
   final nakLons = merged;
 
   final snapshot = EphSnapshot(

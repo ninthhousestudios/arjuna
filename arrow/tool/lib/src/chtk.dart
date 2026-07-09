@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Ninth House Studios LLC
+
 import 'dart:io';
 import 'dart:typed_data';
 
@@ -12,8 +15,7 @@ class ChtkFormat {
   static ChartData read(String filePath) {
     final bytes = File(filePath).readAsBytesSync();
     final content = _decodeUtf16Le(bytes);
-    final lines =
-        content.split(RegExp(r'\r?\n')).map((l) => l.trim()).toList();
+    final lines = content.split(RegExp(r'\r?\n')).map((l) => l.trim()).toList();
 
     while (lines.isNotEmpty && lines.last.isEmpty) {
       lines.removeLast();
@@ -62,8 +64,8 @@ class ChtkFormat {
       gender: genderCode == 2
           ? Gender.female
           : genderCode == 1
-              ? Gender.male
-              : null,
+          ? Gender.male
+          : null,
       notes: noteLines.isNotEmpty ? noteLines.join('\n') : null,
     );
   }
@@ -71,8 +73,9 @@ class ChtkFormat {
   /// Parse DMS like `083E00'00` or `25N20'00`.
   static double _parseDms(String s) {
     s = s.trim();
-    final match =
-        RegExp(r"(\d+)([NESW])(\d+)'(\d+)").firstMatch(s.toUpperCase());
+    final match = RegExp(
+      r"(\d+)([NESW])(\d+)'(\d+)",
+    ).firstMatch(s.toUpperCase());
     if (match == null) return 0.0;
     final deg = int.parse(match.group(1)!);
     final dir = match.group(2)!;

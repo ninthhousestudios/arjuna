@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Ninth House Studios LLC
+
 import 'package:arrow_options/arrow_options.dart';
 import 'package:arrow_swe/arrow_swe.dart';
 
@@ -36,8 +39,13 @@ class Varga {
 
     for (final body in snapshot.bodiesEcliptic.keys) {
       if (Body.karakas.contains(body)) {
-        final k = Karaka(body, snapshot, config, vargaType,
-            sunLongitude: sunLon);
+        final k = Karaka(
+          body,
+          snapshot,
+          config,
+          vargaType,
+          sunLongitude: sunLon,
+        );
         _karakaMap[body] = k;
         _planetMap[body] = k;
       } else {
@@ -53,8 +61,7 @@ class Varga {
 
     signs = {};
     for (var s = 1; s <= 12; s++) {
-      final signPlanets =
-          _planetMap.values.where((p) => p.sign == s).toList();
+      final signPlanets = _planetMap.values.where((p) => p.sign == s).toList();
       final signCusps = cusps.where((c) => c.sign == s).toList();
       signs[s] = Sign(s, signPlanets, signCusps);
     }

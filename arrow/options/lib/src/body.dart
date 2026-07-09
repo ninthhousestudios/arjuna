@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Ninth House Studios LLC
+
 /// Celestial bodies supported by Arrow.
 enum Body {
   sun,
@@ -19,6 +22,14 @@ enum Body {
 
   /// The 9 Vedic grahas (7 karakas + nodes).
   static const grahas = [
-    sun, moon, mars, mercury, jupiter, venus, saturn, rahu, ketu,
+    sun,
+    moon,
+    mars,
+    mercury,
+    jupiter,
+    venus,
+    saturn,
+    rahu,
+    ketu,
   ];
 }

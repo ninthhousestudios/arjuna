@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Ninth House Studios LLC
+
 /// A reference frame for body position calculation.
 ///
 /// Geocentric (Earth-centered) is always computed and is the default frame

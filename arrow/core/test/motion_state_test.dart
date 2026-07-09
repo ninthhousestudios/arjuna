@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 Ninth House Studios LLC
+
 import 'package:arrow_core/arrow_core.dart';
 import 'package:arrow_options/arrow_options.dart';
 import 'package:arrow_swe/arrow_swe.dart';
@@ -7,14 +10,13 @@ PhenoData _pheno({
   double phaseAngle = 90,
   double phase = 0.5,
   required double elongation,
-}) =>
-    PhenoData(
-      phaseAngle: phaseAngle,
-      phase: phase,
-      elongation: elongation,
-      apparentDiameter: 0,
-      apparentMagnitude: 0,
-    );
+}) => PhenoData(
+  phaseAngle: phaseAngle,
+  phase: phase,
+  elongation: elongation,
+  apparentDiameter: 0,
+  apparentMagnitude: 0,
+);
 
 void main() {
   group('directionOf', () {
@@ -130,14 +132,17 @@ void main() {
   });
 
   group('SynodicState.from', () {
-    SynodicState build(Body body, double bodyLong, double sunLong,
-            {double elongation = 90}) =>
-        SynodicState.from(
-          body: body,
-          bodyLongitude: bodyLong,
-          sunLongitude: sunLong,
-          pheno: _pheno(elongation: elongation),
-        );
+    SynodicState build(
+      Body body,
+      double bodyLong,
+      double sunLong, {
+      double elongation = 90,
+    }) => SynodicState.from(
+      body: body,
+      bodyLongitude: bodyLong,
+      sunLongitude: sunLong,
+      pheno: _pheno(elongation: elongation),
+    );
 
     test('category derives from elongation', () {
       final s = build(Body.moon, 100, 10, elongation: 90);
