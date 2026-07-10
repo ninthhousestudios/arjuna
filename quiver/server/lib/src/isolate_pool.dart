@@ -70,8 +70,10 @@ class _CalcResponse {
 
 /// Pool of worker isolates for concurrent ephemeris calculations.
 ///
-/// Each worker gets its own copy of `libswisseph.so` so that `dlopen` sees a
-/// distinct path and allocates independent C globals per isolate.
+/// Pool of worker isolates for CPU parallelism over synchronous [SweFacade.calcAll].
+///
+/// Each worker owns an independent [SweFacade] backed by a swisseph_rs engine
+/// with no shared mutable state across isolates.
 ///
 /// Dispatch is round-robin. Each request gets a unique [Completer]; the worker
 /// sends back the result (serialized as JSON) which completes the future.
@@ -85,51 +87,17 @@ class IsolatePool {
   int _nextId = 0;
   final Map<int, Completer<EphSnapshot>> _pending = {};
   final List<ReceivePort> _receivePorts = [];
-  final List<String> _libCopyPaths = [];
   bool _started = false;
   bool _disposed = false;
 
   IsolatePool({int? size, this.ephePath})
     : size = (size ?? Platform.numberOfProcessors).clamp(2, 16);
 
-  static String _findBaseLibPath() {
-    final dartTool = Directory('.dart_tool');
-    if (!dartTool.existsSync()) {
-      throw StateError('Cannot find .dart_tool directory for libswisseph');
-    }
-    return dartTool
-        .listSync(recursive: true)
-        .whereType<File>()
-        .where(
-          (f) =>
-              f.path.endsWith('libswisseph.so') ||
-              f.path.endsWith('libswisseph.dylib'),
-        )
-        .first
-        .path;
-  }
-
-  static String _copyLibForWorker(String sourcePath, int workerId) {
-    final tmpDir = Directory.systemTemp.createTempSync('quiver_worker_');
-    final ext = sourcePath.endsWith('.dylib') ? 'dylib' : 'so';
-    final destPath = '${tmpDir.path}/libswisseph_$workerId.$ext';
-    File(sourcePath).copySync(destPath);
-    return destPath;
-  }
-
   /// Start all worker isolates. Must be called before [calculate].
   Future<void> start() async {
     if (_started) return;
     _started = true;
     _log.info('Starting isolate pool with $size workers');
-
-    final baseLibPath = _findBaseLibPath();
-    _log.fine('Found base library at $baseLibPath');
-    for (var i = 0; i < size; i++) {
-      final copyPath = _copyLibForWorker(baseLibPath, i);
-      _libCopyPaths.add(copyPath);
-    }
-    _log.fine('Created $size per-worker library copies');
 
     for (var i = 0; i < size; i++) {
       final receivePort = ReceivePort();
@@ -141,7 +109,6 @@ class IsolatePool {
         _WorkerInit(
           sendPort: initPort.sendPort,
           ephePath: ephePath,
-          libPath: _libCopyPaths[i],
           workerId: i,
         ).toMessage(),
       );
@@ -268,18 +235,6 @@ class IsolatePool {
     _receivePorts.clear();
     _pending.clear();
 
-    for (final path in _libCopyPaths) {
-      try {
-        final file = File(path);
-        if (file.existsSync()) file.deleteSync();
-        final dir = file.parent;
-        if (dir.existsSync()) dir.deleteSync();
-      } catch (e) {
-        _log.fine('Failed to clean up library copy $path: $e');
-      }
-    }
-    _libCopyPaths.clear();
-
     _log.info('Isolate pool disposed');
   }
 }
@@ -288,30 +243,20 @@ class IsolatePool {
 class _WorkerInit {
   final SendPort sendPort;
   final String? ephePath;
-  final String libPath;
   final int workerId;
 
-  _WorkerInit({
-    required this.sendPort,
-    this.ephePath,
-    required this.libPath,
-    required this.workerId,
-  });
+  _WorkerInit({required this.sendPort, this.ephePath, required this.workerId});
 
-  List<Object?> toMessage() => [sendPort, ephePath, libPath, workerId];
+  List<Object?> toMessage() => [sendPort, ephePath, workerId];
 
   static _WorkerInit fromMessage(List<Object?> msg) => _WorkerInit(
     sendPort: msg[0] as SendPort,
     ephePath: msg[1] as String?,
-    libPath: msg[2] as String,
-    workerId: msg[3] as int,
+    workerId: msg[2] as int,
   );
 }
 
 /// Entry point for each worker isolate.
-///
-/// Each worker receives its own copy of `libswisseph.so` via [_WorkerInit.libPath]
-/// so that `dlopen` allocates independent C globals per isolate.
 ///
 /// Serialization relies on freezed-generated `toJson`/`fromJson` for
 /// [Location], [ArrowOptions], and [EphSnapshot]. If `.g.dart` files are stale,
@@ -321,8 +266,8 @@ void _workerEntryPoint(List<Object?> initMessage) {
   final init = _WorkerInit.fromMessage(initMessage);
   final log = Logger('Quiver.Server.IsolatePool.Worker${init.workerId}');
 
-  final swe = SweFacade.create(libPath: init.libPath, ephePath: init.ephePath);
-  log.fine('Worker ${init.workerId} initialized with ${init.libPath}');
+  final swe = SweFacade.create(ephePath: init.ephePath);
+  log.fine('Worker ${init.workerId} initialized');
 
   // Create a receive port for incoming requests and send it back.
   final receivePort = ReceivePort();

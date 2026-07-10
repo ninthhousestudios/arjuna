@@ -12,7 +12,7 @@ core/  ←  server/
 | Package | Role |
 |---------|------|
 | `quiver_core` | Proto-generated types, `ArrowGateway`, request/response mappers. Shared by both deployment modes. |
-| `quiver_server` | gRPC server. `IsolatePool` runs one `SweFacade` per isolate (round-robin, 2–16). |
+| `quiver_server` | gRPC server. `IsolatePool` runs one independent `SweFacade` per isolate (round-robin, 2–16). |
 | `quiver_embedded` | `Vayu` — in-process facade. Direct `SweFacade` calls, no isolates, no gRPC. |
 
 `embedded/` and `server/` do not depend on each other.
@@ -46,7 +46,7 @@ Future<EphSnapshot> Function(double jdUt, Location, ArrowOptions)
 
 ## IsolatePool
 
-Serializes across isolate boundaries via JSON (`jsonEncode`/`jsonDecode` of freezed models) because `dart:ffi` state is per-isolate. Each isolate owns its own `SweFacade` instance.
+Pool of worker isolates for CPU parallelism over synchronous `SweFacade.calcAll`. Each worker owns an independent `SweFacade` backed by a swisseph_rs engine with no shared mutable state. Serializes across isolate boundaries via JSON (`jsonEncode`/`jsonDecode` of freezed models).
 
 ## Testing
 
