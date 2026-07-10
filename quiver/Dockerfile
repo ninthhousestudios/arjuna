@@ -29,19 +29,18 @@ COPY drishti/pubspec.yaml drishti/
 RUN dart pub get
 
 # --- Stage 2: Build AOT binary ---
+FROM rust:slim AS rust
+
 FROM deps AS build
+
+COPY --from=rust /usr/local/cargo /usr/local/cargo
+COPY --from=rust /usr/local/rustup /usr/local/rustup
+ENV PATH=/usr/local/cargo/bin:$PATH
 
 RUN dart pub global activate protoc_plugin
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    protobuf-compiler libprotobuf-dev curl && rm -rf /var/lib/apt/lists/*
-
-ENV CARGO_HOME=/usr/local/cargo \
-    RUSTUP_HOME=/usr/local/rustup \
-    PATH=/usr/local/cargo/bin:$PATH
-
-RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | \
-    sh -s -- -y --default-toolchain stable --profile minimal
+    protobuf-compiler libprotobuf-dev && rm -rf /var/lib/apt/lists/*
 
 COPY proto/ proto/
 COPY arrow/options/ arrow/options/
