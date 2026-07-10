@@ -36,6 +36,7 @@ FROM deps AS build
 COPY --from=rust /usr/local/cargo /usr/local/cargo
 COPY --from=rust /usr/local/rustup /usr/local/rustup
 ENV PATH=/usr/local/cargo/bin:$PATH
+RUN rustup default stable
 
 RUN dart pub global activate protoc_plugin
 
