@@ -34,7 +34,14 @@ FROM deps AS build
 RUN dart pub global activate protoc_plugin
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    protobuf-compiler libprotobuf-dev && rm -rf /var/lib/apt/lists/*
+    protobuf-compiler libprotobuf-dev curl && rm -rf /var/lib/apt/lists/*
+
+ENV CARGO_HOME=/usr/local/cargo \
+    RUSTUP_HOME=/usr/local/rustup \
+    PATH=/usr/local/cargo/bin:$PATH
+
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | \
+    sh -s -- -y --default-toolchain stable --profile minimal
 
 COPY proto/ proto/
 COPY arrow/options/ arrow/options/
