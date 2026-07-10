@@ -62,6 +62,13 @@ RUN protoc \
       proto/quiver/chart.proto \
       proto/grpc/health/v1/health.proto
 
+# Build the swisseph_rs native library. dart compile exe does not invoke
+# build hooks, so we run cargo directly against the pub-cached crate.
+RUN SWISSEPH_RS=$(find /root/.pub-cache/hosted/pub.dev -maxdepth 1 -name 'swisseph_rs-*' -print -quit) && \
+    cargo build --release --manifest-path "$SWISSEPH_RS/rust/Cargo.toml" && \
+    mkdir -p /app/lib && \
+    cp "$SWISSEPH_RS/rust/target/release/libswisseph_rs_dart.so" /app/lib/
+
 RUN mkdir -p /app/bin && \
     dart compile exe quiver/server/bin/quiver_server.dart \
     -o /app/bin/quiver_server
@@ -84,8 +91,10 @@ RUN apt-get purge -y curl && apt-get autoremove -y && \
 WORKDIR /app
 
 COPY --from=build /app/bin/ /app/bin/
+COPY --from=build /app/lib/ /app/lib/
 COPY drishti/ephe/ /app/ephe/
 
+ENV LD_PRELOAD=/app/lib/libswisseph_rs_dart.so
 ENV QUIVER_PORT=50051
 ENV QUIVER_POOL_SIZE=2
 ENV QUIVER_EPHE_PATH=/app/ephe
