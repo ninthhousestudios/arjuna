@@ -1,4 +1,5 @@
 .dart_tool/
+!arrow/swe/.dart_tool/lib/libswisseph_rs_dart.so
 .packages
 build/
 .git/

@@ -29,14 +29,7 @@ COPY drishti/pubspec.yaml drishti/
 RUN dart pub get
 
 # --- Stage 2: Build AOT binary ---
-FROM rust:slim AS rust
-
 FROM deps AS build
-
-COPY --from=rust /usr/local/cargo /usr/local/cargo
-COPY --from=rust /usr/local/rustup /usr/local/rustup
-ENV PATH=/usr/local/cargo/bin:$PATH
-RUN rustup default stable
 
 RUN dart pub global activate protoc_plugin
 
@@ -63,12 +56,9 @@ RUN protoc \
       proto/quiver/chart.proto \
       proto/grpc/health/v1/health.proto
 
-# Build the swisseph_rs native library. dart compile exe does not invoke
-# build hooks, so we run cargo directly against the pub-cached crate.
-RUN SWISSEPH_RS=$(find /root/.pub-cache/hosted/pub.dev -maxdepth 1 -name 'swisseph_rs-*' -print -quit) && \
-    cargo build --release --manifest-path "$SWISSEPH_RS/rust/Cargo.toml" && \
-    mkdir -p /app/lib && \
-    cp "$SWISSEPH_RS/rust/target/release/libswisseph_rs_dart.so" /app/lib/
+# dart compile exe (3.12) does not invoke native asset build hooks, so the
+# pre-built .so from the host workspace is copied in via the build context.
+COPY arrow/swe/.dart_tool/lib/libswisseph_rs_dart.so /app/lib/
 
 RUN mkdir -p /app/bin && \
     dart compile exe quiver/server/bin/quiver_server.dart \
