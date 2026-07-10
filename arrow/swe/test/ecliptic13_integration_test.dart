@@ -7,7 +7,6 @@ library;
 import 'package:arrow_calc/arrow_calc.dart';
 import 'package:arrow_options/arrow_options.dart';
 import 'package:arrow_swe/arrow_swe.dart';
-import 'package:swisseph/swisseph.dart';
 import 'package:test/test.dart';
 
 import 'helpers/find_ephe_path.dart';
@@ -22,14 +21,12 @@ void main() {
     const jdUt = 2451545.0; // J2000
     const loc = Location(latitude: 28.6139, longitude: 77.2090, altitude: 0);
 
-    late SwissEph swe;
     late SweFacade facade;
     late EphSnapshot snap;
     late Ecliptic13 ecliptic;
 
     setUpAll(() {
-      swe = SwissEph.find();
-      facade = SweFacade(swe, ephePath: ephePath);
+      facade = SweFacade.create(ephePath: ephePath);
 
       final testStars = {
         ...boundaryStars,
@@ -44,7 +41,7 @@ void main() {
     });
 
     tearDownAll(() {
-      swe.close();
+      facade.dispose();
     });
 
     test('has exactly 13 constellations', () {

@@ -4,14 +4,12 @@
 import 'dart:convert';
 
 import 'package:arrow_swe/arrow_swe.dart';
-import 'package:swisseph/swisseph.dart';
 import 'package:test/test.dart';
 
-/// Smoke: PhenoData mirrors swisseph.dart's PhenoResult. If this fails,
-/// the upstream API changed — stop and fix before proceeding.
+/// Smoke: PhenoData covers the five fields from swisseph_rs's Phenomena.
 void main() {
-  group('PhenoData shape matches swisseph PhenoResult', () {
-    test('field parity', () {
+  group('PhenoData', () {
+    test('construction and field access', () {
       const p = PhenoData(
         phaseAngle: 1.0,
         phase: 0.5,
@@ -19,18 +17,11 @@ void main() {
         apparentDiameter: 0.01,
         apparentMagnitude: -4.0,
       );
-      const r = PhenoResult(
-        phaseAngle: 1.0,
-        phase: 0.5,
-        elongation: 45.0,
-        apparentDiameter: 0.01,
-        apparentMagnitude: -4.0,
-      );
-      expect(p.phaseAngle, r.phaseAngle);
-      expect(p.phase, r.phase);
-      expect(p.elongation, r.elongation);
-      expect(p.apparentDiameter, r.apparentDiameter);
-      expect(p.apparentMagnitude, r.apparentMagnitude);
+      expect(p.phaseAngle, 1.0);
+      expect(p.phase, 0.5);
+      expect(p.elongation, 45.0);
+      expect(p.apparentDiameter, 0.01);
+      expect(p.apparentMagnitude, -4.0);
     });
 
     test('JSON round-trip', () {

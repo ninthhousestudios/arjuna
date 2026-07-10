@@ -6,7 +6,7 @@ library;
 
 import 'package:arrow_options/arrow_options.dart';
 import 'package:arrow_swe/arrow_swe.dart';
-import 'package:swisseph/swisseph.dart';
+import 'package:swisseph_rs/swisseph_rs.dart' as swe;
 import 'package:test/test.dart';
 
 import 'helpers/find_ephe_path.dart';
@@ -21,16 +21,14 @@ void main() {
     const jdUt = 2451545.0; // J2000
     const jdEt = 2451545.0;
 
-    late SwissEph swe;
     late SweFacade facade;
 
     setUp(() {
-      swe = SwissEph.find();
-      facade = SweFacade(swe, ephePath: ephePath);
+      facade = SweFacade.create(ephePath: ephePath);
     });
 
     tearDown(() {
-      swe.close();
+      facade.dispose();
     });
 
     test('tropical returns 0.0', () {
@@ -38,9 +36,16 @@ void main() {
       expect(facade.getAyanamsaUt(jdUt, Ayanamsa.tropical), equals(0.0));
     });
 
-    test('Lahiri at J2000 matches raw SWE call', () {
-      swe.setSidMode(Ayanamsa.lahiri.sweCode);
-      final expected = swe.getAyanamsa(jdEt);
+    test('Lahiri at J2000 matches raw Ephemeris call', () {
+      final raw = swe.Ephemeris(
+        swe.EphemerisConfig(
+          ephemerisSource: swe.EphemerisSource.swiss,
+          ephePath: ephePath,
+          siderealMode: swe.SiderealMode.lahiri,
+        ),
+      );
+      final expected = raw.getAyanamsaEx(swe.JdTt(jdEt), swe.CalcFlags.none);
+      raw.close();
       expect(
         facade.getAyanamsa(jdEt, Ayanamsa.lahiri),
         closeTo(expected, 1e-9),

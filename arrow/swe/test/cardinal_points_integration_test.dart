@@ -6,7 +6,7 @@ library;
 
 import 'package:arrow_options/arrow_options.dart';
 import 'package:arrow_swe/arrow_swe.dart';
-import 'package:swisseph/swisseph.dart';
+import 'package:swisseph_rs/swisseph_rs.dart' as swe;
 import 'package:test/test.dart';
 
 import 'helpers/find_ephe_path.dart';
@@ -31,16 +31,14 @@ void main() {
       : null;
 
   group('calcCardinalPoints — integration', skip: skipReason, () {
-    late SwissEph swe;
     late SweFacade facade;
 
     setUp(() {
-      swe = SwissEph.find();
-      facade = SweFacade(swe, ephePath: ephePath);
+      facade = SweFacade.create(ephePath: ephePath);
     });
 
     tearDown(() {
-      swe.close();
+      facade.dispose();
     });
 
     for (final entry in _expected.entries) {
@@ -58,7 +56,7 @@ void main() {
 
         // All four fall in the requested calendar year, in chronological order.
         for (var i = 0; i < 4; i++) {
-          final date = swe.revjul(jds[i]);
+          final date = swe.revjul(jds[i], swe.CalendarType.gregorian);
           expect(
             date.year,
             equals(year),
@@ -92,7 +90,7 @@ void main() {
         source: EphemerisSource.moshier,
       );
       // Sanity: March equinox lands in March 2026.
-      final date = swe.revjul(cp.ascendingEquinox);
+      final date = swe.revjul(cp.ascendingEquinox, swe.CalendarType.gregorian);
       expect(date.year, 2026);
       expect(date.month, 3);
       expect(date.day, closeTo(20, 1));

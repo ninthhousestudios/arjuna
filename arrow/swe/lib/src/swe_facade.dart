@@ -741,7 +741,7 @@ class SweFacade {
     return _handle(
       _defaultSource,
       siderealModeFor(ayanamsa),
-    ).getAyanamsa(swe.JdTt(jdEt));
+    ).getAyanamsaEx(swe.JdTt(jdEt), swe.CalcFlags.none);
   }
 
   /// Ayanamsa value (arc-degrees) for universal time [jdUt] under [ayanamsa].

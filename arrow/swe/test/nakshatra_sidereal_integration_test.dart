@@ -7,7 +7,6 @@ library;
 import 'package:arrow_core/arrow_core.dart';
 import 'package:arrow_options/arrow_options.dart';
 import 'package:arrow_swe/arrow_swe.dart';
-import 'package:swisseph/swisseph.dart';
 import 'package:test/test.dart';
 
 import 'helpers/find_ephe_path.dart';
@@ -22,16 +21,14 @@ void main() {
     const jdUt = 2451545.0; // J2000
     const location = Location(latitude: 40.0, longitude: -74.0);
 
-    late SwissEph swe;
     late SweFacade facade;
 
     setUp(() {
-      swe = SwissEph.find();
-      facade = SweFacade(swe, ephePath: ephePath);
+      facade = SweFacade.create(ephePath: ephePath);
     });
 
     tearDown(() {
-      swe.close();
+      facade.dispose();
     });
 
     test('nak longitudes match sign longitudes when nak==sign ayanamsa', () {

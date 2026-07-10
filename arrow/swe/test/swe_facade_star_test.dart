@@ -6,7 +6,6 @@ library;
 
 import 'package:arrow_options/arrow_options.dart';
 import 'package:arrow_swe/arrow_swe.dart';
-import 'package:swisseph/swisseph.dart';
 import 'package:test/test.dart';
 
 import 'helpers/find_ephe_path.dart';
@@ -20,16 +19,14 @@ void main() {
   group('SweFacade fixed stars', skip: skipReason, () {
     const jdUt = 2451545.0; // J2000
 
-    late SwissEph swe;
     late SweFacade facade;
 
     setUp(() {
-      swe = SwissEph.find();
-      facade = SweFacade(swe, ephePath: ephePath);
+      facade = SweFacade.create(ephePath: ephePath);
     });
 
     tearDown(() {
-      swe.close();
+      facade.dispose();
     });
 
     test('empty stars set produces empty star maps', () {
@@ -99,16 +96,14 @@ void main() {
   group('SweFacade custom star names', skip: skipReason, () {
     const jdUt = 2451545.0;
 
-    late SwissEph swe;
     late SweFacade facade;
 
     setUp(() {
-      swe = SwissEph.find();
-      facade = SweFacade(swe, ephePath: ephePath);
+      facade = SweFacade.create(ephePath: ephePath);
     });
 
     tearDown(() {
-      swe.close();
+      facade.dispose();
     });
 
     test('exact custom name resolves', () {
@@ -143,16 +138,14 @@ void main() {
   group('SweFacade star data', skip: skipReason, () {
     const jdUt = 2451545.0;
 
-    late SwissEph swe;
     late SweFacade facade;
 
     setUp(() {
-      swe = SwissEph.find();
-      facade = SweFacade(swe, ephePath: ephePath);
+      facade = SweFacade.create(ephePath: ephePath);
     });
 
     tearDown(() {
-      swe.close();
+      facade.dispose();
     });
 
     test('includeStarData=false produces null starData', () {
