@@ -78,7 +78,6 @@ RUN apt-get purge -y curl && apt-get autoremove -y && \
 WORKDIR /app
 
 COPY --from=build /app/bin/ /app/bin/
-COPY --from=build /app/arrow/swe/.dart_tool/lib/libswisseph.so /app/.dart_tool/lib/libswisseph.so
 COPY drishti/ephe/ /app/ephe/
 
 ENV QUIVER_PORT=50051
