@@ -7,26 +7,21 @@ import 'dart:io';
 import 'package:arrow_options/arrow_options.dart';
 import 'package:arrow_swe/arrow_swe.dart';
 import 'package:arrow_tool/arrow_tool.dart';
-import 'package:swisseph/swisseph.dart';
 
 /// Generate test fixture JSON from a .chtk chart file.
 ///
 /// Usage: dart run tool/bin/generate_test_data.dart [options]
 ///   --chtk `path`      Path to .chtk file (default: ~/charts/mine/josh.chtk)
-///   --swe-lib `path`   Path to libswe.so/.dylib (default: searches common paths)
 ///   --ephe-path `dir`  Swiss Ephemeris data directory (.se1 + sefstars.txt).
 ///                      Defaults to $ARROW_EPHE_PATH, then libaditya/ephe, then
 ///                      left unset (SWE falls back to Moshier).
 void main(List<String> args) {
   String? chtkPath;
-  String? sweLib;
   String? ephePath;
 
   for (var i = 0; i < args.length; i++) {
     if (args[i] == '--chtk' && i + 1 < args.length) {
       chtkPath = args[++i];
-    } else if (args[i] == '--swe-lib' && i + 1 < args.length) {
-      sweLib = args[++i];
     } else if (args[i] == '--ephe-path' && i + 1 < args.length) {
       ephePath = args[++i];
     } else if (!args[i].startsWith('-')) {
@@ -35,15 +30,10 @@ void main(List<String> args) {
   }
 
   chtkPath ??= '${Platform.environment['HOME']}/charts/mine/josh.chtk';
-  sweLib ??= _findSweLibrary();
   ephePath ??= _findEphePath();
 
   if (!File(chtkPath).existsSync()) {
     stderr.writeln('Chart file not found: $chtkPath');
-    exit(1);
-  }
-  if (sweLib == null || !File(sweLib).existsSync()) {
-    stderr.writeln('Swiss Ephemeris library not found. Pass --swe-lib <path>');
     exit(1);
   }
 
@@ -73,10 +63,9 @@ void main(List<String> args) {
   const options = ArrowPresets.aditya;
 
   // 4. Compute EphSnapshot
-  final swe = SwissEph(sweLib);
-  final facade = SweFacade(swe, ephePath: ephePath);
+  final facade = SweFacade.create(ephePath: ephePath);
   final snapshot = facade.calcAll(jdUt, location, options.sweConfig);
-  swe.close();
+  facade.dispose();
 
   // 5. Output reference data
   final output = <String, dynamic>{
@@ -137,21 +126,6 @@ String? _findEphePath() {
   ];
   for (final path in candidates) {
     if (Directory(path).existsSync()) return path;
-  }
-  return null;
-}
-
-/// Search common locations for the Swiss Ephemeris shared library.
-String? _findSweLibrary() {
-  final home = Platform.environment['HOME'] ?? '';
-  final candidates = [
-    '/usr/local/lib/libswe.so',
-    '/usr/lib/libswe.so',
-    '$home/.local/lib/libswe.so',
-    '/usr/local/lib/libswe.dylib',
-  ];
-  for (final path in candidates) {
-    if (File(path).existsSync()) return path;
   }
   return null;
 }

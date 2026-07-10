@@ -2,21 +2,20 @@
 // Copyright (C) 2026 Ninth House Studios LLC
 
 import 'package:arrow_options/arrow_options.dart';
+import 'package:swisseph_rs/swisseph_rs.dart' as swe;
 
-const _bodySweIds = <Body, int>{
-  Body.sun: 0,
-  Body.moon: 1,
-  Body.mercury: 2,
-  Body.venus: 3,
-  Body.mars: 4,
-  Body.jupiter: 5,
-  Body.saturn: 6,
-  Body.uranus: 7,
-  Body.neptune: 8,
-  Body.pluto: 9,
-  Body.chiron: 15,
-  Body.rahu: 11,
-  Body.ketu: -1,
+const _bodySweMap = <Body, swe.Body>{
+  Body.sun: swe.Body.sun,
+  Body.moon: swe.Body.moon,
+  Body.mercury: swe.Body.mercury,
+  Body.venus: swe.Body.venus,
+  Body.mars: swe.Body.mars,
+  Body.jupiter: swe.Body.jupiter,
+  Body.saturn: swe.Body.saturn,
+  Body.uranus: swe.Body.uranus,
+  Body.neptune: swe.Body.neptune,
+  Body.pluto: swe.Body.pluto,
+  Body.chiron: swe.Body.chiron,
 };
 
-int sweIdFor(Body body) => _bodySweIds[body]!;
+swe.Body sweBodyFor(Body body) => _bodySweMap[body]!;

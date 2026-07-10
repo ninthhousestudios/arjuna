@@ -3,9 +3,10 @@
 
 import 'package:arrow_options/arrow_options.dart';
 import 'package:logging/logging.dart';
-import 'package:swisseph/swisseph.dart';
+import 'package:swisseph_rs/swisseph_rs.dart' as swe;
 
 import 'asc_mc_points.dart';
+import 'ayanamsa_sid_mode.dart';
 import 'body_position.dart';
 import 'body_swe_id.dart';
 import 'cardinal_points.dart';
@@ -18,52 +19,58 @@ import 'star_position.dart';
 import 'star_swe_name.dart';
 import 'sun_times.dart';
 
-final _log = Logger('Arrow.Swe');
+final _log = Logger('SweFacade');
 
 /// Facade over the Swiss Ephemeris library.
 ///
-/// Wraps [SwissEph] to compute a complete [EphSnapshot] for a given time and
-/// location. Each call to [calcAll] is stateless from the caller's perspective
-/// — configuration is applied immediately before each calculation batch.
+/// Wraps [swe.Ephemeris] to compute a complete [EphSnapshot] for a given time
+/// and location. Each call to [calcAll] is stateless from the caller's
+/// perspective — configuration flows through immutable handles and per-call
+/// config overrides.
 class SweFacade {
-  final SwissEph _swe;
   final String? ephePath;
   final String? jplFile;
 
-  /// Construct a facade over [swe].
-  ///
-  /// [ephePath] points at the directory containing Swiss Ephemeris data files
-  /// (`.se1`, `sefstars.txt`, etc.). Required to use [EphemerisSource.swissEph]
-  /// with real precision — SWE silently falls back to Moshier when unset.
-  ///
-  /// [jplFile] is the JPL ephemeris filename (e.g. `de431.eph`) resolved
-  /// against [ephePath]. Required to use [EphemerisSource.jplEph].
-  SweFacade(SwissEph swe, {this.ephePath, this.jplFile}) : _swe = swe {
-    _ensureConfig();
-  }
+  // housesEx2/getAyanamsaUt read handle-level config (no per-call override),
+  // so sidereal-mode-dependent calls need mode-keyed handles. Source is part
+  // of the key because Swiss/JPL file opens are mutually exclusive per handle.
+  final Map<(swe.EphemerisSource, swe.SiderealMode?), swe.Ephemeris> _handles =
+      {};
 
-  factory SweFacade.create({
-    String? libPath,
-    String? ephePath,
-    String? jplFile,
-  }) {
-    final swe = libPath != null ? SwissEph(libPath) : SwissEph.find();
-    return SweFacade(swe, ephePath: ephePath, jplFile: jplFile);
+  SweFacade.create({this.ephePath, this.jplFile}) {
+    _handle(_defaultSource);
   }
 
   void dispose() {
-    _swe.close();
+    for (final h in _handles.values) {
+      h.close();
+    }
+    _handles.clear();
   }
 
-  /// Re-apply ephePath and jplFile to the C-side globals.
-  ///
-  /// SwissEph's global state can drift across await points and is aggressively
-  /// cleared during Android background→resume. Cheap and idempotent — call
-  /// before every public entry point.
-  void _ensureConfig() {
-    if (ephePath != null) _swe.setEphePath(ephePath!);
-    if (jplFile != null) _swe.setJplFile(jplFile!);
-  }
+  swe.EphemerisSource get _defaultSource => ephePath != null
+      ? swe.EphemerisSource.swiss
+      : swe.EphemerisSource.moshier;
+
+  swe.EphemerisSource _sourceFor(EphemerisSource requested) =>
+      switch (requested) {
+        EphemerisSource.swissEph => _defaultSource,
+        EphemerisSource.moshier => swe.EphemerisSource.moshier,
+        EphemerisSource.jplEph => swe.EphemerisSource.jpl,
+      };
+
+  swe.Ephemeris _handle(swe.EphemerisSource source, [swe.SiderealMode? mode]) =>
+      _handles.putIfAbsent(
+        (source, mode),
+        () => swe.Ephemeris(
+          swe.EphemerisConfig(
+            ephemerisSource: source,
+            ephePath: ephePath,
+            jplFilename: jplFile,
+            siderealMode: mode,
+          ),
+        ),
+      );
 
   /// Compute a complete ephemeris snapshot.
   EphSnapshot calcAll(
@@ -73,8 +80,10 @@ class SweFacade {
     bool includeStarData = false,
   }) {
     final loc = location;
+    final source = _sourceFor(sweConfig.ephemerisSource);
+    final eph = _handle(source);
+    final jd = swe.JdUt1(jdUt);
 
-    _ensureConfig();
     _log.info(
       'calcAll jdUt=$jdUt bodies=${sweConfig.bodies.length} '
       'extraFrames=${sweConfig.extraFrames}',
@@ -89,32 +98,45 @@ class SweFacade {
       );
     }
 
-    // Configure sidereal mode if needed.
+    // Sidereal mode for per-call overrides.
     final isSidereal = !sweConfig.signAyanamsa.isTropical;
-    if (isSidereal && sweConfig.signAyanamsa.isStandard) {
-      _swe.setSidMode(sweConfig.signAyanamsa.sweCode);
-    }
+    final swe.SiderealMode? signMode =
+        isSidereal && sweConfig.signAyanamsa.isStandard
+        ? siderealModeFor(sweConfig.signAyanamsa)
+        : null;
 
-    // Topocentric setup.
-    if (sweConfig.topocentric) {
-      _swe.setTopo(loc.longitude, loc.latitude, loc.altitude);
-    }
+    // Topocentric config for per-call overrides.
+    final swe.TopoPosition? topo = sweConfig.topocentric
+        ? swe.TopoPosition(
+            longitude: loc.longitude,
+            latitude: loc.latitude,
+            altitude: loc.altitude,
+          )
+        : null;
+
+    final callConfig = swe.EphemerisConfig(
+      siderealMode: signMode,
+      topographic: topo,
+    );
 
     // Base flags.
-    final baseEclFlags =
-        ephemerisFlag(sweConfig.ephemerisSource) |
-        seFlgSpeed |
-        (isSidereal ? seFlgSidereal : 0) |
-        (sweConfig.topocentric ? seFlgTopoCtr : 0);
-    final equatorialFlags = baseEclFlags | seFlgEquatorial;
+    var baseEclFlags =
+        ephemerisFlag(sweConfig.ephemerisSource) | swe.CalcFlags.speed;
+    if (isSidereal) baseEclFlags = baseEclFlags | swe.CalcFlags.sidereal;
+    if (sweConfig.topocentric) {
+      baseEclFlags = baseEclFlags | swe.CalcFlags.topoctr;
+    }
+    final equatorialFlags = baseEclFlags | swe.CalcFlags.equatorial;
 
     // Extra-frame flags strip topocentric — it is Earth-surface–specific and
     // meaningless against the SSB / Sun origin.
-    final extraBase = baseEclFlags & ~seFlgTopoCtr;
+    var extraBase =
+        ephemerisFlag(sweConfig.ephemerisSource) | swe.CalcFlags.speed;
+    if (isSidereal) extraBase = extraBase | swe.CalcFlags.sidereal;
 
     final bodiesEcliptic = <Body, BodyPosition>{};
     final bodiesEquatorial = <Body, BodyPosition>{};
-    final phenoData = <Body, PhenoData>{};
+    final phenoResults = <Body, PhenoData>{};
 
     final baryEcl = sweConfig.extraFrames.contains(ReferencePoint.barycentric)
         ? <Body, BodyPosition>{}
@@ -132,14 +154,19 @@ class SweFacade {
     for (final body in sweConfig.bodies) {
       if (body == Body.ketu) continue;
 
-      final sweId = body == Body.rahu
-          ? (sweConfig.trueNode ? seTrueNode : seMeanNode)
-          : sweIdFor(body);
+      final sweBody = body == Body.rahu
+          ? (sweConfig.trueNode ? swe.Body.trueNode : swe.Body.meanNode)
+          : sweBodyFor(body);
 
-      _log.fine('calc body=$body sweId=$sweId');
+      _log.fine('calc body=$body sweBody=$sweBody');
 
-      final ecl = _swe.calcUt(jdUt, sweId, baseEclFlags);
-      final equ = _swe.calcUt(jdUt, sweId, equatorialFlags);
+      final ecl = eph.calcUtWithConfig(jd, sweBody, baseEclFlags, callConfig);
+      final equ = eph.calcUtWithConfig(
+        jd,
+        sweBody,
+        equatorialFlags,
+        callConfig,
+      );
 
       final eclPos = _fromCalcResult(ecl);
       final equPos = _fromCalcResult(equ);
@@ -147,8 +174,8 @@ class SweFacade {
       bodiesEcliptic[body] = eclPos;
       bodiesEquatorial[body] = equPos;
 
-      final pheno = _safePheno(jdUt, body, sweId, baseEclFlags);
-      if (pheno != null) phenoData[body] = pheno;
+      final pheno = _safePheno(eph, jd, body, sweBody, sweConfig, topo);
+      if (pheno != null) phenoResults[body] = pheno;
 
       if (body == Body.rahu) {
         rahuEcl = eclPos;
@@ -156,13 +183,23 @@ class SweFacade {
       }
 
       if (baryEcl != null) {
-        final r = _swe.calcUt(jdUt, sweId, extraBase | seFlgBaryCtr);
+        final r = eph.calcUtWithConfig(
+          jd,
+          sweBody,
+          extraBase | swe.CalcFlags.baryctr,
+          callConfig,
+        );
         final pos = _fromCalcResult(r);
         baryEcl[body] = pos;
         if (body == Body.rahu) rahuBaryEcl = pos;
       }
       if (helioEcl != null && body != Body.sun) {
-        final r = _swe.calcUt(jdUt, sweId, extraBase | seFlgHelCtr);
+        final r = eph.calcUtWithConfig(
+          jd,
+          sweBody,
+          extraBase | swe.CalcFlags.helctr,
+          callConfig,
+        );
         final pos = _fromCalcResult(r);
         helioEcl[body] = pos;
         if (body == Body.rahu) rahuHelioEcl = pos;
@@ -188,10 +225,20 @@ class SweFacade {
     for (final star in sweConfig.stars) {
       _log.fine('calc star=${star.label} sweName=${sweNameFor(star)}');
       try {
-        final ecl = _swe.fixstar2Ut(sweNameFor(star), jdUt, baseEclFlags);
-        final equ = _swe.fixstar2Ut(sweNameFor(star), jdUt, equatorialFlags);
+        final ecl = eph.fixstar2UtWithConfig(
+          sweNameFor(star),
+          jd,
+          baseEclFlags,
+          callConfig,
+        );
+        final equ = eph.fixstar2UtWithConfig(
+          sweNameFor(star),
+          jd,
+          equatorialFlags,
+          callConfig,
+        );
         final data = includeStarData
-            ? _calcStarData(sweNameFor(star), jdUt, loc, sweConfig)
+            ? _calcStarData(eph, sweNameFor(star), jd, loc, sweConfig)
             : null;
         starsMap[star] = StarPosition(
           ecliptic: _fromFixstarResult(ecl),
@@ -208,10 +255,20 @@ class SweFacade {
     for (final name in sweConfig.customStarNames) {
       _log.fine('calc customStar=$name');
       try {
-        final ecl = _swe.fixstar2Ut(name, jdUt, baseEclFlags);
-        final equ = _swe.fixstar2Ut(name, jdUt, equatorialFlags);
+        final ecl = eph.fixstar2UtWithConfig(
+          name,
+          jd,
+          baseEclFlags,
+          callConfig,
+        );
+        final equ = eph.fixstar2UtWithConfig(
+          name,
+          jd,
+          equatorialFlags,
+          callConfig,
+        );
         final data = includeStarData
-            ? _calcStarData(name, jdUt, loc, sweConfig)
+            ? _calcStarData(eph, name, jd, loc, sweConfig)
             : null;
         customStarsMap[name] = StarPosition(
           ecliptic: _fromFixstarResult(ecl),
@@ -222,10 +279,20 @@ class SweFacade {
         if (!name.endsWith('%')) {
           _log.fine('fixstar exact match failed for $name, retrying with %');
           try {
-            final ecl = _swe.fixstar2Ut('$name%', jdUt, baseEclFlags);
-            final equ = _swe.fixstar2Ut('$name%', jdUt, equatorialFlags);
+            final ecl = eph.fixstar2UtWithConfig(
+              '$name%',
+              jd,
+              baseEclFlags,
+              callConfig,
+            );
+            final equ = eph.fixstar2UtWithConfig(
+              '$name%',
+              jd,
+              equatorialFlags,
+              callConfig,
+            );
             final data = includeStarData
-                ? _calcStarData(name, jdUt, loc, sweConfig)
+                ? _calcStarData(eph, name, jd, loc, sweConfig)
                 : null;
             customStarsMap[name] = StarPosition(
               ecliptic: _fromFixstarResult(ecl),
@@ -242,30 +309,41 @@ class SweFacade {
     }
 
     // House cusps and ascmc.
-    // housesEx takes hsys as the ASCII code of the house system character.
-    final hsys = sweConfig.houseSystem.sweChar.codeUnitAt(0);
-    final houseFlags = isSidereal ? seFlgSidereal : 0;
-    final houseResult = _swe.housesEx(
-      jdUt,
+    final hsys = swe.HouseSystem.fromCharCode(
+      sweConfig.houseSystem.sweChar.codeUnitAt(0),
+    )!;
+    final houseFlags = isSidereal ? swe.CalcFlags.sidereal : swe.CalcFlags.none;
+    final housesEph = isSidereal ? _handle(source, signMode) : eph;
+    final houseResult = housesEph.housesEx2(
+      jd,
       houseFlags,
       loc.latitude,
       loc.longitude,
       hsys,
     );
-    // cusps[0] is unused in SWE (1-based), so we take indices 1..12.
     final cusps = List<double>.generate(12, (i) => houseResult.cusps[i + 1]);
-    final ascmc = _ascMcFromList(houseResult.ascmc);
+    final ascmc = AscMcPoints(
+      ascendant: houseResult.ascmc.ascendant,
+      mc: houseResult.ascmc.mc,
+      armc: houseResult.ascmc.armc,
+      vertex: houseResult.ascmc.vertex,
+      equatorialAscendant: houseResult.ascmc.equatorialAscendant,
+      coAscendantKoch: houseResult.ascmc.coascendantKoch,
+      coAscendantMunkasey: houseResult.ascmc.coascendantMunkasey,
+      polarAscendant: houseResult.ascmc.polarAscendant,
+    );
 
     // Ayanamsa value (sign frame).
     double ayanamsaValue = 0.0;
     if (isSidereal) {
-      ayanamsaValue = _swe.getAyanamsaUt(jdUt);
+      ayanamsaValue = _handle(
+        source,
+        signMode,
+      ).getAyanamsaUt(jd, swe.CalcFlags.none);
       _log.fine('ayanamsa=$ayanamsaValue');
     }
 
     // ── Nakshatra-frame longitudes ──
-    // Computed AFTER all sign-frame work is done (including getAyanamsaUt).
-    // SWE sidereal mode may change here — nothing after this depends on it.
     final nakAyanamsa = sweConfig.nakAyanamsa;
     _log.fine('nakAyanamsa=${nakAyanamsa.label}');
 
@@ -296,10 +374,10 @@ class SweFacade {
       // Dhruva is equatorial-only. Ecliptic maps store the same value.
       for (final body in sweConfig.bodies) {
         if (body == Body.ketu) continue;
-        final sweId = body == Body.rahu
-            ? (sweConfig.trueNode ? seTrueNode : seMeanNode)
-            : sweIdFor(body);
-        final equ = dhruvaGcEquatorial(_swe, jdUt, sweId);
+        final sweBody = body == Body.rahu
+            ? (sweConfig.trueNode ? swe.Body.trueNode : swe.Body.meanNode)
+            : sweBodyFor(body);
+        final equ = dhruvaGcEquatorial(eph, jdUt, sweBody);
         bodiesNakEclLon[body] = equ;
         bodiesNakEquLon[body] = equ;
       }
@@ -311,7 +389,7 @@ class SweFacade {
       }
       for (final star in sweConfig.stars) {
         try {
-          final equ = dhruvaGcEquatorialStar(_swe, jdUt, sweNameFor(star));
+          final equ = dhruvaGcEquatorialStar(eph, jdUt, sweNameFor(star));
           starsNakEclLon[star] = equ;
           starsNakEquLon[star] = equ;
         } catch (e) {
@@ -320,13 +398,13 @@ class SweFacade {
       }
       for (final name in sweConfig.customStarNames) {
         try {
-          final equ = dhruvaGcEquatorialStar(_swe, jdUt, name);
+          final equ = dhruvaGcEquatorialStar(eph, jdUt, name);
           customStarsNakEclLon[name] = equ;
           customStarsNakEquLon[name] = equ;
         } catch (_) {
           if (!name.endsWith('%')) {
             try {
-              final equ = dhruvaGcEquatorialStar(_swe, jdUt, '$name%');
+              final equ = dhruvaGcEquatorialStar(eph, jdUt, '$name%');
               customStarsNakEclLon[name] = equ;
               customStarsNakEquLon[name] = equ;
             } catch (_) {}
@@ -335,33 +413,45 @@ class SweFacade {
       }
     } else {
       // Standard SWE ayanamsa or tropical, different from signAyanamsa.
-      // setSidMode changes global SWE state — safe because sign-frame work
-      // (including getAyanamsaUt) is already complete.
-      final int nakEclFlags;
-      final int nakEquFlags;
+      final swe.SiderealMode? nakMode =
+          !nakAyanamsa.isTropical && nakAyanamsa.isStandard
+          ? siderealModeFor(nakAyanamsa)
+          : null;
+
+      final nakCallConfig = swe.EphemerisConfig(
+        siderealMode: nakMode,
+        topographic: topo,
+      );
+
+      final swe.CalcFlags nakEclFlags;
+      final swe.CalcFlags nakEquFlags;
       if (nakAyanamsa.isTropical) {
-        nakEclFlags =
-            ephemerisFlag(sweConfig.ephemerisSource) |
-            seFlgSpeed |
-            (sweConfig.topocentric ? seFlgTopoCtr : 0);
-        nakEquFlags = nakEclFlags | seFlgEquatorial;
+        var flags =
+            ephemerisFlag(sweConfig.ephemerisSource) | swe.CalcFlags.speed;
+        if (sweConfig.topocentric) flags = flags | swe.CalcFlags.topoctr;
+        nakEclFlags = flags;
+        nakEquFlags = flags | swe.CalcFlags.equatorial;
       } else {
-        _swe.setSidMode(nakAyanamsa.sweCode);
-        nakEclFlags =
+        var flags =
             ephemerisFlag(sweConfig.ephemerisSource) |
-            seFlgSpeed |
-            seFlgSidereal |
-            (sweConfig.topocentric ? seFlgTopoCtr : 0);
-        nakEquFlags = nakEclFlags | seFlgEquatorial;
+            swe.CalcFlags.speed |
+            swe.CalcFlags.sidereal;
+        if (sweConfig.topocentric) flags = flags | swe.CalcFlags.topoctr;
+        nakEclFlags = flags;
+        nakEquFlags = flags | swe.CalcFlags.equatorial;
       }
 
       for (final body in sweConfig.bodies) {
         if (body == Body.ketu) continue;
-        final sweId = body == Body.rahu
-            ? (sweConfig.trueNode ? seTrueNode : seMeanNode)
-            : sweIdFor(body);
-        bodiesNakEclLon[body] = _swe.calcUt(jdUt, sweId, nakEclFlags).longitude;
-        bodiesNakEquLon[body] = _swe.calcUt(jdUt, sweId, nakEquFlags).longitude;
+        final sweBody = body == Body.rahu
+            ? (sweConfig.trueNode ? swe.Body.trueNode : swe.Body.meanNode)
+            : sweBodyFor(body);
+        bodiesNakEclLon[body] = eph
+            .calcUtWithConfig(jd, sweBody, nakEclFlags, nakCallConfig)
+            .longitude;
+        bodiesNakEquLon[body] = eph
+            .calcUtWithConfig(jd, sweBody, nakEquFlags, nakCallConfig)
+            .longitude;
       }
       if (sweConfig.bodies.contains(Body.ketu) &&
           bodiesNakEclLon.containsKey(Body.rahu)) {
@@ -371,11 +461,11 @@ class SweFacade {
       for (final star in sweConfig.stars) {
         try {
           final sweName = sweNameFor(star);
-          starsNakEclLon[star] = _swe
-              .fixstar2Ut(sweName, jdUt, nakEclFlags)
+          starsNakEclLon[star] = eph
+              .fixstar2UtWithConfig(sweName, jd, nakEclFlags, nakCallConfig)
               .longitude;
-          starsNakEquLon[star] = _swe
-              .fixstar2Ut(sweName, jdUt, nakEquFlags)
+          starsNakEquLon[star] = eph
+              .fixstar2UtWithConfig(sweName, jd, nakEquFlags, nakCallConfig)
               .longitude;
         } catch (e) {
           _log.warning('fixstar nak calc failed for ${star.label}: $e');
@@ -383,20 +473,30 @@ class SweFacade {
       }
       for (final name in sweConfig.customStarNames) {
         try {
-          customStarsNakEclLon[name] = _swe
-              .fixstar2Ut(name, jdUt, nakEclFlags)
+          customStarsNakEclLon[name] = eph
+              .fixstar2UtWithConfig(name, jd, nakEclFlags, nakCallConfig)
               .longitude;
-          customStarsNakEquLon[name] = _swe
-              .fixstar2Ut(name, jdUt, nakEquFlags)
+          customStarsNakEquLon[name] = eph
+              .fixstar2UtWithConfig(name, jd, nakEquFlags, nakCallConfig)
               .longitude;
         } catch (_) {
           if (!name.endsWith('%')) {
             try {
-              customStarsNakEclLon[name] = _swe
-                  .fixstar2Ut('$name%', jdUt, nakEclFlags)
+              customStarsNakEclLon[name] = eph
+                  .fixstar2UtWithConfig(
+                    '$name%',
+                    jd,
+                    nakEclFlags,
+                    nakCallConfig,
+                  )
                   .longitude;
-              customStarsNakEquLon[name] = _swe
-                  .fixstar2Ut('$name%', jdUt, nakEquFlags)
+              customStarsNakEquLon[name] = eph
+                  .fixstar2UtWithConfig(
+                    '$name%',
+                    jd,
+                    nakEquFlags,
+                    nakCallConfig,
+                  )
                   .longitude;
             } catch (_) {}
           }
@@ -405,25 +505,23 @@ class SweFacade {
     }
 
     // ── Cusp nakshatra-frame longitudes ──
-    // For standard ayanamsas, recompute housesEx in the nak frame.
-    // For dhruva (equatorial-only), cusps have no meaningful nak longitude.
     final List<double> cuspsNakLon;
     if (nakAyanamsa == sweConfig.signAyanamsa) {
       cuspsNakLon = cusps;
     } else if (!nakAyanamsa.isTropical && nakAyanamsa.isStandard) {
-      _swe.setSidMode(nakAyanamsa.sweCode);
-      final nakHouse = _swe.housesEx(
-        jdUt,
-        seFlgSidereal,
+      final nakMode = siderealModeFor(nakAyanamsa);
+      final nakHouse = _handle(source, nakMode).housesEx2(
+        jd,
+        swe.CalcFlags.sidereal,
         loc.latitude,
         loc.longitude,
         hsys,
       );
       cuspsNakLon = List.generate(12, (i) => nakHouse.cusps[i + 1]);
     } else if (nakAyanamsa.isTropical && isSidereal) {
-      final nakHouse = _swe.housesEx(
-        jdUt,
-        0,
+      final nakHouse = eph.housesEx2(
+        jd,
+        swe.CalcFlags.none,
         loc.latitude,
         loc.longitude,
         hsys,
@@ -434,7 +532,7 @@ class SweFacade {
     }
 
     // Sunrise / sunset.
-    final sunTimes = _calcSunTimes(jdUt, loc);
+    final sunTimes = _calcSunTimes(eph, jd, loc, sweConfig);
 
     return EphSnapshot(
       jdUt: jdUt,
@@ -442,7 +540,7 @@ class SweFacade {
       sweConfig: sweConfig,
       bodiesEcliptic: bodiesEcliptic,
       bodiesEquatorial: bodiesEquatorial,
-      phenoData: phenoData,
+      phenoData: phenoResults,
       cusps: cusps,
       ascmc: ascmc,
       sunTimes: sunTimes,
@@ -461,7 +559,7 @@ class SweFacade {
     );
   }
 
-  BodyPosition _fromCalcResult(CalcResult r) => BodyPosition(
+  BodyPosition _fromCalcResult(swe.CalcResult r) => BodyPosition(
     longitude: r.longitude,
     latitude: r.latitude,
     distance: r.distance,
@@ -470,7 +568,7 @@ class SweFacade {
     speedDistance: r.distanceSpeed,
   );
 
-  BodyPosition _fromFixstarResult(FixstarResult r) => BodyPosition(
+  BodyPosition _fromFixstarResult(swe.FixstarResult r) => BodyPosition(
     longitude: r.longitude,
     latitude: r.latitude,
     distance: r.distance,
@@ -479,15 +577,22 @@ class SweFacade {
     speedDistance: r.distanceSpeed,
   );
 
-  /// Call `swe_pheno_ut` for [body]. Skips lunar nodes (mathematical points
-  /// with no pheno output); logs and returns null on SWE error. Flags use
-  /// the base ecliptic flags minus `seFlgSidereal`/`seFlgEquatorial`
-  /// (pheno is a geocentric angular quantity; sidereal frame is irrelevant).
-  PhenoData? _safePheno(double jdUt, Body body, int sweId, int flags) {
+  PhenoData? _safePheno(
+    swe.Ephemeris eph,
+    swe.JdUt1 jd,
+    Body body,
+    swe.Body sweBody,
+    SweConfig sweConfig,
+    swe.TopoPosition? topo,
+  ) {
     if (body == Body.rahu || body == Body.ketu) return null;
-    final phenoFlags = flags & ~(seFlgSidereal | seFlgEquatorial);
+    final phenoFlags =
+        ephemerisFlag(sweConfig.ephemerisSource) |
+        swe.CalcFlags.speed |
+        (sweConfig.topocentric ? swe.CalcFlags.topoctr : swe.CalcFlags.none);
+    final phenoConfig = swe.EphemerisConfig(topographic: topo);
     try {
-      final r = _swe.phenoUt(jdUt, sweId, phenoFlags);
+      final r = eph.phenoUtWithConfig(jd, sweBody, phenoFlags, phenoConfig);
       return PhenoData(
         phaseAngle: r.phaseAngle,
         phase: r.phase,
@@ -510,111 +615,117 @@ class SweFacade {
     speedDistance: rahu.speedDistance,
   );
 
-  AscMcPoints _ascMcFromList(List<double> a) => AscMcPoints(
-    ascendant: a[0],
-    mc: a[1],
-    armc: a[2],
-    vertex: a[3],
-    equatorialAscendant: a[4],
-    coAscendantKoch: a[5],
-    coAscendantMunkasey: a[6],
-    polarAscendant: a[7],
-  );
-
   StarData _calcStarData(
+    swe.Ephemeris eph,
     String sweName,
-    double jdUt,
+    swe.JdUt1 jd,
     Location loc,
     SweConfig sweConfig,
   ) {
     double? mag;
     try {
-      mag = _swe.fixstar2Mag(sweName);
+      mag = eph.fixstar2Mag(sweName).magnitude;
     } catch (e) {
       _log.fine('fixstar2Mag failed for $sweName: $e');
     }
 
     double? riseJd;
     double? setJd;
-    bool riseFailed = false;
-    bool setFailed = false;
+    bool riseCircumpolar = false;
+    bool setCircumpolar = false;
+
+    final epheFlags = ephemerisFlag(sweConfig.ephemerisSource);
 
     try {
-      final r = _swe.riseTrans(
-        jdUt,
-        0,
-        starName: sweName,
-        rsmi: seCalcRise,
-        geolon: loc.longitude,
-        geolat: loc.latitude,
-        geoalt: loc.altitude,
-      );
-      riseJd = r.transitTime;
-    } catch (e) {
+      riseJd = eph
+          .riseTrans(
+            jd,
+            swe.Body.sun,
+            epheFlags,
+            swe.RiseSetFlags.rise,
+            starname: sweName,
+            geolon: loc.longitude,
+            geolat: loc.latitude,
+            geoalt: loc.altitude,
+          )
+          .time;
+    } on swe.CircumpolarBodyException {
+      riseCircumpolar = true;
+    } on swe.SweException catch (e) {
       _log.warning('star rise failed for $sweName: $e');
-      riseFailed = true;
     }
 
     try {
-      final r = _swe.riseTrans(
-        jdUt,
-        0,
-        starName: sweName,
-        rsmi: seCalcSet,
-        geolon: loc.longitude,
-        geolat: loc.latitude,
-        geoalt: loc.altitude,
-      );
-      setJd = r.transitTime;
-    } catch (e) {
+      setJd = eph
+          .riseTrans(
+            jd,
+            swe.Body.sun,
+            epheFlags,
+            swe.RiseSetFlags.set,
+            starname: sweName,
+            geolon: loc.longitude,
+            geolat: loc.latitude,
+            geoalt: loc.altitude,
+          )
+          .time;
+    } on swe.CircumpolarBodyException {
+      setCircumpolar = true;
+    } on swe.SweException catch (e) {
       _log.warning('star set failed for $sweName: $e');
-      setFailed = true;
     }
-
-    // Only mark circumpolar when both rise and set fail — a single failure
-    // could be a genuine circumpolar condition or an input/ephemeris error,
-    // but both failing strongly implies a circumpolar star at this latitude.
-    // TODO: inspect SWE error codes when the Dart binding exposes them to
-    // distinguish circumpolar from calculation errors more precisely.
-    final circumpolar = riseFailed && setFailed;
 
     return StarData(
       apparentMagnitude: mag,
       riseJd: riseJd,
       setJd: setJd,
-      circumpolar: circumpolar,
+      circumpolar: riseCircumpolar || setCircumpolar,
     );
   }
 
-  SunTimes _calcSunTimes(double jdUt, Location loc) {
+  SunTimes _calcSunTimes(
+    swe.Ephemeris eph,
+    swe.JdUt1 jd,
+    Location loc,
+    SweConfig sweConfig,
+  ) {
     double? sunrise;
     double? sunset;
 
+    final epheFlags = ephemerisFlag(sweConfig.ephemerisSource);
+
     try {
-      final r = _swe.riseTrans(
-        jdUt,
-        seSun,
-        rsmi: seCalcRise,
-        geolon: loc.longitude,
-        geolat: loc.latitude,
-        geoalt: loc.altitude,
-      );
-      sunrise = r.transitTime;
-    } catch (e) {
+      sunrise = eph
+          .riseTrans(
+            jd,
+            swe.Body.sun,
+            epheFlags,
+            swe.RiseSetFlags.rise,
+            geolon: loc.longitude,
+            geolat: loc.latitude,
+            geoalt: loc.altitude,
+          )
+          .time;
+    } on swe.CircumpolarBodyException {
+      // Polar day/night — no rise event.
+    } on swe.SweException catch (e) {
       _log.warning('sunrise calc failed: $e');
     }
 
     try {
-      final r = _swe.riseTrans(
-        jdUt,
-        seSun,
-        rsmi: seCalcSet,
-        geolon: loc.longitude,
-        geolat: loc.latitude,
-        geoalt: loc.altitude,
-      );
-      sunset = r.transitTime;
-    } catch (e) {
+      sunset = eph
+          .riseTrans(
+            jd,
+            swe.Body.sun,
+            epheFlags,
+            swe.RiseSetFlags.set,
+            geolon: loc.longitude,
+            geolat: loc.latitude,
+            geoalt: loc.altitude,
+          )
+          .time;
+    } on swe.CircumpolarBodyException {
+      // Polar day/night — no set event.
+    } on swe.SweException catch (e) {
       _log.warning('sunset calc failed: $e');
     }
 
@@ -623,81 +734,63 @@ class SweFacade {
 
   /// Ayanamsa value (arc-degrees) for ephemeris time [jdEt] under [ayanamsa].
   ///
-  /// Returns 0.0 for tropical. For non-tropical standard ayanamsas, applies
-  /// `setSidMode` before delegating to `swe_get_ayanamsa` (ET variant).
-  ///
-  /// The UT variant is computed internally by [calcAll] and stored on the
-  /// resulting [EphSnapshot] as `ayanamsaValue`; use this method when you
-  /// need ET input or ad-hoc computation outside a full snapshot.
-  ///
-  /// Non-standard ayanamsas (custom `setSidModeEx` configurations) are not
-  /// supported here; pass a standard [Ayanamsa].
+  /// Returns 0.0 for tropical. For non-tropical standard ayanamsas, uses
+  /// a handle constructed with the appropriate sidereal mode.
   double getAyanamsa(double jdEt, Ayanamsa ayanamsa) {
-    _ensureConfig();
-    return _ayanamsaWith(ayanamsa, () => _swe.getAyanamsa(jdEt));
+    if (ayanamsa.isTropical) return 0.0;
+    return _handle(
+      _defaultSource,
+      siderealModeFor(ayanamsa),
+    ).getAyanamsa(swe.JdTt(jdEt));
   }
 
   /// Ayanamsa value (arc-degrees) for universal time [jdUt] under [ayanamsa].
-  ///
-  /// UT counterpart of [getAyanamsa]. Differs by roughly delta-T (~64s worth
-  /// of precession ≈ 0.001°) — negligible for sign-level work, meaningful
-  /// for sub-arcsecond calculations.
   double getAyanamsaUt(double jdUt, Ayanamsa ayanamsa) {
-    _ensureConfig();
-    return _ayanamsaWith(ayanamsa, () => _swe.getAyanamsaUt(jdUt));
-  }
-
-  double _ayanamsaWith(Ayanamsa ayanamsa, double Function() compute) {
     if (ayanamsa.isTropical) return 0.0;
-    if (ayanamsa.isStandard) {
-      _swe.setSidMode(ayanamsa.sweCode);
-    }
-    return compute();
+    return _handle(
+      _defaultSource,
+      siderealModeFor(ayanamsa),
+    ).getAyanamsaUt(swe.JdUt1(jdUt), swe.CalcFlags.none);
   }
 
   /// Sidereal ecliptic longitude of [sweId] at [jdUt] under [ayanamsa].
-  ///
-  /// Sets the SWE sidereal mode and computes directly in the sidereal frame,
-  /// rather than computing tropical and subtracting. Only for standard SWE
-  /// ayanamsas (codes 0–96).
   double calcSiderealLongitude(double jdUt, int sweId, Ayanamsa ayanamsa) {
-    _ensureConfig();
     assert(ayanamsa.isStandard);
-    _swe.setSidMode(ayanamsa.sweCode);
     final flags =
-        ephemerisFlag(EphemerisSource.swissEph) | seFlgSpeed | seFlgSidereal;
-    final r = _swe.calcUt(jdUt, sweId, flags);
-    return r.longitude;
+        swe.CalcFlags.swiEph | swe.CalcFlags.speed | swe.CalcFlags.sidereal;
+    return _handle(_defaultSource)
+        .calcUtWithConfig(
+          swe.JdUt1(jdUt),
+          swe.Body.fromRawId(sweId),
+          flags,
+          swe.EphemerisConfig(siderealMode: siderealModeFor(ayanamsa)),
+        )
+        .longitude;
   }
 
   /// Dhruva GC mid-Mula Equatorial longitude for [sweId] at [jdUt].
-  ///
-  /// Delegates to the free function [dhruvaGcEquatorial] which anchors
-  /// the nakshatra system equatorially on Sgr A*.
   double calcDhruvaLongitude(double jdUt, int sweId) {
-    _ensureConfig();
-    return dhruvaGcEquatorial(_swe, jdUt, sweId);
+    return dhruvaGcEquatorial(
+      _handle(_defaultSource),
+      jdUt,
+      swe.Body.fromRawId(sweId),
+    );
   }
 
-  /// Find the four tropical cardinal points of calendar [year]: the JDs (UT)
-  /// at which the Sun reaches tropical longitudes 0°, 90°, 180°, 270°.
-  ///
-  /// [source] selects the underlying ephemeris — defaults to Swiss Ephemeris.
-  /// Sidereal and topocentric settings from [SweConfig] are irrelevant:
-  /// equinoxes and solstices are defined against the tropical frame.
+  /// Find the four tropical cardinal points of calendar [year].
   CardinalPoints calcCardinalPoints(
     int year, {
     EphemerisSource source = EphemerisSource.swissEph,
   }) {
-    _ensureConfig();
-    final jdStart = _swe.julday(year, 1, 1, 0.0);
+    final eph = _handle(_sourceFor(source));
+    final jdStart = swe.julday(year, 1, 1, 0.0, swe.CalendarType.gregorian);
     final flags = ephemerisFlag(source);
     _log.info('calcCardinalPoints year=$year jdStart=$jdStart');
     return CardinalPoints(
-      ascendingEquinox: _swe.solCrossUt(0.0, jdStart, flags),
-      northernSolstice: _swe.solCrossUt(90.0, jdStart, flags),
-      descendingEquinox: _swe.solCrossUt(180.0, jdStart, flags),
-      southernSolstice: _swe.solCrossUt(270.0, jdStart, flags),
+      ascendingEquinox: eph.solcrossUt(0.0, jdStart, flags),
+      northernSolstice: eph.solcrossUt(90.0, jdStart, flags),
+      descendingEquinox: eph.solcrossUt(180.0, jdStart, flags),
+      southernSolstice: eph.solcrossUt(270.0, jdStart, flags),
     );
   }
 }
