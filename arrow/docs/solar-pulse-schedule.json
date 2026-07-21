@@ -1,0 +1,4810 @@
+[
+  {
+    "start": "2026-01-01T00:00:00.000Z",
+    "end": "2026-01-08T07:03:12.261Z",
+    "aditya": "pusha",
+    "being_name": "Gautama",
+    "being_type": "rishi",
+    "being_slug": "pusha-rishi"
+  },
+  {
+    "start": "2026-01-08T07:03:12.261Z",
+    "end": "2026-01-15T03:56:09.067Z",
+    "aditya": "pusha",
+    "being_name": "Sushena",
+    "being_type": "yaksha",
+    "being_slug": "pusha-yaksha"
+  },
+  {
+    "start": "2026-01-15T03:56:09.067Z",
+    "end": "2026-01-20T01:44:55.825Z",
+    "aditya": "pusha",
+    "being_name": "Ghritachi",
+    "being_type": "apsara",
+    "being_slug": "pusha-apsara"
+  },
+  {
+    "start": "2026-01-20T01:44:55.825Z",
+    "end": "2026-01-24T23:40:28.638Z",
+    "aditya": "parjanya",
+    "being_name": "Vishvaci",
+    "being_type": "apsara",
+    "being_slug": "parjanya-apsara"
+  },
+  {
+    "start": "2026-01-24T23:40:28.638Z",
+    "end": "2026-01-31T21:03:02.593Z",
+    "aditya": "parjanya",
+    "being_name": "Senajit",
+    "being_type": "yaksha",
+    "being_slug": "parjanya-yaksha"
+  },
+  {
+    "start": "2026-01-31T21:03:02.593Z",
+    "end": "2026-02-08T18:28:23.320Z",
+    "aditya": "parjanya",
+    "being_name": "Bharadvaja",
+    "being_type": "rishi",
+    "being_slug": "parjanya-rishi"
+  },
+  {
+    "start": "2026-02-08T18:28:23.320Z",
+    "end": "2026-02-13T17:04:08.730Z",
+    "aditya": "parjanya",
+    "being_name": "Varca",
+    "being_type": "rakshasa",
+    "being_slug": "parjanya-rakshasa"
+  },
+  {
+    "start": "2026-02-13T17:04:08.730Z",
+    "end": "2026-02-18T15:51:55.942Z",
+    "aditya": "parjanya",
+    "being_name": "Vishvavasu",
+    "being_type": "gandharva",
+    "being_slug": "parjanya-gandharva"
+  },
+  {
+    "start": "2026-02-18T15:51:55.942Z",
+    "end": "2026-02-23T14:55:29.736Z",
+    "aditya": "dhata",
+    "being_name": "Tumburu",
+    "being_type": "gandharva",
+    "being_slug": "dhata-gandharva"
+  },
+  {
+    "start": "2026-02-23T14:55:29.736Z",
+    "end": "2026-02-28T14:17:34.907Z",
+    "aditya": "dhata",
+    "being_name": "Heti",
+    "being_type": "rakshasa",
+    "being_slug": "dhata-rakshasa"
+  },
+  {
+    "start": "2026-02-28T14:17:34.907Z",
+    "end": "2026-03-08T13:56:11.484Z",
+    "aditya": "dhata",
+    "being_name": "Pulastya",
+    "being_type": "rishi",
+    "being_slug": "dhata-rishi"
+  },
+  {
+    "start": "2026-03-08T13:56:11.484Z",
+    "end": "2026-03-15T14:12:34.321Z",
+    "aditya": "dhata",
+    "being_name": "Rathakrit",
+    "being_type": "yaksha",
+    "being_slug": "dhata-yaksha"
+  },
+  {
+    "start": "2026-03-15T14:12:34.321Z",
+    "end": "2026-03-20T14:45:58.887Z",
+    "aditya": "dhata",
+    "being_name": "Kritasthali",
+    "being_type": "apsara",
+    "being_slug": "dhata-apsara"
+  },
+  {
+    "start": "2026-03-20T14:45:58.887Z",
+    "end": "2026-03-25T15:40:32.373Z",
+    "aditya": "aryama",
+    "being_name": "Punjikasthali",
+    "being_type": "apsara",
+    "being_slug": "aryama-apsara"
+  },
+  {
+    "start": "2026-03-25T15:40:32.373Z",
+    "end": "2026-04-01T17:36:49.131Z",
+    "aditya": "aryama",
+    "being_name": "Rathauja",
+    "being_type": "yaksha",
+    "being_slug": "aryama-yaksha"
+  },
+  {
+    "start": "2026-04-01T17:36:49.131Z",
+    "end": "2026-04-09T20:40:45.117Z",
+    "aditya": "aryama",
+    "being_name": "Pulaha",
+    "being_type": "rishi",
+    "being_slug": "aryama-rishi"
+  },
+  {
+    "start": "2026-04-09T20:40:45.117Z",
+    "end": "2026-04-14T23:00:13.403Z",
+    "aditya": "aryama",
+    "being_name": "Praheti",
+    "being_type": "rakshasa",
+    "being_slug": "aryama-rakshasa"
+  },
+  {
+    "start": "2026-04-14T23:00:13.403Z",
+    "end": "2026-04-20T01:39:07.778Z",
+    "aditya": "aryama",
+    "being_name": "Narada",
+    "being_type": "gandharva",
+    "being_slug": "aryama-gandharva"
+  },
+  {
+    "start": "2026-04-20T01:39:07.778Z",
+    "end": "2026-04-25T04:40:07.104Z",
+    "aditya": "mitra",
+    "being_name": "Haha",
+    "being_type": "gandharva",
+    "being_slug": "mitra-gandharva"
+  },
+  {
+    "start": "2026-04-25T04:40:07.104Z",
+    "end": "2026-04-30T08:04:27.847Z",
+    "aditya": "mitra",
+    "being_name": "Paurusheya",
+    "being_type": "rakshasa",
+    "being_slug": "mitra-rakshasa"
+  },
+  {
+    "start": "2026-04-30T08:04:27.847Z",
+    "end": "2026-05-08T14:11:27.744Z",
+    "aditya": "mitra",
+    "being_name": "Atri",
+    "being_type": "rishi",
+    "being_slug": "mitra-rishi"
+  },
+  {
+    "start": "2026-05-08T14:11:27.744Z",
+    "end": "2026-05-15T20:05:39.038Z",
+    "aditya": "mitra",
+    "being_name": "Rathasvana",
+    "being_type": "yaksha",
+    "being_slug": "mitra-yaksha"
+  },
+  {
+    "start": "2026-05-15T20:05:39.038Z",
+    "end": "2026-05-21T00:36:44.956Z",
+    "aditya": "mitra",
+    "being_name": "Menaka",
+    "being_type": "apsara",
+    "being_slug": "mitra-apsara"
+  },
+  {
+    "start": "2026-05-21T00:36:44.956Z",
+    "end": "2026-05-26T05:25:56.543Z",
+    "aditya": "varuna",
+    "being_name": "Sahajanya",
+    "being_type": "apsara",
+    "being_slug": "varuna-apsara"
+  },
+  {
+    "start": "2026-05-26T05:25:56.543Z",
+    "end": "2026-06-02T12:36:50.229Z",
+    "aditya": "varuna",
+    "being_name": "Rathacitra",
+    "being_type": "yaksha",
+    "being_slug": "varuna-yaksha"
+  },
+  {
+    "start": "2026-06-02T12:36:50.229Z",
+    "end": "2026-06-10T21:13:56.499Z",
+    "aditya": "varuna",
+    "being_name": "Vasishtha",
+    "being_type": "rishi",
+    "being_slug": "varuna-rishi"
+  },
+  {
+    "start": "2026-06-10T21:13:56.499Z",
+    "end": "2026-06-16T02:45:16.040Z",
+    "aditya": "varuna",
+    "being_name": "Chitrasvana",
+    "being_type": "rakshasa",
+    "being_slug": "varuna-rakshasa"
+  },
+  {
+    "start": "2026-06-16T02:45:16.040Z",
+    "end": "2026-06-21T08:24:30.850Z",
+    "aditya": "varuna",
+    "being_name": "Huhu",
+    "being_type": "gandharva",
+    "being_slug": "varuna-gandharva"
+  },
+  {
+    "start": "2026-06-21T08:24:30.850Z",
+    "end": "2026-06-26T14:12:02.021Z",
+    "aditya": "indra",
+    "being_name": "Vishvavasu",
+    "being_type": "gandharva",
+    "being_slug": "indra-gandharva"
+  },
+  {
+    "start": "2026-06-26T14:12:02.021Z",
+    "end": "2026-07-01T20:04:12.686Z",
+    "aditya": "indra",
+    "being_name": "Varya",
+    "being_type": "rakshasa",
+    "being_slug": "indra-rakshasa"
+  },
+  {
+    "start": "2026-07-01T20:04:12.686Z",
+    "end": "2026-07-10T05:26:59.165Z",
+    "aditya": "indra",
+    "being_name": "Angiras",
+    "being_type": "rishi",
+    "being_slug": "indra-rishi"
+  },
+  {
+    "start": "2026-07-10T05:26:59.165Z",
+    "end": "2026-07-17T13:30:32.300Z",
+    "aditya": "indra",
+    "being_name": "Shrota",
+    "being_type": "yaksha",
+    "being_slug": "indra-yaksha"
+  },
+  {
+    "start": "2026-07-17T13:30:32.300Z",
+    "end": "2026-07-22T19:13:05.522Z",
+    "aditya": "indra",
+    "being_name": "Pramlocha",
+    "being_type": "apsara",
+    "being_slug": "indra-apsara"
+  },
+  {
+    "start": "2026-07-22T19:13:05.522Z",
+    "end": "2026-07-28T00:51:44.077Z",
+    "aditya": "vivasvan",
+    "being_name": "Anumlocha",
+    "being_type": "apsara",
+    "being_slug": "vivasvan-apsara"
+  },
+  {
+    "start": "2026-07-28T00:51:44.077Z",
+    "end": "2026-08-04T08:32:45.234Z",
+    "aditya": "vivasvan",
+    "being_name": "Asarana",
+    "being_type": "yaksha",
+    "being_slug": "vivasvan-yaksha"
+  },
+  {
+    "start": "2026-08-04T08:32:45.234Z",
+    "end": "2026-08-12T16:47:24.141Z",
+    "aditya": "vivasvan",
+    "being_name": "Bhrigu",
+    "being_type": "rishi",
+    "being_slug": "vivasvan-rishi"
+  },
+  {
+    "start": "2026-08-12T16:47:24.141Z",
+    "end": "2026-08-17T21:39:15.908Z",
+    "aditya": "vivasvan",
+    "being_name": "Vyaghra",
+    "being_type": "rakshasa",
+    "being_slug": "vivasvan-rakshasa"
+  },
+  {
+    "start": "2026-08-17T21:39:15.908Z",
+    "end": "2026-08-23T02:18:48.735Z",
+    "aditya": "vivasvan",
+    "being_name": "Ugrasena",
+    "being_type": "gandharva",
+    "being_slug": "vivasvan-gandharva"
+  },
+  {
+    "start": "2026-08-23T02:18:48.735Z",
+    "end": "2026-08-28T06:44:46.816Z",
+    "aditya": "tvashta",
+    "being_name": "Dhritarashtra",
+    "being_type": "gandharva",
+    "being_slug": "tvashta-gandharva"
+  },
+  {
+    "start": "2026-08-28T06:44:46.816Z",
+    "end": "2026-09-02T10:53:43.169Z",
+    "aditya": "tvashta",
+    "being_name": "Brahmapeta",
+    "being_type": "rakshasa",
+    "being_slug": "tvashta-rakshasa"
+  },
+  {
+    "start": "2026-09-02T10:53:43.169Z",
+    "end": "2026-09-10T16:47:37.983Z",
+    "aditya": "tvashta",
+    "being_name": "Jamadagni",
+    "being_type": "rishi",
+    "being_slug": "tvashta-rishi"
+  },
+  {
+    "start": "2026-09-10T16:47:37.983Z",
+    "end": "2026-09-17T21:15:33.398Z",
+    "aditya": "tvashta",
+    "being_name": "Shatajit",
+    "being_type": "yaksha",
+    "being_slug": "tvashta-yaksha"
+  },
+  {
+    "start": "2026-09-17T21:15:33.398Z",
+    "end": "2026-09-23T00:05:13.770Z",
+    "aditya": "tvashta",
+    "being_name": "Tilottama",
+    "being_type": "apsara",
+    "being_slug": "tvashta-apsara"
+  },
+  {
+    "start": "2026-09-23T00:05:13.770Z",
+    "end": "2026-09-28T02:36:12.876Z",
+    "aditya": "vishnu",
+    "being_name": "Rambha",
+    "being_type": "apsara",
+    "being_slug": "vishnu-apsara"
+  },
+  {
+    "start": "2026-09-28T02:36:12.876Z",
+    "end": "2026-10-05T05:29:25.503Z",
+    "aditya": "vishnu",
+    "being_name": "Satyajit",
+    "being_type": "yaksha",
+    "being_slug": "vishnu-yaksha"
+  },
+  {
+    "start": "2026-10-05T05:29:25.503Z",
+    "end": "2026-10-13T07:51:24.741Z",
+    "aditya": "vishnu",
+    "being_name": "Vishvamitra",
+    "being_type": "rishi",
+    "being_slug": "vishnu-rishi"
+  },
+  {
+    "start": "2026-10-13T07:51:24.741Z",
+    "end": "2026-10-18T08:53:35.039Z",
+    "aditya": "vishnu",
+    "being_name": "Makhapeta",
+    "being_type": "rakshasa",
+    "being_slug": "vishnu-rakshasa"
+  },
+  {
+    "start": "2026-10-18T08:53:35.039Z",
+    "end": "2026-10-23T09:37:56.807Z",
+    "aditya": "vishnu",
+    "being_name": "Suryavarcas",
+    "being_type": "gandharva",
+    "being_slug": "vishnu-gandharva"
+  },
+  {
+    "start": "2026-10-23T09:37:56.807Z",
+    "end": "2026-10-28T10:03:45.879Z",
+    "aditya": "amshu",
+    "being_name": "Ritasena",
+    "being_type": "gandharva",
+    "being_slug": "amshu-gandharva"
+  },
+  {
+    "start": "2026-10-28T10:03:45.879Z",
+    "end": "2026-11-02T10:08:24.712Z",
+    "aditya": "amshu",
+    "being_name": "Vidyucchatru",
+    "being_type": "rakshasa",
+    "being_slug": "amshu-rakshasa"
+  },
+  {
+    "start": "2026-11-02T10:08:24.712Z",
+    "end": "2026-11-10T09:33:00.835Z",
+    "aditya": "amshu",
+    "being_name": "Kashyapa",
+    "being_type": "rishi",
+    "being_slug": "amshu-rishi"
+  },
+  {
+    "start": "2026-11-10T09:33:00.835Z",
+    "end": "2026-11-17T08:26:26.206Z",
+    "aditya": "amshu",
+    "being_name": "Tarkshya",
+    "being_type": "yaksha",
+    "being_slug": "amshu-yaksha"
+  },
+  {
+    "start": "2026-11-17T08:26:26.206Z",
+    "end": "2026-11-22T07:23:21.196Z",
+    "aditya": "amshu",
+    "being_name": "Urvashi",
+    "being_type": "apsara",
+    "being_slug": "amshu-apsara"
+  },
+  {
+    "start": "2026-11-22T07:23:21.196Z",
+    "end": "2026-11-27T06:07:09.126Z",
+    "aditya": "bhaga",
+    "being_name": "Purvacitti",
+    "being_type": "apsara",
+    "being_slug": "bhaga-apsara"
+  },
+  {
+    "start": "2026-11-27T06:07:09.126Z",
+    "end": "2026-12-04T03:56:36.094Z",
+    "aditya": "bhaga",
+    "being_name": "Arishtanemi",
+    "being_type": "yaksha",
+    "being_slug": "bhaga-yaksha"
+  },
+  {
+    "start": "2026-12-04T03:56:36.094Z",
+    "end": "2026-12-12T00:57:29.487Z",
+    "aditya": "bhaga",
+    "being_name": "Ayu",
+    "being_type": "rishi",
+    "being_slug": "bhaga-rishi"
+  },
+  {
+    "start": "2026-12-12T00:57:29.487Z",
+    "end": "2026-12-16T22:55:49.731Z",
+    "aditya": "bhaga",
+    "being_name": "Sphurja",
+    "being_type": "rakshasa",
+    "being_slug": "bhaga-rakshasa"
+  },
+  {
+    "start": "2026-12-16T22:55:49.731Z",
+    "end": "2026-12-21T20:50:14.648Z",
+    "aditya": "bhaga",
+    "being_name": "Urna",
+    "being_type": "gandharva",
+    "being_slug": "bhaga-gandharva"
+  },
+  {
+    "start": "2026-12-21T20:50:14.648Z",
+    "end": "2026-12-26T18:40:57.422Z",
+    "aditya": "pusha",
+    "being_name": "Suruci",
+    "being_type": "gandharva",
+    "being_slug": "pusha-gandharva"
+  },
+  {
+    "start": "2026-12-26T18:40:57.422Z",
+    "end": "2026-12-31T16:27:25.093Z",
+    "aditya": "pusha",
+    "being_name": "Vata",
+    "being_type": "rakshasa",
+    "being_slug": "pusha-rakshasa"
+  },
+  {
+    "start": "2026-12-31T16:27:25.093Z",
+    "end": "2027-01-08T12:46:57.993Z",
+    "aditya": "pusha",
+    "being_name": "Gautama",
+    "being_type": "rishi",
+    "being_slug": "pusha-rishi"
+  },
+  {
+    "start": "2027-01-08T12:46:57.993Z",
+    "end": "2027-01-15T09:37:46.260Z",
+    "aditya": "pusha",
+    "being_name": "Sushena",
+    "being_type": "yaksha",
+    "being_slug": "pusha-yaksha"
+  },
+  {
+    "start": "2027-01-15T09:37:46.260Z",
+    "end": "2027-01-20T07:29:51.431Z",
+    "aditya": "pusha",
+    "being_name": "Ghritachi",
+    "being_type": "apsara",
+    "being_slug": "pusha-apsara"
+  },
+  {
+    "start": "2027-01-20T07:29:51.431Z",
+    "end": "2027-01-25T05:29:09.023Z",
+    "aditya": "parjanya",
+    "being_name": "Vishvaci",
+    "being_type": "apsara",
+    "being_slug": "parjanya-apsara"
+  },
+  {
+    "start": "2027-01-25T05:29:09.023Z",
+    "end": "2027-02-01T02:50:20.581Z",
+    "aditya": "parjanya",
+    "being_name": "Senajit",
+    "being_type": "yaksha",
+    "being_slug": "parjanya-yaksha"
+  },
+  {
+    "start": "2027-02-01T02:50:20.581Z",
+    "end": "2027-02-09T00:07:48.018Z",
+    "aditya": "parjanya",
+    "being_name": "Bharadvaja",
+    "being_type": "rishi",
+    "being_slug": "parjanya-rishi"
+  },
+  {
+    "start": "2027-02-09T00:07:48.018Z",
+    "end": "2027-02-13T22:42:41.353Z",
+    "aditya": "parjanya",
+    "being_name": "Varca",
+    "being_type": "rakshasa",
+    "being_slug": "parjanya-rakshasa"
+  },
+  {
+    "start": "2027-02-13T22:42:41.353Z",
+    "end": "2027-02-18T21:33:29.839Z",
+    "aditya": "parjanya",
+    "being_name": "Vishvavasu",
+    "being_type": "gandharva",
+    "being_slug": "parjanya-gandharva"
+  },
+  {
+    "start": "2027-02-18T21:33:29.839Z",
+    "end": "2027-02-23T20:40:58.960Z",
+    "aditya": "dhata",
+    "being_name": "Tumburu",
+    "being_type": "gandharva",
+    "being_slug": "dhata-gandharva"
+  },
+  {
+    "start": "2027-02-23T20:40:58.960Z",
+    "end": "2027-02-28T20:02:54.243Z",
+    "aditya": "dhata",
+    "being_name": "Heti",
+    "being_type": "rakshasa",
+    "being_slug": "dhata-rakshasa"
+  },
+  {
+    "start": "2027-02-28T20:02:54.243Z",
+    "end": "2027-03-08T19:33:40.825Z",
+    "aditya": "dhata",
+    "being_name": "Pulastya",
+    "being_type": "rishi",
+    "being_slug": "dhata-rishi"
+  },
+  {
+    "start": "2027-03-08T19:33:40.825Z",
+    "end": "2027-03-15T19:47:46.553Z",
+    "aditya": "dhata",
+    "being_name": "Rathakrit",
+    "being_type": "yaksha",
+    "being_slug": "dhata-yaksha"
+  },
+  {
+    "start": "2027-03-15T19:47:46.553Z",
+    "end": "2027-03-20T20:24:42.715Z",
+    "aditya": "dhata",
+    "being_name": "Kritasthali",
+    "being_type": "apsara",
+    "being_slug": "dhata-apsara"
+  },
+  {
+    "start": "2027-03-20T20:24:42.715Z",
+    "end": "2027-03-25T21:23:28.667Z",
+    "aditya": "aryama",
+    "being_name": "Punjikasthali",
+    "being_type": "apsara",
+    "being_slug": "aryama-apsara"
+  },
+  {
+    "start": "2027-03-25T21:23:28.667Z",
+    "end": "2027-04-01T23:17:18.428Z",
+    "aditya": "aryama",
+    "being_name": "Rathauja",
+    "being_type": "yaksha",
+    "being_slug": "aryama-yaksha"
+  },
+  {
+    "start": "2027-04-01T23:17:18.428Z",
+    "end": "2027-04-10T02:14:14.517Z",
+    "aditya": "aryama",
+    "being_name": "Pulaha",
+    "being_type": "rishi",
+    "being_slug": "aryama-rishi"
+  },
+  {
+    "start": "2027-04-10T02:14:14.517Z",
+    "end": "2027-04-15T04:33:46.099Z",
+    "aditya": "aryama",
+    "being_name": "Praheti",
+    "being_type": "rakshasa",
+    "being_slug": "aryama-rakshasa"
+  },
+  {
+    "start": "2027-04-15T04:33:46.099Z",
+    "end": "2027-04-20T07:17:38.423Z",
+    "aditya": "aryama",
+    "being_name": "Narada",
+    "being_type": "gandharva",
+    "being_slug": "aryama-gandharva"
+  },
+  {
+    "start": "2027-04-20T07:17:38.423Z",
+    "end": "2027-04-25T10:22:25.825Z",
+    "aditya": "mitra",
+    "being_name": "Haha",
+    "being_type": "gandharva",
+    "being_slug": "mitra-gandharva"
+  },
+  {
+    "start": "2027-04-25T10:22:25.825Z",
+    "end": "2027-04-30T13:45:15.601Z",
+    "aditya": "mitra",
+    "being_name": "Paurusheya",
+    "being_type": "rakshasa",
+    "being_slug": "mitra-rakshasa"
+  },
+  {
+    "start": "2027-04-30T13:45:15.601Z",
+    "end": "2027-05-08T19:45:30.103Z",
+    "aditya": "mitra",
+    "being_name": "Atri",
+    "being_type": "rishi",
+    "being_slug": "mitra-rishi"
+  },
+  {
+    "start": "2027-05-08T19:45:30.103Z",
+    "end": "2027-05-16T01:41:08.408Z",
+    "aditya": "mitra",
+    "being_name": "Rathasvana",
+    "being_type": "yaksha",
+    "being_slug": "mitra-yaksha"
+  },
+  {
+    "start": "2027-05-16T01:41:08.408Z",
+    "end": "2027-05-21T06:18:14.897Z",
+    "aditya": "mitra",
+    "being_name": "Menaka",
+    "being_type": "apsara",
+    "being_slug": "mitra-apsara"
+  },
+  {
+    "start": "2027-05-21T06:18:14.897Z",
+    "end": "2027-05-26T11:09:55.459Z",
+    "aditya": "varuna",
+    "being_name": "Sahajanya",
+    "being_type": "apsara",
+    "being_slug": "varuna-apsara"
+  },
+  {
+    "start": "2027-05-26T11:09:55.459Z",
+    "end": "2027-06-02T18:17:03.706Z",
+    "aditya": "varuna",
+    "being_name": "Rathacitra",
+    "being_type": "yaksha",
+    "being_slug": "varuna-yaksha"
+  },
+  {
+    "start": "2027-06-02T18:17:03.706Z",
+    "end": "2027-06-11T02:49:58.169Z",
+    "aditya": "varuna",
+    "being_name": "Vasishtha",
+    "being_type": "rishi",
+    "being_slug": "varuna-rishi"
+  },
+  {
+    "start": "2027-06-11T02:49:58.169Z",
+    "end": "2027-06-16T08:26:16.978Z",
+    "aditya": "varuna",
+    "being_name": "Chitrasvana",
+    "being_type": "rakshasa",
+    "being_slug": "varuna-rakshasa"
+  },
+  {
+    "start": "2027-06-16T08:26:16.978Z",
+    "end": "2027-06-21T14:10:50.830Z",
+    "aditya": "varuna",
+    "being_name": "Huhu",
+    "being_type": "gandharva",
+    "being_slug": "varuna-gandharva"
+  },
+  {
+    "start": "2027-06-21T14:10:50.830Z",
+    "end": "2027-06-26T19:59:33.853Z",
+    "aditya": "indra",
+    "being_name": "Vishvavasu",
+    "being_type": "gandharva",
+    "being_slug": "indra-gandharva"
+  },
+  {
+    "start": "2027-06-26T19:59:33.853Z",
+    "end": "2027-07-02T01:48:30.718Z",
+    "aditya": "indra",
+    "being_name": "Varya",
+    "being_type": "rakshasa",
+    "being_slug": "indra-rakshasa"
+  },
+  {
+    "start": "2027-07-02T01:48:30.718Z",
+    "end": "2027-07-10T11:07:14.619Z",
+    "aditya": "indra",
+    "being_name": "Angiras",
+    "being_type": "rishi",
+    "being_slug": "indra-rishi"
+  },
+  {
+    "start": "2027-07-10T11:07:14.619Z",
+    "end": "2027-07-17T19:18:04.790Z",
+    "aditya": "indra",
+    "being_name": "Shrota",
+    "being_type": "yaksha",
+    "being_slug": "indra-yaksha"
+  },
+  {
+    "start": "2027-07-17T19:18:04.790Z",
+    "end": "2027-07-23T01:04:41.250Z",
+    "aditya": "indra",
+    "being_name": "Pramlocha",
+    "being_type": "apsara",
+    "being_slug": "indra-apsara"
+  },
+  {
+    "start": "2027-07-23T01:04:41.250Z",
+    "end": "2027-07-28T06:42:51.460Z",
+    "aditya": "vivasvan",
+    "being_name": "Anumlocha",
+    "being_type": "apsara",
+    "being_slug": "vivasvan-apsara"
+  },
+  {
+    "start": "2027-07-28T06:42:51.460Z",
+    "end": "2027-08-04T14:17:27.656Z",
+    "aditya": "vivasvan",
+    "being_name": "Asarana",
+    "being_type": "yaksha",
+    "being_slug": "vivasvan-yaksha"
+  },
+  {
+    "start": "2027-08-04T14:17:27.656Z",
+    "end": "2027-08-12T22:34:58.608Z",
+    "aditya": "vivasvan",
+    "being_name": "Bhrigu",
+    "being_type": "rishi",
+    "being_slug": "vivasvan-rishi"
+  },
+  {
+    "start": "2027-08-12T22:34:58.608Z",
+    "end": "2027-08-18T03:32:06.123Z",
+    "aditya": "vivasvan",
+    "being_name": "Vyaghra",
+    "being_type": "rakshasa",
+    "being_slug": "vivasvan-rakshasa"
+  },
+  {
+    "start": "2027-08-18T03:32:06.123Z",
+    "end": "2027-08-23T08:14:19.790Z",
+    "aditya": "vivasvan",
+    "being_name": "Ugrasena",
+    "being_type": "gandharva",
+    "being_slug": "vivasvan-gandharva"
+  },
+  {
+    "start": "2027-08-23T08:14:19.790Z",
+    "end": "2027-08-28T12:37:25.825Z",
+    "aditya": "tvashta",
+    "being_name": "Dhritarashtra",
+    "being_type": "gandharva",
+    "being_slug": "tvashta-gandharva"
+  },
+  {
+    "start": "2027-08-28T12:37:25.825Z",
+    "end": "2027-09-02T16:41:26.206Z",
+    "aditya": "tvashta",
+    "being_name": "Brahmapeta",
+    "being_type": "rakshasa",
+    "being_slug": "tvashta-rakshasa"
+  },
+  {
+    "start": "2027-09-02T16:41:26.206Z",
+    "end": "2027-09-10T22:36:47.373Z",
+    "aditya": "tvashta",
+    "being_name": "Jamadagni",
+    "being_type": "rishi",
+    "being_slug": "tvashta-rishi"
+  },
+  {
+    "start": "2027-09-10T22:36:47.373Z",
+    "end": "2027-09-18T03:11:20.933Z",
+    "aditya": "tvashta",
+    "being_name": "Shatajit",
+    "being_type": "yaksha",
+    "being_slug": "tvashta-yaksha"
+  },
+  {
+    "start": "2027-09-18T03:11:20.933Z",
+    "end": "2027-09-23T06:01:43.491Z",
+    "aditya": "tvashta",
+    "being_name": "Tilottama",
+    "being_type": "apsara",
+    "being_slug": "tvashta-apsara"
+  },
+  {
+    "start": "2027-09-23T06:01:43.491Z",
+    "end": "2027-09-28T08:28:12.993Z",
+    "aditya": "vishnu",
+    "being_name": "Rambha",
+    "being_type": "apsara",
+    "being_slug": "vishnu-apsara"
+  },
+  {
+    "start": "2027-09-28T08:28:12.993Z",
+    "end": "2027-10-05T11:16:33.604Z",
+    "aditya": "vishnu",
+    "being_name": "Satyajit",
+    "being_type": "yaksha",
+    "being_slug": "vishnu-yaksha"
+  },
+  {
+    "start": "2027-10-05T11:16:33.604Z",
+    "end": "2027-10-13T13:43:14.971Z",
+    "aditya": "vishnu",
+    "being_name": "Vishvamitra",
+    "being_type": "rishi",
+    "being_slug": "vishnu-rishi"
+  },
+  {
+    "start": "2027-10-13T13:43:14.971Z",
+    "end": "2027-10-18T14:49:22.573Z",
+    "aditya": "vishnu",
+    "being_name": "Makhapeta",
+    "being_type": "rakshasa",
+    "being_slug": "vishnu-rakshasa"
+  },
+  {
+    "start": "2027-10-18T14:49:22.573Z",
+    "end": "2027-10-23T15:32:52.266Z",
+    "aditya": "vishnu",
+    "being_name": "Suryavarcas",
+    "being_type": "gandharva",
+    "being_slug": "vishnu-gandharva"
+  },
+  {
+    "start": "2027-10-23T15:32:52.266Z",
+    "end": "2027-10-28T15:53:49.980Z",
+    "aditya": "amshu",
+    "being_name": "Ritasena",
+    "being_type": "gandharva",
+    "being_slug": "amshu-gandharva"
+  },
+  {
+    "start": "2027-10-28T15:53:49.980Z",
+    "end": "2027-11-02T15:54:30.190Z",
+    "aditya": "amshu",
+    "being_name": "Vidyucchatru",
+    "being_type": "rakshasa",
+    "being_slug": "amshu-rakshasa"
+  },
+  {
+    "start": "2027-11-02T15:54:30.190Z",
+    "end": "2027-11-10T15:21:49.790Z",
+    "aditya": "amshu",
+    "being_name": "Kashyapa",
+    "being_type": "rishi",
+    "being_slug": "amshu-rishi"
+  },
+  {
+    "start": "2027-11-10T15:21:49.790Z",
+    "end": "2027-11-17T14:20:32.227Z",
+    "aditya": "amshu",
+    "being_name": "Tarkshya",
+    "being_type": "yaksha",
+    "being_slug": "amshu-yaksha"
+  },
+  {
+    "start": "2027-11-17T14:20:32.227Z",
+    "end": "2027-11-22T13:16:14.048Z",
+    "aditya": "amshu",
+    "being_name": "Urvashi",
+    "being_type": "apsara",
+    "being_slug": "amshu-apsara"
+  },
+  {
+    "start": "2027-11-22T13:16:14.048Z",
+    "end": "2027-11-27T11:55:20.508Z",
+    "aditya": "bhaga",
+    "being_name": "Purvacitti",
+    "being_type": "apsara",
+    "being_slug": "bhaga-apsara"
+  },
+  {
+    "start": "2027-11-27T11:55:20.508Z",
+    "end": "2027-12-04T09:40:39.624Z",
+    "aditya": "bhaga",
+    "being_name": "Arishtanemi",
+    "being_type": "yaksha",
+    "being_slug": "bhaga-yaksha"
+  },
+  {
+    "start": "2027-12-04T09:40:39.624Z",
+    "end": "2027-12-12T06:46:56.016Z",
+    "aditya": "bhaga",
+    "being_name": "Ayu",
+    "being_type": "rishi",
+    "being_slug": "bhaga-rishi"
+  },
+  {
+    "start": "2027-12-12T06:46:56.016Z",
+    "end": "2027-12-17T04:48:35.332Z",
+    "aditya": "bhaga",
+    "being_name": "Sphurja",
+    "being_type": "rakshasa",
+    "being_slug": "bhaga-rakshasa"
+  },
+  {
+    "start": "2027-12-17T04:48:35.332Z",
+    "end": "2027-12-22T02:42:09.492Z",
+    "aditya": "bhaga",
+    "being_name": "Urna",
+    "being_type": "gandharva",
+    "being_slug": "bhaga-gandharva"
+  },
+  {
+    "start": "2027-12-22T02:42:09.492Z",
+    "end": "2027-12-27T00:28:21.343Z",
+    "aditya": "pusha",
+    "being_name": "Suruci",
+    "being_type": "gandharva",
+    "being_slug": "pusha-gandharva"
+  },
+  {
+    "start": "2027-12-27T00:28:21.343Z",
+    "end": "2027-12-31T22:11:08.848Z",
+    "aditya": "pusha",
+    "being_name": "Vata",
+    "being_type": "rakshasa",
+    "being_slug": "pusha-rakshasa"
+  },
+  {
+    "start": "2027-12-31T22:11:08.848Z",
+    "end": "2028-01-08T18:33:59.502Z",
+    "aditya": "pusha",
+    "being_name": "Gautama",
+    "being_type": "rishi",
+    "being_slug": "pusha-rishi"
+  },
+  {
+    "start": "2028-01-08T18:33:59.502Z",
+    "end": "2028-01-15T15:30:16.699Z",
+    "aditya": "pusha",
+    "being_name": "Sushena",
+    "being_type": "yaksha",
+    "being_slug": "pusha-yaksha"
+  },
+  {
+    "start": "2028-01-15T15:30:16.699Z",
+    "end": "2028-01-20T13:21:56.162Z",
+    "aditya": "pusha",
+    "being_name": "Ghritachi",
+    "being_type": "apsara",
+    "being_slug": "pusha-apsara"
+  },
+  {
+    "start": "2028-01-20T13:21:56.162Z",
+    "end": "2028-01-25T11:16:42.173Z",
+    "aditya": "parjanya",
+    "being_name": "Vishvaci",
+    "being_type": "apsara",
+    "being_slug": "parjanya-apsara"
+  },
+  {
+    "start": "2028-01-25T11:16:42.173Z",
+    "end": "2028-02-01T08:34:14.224Z",
+    "aditya": "parjanya",
+    "being_name": "Senajit",
+    "being_type": "yaksha",
+    "being_slug": "parjanya-yaksha"
+  },
+  {
+    "start": "2028-02-01T08:34:14.224Z",
+    "end": "2028-02-09T05:56:45.542Z",
+    "aditya": "parjanya",
+    "being_name": "Bharadvaja",
+    "being_type": "rishi",
+    "being_slug": "parjanya-rishi"
+  },
+  {
+    "start": "2028-02-09T05:56:45.542Z",
+    "end": "2028-02-14T04:35:42.773Z",
+    "aditya": "parjanya",
+    "being_name": "Varca",
+    "being_type": "rakshasa",
+    "being_slug": "parjanya-rakshasa"
+  },
+  {
+    "start": "2028-02-14T04:35:42.773Z",
+    "end": "2028-02-19T03:26:01.597Z",
+    "aditya": "parjanya",
+    "being_name": "Vishvavasu",
+    "being_type": "gandharva",
+    "being_slug": "parjanya-gandharva"
+  },
+  {
+    "start": "2028-02-19T03:26:01.597Z",
+    "end": "2028-02-24T02:28:51.885Z",
+    "aditya": "dhata",
+    "being_name": "Tumburu",
+    "being_type": "gandharva",
+    "being_slug": "dhata-gandharva"
+  },
+  {
+    "start": "2028-02-24T02:28:51.885Z",
+    "end": "2028-02-29T01:47:30.732Z",
+    "aditya": "dhata",
+    "being_name": "Heti",
+    "being_type": "rakshasa",
+    "being_slug": "dhata-rakshasa"
+  },
+  {
+    "start": "2028-02-29T01:47:30.732Z",
+    "end": "2028-03-08T01:21:10.679Z",
+    "aditya": "dhata",
+    "being_name": "Pulastya",
+    "being_type": "rishi",
+    "being_slug": "dhata-rishi"
+  },
+  {
+    "start": "2028-03-08T01:21:10.679Z",
+    "end": "2028-03-15T01:41:26.865Z",
+    "aditya": "dhata",
+    "being_name": "Rathakrit",
+    "being_type": "yaksha",
+    "being_slug": "dhata-yaksha"
+  },
+  {
+    "start": "2028-03-15T01:41:26.865Z",
+    "end": "2028-03-20T02:17:09.858Z",
+    "aditya": "dhata",
+    "being_name": "Kritasthali",
+    "being_type": "apsara",
+    "being_slug": "dhata-apsara"
+  },
+  {
+    "start": "2028-03-20T02:17:09.858Z",
+    "end": "2028-03-25T03:11:15.659Z",
+    "aditya": "aryama",
+    "being_name": "Punjikasthali",
+    "being_type": "apsara",
+    "being_slug": "aryama-apsara"
+  },
+  {
+    "start": "2028-03-25T03:11:15.659Z",
+    "end": "2028-04-01T05:01:48.984Z",
+    "aditya": "aryama",
+    "being_name": "Rathauja",
+    "being_type": "yaksha",
+    "being_slug": "aryama-yaksha"
+  },
+  {
+    "start": "2028-04-01T05:01:48.984Z",
+    "end": "2028-04-09T08:04:55.532Z",
+    "aditya": "aryama",
+    "being_name": "Pulaha",
+    "being_type": "rishi",
+    "being_slug": "aryama-rishi"
+  },
+  {
+    "start": "2028-04-09T08:04:55.532Z",
+    "end": "2028-04-14T10:27:53.438Z",
+    "aditya": "aryama",
+    "being_name": "Praheti",
+    "being_type": "rakshasa",
+    "being_slug": "aryama-rakshasa"
+  },
+  {
+    "start": "2028-04-14T10:27:53.438Z",
+    "end": "2028-04-19T13:09:30.630Z",
+    "aditya": "aryama",
+    "being_name": "Narada",
+    "being_type": "gandharva",
+    "being_slug": "aryama-gandharva"
+  },
+  {
+    "start": "2028-04-19T13:09:30.630Z",
+    "end": "2028-04-24T16:09:48.428Z",
+    "aditya": "mitra",
+    "being_name": "Haha",
+    "being_type": "gandharva",
+    "being_slug": "mitra-gandharva"
+  },
+  {
+    "start": "2028-04-24T16:09:48.428Z",
+    "end": "2028-04-29T19:29:53.408Z",
+    "aditya": "mitra",
+    "being_name": "Paurusheya",
+    "being_type": "rakshasa",
+    "being_slug": "mitra-rakshasa"
+  },
+  {
+    "start": "2028-04-29T19:29:53.408Z",
+    "end": "2028-05-08T01:36:03.208Z",
+    "aditya": "mitra",
+    "being_name": "Atri",
+    "being_type": "rishi",
+    "being_slug": "mitra-rishi"
+  },
+  {
+    "start": "2028-05-08T01:36:03.208Z",
+    "end": "2028-05-15T07:35:40.796Z",
+    "aditya": "mitra",
+    "being_name": "Rathasvana",
+    "being_type": "yaksha",
+    "being_slug": "mitra-yaksha"
+  },
+  {
+    "start": "2028-05-15T07:35:40.796Z",
+    "end": "2028-05-20T12:09:49.966Z",
+    "aditya": "mitra",
+    "being_name": "Menaka",
+    "being_type": "apsara",
+    "being_slug": "mitra-apsara"
+  },
+  {
+    "start": "2028-05-20T12:09:49.966Z",
+    "end": "2028-05-25T16:56:57.627Z",
+    "aditya": "varuna",
+    "being_name": "Sahajanya",
+    "being_type": "apsara",
+    "being_slug": "varuna-apsara"
+  },
+  {
+    "start": "2028-05-25T16:56:57.627Z",
+    "end": "2028-06-02T00:03:54.668Z",
+    "aditya": "varuna",
+    "being_name": "Rathacitra",
+    "being_type": "yaksha",
+    "being_slug": "varuna-yaksha"
+  },
+  {
+    "start": "2028-06-02T00:03:54.668Z",
+    "end": "2028-06-10T08:44:59.561Z",
+    "aditya": "varuna",
+    "being_name": "Vasishtha",
+    "being_type": "rishi",
+    "being_slug": "varuna-rishi"
+  },
+  {
+    "start": "2028-06-10T08:44:59.561Z",
+    "end": "2028-06-15T14:21:26.279Z",
+    "aditya": "varuna",
+    "being_name": "Chitrasvana",
+    "being_type": "rakshasa",
+    "being_slug": "varuna-rakshasa"
+  },
+  {
+    "start": "2028-06-15T14:21:26.279Z",
+    "end": "2028-06-20T20:02:01.509Z",
+    "aditya": "varuna",
+    "being_name": "Huhu",
+    "being_type": "gandharva",
+    "being_slug": "varuna-gandharva"
+  },
+  {
+    "start": "2028-06-20T20:02:01.509Z",
+    "end": "2028-06-26T01:46:17.563Z",
+    "aditya": "indra",
+    "being_name": "Vishvavasu",
+    "being_type": "gandharva",
+    "being_slug": "indra-gandharva"
+  },
+  {
+    "start": "2028-06-26T01:46:17.563Z",
+    "end": "2028-07-01T07:36:23.643Z",
+    "aditya": "indra",
+    "being_name": "Varya",
+    "being_type": "rakshasa",
+    "being_slug": "indra-rakshasa"
+  },
+  {
+    "start": "2028-07-01T07:36:23.643Z",
+    "end": "2028-07-09T17:02:49.629Z",
+    "aditya": "indra",
+    "being_name": "Angiras",
+    "being_type": "rishi",
+    "being_slug": "indra-rishi"
+  },
+  {
+    "start": "2028-07-09T17:02:49.629Z",
+    "end": "2028-07-17T01:12:45.747Z",
+    "aditya": "indra",
+    "being_name": "Shrota",
+    "being_type": "yaksha",
+    "being_slug": "indra-yaksha"
+  },
+  {
+    "start": "2028-07-17T01:12:45.747Z",
+    "end": "2028-07-22T06:54:00.527Z",
+    "aditya": "indra",
+    "being_name": "Pramlocha",
+    "being_type": "apsara",
+    "being_slug": "indra-apsara"
+  },
+  {
+    "start": "2028-07-22T06:54:00.527Z",
+    "end": "2028-07-27T12:29:21.987Z",
+    "aditya": "vivasvan",
+    "being_name": "Anumlocha",
+    "being_type": "apsara",
+    "being_slug": "vivasvan-apsara"
+  },
+  {
+    "start": "2028-07-27T12:29:21.987Z",
+    "end": "2028-08-03T20:09:11.953Z",
+    "aditya": "vivasvan",
+    "being_name": "Asarana",
+    "being_type": "yaksha",
+    "being_slug": "vivasvan-yaksha"
+  },
+  {
+    "start": "2028-08-03T20:09:11.953Z",
+    "end": "2028-08-12T04:30:50.098Z",
+    "aditya": "vivasvan",
+    "being_name": "Bhrigu",
+    "being_type": "rishi",
+    "being_slug": "vivasvan-rishi"
+  },
+  {
+    "start": "2028-08-12T04:30:50.098Z",
+    "end": "2028-08-17T09:24:08.877Z",
+    "aditya": "vivasvan",
+    "being_name": "Vyaghra",
+    "being_type": "rakshasa",
+    "being_slug": "vivasvan-rakshasa"
+  },
+  {
+    "start": "2028-08-17T09:24:08.877Z",
+    "end": "2028-08-22T14:00:56.909Z",
+    "aditya": "vivasvan",
+    "being_name": "Ugrasena",
+    "being_type": "gandharva",
+    "being_slug": "vivasvan-gandharva"
+  },
+  {
+    "start": "2028-08-22T14:00:56.909Z",
+    "end": "2028-08-27T18:23:16.802Z",
+    "aditya": "tvashta",
+    "being_name": "Dhritarashtra",
+    "being_type": "gandharva",
+    "being_slug": "tvashta-gandharva"
+  },
+  {
+    "start": "2028-08-27T18:23:16.802Z",
+    "end": "2028-09-01T22:31:10.532Z",
+    "aditya": "tvashta",
+    "being_name": "Brahmapeta",
+    "being_type": "rakshasa",
+    "being_slug": "tvashta-rakshasa"
+  },
+  {
+    "start": "2028-09-01T22:31:10.532Z",
+    "end": "2028-09-10T04:30:56.030Z",
+    "aditya": "tvashta",
+    "being_name": "Jamadagni",
+    "being_type": "rishi",
+    "being_slug": "tvashta-rishi"
+  },
+  {
+    "start": "2028-09-10T04:30:56.030Z",
+    "end": "2028-09-17T08:59:25.723Z",
+    "aditya": "tvashta",
+    "being_name": "Shatajit",
+    "being_type": "yaksha",
+    "being_slug": "tvashta-yaksha"
+  },
+  {
+    "start": "2028-09-17T08:59:25.723Z",
+    "end": "2028-09-22T11:45:19.995Z",
+    "aditya": "tvashta",
+    "being_name": "Tilottama",
+    "being_type": "apsara",
+    "being_slug": "tvashta-apsara"
+  },
+  {
+    "start": "2028-09-22T11:45:19.995Z",
+    "end": "2028-09-27T14:12:16.523Z",
+    "aditya": "vishnu",
+    "being_name": "Rambha",
+    "being_type": "apsara",
+    "being_slug": "vishnu-apsara"
+  },
+  {
+    "start": "2028-09-27T14:12:16.523Z",
+    "end": "2028-10-04T17:06:35.068Z",
+    "aditya": "vishnu",
+    "being_name": "Satyajit",
+    "being_type": "yaksha",
+    "being_slug": "vishnu-yaksha"
+  },
+  {
+    "start": "2028-10-04T17:06:35.068Z",
+    "end": "2028-10-12T19:32:46.772Z",
+    "aditya": "vishnu",
+    "being_name": "Vishvamitra",
+    "being_type": "rishi",
+    "being_slug": "vishnu-rishi"
+  },
+  {
+    "start": "2028-10-12T19:32:46.772Z",
+    "end": "2028-10-17T20:33:37.969Z",
+    "aditya": "vishnu",
+    "being_name": "Makhapeta",
+    "being_type": "rakshasa",
+    "being_slug": "vishnu-rakshasa"
+  },
+  {
+    "start": "2028-10-17T20:33:37.969Z",
+    "end": "2028-10-22T21:13:22.881Z",
+    "aditya": "vishnu",
+    "being_name": "Suryavarcas",
+    "being_type": "gandharva",
+    "being_slug": "vishnu-gandharva"
+  },
+  {
+    "start": "2028-10-22T21:13:22.881Z",
+    "end": "2028-10-27T21:35:33.765Z",
+    "aditya": "amshu",
+    "being_name": "Ritasena",
+    "being_type": "gandharva",
+    "being_slug": "amshu-gandharva"
+  },
+  {
+    "start": "2028-10-27T21:35:33.765Z",
+    "end": "2028-11-01T21:40:44.897Z",
+    "aditya": "amshu",
+    "being_name": "Vidyucchatru",
+    "being_type": "rakshasa",
+    "being_slug": "amshu-rakshasa"
+  },
+  {
+    "start": "2028-11-01T21:40:44.897Z",
+    "end": "2028-11-09T21:09:43.374Z",
+    "aditya": "amshu",
+    "being_name": "Kashyapa",
+    "being_type": "rishi",
+    "being_slug": "amshu-rishi"
+  },
+  {
+    "start": "2028-11-09T21:09:43.374Z",
+    "end": "2028-11-16T20:01:59.531Z",
+    "aditya": "amshu",
+    "being_name": "Tarkshya",
+    "being_type": "yaksha",
+    "being_slug": "amshu-yaksha"
+  },
+  {
+    "start": "2028-11-16T20:01:59.531Z",
+    "end": "2028-11-21T18:54:23.599Z",
+    "aditya": "amshu",
+    "being_name": "Urvashi",
+    "being_type": "apsara",
+    "being_slug": "amshu-apsara"
+  },
+  {
+    "start": "2028-11-21T18:54:23.599Z",
+    "end": "2028-11-26T17:35:20.142Z",
+    "aditya": "bhaga",
+    "being_name": "Purvacitti",
+    "being_type": "apsara",
+    "being_slug": "bhaga-apsara"
+  },
+  {
+    "start": "2028-11-26T17:35:20.142Z",
+    "end": "2028-12-03T15:26:37.192Z",
+    "aditya": "bhaga",
+    "being_name": "Arishtanemi",
+    "being_type": "yaksha",
+    "being_slug": "bhaga-yaksha"
+  },
+  {
+    "start": "2028-12-03T15:26:37.192Z",
+    "end": "2028-12-11T12:32:09.419Z",
+    "aditya": "bhaga",
+    "being_name": "Ayu",
+    "being_type": "rishi",
+    "being_slug": "bhaga-rishi"
+  },
+  {
+    "start": "2028-12-11T12:32:09.419Z",
+    "end": "2028-12-16T10:29:00.015Z",
+    "aditya": "bhaga",
+    "being_name": "Sphurja",
+    "being_type": "rakshasa",
+    "being_slug": "bhaga-rakshasa"
+  },
+  {
+    "start": "2028-12-16T10:29:00.015Z",
+    "end": "2028-12-21T08:19:40.811Z",
+    "aditya": "bhaga",
+    "being_name": "Urna",
+    "being_type": "gandharva",
+    "being_slug": "bhaga-gandharva"
+  },
+  {
+    "start": "2028-12-21T08:19:40.811Z",
+    "end": "2028-12-26T06:08:03.838Z",
+    "aditya": "pusha",
+    "being_name": "Suruci",
+    "being_type": "gandharva",
+    "being_slug": "pusha-gandharva"
+  },
+  {
+    "start": "2028-12-26T06:08:03.838Z",
+    "end": "2028-12-31T03:55:24.243Z",
+    "aditya": "pusha",
+    "being_name": "Vata",
+    "being_type": "rakshasa",
+    "being_slug": "pusha-rakshasa"
+  },
+  {
+    "start": "2028-12-31T03:55:24.243Z",
+    "end": "2029-01-08T00:21:07.603Z",
+    "aditya": "pusha",
+    "being_name": "Gautama",
+    "being_type": "rishi",
+    "being_slug": "pusha-rishi"
+  },
+  {
+    "start": "2029-01-08T00:21:07.603Z",
+    "end": "2029-01-14T21:11:41.367Z",
+    "aditya": "pusha",
+    "being_name": "Sushena",
+    "being_type": "yaksha",
+    "being_slug": "pusha-yaksha"
+  },
+  {
+    "start": "2029-01-14T21:11:41.367Z",
+    "end": "2029-01-19T19:00:53.174Z",
+    "aditya": "pusha",
+    "being_name": "Ghritachi",
+    "being_type": "apsara",
+    "being_slug": "pusha-apsara"
+  },
+  {
+    "start": "2029-01-19T19:00:53.174Z",
+    "end": "2029-01-24T16:57:54.316Z",
+    "aditya": "parjanya",
+    "being_name": "Vishvaci",
+    "being_type": "apsara",
+    "being_slug": "parjanya-apsara"
+  },
+  {
+    "start": "2029-01-24T16:57:54.316Z",
+    "end": "2029-01-31T14:21:53.306Z",
+    "aditya": "parjanya",
+    "being_name": "Senajit",
+    "being_type": "yaksha",
+    "being_slug": "parjanya-yaksha"
+  },
+  {
+    "start": "2029-01-31T14:21:53.306Z",
+    "end": "2029-02-08T11:45:16.040Z",
+    "aditya": "parjanya",
+    "being_name": "Bharadvaja",
+    "being_type": "rishi",
+    "being_slug": "parjanya-rishi"
+  },
+  {
+    "start": "2029-02-08T11:45:16.040Z",
+    "end": "2029-02-13T10:19:41.030Z",
+    "aditya": "parjanya",
+    "being_name": "Varca",
+    "being_type": "rakshasa",
+    "being_slug": "parjanya-rakshasa"
+  },
+  {
+    "start": "2029-02-13T10:19:41.030Z",
+    "end": "2029-02-18T09:07:55.928Z",
+    "aditya": "parjanya",
+    "being_name": "Vishvavasu",
+    "being_type": "gandharva",
+    "being_slug": "parjanya-gandharva"
+  },
+  {
+    "start": "2029-02-18T09:07:55.928Z",
+    "end": "2029-02-23T08:12:51.460Z",
+    "aditya": "dhata",
+    "being_name": "Tumburu",
+    "being_type": "gandharva",
+    "being_slug": "dhata-gandharva"
+  },
+  {
+    "start": "2029-02-23T08:12:51.460Z",
+    "end": "2029-02-28T07:36:21.665Z",
+    "aditya": "dhata",
+    "being_name": "Heti",
+    "being_type": "rakshasa",
+    "being_slug": "dhata-rakshasa"
+  },
+  {
+    "start": "2029-02-28T07:36:21.665Z",
+    "end": "2029-03-08T07:13:41.777Z",
+    "aditya": "dhata",
+    "being_name": "Pulastya",
+    "being_type": "rishi",
+    "being_slug": "dhata-rishi"
+  },
+  {
+    "start": "2029-03-08T07:13:41.777Z",
+    "end": "2029-03-15T07:28:11.895Z",
+    "aditya": "dhata",
+    "being_name": "Rathakrit",
+    "being_type": "yaksha",
+    "being_slug": "dhata-yaksha"
+  },
+  {
+    "start": "2029-03-15T07:28:11.895Z",
+    "end": "2029-03-20T08:01:59.531Z",
+    "aditya": "dhata",
+    "being_name": "Kritasthali",
+    "being_type": "apsara",
+    "being_slug": "dhata-apsara"
+  },
+  {
+    "start": "2029-03-20T08:01:59.531Z",
+    "end": "2029-03-25T08:58:05.962Z",
+    "aditya": "aryama",
+    "being_name": "Punjikasthali",
+    "being_type": "apsara",
+    "being_slug": "aryama-apsara"
+  },
+  {
+    "start": "2029-03-25T08:58:05.962Z",
+    "end": "2029-04-01T10:55:51.050Z",
+    "aditya": "aryama",
+    "being_name": "Rathauja",
+    "being_type": "yaksha",
+    "being_slug": "aryama-yaksha"
+  },
+  {
+    "start": "2029-04-01T10:55:51.050Z",
+    "end": "2029-04-09T13:57:27.290Z",
+    "aditya": "aryama",
+    "being_name": "Pulaha",
+    "being_type": "rishi",
+    "being_slug": "aryama-rishi"
+  },
+  {
+    "start": "2029-04-09T13:57:27.290Z",
+    "end": "2029-04-14T16:16:01.523Z",
+    "aditya": "aryama",
+    "being_name": "Praheti",
+    "being_type": "rakshasa",
+    "being_slug": "aryama-rakshasa"
+  },
+  {
+    "start": "2029-04-14T16:16:01.523Z",
+    "end": "2029-04-19T18:55:43.359Z",
+    "aditya": "aryama",
+    "being_name": "Narada",
+    "being_type": "gandharva",
+    "being_slug": "aryama-gandharva"
+  },
+  {
+    "start": "2029-04-19T18:55:43.359Z",
+    "end": "2029-04-24T21:58:43.315Z",
+    "aditya": "mitra",
+    "being_name": "Haha",
+    "being_type": "gandharva",
+    "being_slug": "mitra-gandharva"
+  },
+  {
+    "start": "2029-04-24T21:58:43.315Z",
+    "end": "2029-04-30T01:24:13.271Z",
+    "aditya": "mitra",
+    "being_name": "Paurusheya",
+    "being_type": "rakshasa",
+    "being_slug": "mitra-rakshasa"
+  },
+  {
+    "start": "2029-04-30T01:24:13.271Z",
+    "end": "2029-05-08T07:29:41.543Z",
+    "aditya": "mitra",
+    "being_name": "Atri",
+    "being_type": "rishi",
+    "being_slug": "mitra-rishi"
+  },
+  {
+    "start": "2029-05-08T07:29:41.543Z",
+    "end": "2029-05-15T13:22:56.807Z",
+    "aditya": "mitra",
+    "being_name": "Rathasvana",
+    "being_type": "yaksha",
+    "being_slug": "mitra-yaksha"
+  },
+  {
+    "start": "2029-05-15T13:22:56.807Z",
+    "end": "2029-05-20T17:55:52.808Z",
+    "aditya": "mitra",
+    "being_name": "Menaka",
+    "being_type": "apsara",
+    "being_slug": "mitra-apsara"
+  },
+  {
+    "start": "2029-05-20T17:55:52.808Z",
+    "end": "2029-05-25T22:47:16.230Z",
+    "aditya": "varuna",
+    "being_name": "Sahajanya",
+    "being_type": "apsara",
+    "being_slug": "varuna-apsara"
+  },
+  {
+    "start": "2029-05-25T22:47:16.230Z",
+    "end": "2029-06-02T05:58:57.378Z",
+    "aditya": "varuna",
+    "being_name": "Rathacitra",
+    "being_type": "yaksha",
+    "being_slug": "varuna-yaksha"
+  },
+  {
+    "start": "2029-06-02T05:58:57.378Z",
+    "end": "2029-06-10T14:34:24.771Z",
+    "aditya": "varuna",
+    "being_name": "Vasishtha",
+    "being_type": "rishi",
+    "being_slug": "varuna-rishi"
+  },
+  {
+    "start": "2029-06-10T14:34:24.771Z",
+    "end": "2029-06-15T20:06:36.387Z",
+    "aditya": "varuna",
+    "being_name": "Chitrasvana",
+    "being_type": "rakshasa",
+    "being_slug": "varuna-rakshasa"
+  },
+  {
+    "start": "2029-06-15T20:06:36.387Z",
+    "end": "2029-06-21T01:48:18.193Z",
+    "aditya": "varuna",
+    "being_name": "Huhu",
+    "being_type": "gandharva",
+    "being_slug": "varuna-gandharva"
+  },
+  {
+    "start": "2029-06-21T01:48:18.193Z",
+    "end": "2029-06-26T07:37:48.677Z",
+    "aditya": "indra",
+    "being_name": "Vishvavasu",
+    "being_type": "gandharva",
+    "being_slug": "indra-gandharva"
+  },
+  {
+    "start": "2029-06-26T07:37:48.677Z",
+    "end": "2029-07-01T13:30:40.869Z",
+    "aditya": "indra",
+    "being_name": "Varya",
+    "being_type": "rakshasa",
+    "being_slug": "indra-rakshasa"
+  },
+  {
+    "start": "2029-07-01T13:30:40.869Z",
+    "end": "2029-07-09T22:51:51.108Z",
+    "aditya": "indra",
+    "being_name": "Angiras",
+    "being_type": "rishi",
+    "being_slug": "indra-rishi"
+  },
+  {
+    "start": "2029-07-09T22:51:51.108Z",
+    "end": "2029-07-17T06:57:18.281Z",
+    "aditya": "indra",
+    "being_name": "Shrota",
+    "being_type": "yaksha",
+    "being_slug": "indra-yaksha"
+  },
+  {
+    "start": "2029-07-17T06:57:18.281Z",
+    "end": "2029-07-22T12:42:06.636Z",
+    "aditya": "indra",
+    "being_name": "Pramlocha",
+    "being_type": "apsara",
+    "being_slug": "indra-apsara"
+  },
+  {
+    "start": "2029-07-22T12:42:06.636Z",
+    "end": "2029-07-27T18:22:27.363Z",
+    "aditya": "vivasvan",
+    "being_name": "Anumlocha",
+    "being_type": "apsara",
+    "being_slug": "vivasvan-apsara"
+  },
+  {
+    "start": "2029-07-27T18:22:27.363Z",
+    "end": "2029-08-04T02:02:33.149Z",
+    "aditya": "vivasvan",
+    "being_name": "Asarana",
+    "being_type": "yaksha",
+    "being_slug": "vivasvan-yaksha"
+  },
+  {
+    "start": "2029-08-04T02:02:33.149Z",
+    "end": "2029-08-12T10:16:40.415Z",
+    "aditya": "vivasvan",
+    "being_name": "Bhrigu",
+    "being_type": "rishi",
+    "being_slug": "vivasvan-rishi"
+  },
+  {
+    "start": "2029-08-12T10:16:40.415Z",
+    "end": "2029-08-17T15:10:04.468Z",
+    "aditya": "vivasvan",
+    "being_name": "Vyaghra",
+    "being_type": "rakshasa",
+    "being_slug": "vivasvan-rakshasa"
+  },
+  {
+    "start": "2029-08-17T15:10:04.468Z",
+    "end": "2029-08-22T19:51:37.266Z",
+    "aditya": "vivasvan",
+    "being_name": "Ugrasena",
+    "being_type": "gandharva",
+    "being_slug": "vivasvan-gandharva"
+  },
+  {
+    "start": "2029-08-22T19:51:37.266Z",
+    "end": "2029-08-28T00:18:17.534Z",
+    "aditya": "tvashta",
+    "being_name": "Dhritarashtra",
+    "being_type": "gandharva",
+    "being_slug": "tvashta-gandharva"
+  },
+  {
+    "start": "2029-08-28T00:18:17.534Z",
+    "end": "2029-09-02T04:25:38.306Z",
+    "aditya": "tvashta",
+    "being_name": "Brahmapeta",
+    "being_type": "rakshasa",
+    "being_slug": "tvashta-rakshasa"
+  },
+  {
+    "start": "2029-09-02T04:25:38.306Z",
+    "end": "2029-09-10T10:18:06.108Z",
+    "aditya": "tvashta",
+    "being_name": "Jamadagni",
+    "being_type": "rishi",
+    "being_slug": "tvashta-rishi"
+  },
+  {
+    "start": "2029-09-10T10:18:06.108Z",
+    "end": "2029-09-17T14:47:23.262Z",
+    "aditya": "tvashta",
+    "being_name": "Shatajit",
+    "being_type": "yaksha",
+    "being_slug": "tvashta-yaksha"
+  },
+  {
+    "start": "2029-09-17T14:47:23.262Z",
+    "end": "2029-09-22T17:38:30.645Z",
+    "aditya": "tvashta",
+    "being_name": "Tilottama",
+    "being_type": "apsara",
+    "being_slug": "tvashta-apsara"
+  },
+  {
+    "start": "2029-09-22T17:38:30.645Z",
+    "end": "2029-09-27T20:08:39.653Z",
+    "aditya": "vishnu",
+    "being_name": "Rambha",
+    "being_type": "apsara",
+    "being_slug": "vishnu-apsara"
+  },
+  {
+    "start": "2029-09-27T20:08:39.653Z",
+    "end": "2029-10-04T22:59:06.167Z",
+    "aditya": "vishnu",
+    "being_name": "Satyajit",
+    "being_type": "yaksha",
+    "being_slug": "vishnu-yaksha"
+  },
+  {
+    "start": "2029-10-04T22:59:06.167Z",
+    "end": "2029-10-13T01:19:44.985Z",
+    "aditya": "vishnu",
+    "being_name": "Vishvamitra",
+    "being_type": "rishi",
+    "being_slug": "vishnu-rishi"
+  },
+  {
+    "start": "2029-10-13T01:19:44.985Z",
+    "end": "2029-10-18T02:23:11.089Z",
+    "aditya": "vishnu",
+    "being_name": "Makhapeta",
+    "being_type": "rakshasa",
+    "being_slug": "vishnu-rakshasa"
+  },
+  {
+    "start": "2029-10-18T02:23:11.089Z",
+    "end": "2029-10-23T03:08:07.793Z",
+    "aditya": "vishnu",
+    "being_name": "Suryavarcas",
+    "being_type": "gandharva",
+    "being_slug": "vishnu-gandharva"
+  },
+  {
+    "start": "2029-10-23T03:08:07.793Z",
+    "end": "2029-10-28T03:32:21.943Z",
+    "aditya": "amshu",
+    "being_name": "Ritasena",
+    "being_type": "gandharva",
+    "being_slug": "amshu-gandharva"
+  },
+  {
+    "start": "2029-10-28T03:32:21.943Z",
+    "end": "2029-11-02T03:34:58.169Z",
+    "aditya": "amshu",
+    "being_name": "Vidyucchatru",
+    "being_type": "rakshasa",
+    "being_slug": "amshu-rakshasa"
+  },
+  {
+    "start": "2029-11-02T03:34:58.169Z",
+    "end": "2029-11-10T02:57:12.568Z",
+    "aditya": "amshu",
+    "being_name": "Kashyapa",
+    "being_type": "rishi",
+    "being_slug": "amshu-rishi"
+  },
+  {
+    "start": "2029-11-10T02:57:12.568Z",
+    "end": "2029-11-17T01:52:13.521Z",
+    "aditya": "amshu",
+    "being_name": "Tarkshya",
+    "being_type": "yaksha",
+    "being_slug": "amshu-yaksha"
+  },
+  {
+    "start": "2029-11-17T01:52:13.521Z",
+    "end": "2029-11-22T00:49:23.672Z",
+    "aditya": "amshu",
+    "being_name": "Urvashi",
+    "being_type": "apsara",
+    "being_slug": "amshu-apsara"
+  },
+  {
+    "start": "2029-11-22T00:49:23.672Z",
+    "end": "2029-11-26T23:31:55.137Z",
+    "aditya": "bhaga",
+    "being_name": "Purvacitti",
+    "being_type": "apsara",
+    "being_slug": "bhaga-apsara"
+  },
+  {
+    "start": "2029-11-26T23:31:55.137Z",
+    "end": "2029-12-03T21:18:46.538Z",
+    "aditya": "bhaga",
+    "being_name": "Arishtanemi",
+    "being_type": "yaksha",
+    "being_slug": "bhaga-yaksha"
+  },
+  {
+    "start": "2029-12-03T21:18:46.538Z",
+    "end": "2029-12-11T18:19:07.632Z",
+    "aditya": "bhaga",
+    "being_name": "Ayu",
+    "being_type": "rishi",
+    "being_slug": "bhaga-rishi"
+  },
+  {
+    "start": "2029-12-11T18:19:07.632Z",
+    "end": "2029-12-16T16:19:04.116Z",
+    "aditya": "bhaga",
+    "being_name": "Sphurja",
+    "being_type": "rakshasa",
+    "being_slug": "bhaga-rakshasa"
+  },
+  {
+    "start": "2029-12-16T16:19:04.116Z",
+    "end": "2029-12-21T14:14:07.266Z",
+    "aditya": "bhaga",
+    "being_name": "Urna",
+    "being_type": "gandharva",
+    "being_slug": "bhaga-gandharva"
+  },
+  {
+    "start": "2029-12-21T14:14:07.266Z",
+    "end": "2029-12-26T12:04:17.080Z",
+    "aditya": "pusha",
+    "being_name": "Suruci",
+    "being_type": "gandharva",
+    "being_slug": "pusha-gandharva"
+  },
+  {
+    "start": "2029-12-26T12:04:17.080Z",
+    "end": "2029-12-31T09:49:13.784Z",
+    "aditya": "pusha",
+    "being_name": "Vata",
+    "being_type": "rakshasa",
+    "being_slug": "pusha-rakshasa"
+  },
+  {
+    "start": "2029-12-31T09:49:13.784Z",
+    "end": "2030-01-08T06:07:52.632Z",
+    "aditya": "pusha",
+    "being_name": "Gautama",
+    "being_type": "rishi",
+    "being_slug": "pusha-rishi"
+  },
+  {
+    "start": "2030-01-08T06:07:52.632Z",
+    "end": "2030-01-15T03:01:03.940Z",
+    "aditya": "pusha",
+    "being_name": "Sushena",
+    "being_type": "yaksha",
+    "being_slug": "pusha-yaksha"
+  },
+  {
+    "start": "2030-01-15T03:01:03.940Z",
+    "end": "2030-01-20T00:54:23.599Z",
+    "aditya": "pusha",
+    "being_name": "Ghritachi",
+    "being_type": "apsara",
+    "being_slug": "pusha-apsara"
+  },
+  {
+    "start": "2030-01-20T00:54:23.599Z",
+    "end": "2030-01-24T22:53:33.281Z",
+    "aditya": "parjanya",
+    "being_name": "Vishvaci",
+    "being_type": "apsara",
+    "being_slug": "parjanya-apsara"
+  },
+  {
+    "start": "2030-01-24T22:53:33.281Z",
+    "end": "2030-01-31T20:12:46.846Z",
+    "aditya": "parjanya",
+    "being_name": "Senajit",
+    "being_type": "yaksha",
+    "being_slug": "parjanya-yaksha"
+  },
+  {
+    "start": "2030-01-31T20:12:46.846Z",
+    "end": "2030-02-08T17:30:55.811Z",
+    "aditya": "parjanya",
+    "being_name": "Bharadvaja",
+    "being_type": "rishi",
+    "being_slug": "parjanya-rishi"
+  },
+  {
+    "start": "2030-02-08T17:30:55.811Z",
+    "end": "2030-02-13T16:07:36.592Z",
+    "aditya": "parjanya",
+    "being_name": "Varca",
+    "being_type": "rakshasa",
+    "being_slug": "parjanya-rakshasa"
+  },
+  {
+    "start": "2030-02-13T16:07:36.592Z",
+    "end": "2030-02-18T14:59:57.363Z",
+    "aditya": "parjanya",
+    "being_name": "Vishvavasu",
+    "being_type": "gandharva",
+    "being_slug": "parjanya-gandharva"
+  },
+  {
+    "start": "2030-02-18T14:59:57.363Z",
+    "end": "2030-02-23T14:07:06.709Z",
+    "aditya": "dhata",
+    "being_name": "Tumburu",
+    "being_type": "gandharva",
+    "being_slug": "dhata-gandharva"
+  },
+  {
+    "start": "2030-02-23T14:07:06.709Z",
+    "end": "2030-02-28T13:27:26.411Z",
+    "aditya": "dhata",
+    "being_name": "Heti",
+    "being_type": "rakshasa",
+    "being_slug": "dhata-rakshasa"
+  },
+  {
+    "start": "2030-02-28T13:27:26.411Z",
+    "end": "2030-03-08T12:57:42.671Z",
+    "aditya": "dhata",
+    "being_name": "Pulastya",
+    "being_type": "rishi",
+    "being_slug": "dhata-rishi"
+  },
+  {
+    "start": "2030-03-08T12:57:42.671Z",
+    "end": "2030-03-15T13:13:57.598Z",
+    "aditya": "dhata",
+    "being_name": "Rathakrit",
+    "being_type": "yaksha",
+    "being_slug": "dhata-yaksha"
+  },
+  {
+    "start": "2030-03-15T13:13:57.598Z",
+    "end": "2030-03-20T13:52:06.929Z",
+    "aditya": "dhata",
+    "being_name": "Kritasthali",
+    "being_type": "apsara",
+    "being_slug": "dhata-apsara"
+  },
+  {
+    "start": "2030-03-20T13:52:06.929Z",
+    "end": "2030-03-25T14:49:52.236Z",
+    "aditya": "aryama",
+    "being_name": "Punjikasthali",
+    "being_type": "apsara",
+    "being_slug": "aryama-apsara"
+  },
+  {
+    "start": "2030-03-25T14:49:52.236Z",
+    "end": "2030-04-01T16:41:18.955Z",
+    "aditya": "aryama",
+    "being_name": "Rathauja",
+    "being_type": "yaksha",
+    "being_slug": "aryama-yaksha"
+  },
+  {
+    "start": "2030-04-01T16:41:18.955Z",
+    "end": "2030-04-09T19:38:17.021Z",
+    "aditya": "aryama",
+    "being_name": "Pulaha",
+    "being_type": "rishi",
+    "being_slug": "aryama-rishi"
+  },
+  {
+    "start": "2030-04-09T19:38:17.021Z",
+    "end": "2030-04-14T21:59:24.185Z",
+    "aditya": "aryama",
+    "being_name": "Praheti",
+    "being_type": "rakshasa",
+    "being_slug": "aryama-rakshasa"
+  },
+  {
+    "start": "2030-04-14T21:59:24.185Z",
+    "end": "2030-04-20T00:43:36.284Z",
+    "aditya": "aryama",
+    "being_name": "Narada",
+    "being_type": "gandharva",
+    "being_slug": "aryama-gandharva"
+  },
+  {
+    "start": "2030-04-20T00:43:36.284Z",
+    "end": "2030-04-25T03:46:46.128Z",
+    "aditya": "mitra",
+    "being_name": "Haha",
+    "being_type": "gandharva",
+    "being_slug": "mitra-gandharva"
+  },
+  {
+    "start": "2030-04-25T03:46:46.128Z",
+    "end": "2030-04-30T07:07:30.659Z",
+    "aditya": "mitra",
+    "being_name": "Paurusheya",
+    "being_type": "rakshasa",
+    "being_slug": "mitra-rakshasa"
+  },
+  {
+    "start": "2030-04-30T07:07:30.659Z",
+    "end": "2030-05-08T13:07:00.996Z",
+    "aditya": "mitra",
+    "being_name": "Atri",
+    "being_type": "rishi",
+    "being_slug": "mitra-rishi"
+  },
+  {
+    "start": "2030-05-08T13:07:00.996Z",
+    "end": "2030-05-15T19:04:23.452Z",
+    "aditya": "mitra",
+    "being_name": "Rathasvana",
+    "being_type": "yaksha",
+    "being_slug": "mitra-yaksha"
+  },
+  {
+    "start": "2030-05-15T19:04:23.452Z",
+    "end": "2030-05-20T23:41:05.552Z",
+    "aditya": "mitra",
+    "being_name": "Menaka",
+    "being_type": "apsara",
+    "being_slug": "mitra-apsara"
+  },
+  {
+    "start": "2030-05-20T23:41:05.552Z",
+    "end": "2030-05-26T04:30:57.349Z",
+    "aditya": "varuna",
+    "being_name": "Sahajanya",
+    "being_type": "apsara",
+    "being_slug": "varuna-apsara"
+  },
+  {
+    "start": "2030-05-26T04:30:57.349Z",
+    "end": "2030-06-02T11:35:29.370Z",
+    "aditya": "varuna",
+    "being_name": "Rathacitra",
+    "being_type": "yaksha",
+    "being_slug": "varuna-yaksha"
+  },
+  {
+    "start": "2030-06-02T11:35:29.370Z",
+    "end": "2030-06-10T20:10:06.665Z",
+    "aditya": "varuna",
+    "being_name": "Vasishtha",
+    "being_type": "rishi",
+    "being_slug": "varuna-rishi"
+  },
+  {
+    "start": "2030-06-10T20:10:06.665Z",
+    "end": "2030-06-16T01:47:14.253Z",
+    "aditya": "varuna",
+    "being_name": "Chitrasvana",
+    "being_type": "rakshasa",
+    "being_slug": "varuna-rakshasa"
+  },
+  {
+    "start": "2030-06-16T01:47:14.253Z",
+    "end": "2030-06-21T07:31:19.761Z",
+    "aditya": "varuna",
+    "being_name": "Huhu",
+    "being_type": "gandharva",
+    "being_slug": "varuna-gandharva"
+  },
+  {
+    "start": "2030-06-21T07:31:19.761Z",
+    "end": "2030-06-26T13:18:00.176Z",
+    "aditya": "indra",
+    "being_name": "Vishvavasu",
+    "being_type": "gandharva",
+    "being_slug": "indra-gandharva"
+  },
+  {
+    "start": "2030-06-26T13:18:00.176Z",
+    "end": "2030-07-01T19:05:40.576Z",
+    "aditya": "indra",
+    "being_name": "Varya",
+    "being_type": "rakshasa",
+    "being_slug": "indra-rakshasa"
+  },
+  {
+    "start": "2030-07-01T19:05:40.576Z",
+    "end": "2030-07-10T04:26:37.632Z",
+    "aditya": "indra",
+    "being_name": "Angiras",
+    "being_type": "rishi",
+    "being_slug": "indra-rishi"
+  },
+  {
+    "start": "2030-07-10T04:26:37.632Z",
+    "end": "2030-07-17T12:39:06.021Z",
+    "aditya": "indra",
+    "being_name": "Shrota",
+    "being_type": "yaksha",
+    "being_slug": "indra-yaksha"
+  },
+  {
+    "start": "2030-07-17T12:39:06.021Z",
+    "end": "2030-07-22T18:24:54.360Z",
+    "aditya": "indra",
+    "being_name": "Pramlocha",
+    "being_type": "apsara",
+    "being_slug": "indra-apsara"
+  },
+  {
+    "start": "2030-07-22T18:24:54.360Z",
+    "end": "2030-07-28T00:01:18.442Z",
+    "aditya": "vivasvan",
+    "being_name": "Anumlocha",
+    "being_type": "apsara",
+    "being_slug": "vivasvan-apsara"
+  },
+  {
+    "start": "2030-07-28T00:01:18.442Z",
+    "end": "2030-08-04T07:36:55.942Z",
+    "aditya": "vivasvan",
+    "being_name": "Asarana",
+    "being_type": "yaksha",
+    "being_slug": "vivasvan-yaksha"
+  },
+  {
+    "start": "2030-08-04T07:36:55.942Z",
+    "end": "2030-08-12T15:57:30.806Z",
+    "aditya": "vivasvan",
+    "being_name": "Bhrigu",
+    "being_type": "rishi",
+    "being_slug": "vivasvan-rishi"
+  },
+  {
+    "start": "2030-08-12T15:57:30.806Z",
+    "end": "2030-08-17T20:55:31.055Z",
+    "aditya": "vivasvan",
+    "being_name": "Vyaghra",
+    "being_type": "rakshasa",
+    "being_slug": "vivasvan-rakshasa"
+  },
+  {
+    "start": "2030-08-17T20:55:31.055Z",
+    "end": "2030-08-23T01:36:24.961Z",
+    "aditya": "vivasvan",
+    "being_name": "Ugrasena",
+    "being_type": "gandharva",
+    "being_slug": "vivasvan-gandharva"
+  },
+  {
+    "start": "2030-08-23T01:36:24.961Z",
+    "end": "2030-08-28T05:58:45.513Z",
+    "aditya": "tvashta",
+    "being_name": "Dhritarashtra",
+    "being_type": "gandharva",
+    "being_slug": "tvashta-gandharva"
+  },
+  {
+    "start": "2030-08-28T05:58:45.513Z",
+    "end": "2030-09-02T10:03:47.856Z",
+    "aditya": "tvashta",
+    "being_name": "Brahmapeta",
+    "being_type": "rakshasa",
+    "being_slug": "tvashta-rakshasa"
+  },
+  {
+    "start": "2030-09-02T10:03:47.856Z",
+    "end": "2030-09-10T16:02:36.006Z",
+    "aditya": "tvashta",
+    "being_name": "Jamadagni",
+    "being_type": "rishi",
+    "being_slug": "tvashta-rishi"
+  },
+  {
+    "start": "2030-09-10T16:02:36.006Z",
+    "end": "2030-09-17T20:37:47.139Z",
+    "aditya": "tvashta",
+    "being_name": "Shatajit",
+    "being_type": "yaksha",
+    "being_slug": "tvashta-yaksha"
+  },
+  {
+    "start": "2030-09-17T20:37:47.139Z",
+    "end": "2030-09-22T23:26:53.892Z",
+    "aditya": "tvashta",
+    "being_name": "Tilottama",
+    "being_type": "apsara",
+    "being_slug": "tvashta-apsara"
+  },
+  {
+    "start": "2030-09-22T23:26:53.892Z",
+    "end": "2030-09-28T01:53:06.914Z",
+    "aditya": "vishnu",
+    "being_name": "Rambha",
+    "being_type": "apsara",
+    "being_slug": "vishnu-apsara"
+  },
+  {
+    "start": "2030-09-28T01:53:06.914Z",
+    "end": "2030-10-05T04:43:16.948Z",
+    "aditya": "vishnu",
+    "being_name": "Satyajit",
+    "being_type": "yaksha",
+    "being_slug": "vishnu-yaksha"
+  },
+  {
+    "start": "2030-10-05T04:43:16.948Z",
+    "end": "2030-10-13T07:12:51.021Z",
+    "aditya": "vishnu",
+    "being_name": "Vishvamitra",
+    "being_type": "rishi",
+    "being_slug": "vishnu-rishi"
+  },
+  {
+    "start": "2030-10-13T07:12:51.021Z",
+    "end": "2030-10-18T08:18:13.140Z",
+    "aditya": "vishnu",
+    "being_name": "Makhapeta",
+    "being_type": "rakshasa",
+    "being_slug": "vishnu-rakshasa"
+  },
+  {
+    "start": "2030-10-18T08:18:13.140Z",
+    "end": "2030-10-23T09:00:33.618Z",
+    "aditya": "vishnu",
+    "being_name": "Suryavarcas",
+    "being_type": "gandharva",
+    "being_slug": "vishnu-gandharva"
+  },
+  {
+    "start": "2030-10-23T09:00:33.618Z",
+    "end": "2030-10-28T09:20:54.419Z",
+    "aditya": "amshu",
+    "being_name": "Ritasena",
+    "being_type": "gandharva",
+    "being_slug": "amshu-gandharva"
+  },
+  {
+    "start": "2030-10-28T09:20:54.419Z",
+    "end": "2030-11-02T09:22:34.614Z",
+    "aditya": "amshu",
+    "being_name": "Vidyucchatru",
+    "being_type": "rakshasa",
+    "being_slug": "amshu-rakshasa"
+  },
+  {
+    "start": "2030-11-02T09:22:34.614Z",
+    "end": "2030-11-10T08:52:36.372Z",
+    "aditya": "amshu",
+    "being_name": "Kashyapa",
+    "being_type": "rishi",
+    "being_slug": "amshu-rishi"
+  },
+  {
+    "start": "2030-11-10T08:52:36.372Z",
+    "end": "2030-11-17T07:50:19.482Z",
+    "aditya": "amshu",
+    "being_name": "Tarkshya",
+    "being_type": "yaksha",
+    "being_slug": "amshu-yaksha"
+  },
+  {
+    "start": "2030-11-17T07:50:19.482Z",
+    "end": "2030-11-22T06:44:36.270Z",
+    "aditya": "amshu",
+    "being_name": "Urvashi",
+    "being_type": "apsara",
+    "being_slug": "amshu-apsara"
+  },
+  {
+    "start": "2030-11-22T06:44:36.270Z",
+    "end": "2030-11-27T05:22:41.426Z",
+    "aditya": "bhaga",
+    "being_name": "Purvacitti",
+    "being_type": "apsara",
+    "being_slug": "bhaga-apsara"
+  },
+  {
+    "start": "2030-11-27T05:22:41.426Z",
+    "end": "2030-12-04T03:09:42.056Z",
+    "aditya": "bhaga",
+    "being_name": "Arishtanemi",
+    "being_type": "yaksha",
+    "being_slug": "bhaga-yaksha"
+  },
+  {
+    "start": "2030-12-04T03:09:42.056Z",
+    "end": "2030-12-12T00:17:09.639Z",
+    "aditya": "bhaga",
+    "being_name": "Ayu",
+    "being_type": "rishi",
+    "being_slug": "bhaga-rishi"
+  },
+  {
+    "start": "2030-12-12T00:17:09.639Z",
+    "end": "2030-12-16T22:17:48.311Z",
+    "aditya": "bhaga",
+    "being_name": "Sphurja",
+    "being_type": "rakshasa",
+    "being_slug": "bhaga-rakshasa"
+  },
+  {
+    "start": "2030-12-16T22:17:48.311Z",
+    "end": "2030-12-21T20:09:38.320Z",
+    "aditya": "bhaga",
+    "being_name": "Urna",
+    "being_type": "gandharva",
+    "being_slug": "bhaga-gandharva"
+  },
+  {
+    "start": "2030-12-21T20:09:38.320Z",
+    "end": "2030-12-26T17:54:38.979Z",
+    "aditya": "pusha",
+    "being_name": "Suruci",
+    "being_type": "gandharva",
+    "being_slug": "pusha-gandharva"
+  },
+  {
+    "start": "2030-12-26T17:54:38.979Z",
+    "end": "2030-12-31T15:38:17.900Z",
+    "aditya": "pusha",
+    "being_name": "Vata",
+    "being_type": "rakshasa",
+    "being_slug": "pusha-rakshasa"
+  },
+  {
+    "start": "2030-12-31T15:38:17.900Z",
+    "end": "2031-01-08T12:02:53.364Z",
+    "aditya": "pusha",
+    "being_name": "Gautama",
+    "being_type": "rishi",
+    "being_slug": "pusha-rishi"
+  },
+  {
+    "start": "2031-01-08T12:02:53.364Z",
+    "end": "2031-01-15T08:58:11.895Z",
+    "aditya": "pusha",
+    "being_name": "Sushena",
+    "being_type": "yaksha",
+    "being_slug": "pusha-yaksha"
+  },
+  {
+    "start": "2031-01-15T08:58:11.895Z",
+    "end": "2031-01-20T06:47:57.979Z",
+    "aditya": "pusha",
+    "being_name": "Ghritachi",
+    "being_type": "apsara",
+    "being_slug": "pusha-apsara"
+  },
+  {
+    "start": "2031-01-20T06:47:57.979Z",
+    "end": "2031-01-25T04:41:40.708Z",
+    "aditya": "parjanya",
+    "being_name": "Vishvaci",
+    "being_type": "apsara",
+    "being_slug": "parjanya-apsara"
+  },
+  {
+    "start": "2031-01-25T04:41:40.708Z",
+    "end": "2031-02-01T02:00:27.905Z",
+    "aditya": "parjanya",
+    "being_name": "Senajit",
+    "being_type": "yaksha",
+    "being_slug": "parjanya-yaksha"
+  },
+  {
+    "start": "2031-02-01T02:00:27.905Z",
+    "end": "2031-02-08T23:24:34.805Z",
+    "aditya": "parjanya",
+    "being_name": "Bharadvaja",
+    "being_type": "rishi",
+    "being_slug": "parjanya-rishi"
+  },
+  {
+    "start": "2031-02-08T23:24:34.805Z",
+    "end": "2031-02-13T22:02:26.118Z",
+    "aditya": "parjanya",
+    "being_name": "Varca",
+    "being_type": "rakshasa",
+    "being_slug": "parjanya-rakshasa"
+  },
+  {
+    "start": "2031-02-13T22:02:26.118Z",
+    "end": "2031-02-18T20:50:54.858Z",
+    "aditya": "parjanya",
+    "being_name": "Vishvavasu",
+    "being_type": "gandharva",
+    "being_slug": "parjanya-gandharva"
+  },
+  {
+    "start": "2031-02-18T20:50:54.858Z",
+    "end": "2031-02-23T19:52:51.753Z",
+    "aditya": "dhata",
+    "being_name": "Tumburu",
+    "being_type": "gandharva",
+    "being_slug": "dhata-gandharva"
+  },
+  {
+    "start": "2031-02-23T19:52:51.753Z",
+    "end": "2031-02-28T19:12:08.174Z",
+    "aditya": "dhata",
+    "being_name": "Heti",
+    "being_type": "rakshasa",
+    "being_slug": "dhata-rakshasa"
+  },
+  {
+    "start": "2031-02-28T19:12:08.174Z",
+    "end": "2031-03-08T18:48:05.889Z",
+    "aditya": "dhata",
+    "being_name": "Pulastya",
+    "being_type": "rishi",
+    "being_slug": "dhata-rishi"
+  },
+  {
+    "start": "2031-03-08T18:48:05.889Z",
+    "end": "2031-03-15T19:07:02.314Z",
+    "aditya": "dhata",
+    "being_name": "Rathakrit",
+    "being_type": "yaksha",
+    "being_slug": "dhata-yaksha"
+  },
+  {
+    "start": "2031-03-15T19:07:02.314Z",
+    "end": "2031-03-20T19:40:58.521Z",
+    "aditya": "dhata",
+    "being_name": "Kritasthali",
+    "being_type": "apsara",
+    "being_slug": "dhata-apsara"
+  },
+  {
+    "start": "2031-03-20T19:40:58.521Z",
+    "end": "2031-03-25T20:34:09.609Z",
+    "aditya": "aryama",
+    "being_name": "Punjikasthali",
+    "being_type": "apsara",
+    "being_slug": "aryama-apsara"
+  },
+  {
+    "start": "2031-03-25T20:34:09.609Z",
+    "end": "2031-04-01T22:26:04.014Z",
+    "aditya": "aryama",
+    "being_name": "Rathauja",
+    "being_type": "yaksha",
+    "being_slug": "aryama-yaksha"
+  },
+  {
+    "start": "2031-04-01T22:26:04.014Z",
+    "end": "2031-04-10T01:30:16.479Z",
+    "aditya": "aryama",
+    "being_name": "Pulaha",
+    "being_type": "rishi",
+    "being_slug": "aryama-rishi"
+  },
+  {
+    "start": "2031-04-10T01:30:16.479Z",
+    "end": "2031-04-15T03:51:33.530Z",
+    "aditya": "aryama",
+    "being_name": "Praheti",
+    "being_type": "rakshasa",
+    "being_slug": "aryama-rakshasa"
+  },
+  {
+    "start": "2031-04-15T03:51:33.530Z",
+    "end": "2031-04-20T06:31:15.366Z",
+    "aditya": "aryama",
+    "being_name": "Narada",
+    "being_type": "gandharva",
+    "being_slug": "aryama-gandharva"
+  },
+  {
+    "start": "2031-04-20T06:31:15.366Z",
+    "end": "2031-04-25T09:30:33.838Z",
+    "aditya": "mitra",
+    "being_name": "Haha",
+    "being_type": "gandharva",
+    "being_slug": "mitra-gandharva"
+  },
+  {
+    "start": "2031-04-25T09:30:33.838Z",
+    "end": "2031-04-30T12:51:41.440Z",
+    "aditya": "mitra",
+    "being_name": "Paurusheya",
+    "being_type": "rakshasa",
+    "being_slug": "mitra-rakshasa"
+  },
+  {
+    "start": "2031-04-30T12:51:41.440Z",
+    "end": "2031-05-08T18:58:49.907Z",
+    "aditya": "mitra",
+    "being_name": "Atri",
+    "being_type": "rishi",
+    "being_slug": "mitra-rishi"
+  },
+  {
+    "start": "2031-05-08T18:58:49.907Z",
+    "end": "2031-05-16T00:55:59.839Z",
+    "aditya": "mitra",
+    "being_name": "Rathasvana",
+    "being_type": "yaksha",
+    "being_slug": "mitra-yaksha"
+  },
+  {
+    "start": "2031-05-16T00:55:59.839Z",
+    "end": "2031-05-21T05:27:56.514Z",
+    "aditya": "mitra",
+    "being_name": "Menaka",
+    "being_type": "apsara",
+    "being_slug": "mitra-apsara"
+  },
+  {
+    "start": "2031-05-21T05:27:56.514Z",
+    "end": "2031-05-26T10:14:45.718Z",
+    "aditya": "varuna",
+    "being_name": "Sahajanya",
+    "being_type": "apsara",
+    "being_slug": "varuna-apsara"
+  },
+  {
+    "start": "2031-05-26T10:14:45.718Z",
+    "end": "2031-06-02T17:23:28.228Z",
+    "aditya": "varuna",
+    "being_name": "Rathacitra",
+    "being_type": "yaksha",
+    "being_slug": "varuna-yaksha"
+  },
+  {
+    "start": "2031-06-02T17:23:28.228Z",
+    "end": "2031-06-11T02:03:47.637Z",
+    "aditya": "varuna",
+    "being_name": "Vasishtha",
+    "being_type": "rishi",
+    "being_slug": "varuna-rishi"
+  },
+  {
+    "start": "2031-06-11T02:03:47.637Z",
+    "end": "2031-06-16T07:37:59.883Z",
+    "aditya": "varuna",
+    "being_name": "Chitrasvana",
+    "being_type": "rakshasa",
+    "being_slug": "varuna-rakshasa"
+  },
+  {
+    "start": "2031-06-16T07:37:59.883Z",
+    "end": "2031-06-21T13:17:09.419Z",
+    "aditya": "varuna",
+    "being_name": "Huhu",
+    "being_type": "gandharva",
+    "being_slug": "varuna-gandharva"
+  },
+  {
+    "start": "2031-06-21T13:17:09.419Z",
+    "end": "2031-06-26T19:02:34.028Z",
+    "aditya": "indra",
+    "being_name": "Vishvavasu",
+    "being_type": "gandharva",
+    "being_slug": "indra-gandharva"
+  },
+  {
+    "start": "2031-06-26T19:02:34.028Z",
+    "end": "2031-07-02T00:54:09.756Z",
+    "aditya": "indra",
+    "being_name": "Varya",
+    "being_type": "rakshasa",
+    "being_slug": "indra-rakshasa"
+  },
+  {
+    "start": "2031-07-02T00:54:09.756Z",
+    "end": "2031-07-10T10:21:03.428Z",
+    "aditya": "indra",
+    "being_name": "Angiras",
+    "being_type": "rishi",
+    "being_slug": "indra-rishi"
+  },
+  {
+    "start": "2031-07-10T10:21:03.428Z",
+    "end": "2031-07-17T18:28:38.481Z",
+    "aditya": "indra",
+    "being_name": "Shrota",
+    "being_type": "yaksha",
+    "being_slug": "indra-yaksha"
+  },
+  {
+    "start": "2031-07-17T18:28:38.481Z",
+    "end": "2031-07-23T00:10:28.198Z",
+    "aditya": "indra",
+    "being_name": "Pramlocha",
+    "being_type": "apsara",
+    "being_slug": "indra-apsara"
+  },
+  {
+    "start": "2031-07-23T00:10:28.198Z",
+    "end": "2031-07-28T05:47:55.562Z",
+    "aditya": "vivasvan",
+    "being_name": "Anumlocha",
+    "being_type": "apsara",
+    "being_slug": "vivasvan-apsara"
+  },
+  {
+    "start": "2031-07-28T05:47:55.562Z",
+    "end": "2031-08-04T13:30:34.277Z",
+    "aditya": "vivasvan",
+    "being_name": "Asarana",
+    "being_type": "yaksha",
+    "being_slug": "vivasvan-yaksha"
+  },
+  {
+    "start": "2031-08-04T13:30:34.277Z",
+    "end": "2031-08-12T21:51:32.871Z",
+    "aditya": "vivasvan",
+    "being_name": "Bhrigu",
+    "being_type": "rishi",
+    "being_slug": "vivasvan-rishi"
+  },
+  {
+    "start": "2031-08-12T21:51:32.871Z",
+    "end": "2031-08-18T02:44:37.808Z",
+    "aditya": "vivasvan",
+    "being_name": "Vyaghra",
+    "being_type": "rakshasa",
+    "being_slug": "vivasvan-rakshasa"
+  },
+  {
+    "start": "2031-08-18T02:44:37.808Z",
+    "end": "2031-08-23T07:23:19.219Z",
+    "aditya": "vivasvan",
+    "being_name": "Ugrasena",
+    "being_type": "gandharva",
+    "being_slug": "vivasvan-gandharva"
+  },
+  {
+    "start": "2031-08-23T07:23:19.219Z",
+    "end": "2031-08-28T11:48:17.974Z",
+    "aditya": "tvashta",
+    "being_name": "Dhritarashtra",
+    "being_type": "gandharva",
+    "being_slug": "tvashta-gandharva"
+  },
+  {
+    "start": "2031-08-28T11:48:17.974Z",
+    "end": "2031-09-02T15:58:45.952Z",
+    "aditya": "tvashta",
+    "being_name": "Brahmapeta",
+    "being_type": "rakshasa",
+    "being_slug": "tvashta-rakshasa"
+  },
+  {
+    "start": "2031-09-02T15:58:45.952Z",
+    "end": "2031-09-10T21:58:26.177Z",
+    "aditya": "tvashta",
+    "being_name": "Jamadagni",
+    "being_type": "rishi",
+    "being_slug": "tvashta-rishi"
+  },
+  {
+    "start": "2031-09-10T21:58:26.177Z",
+    "end": "2031-09-18T02:27:22.236Z",
+    "aditya": "tvashta",
+    "being_name": "Shatajit",
+    "being_type": "yaksha",
+    "being_slug": "tvashta-yaksha"
+  },
+  {
+    "start": "2031-09-18T02:27:22.236Z",
+    "end": "2031-09-23T05:15:19.775Z",
+    "aditya": "tvashta",
+    "being_name": "Tilottama",
+    "being_type": "apsara",
+    "being_slug": "tvashta-apsara"
+  },
+  {
+    "start": "2031-09-23T05:15:19.775Z",
+    "end": "2031-09-28T07:45:09.009Z",
+    "aditya": "vishnu",
+    "being_name": "Rambha",
+    "being_type": "apsara",
+    "being_slug": "vishnu-apsara"
+  },
+  {
+    "start": "2031-09-28T07:45:09.009Z",
+    "end": "2031-10-05T10:41:24.888Z",
+    "aditya": "vishnu",
+    "being_name": "Satyajit",
+    "being_type": "yaksha",
+    "being_slug": "vishnu-yaksha"
+  },
+  {
+    "start": "2031-10-05T10:41:24.888Z",
+    "end": "2031-10-13T13:06:37.925Z",
+    "aditya": "vishnu",
+    "being_name": "Vishvamitra",
+    "being_type": "rishi",
+    "being_slug": "vishnu-rishi"
+  },
+  {
+    "start": "2031-10-13T13:06:37.925Z",
+    "end": "2031-10-18T14:07:50.874Z",
+    "aditya": "vishnu",
+    "being_name": "Makhapeta",
+    "being_type": "rakshasa",
+    "being_slug": "vishnu-rakshasa"
+  },
+  {
+    "start": "2031-10-18T14:07:50.874Z",
+    "end": "2031-10-23T14:49:27.188Z",
+    "aditya": "vishnu",
+    "being_name": "Suryavarcas",
+    "being_type": "gandharva",
+    "being_slug": "vishnu-gandharva"
+  },
+  {
+    "start": "2031-10-23T14:49:27.188Z",
+    "end": "2031-10-28T15:14:03.091Z",
+    "aditya": "amshu",
+    "being_name": "Ritasena",
+    "being_type": "gandharva",
+    "being_slug": "amshu-gandharva"
+  },
+  {
+    "start": "2031-10-28T15:14:03.091Z",
+    "end": "2031-11-02T15:20:00.366Z",
+    "aditya": "amshu",
+    "being_name": "Vidyucchatru",
+    "being_type": "rakshasa",
+    "being_slug": "amshu-rakshasa"
+  },
+  {
+    "start": "2031-11-02T15:20:00.366Z",
+    "end": "2031-11-10T14:47:23.921Z",
+    "aditya": "amshu",
+    "being_name": "Kashyapa",
+    "being_type": "rishi",
+    "being_slug": "amshu-rishi"
+  },
+  {
+    "start": "2031-11-10T14:47:23.921Z",
+    "end": "2031-11-17T13:38:51.299Z",
+    "aditya": "amshu",
+    "being_name": "Tarkshya",
+    "being_type": "yaksha",
+    "being_slug": "amshu-yaksha"
+  },
+  {
+    "start": "2031-11-17T13:38:51.299Z",
+    "end": "2031-11-22T12:32:37.104Z",
+    "aditya": "amshu",
+    "being_name": "Urvashi",
+    "being_type": "apsara",
+    "being_slug": "amshu-apsara"
+  },
+  {
+    "start": "2031-11-22T12:32:37.104Z",
+    "end": "2031-11-27T11:15:02.637Z",
+    "aditya": "bhaga",
+    "being_name": "Purvacitti",
+    "being_type": "apsara",
+    "being_slug": "bhaga-apsara"
+  },
+  {
+    "start": "2031-11-27T11:15:02.637Z",
+    "end": "2031-12-04T09:05:49.365Z",
+    "aditya": "bhaga",
+    "being_name": "Arishtanemi",
+    "being_type": "yaksha",
+    "being_slug": "bhaga-yaksha"
+  },
+  {
+    "start": "2031-12-04T09:05:49.365Z",
+    "end": "2031-12-12T06:08:20.977Z",
+    "aditya": "bhaga",
+    "being_name": "Ayu",
+    "being_type": "rishi",
+    "being_slug": "bhaga-rishi"
+  },
+  {
+    "start": "2031-12-12T06:08:20.977Z",
+    "end": "2031-12-17T04:04:09.609Z",
+    "aditya": "bhaga",
+    "being_name": "Sphurja",
+    "being_type": "rakshasa",
+    "being_slug": "bhaga-rakshasa"
+  },
+  {
+    "start": "2031-12-17T04:04:09.609Z",
+    "end": "2031-12-22T01:55:33.252Z",
+    "aditya": "bhaga",
+    "being_name": "Urna",
+    "being_type": "gandharva",
+    "being_slug": "bhaga-gandharva"
+  },
+  {
+    "start": "2031-12-22T01:55:33.252Z",
+    "end": "2031-12-26T23:44:39.126Z",
+    "aditya": "pusha",
+    "being_name": "Suruci",
+    "being_type": "gandharva",
+    "being_slug": "pusha-gandharva"
+  },
+  {
+    "start": "2031-12-26T23:44:39.126Z",
+    "end": "2031-12-31T21:31:32.505Z",
+    "aditya": "pusha",
+    "being_name": "Vata",
+    "being_type": "rakshasa",
+    "being_slug": "pusha-rakshasa"
+  },
+  {
+    "start": "2031-12-31T21:31:32.505Z",
+    "end": "2032-01-08T17:53:43.608Z",
+    "aditya": "pusha",
+    "being_name": "Gautama",
+    "being_type": "rishi",
+    "being_slug": "pusha-rishi"
+  },
+  {
+    "start": "2032-01-08T17:53:43.608Z",
+    "end": "2032-01-15T14:41:53.672Z",
+    "aditya": "pusha",
+    "being_name": "Sushena",
+    "being_type": "yaksha",
+    "being_slug": "pusha-yaksha"
+  },
+  {
+    "start": "2032-01-15T14:41:53.672Z",
+    "end": "2032-01-20T12:31:18.003Z",
+    "aditya": "pusha",
+    "being_name": "Ghritachi",
+    "being_type": "apsara",
+    "being_slug": "pusha-apsara"
+  },
+  {
+    "start": "2032-01-20T12:31:18.003Z",
+    "end": "2032-01-25T10:28:47.490Z",
+    "aditya": "parjanya",
+    "being_name": "Vishvaci",
+    "being_type": "apsara",
+    "being_slug": "parjanya-apsara"
+  },
+  {
+    "start": "2032-01-25T10:28:47.490Z",
+    "end": "2032-02-01T07:51:35.288Z",
+    "aditya": "parjanya",
+    "being_name": "Senajit",
+    "being_type": "yaksha",
+    "being_slug": "parjanya-yaksha"
+  },
+  {
+    "start": "2032-02-01T07:51:35.288Z",
+    "end": "2032-02-09T05:10:51.489Z",
+    "aditya": "parjanya",
+    "being_name": "Bharadvaja",
+    "being_type": "rishi",
+    "being_slug": "parjanya-rishi"
+  },
+  {
+    "start": "2032-02-09T05:10:51.489Z",
+    "end": "2032-02-14T03:43:52.104Z",
+    "aditya": "parjanya",
+    "being_name": "Varca",
+    "being_type": "rakshasa",
+    "being_slug": "parjanya-rakshasa"
+  },
+  {
+    "start": "2032-02-14T03:43:52.104Z",
+    "end": "2032-02-19T02:32:12.935Z",
+    "aditya": "parjanya",
+    "being_name": "Vishvavasu",
+    "being_type": "gandharva",
+    "being_slug": "parjanya-gandharva"
+  },
+  {
+    "start": "2032-02-19T02:32:12.935Z",
+    "end": "2032-02-24T01:37:57.246Z",
+    "aditya": "dhata",
+    "being_name": "Tumburu",
+    "being_type": "gandharva",
+    "being_slug": "dhata-gandharva"
+  },
+  {
+    "start": "2032-02-24T01:37:57.246Z",
+    "end": "2032-02-29T01:01:08.335Z",
+    "aditya": "dhata",
+    "being_name": "Heti",
+    "being_type": "rakshasa",
+    "being_slug": "dhata-rakshasa"
+  },
+  {
+    "start": "2032-02-29T01:01:08.335Z",
+    "end": "2032-03-08T00:34:56.851Z",
+    "aditya": "dhata",
+    "being_name": "Pulastya",
+    "being_type": "rishi",
+    "being_slug": "dhata-rishi"
+  },
+  {
+    "start": "2032-03-08T00:34:56.851Z",
+    "end": "2032-03-15T00:47:32.271Z",
+    "aditya": "dhata",
+    "being_name": "Rathakrit",
+    "being_type": "yaksha",
+    "being_slug": "dhata-yaksha"
+  },
+  {
+    "start": "2032-03-15T00:47:32.271Z",
+    "end": "2032-03-20T01:21:54.185Z",
+    "aditya": "dhata",
+    "being_name": "Kritasthali",
+    "being_type": "apsara",
+    "being_slug": "dhata-apsara"
+  },
+  {
+    "start": "2032-03-20T01:21:54.185Z",
+    "end": "2032-03-25T02:19:24.331Z",
+    "aditya": "aryama",
+    "being_name": "Punjikasthali",
+    "being_type": "apsara",
+    "being_slug": "aryama-apsara"
+  },
+  {
+    "start": "2032-03-25T02:19:24.331Z",
+    "end": "2032-04-01T04:16:10.093Z",
+    "aditya": "aryama",
+    "being_name": "Rathauja",
+    "being_type": "yaksha",
+    "being_slug": "aryama-yaksha"
+  },
+  {
+    "start": "2032-04-01T04:16:10.093Z",
+    "end": "2032-04-09T07:15:00.879Z",
+    "aditya": "aryama",
+    "being_name": "Pulaha",
+    "being_type": "rishi",
+    "being_slug": "aryama-rishi"
+  },
+  {
+    "start": "2032-04-09T07:15:00.879Z",
+    "end": "2032-04-14T09:32:58.857Z",
+    "aditya": "aryama",
+    "being_name": "Praheti",
+    "being_type": "rakshasa",
+    "being_slug": "aryama-rakshasa"
+  },
+  {
+    "start": "2032-04-14T09:32:58.857Z",
+    "end": "2032-04-19T12:14:08.364Z",
+    "aditya": "aryama",
+    "being_name": "Narada",
+    "being_type": "gandharva",
+    "being_slug": "aryama-gandharva"
+  },
+  {
+    "start": "2032-04-19T12:14:08.364Z",
+    "end": "2032-04-24T15:18:42.583Z",
+    "aditya": "mitra",
+    "being_name": "Haha",
+    "being_type": "gandharva",
+    "being_slug": "mitra-gandharva"
+  },
+  {
+    "start": "2032-04-24T15:18:42.583Z",
+    "end": "2032-04-29T18:43:43.535Z",
+    "aditya": "mitra",
+    "being_name": "Paurusheya",
+    "being_type": "rakshasa",
+    "being_slug": "mitra-rakshasa"
+  },
+  {
+    "start": "2032-04-29T18:43:43.535Z",
+    "end": "2032-05-08T00:46:50.742Z",
+    "aditya": "mitra",
+    "being_name": "Atri",
+    "being_type": "rishi",
+    "being_slug": "mitra-rishi"
+  },
+  {
+    "start": "2032-05-08T00:46:50.742Z",
+    "end": "2032-05-15T06:39:57.437Z",
+    "aditya": "mitra",
+    "being_name": "Rathasvana",
+    "being_type": "yaksha",
+    "being_slug": "mitra-yaksha"
+  },
+  {
+    "start": "2032-05-15T06:39:57.437Z",
+    "end": "2032-05-20T11:15:00.659Z",
+    "aditya": "mitra",
+    "being_name": "Menaka",
+    "being_type": "apsara",
+    "being_slug": "mitra-apsara"
+  },
+  {
+    "start": "2032-05-20T11:15:00.659Z",
+    "end": "2032-05-25T16:07:26.045Z",
+    "aditya": "varuna",
+    "being_name": "Sahajanya",
+    "being_type": "apsara",
+    "being_slug": "varuna-apsara"
+  },
+  {
+    "start": "2032-05-25T16:07:26.045Z",
+    "end": "2032-06-01T23:18:01.934Z",
+    "aditya": "varuna",
+    "being_name": "Rathacitra",
+    "being_type": "yaksha",
+    "being_slug": "varuna-yaksha"
+  },
+  {
+    "start": "2032-06-01T23:18:01.934Z",
+    "end": "2032-06-10T07:51:29.355Z",
+    "aditya": "varuna",
+    "being_name": "Vasishtha",
+    "being_type": "rishi",
+    "being_slug": "varuna-rishi"
+  },
+  {
+    "start": "2032-06-10T07:51:29.355Z",
+    "end": "2032-06-15T13:25:11.279Z",
+    "aditya": "varuna",
+    "being_name": "Chitrasvana",
+    "being_type": "rakshasa",
+    "being_slug": "varuna-rakshasa"
+  },
+  {
+    "start": "2032-06-15T13:25:11.279Z",
+    "end": "2032-06-20T19:08:47.124Z",
+    "aditya": "varuna",
+    "being_name": "Huhu",
+    "being_type": "gandharva",
+    "being_slug": "varuna-gandharva"
+  },
+  {
+    "start": "2032-06-20T19:08:47.124Z",
+    "end": "2032-06-26T00:58:58.477Z",
+    "aditya": "indra",
+    "being_name": "Vishvavasu",
+    "being_type": "gandharva",
+    "being_slug": "indra-gandharva"
+  },
+  {
+    "start": "2032-06-26T00:58:58.477Z",
+    "end": "2032-07-01T06:50:53.979Z",
+    "aditya": "indra",
+    "being_name": "Varya",
+    "being_type": "rakshasa",
+    "being_slug": "indra-rakshasa"
+  },
+  {
+    "start": "2032-07-01T06:50:53.979Z",
+    "end": "2032-07-09T16:10:16.113Z",
+    "aditya": "indra",
+    "being_name": "Angiras",
+    "being_type": "rishi",
+    "being_slug": "indra-rishi"
+  },
+  {
+    "start": "2032-07-09T16:10:16.113Z",
+    "end": "2032-07-17T00:18:12.920Z",
+    "aditya": "indra",
+    "being_name": "Shrota",
+    "being_type": "yaksha",
+    "being_slug": "indra-yaksha"
+  },
+  {
+    "start": "2032-07-17T00:18:12.920Z",
+    "end": "2032-07-22T06:04:45.425Z",
+    "aditya": "indra",
+    "being_name": "Pramlocha",
+    "being_type": "apsara",
+    "being_slug": "indra-apsara"
+  },
+  {
+    "start": "2032-07-22T06:04:45.425Z",
+    "end": "2032-07-27T11:45:33.838Z",
+    "aditya": "vivasvan",
+    "being_name": "Anumlocha",
+    "being_type": "apsara",
+    "being_slug": "vivasvan-apsara"
+  },
+  {
+    "start": "2032-07-27T11:45:33.838Z",
+    "end": "2032-08-03T19:23:38.335Z",
+    "aditya": "vivasvan",
+    "being_name": "Asarana",
+    "being_type": "yaksha",
+    "being_slug": "vivasvan-yaksha"
+  },
+  {
+    "start": "2032-08-03T19:23:38.335Z",
+    "end": "2032-08-12T03:39:11.294Z",
+    "aditya": "vivasvan",
+    "being_name": "Bhrigu",
+    "being_type": "rishi",
+    "being_slug": "vivasvan-rishi"
+  },
+  {
+    "start": "2032-08-12T03:39:11.294Z",
+    "end": "2032-08-17T08:34:50.479Z",
+    "aditya": "vivasvan",
+    "being_name": "Vyaghra",
+    "being_type": "rakshasa",
+    "being_slug": "vivasvan-rakshasa"
+  },
+  {
+    "start": "2032-08-17T08:34:50.479Z",
+    "end": "2032-08-22T13:18:19.292Z",
+    "aditya": "vivasvan",
+    "being_name": "Ugrasena",
+    "being_type": "gandharva",
+    "being_slug": "vivasvan-gandharva"
+  },
+  {
+    "start": "2032-08-22T13:18:19.292Z",
+    "end": "2032-08-27T17:44:49.673Z",
+    "aditya": "tvashta",
+    "being_name": "Dhritarashtra",
+    "being_type": "gandharva",
+    "being_slug": "tvashta-gandharva"
+  },
+  {
+    "start": "2032-08-27T17:44:49.673Z",
+    "end": "2032-09-01T21:51:03.867Z",
+    "aditya": "tvashta",
+    "being_name": "Brahmapeta",
+    "being_type": "rakshasa",
+    "being_slug": "tvashta-rakshasa"
+  },
+  {
+    "start": "2032-09-01T21:51:03.867Z",
+    "end": "2032-09-10T03:45:12.524Z",
+    "aditya": "tvashta",
+    "being_name": "Jamadagni",
+    "being_type": "rishi",
+    "being_slug": "tvashta-rishi"
+  },
+  {
+    "start": "2032-09-10T03:45:12.524Z",
+    "end": "2032-09-17T08:18:06.548Z",
+    "aditya": "tvashta",
+    "being_name": "Shatajit",
+    "being_type": "yaksha",
+    "being_slug": "tvashta-yaksha"
+  },
+  {
+    "start": "2032-09-17T08:18:06.548Z",
+    "end": "2032-09-22T11:10:52.148Z",
+    "aditya": "tvashta",
+    "being_name": "Tilottama",
+    "being_type": "apsara",
+    "being_slug": "tvashta-apsara"
+  },
+  {
+    "start": "2032-09-22T11:10:52.148Z",
+    "end": "2032-09-27T13:40:30.835Z",
+    "aditya": "vishnu",
+    "being_name": "Rambha",
+    "being_type": "apsara",
+    "being_slug": "vishnu-apsara"
+  },
+  {
+    "start": "2032-09-27T13:40:30.835Z",
+    "end": "2032-10-04T16:30:37.573Z",
+    "aditya": "vishnu",
+    "being_name": "Satyajit",
+    "being_type": "yaksha",
+    "being_slug": "vishnu-yaksha"
+  },
+  {
+    "start": "2032-10-04T16:30:37.573Z",
+    "end": "2032-10-12T18:54:20.962Z",
+    "aditya": "vishnu",
+    "being_name": "Vishvamitra",
+    "being_type": "rishi",
+    "being_slug": "vishnu-rishi"
+  },
+  {
+    "start": "2032-10-12T18:54:20.962Z",
+    "end": "2032-10-17T20:00:20.654Z",
+    "aditya": "vishnu",
+    "being_name": "Makhapeta",
+    "being_type": "rakshasa",
+    "being_slug": "vishnu-rakshasa"
+  },
+  {
+    "start": "2032-10-17T20:00:20.654Z",
+    "end": "2032-10-22T20:46:14.048Z",
+    "aditya": "vishnu",
+    "being_name": "Suryavarcas",
+    "being_type": "gandharva",
+    "being_slug": "vishnu-gandharva"
+  },
+  {
+    "start": "2032-10-22T20:46:14.048Z",
+    "end": "2032-10-27T21:09:49.966Z",
+    "aditya": "amshu",
+    "being_name": "Ritasena",
+    "being_type": "gandharva",
+    "being_slug": "amshu-gandharva"
+  },
+  {
+    "start": "2032-10-27T21:09:49.966Z",
+    "end": "2032-11-01T21:11:49.277Z",
+    "aditya": "amshu",
+    "being_name": "Vidyucchatru",
+    "being_type": "rakshasa",
+    "being_slug": "amshu-rakshasa"
+  },
+  {
+    "start": "2032-11-01T21:11:49.277Z",
+    "end": "2032-11-09T20:35:55.737Z",
+    "aditya": "amshu",
+    "being_name": "Kashyapa",
+    "being_type": "rishi",
+    "being_slug": "amshu-rishi"
+  },
+  {
+    "start": "2032-11-09T20:35:55.737Z",
+    "end": "2032-11-16T19:33:45.439Z",
+    "aditya": "amshu",
+    "being_name": "Tarkshya",
+    "being_type": "yaksha",
+    "being_slug": "amshu-yaksha"
+  },
+  {
+    "start": "2032-11-16T19:33:45.439Z",
+    "end": "2032-11-21T18:31:12.070Z",
+    "aditya": "amshu",
+    "being_name": "Urvashi",
+    "being_type": "apsara",
+    "being_slug": "amshu-apsara"
+  },
+  {
+    "start": "2032-11-21T18:31:12.070Z",
+    "end": "2032-11-26T17:12:40.254Z",
+    "aditya": "bhaga",
+    "being_name": "Purvacitti",
+    "being_type": "apsara",
+    "being_slug": "bhaga-apsara"
+  },
+  {
+    "start": "2032-11-26T17:12:40.254Z",
+    "end": "2032-12-03T14:57:58.711Z",
+    "aditya": "bhaga",
+    "being_name": "Arishtanemi",
+    "being_type": "yaksha",
+    "being_slug": "bhaga-yaksha"
+  },
+  {
+    "start": "2032-12-03T14:57:58.711Z",
+    "end": "2032-12-11T12:00:06.592Z",
+    "aditya": "bhaga",
+    "being_name": "Ayu",
+    "being_type": "rishi",
+    "being_slug": "bhaga-rishi"
+  },
+  {
+    "start": "2032-12-11T12:00:06.592Z",
+    "end": "2032-12-16T10:01:08.335Z",
+    "aditya": "bhaga",
+    "being_name": "Sphurja",
+    "being_type": "rakshasa",
+    "being_slug": "bhaga-rakshasa"
+  },
+  {
+    "start": "2032-12-16T10:01:08.335Z",
+    "end": "2032-12-21T07:55:56.982Z",
+    "aditya": "bhaga",
+    "being_name": "Urna",
+    "being_type": "gandharva",
+    "being_slug": "bhaga-gandharva"
+  },
+  {
+    "start": "2032-12-21T07:55:56.982Z",
+    "end": "2032-12-26T05:44:21.328Z",
+    "aditya": "pusha",
+    "being_name": "Suruci",
+    "being_type": "gandharva",
+    "being_slug": "pusha-gandharva"
+  },
+  {
+    "start": "2032-12-26T05:44:21.328Z",
+    "end": "2032-12-31T03:27:14.766Z",
+    "aditya": "pusha",
+    "being_name": "Vata",
+    "being_type": "rakshasa",
+    "being_slug": "pusha-rakshasa"
+  },
+  {
+    "start": "2032-12-31T03:27:14.766Z",
+    "end": "2033-01-07T23:45:49.658Z",
+    "aditya": "pusha",
+    "being_name": "Gautama",
+    "being_type": "rishi",
+    "being_slug": "pusha-rishi"
+  },
+  {
+    "start": "2033-01-07T23:45:49.658Z",
+    "end": "2033-01-14T20:40:00.293Z",
+    "aditya": "pusha",
+    "being_name": "Sushena",
+    "being_type": "yaksha",
+    "being_slug": "pusha-yaksha"
+  },
+  {
+    "start": "2033-01-14T20:40:00.293Z",
+    "end": "2033-01-19T18:32:47.651Z",
+    "aditya": "pusha",
+    "being_name": "Ghritachi",
+    "being_type": "apsara",
+    "being_slug": "pusha-apsara"
+  },
+  {
+    "start": "2033-01-19T18:32:47.651Z",
+    "end": "2033-01-24T16:29:42.861Z",
+    "aditya": "parjanya",
+    "being_name": "Vishvaci",
+    "being_type": "apsara",
+    "being_slug": "parjanya-apsara"
+  },
+  {
+    "start": "2033-01-24T16:29:42.861Z",
+    "end": "2033-01-31T13:46:09.653Z",
+    "aditya": "parjanya",
+    "being_name": "Senajit",
+    "being_type": "yaksha",
+    "being_slug": "parjanya-yaksha"
+  },
+  {
+    "start": "2033-01-31T13:46:09.653Z",
+    "end": "2033-02-08T11:04:33.120Z",
+    "aditya": "parjanya",
+    "being_name": "Bharadvaja",
+    "being_type": "rishi",
+    "being_slug": "parjanya-rishi"
+  },
+  {
+    "start": "2033-02-08T11:04:33.120Z",
+    "end": "2033-02-13T09:42:01.362Z",
+    "aditya": "parjanya",
+    "being_name": "Varca",
+    "being_type": "rakshasa",
+    "being_slug": "parjanya-rakshasa"
+  },
+  {
+    "start": "2033-02-13T09:42:01.362Z",
+    "end": "2033-02-18T08:33:47.856Z",
+    "aditya": "parjanya",
+    "being_name": "Vishvavasu",
+    "being_type": "gandharva",
+    "being_slug": "parjanya-gandharva"
+  },
+  {
+    "start": "2033-02-18T08:33:47.856Z",
+    "end": "2033-02-23T07:38:43.389Z",
+    "aditya": "dhata",
+    "being_name": "Tumburu",
+    "being_type": "gandharva",
+    "being_slug": "dhata-gandharva"
+  },
+  {
+    "start": "2033-02-23T07:38:43.389Z",
+    "end": "2033-02-28T06:57:06.416Z",
+    "aditya": "dhata",
+    "being_name": "Heti",
+    "being_type": "rakshasa",
+    "being_slug": "dhata-rakshasa"
+  },
+  {
+    "start": "2033-02-28T06:57:06.416Z",
+    "end": "2033-03-08T06:27:04.219Z",
+    "aditya": "dhata",
+    "being_name": "Pulastya",
+    "being_type": "rishi",
+    "being_slug": "dhata-rishi"
+  },
+  {
+    "start": "2033-03-08T06:27:04.219Z",
+    "end": "2033-03-15T06:45:07.251Z",
+    "aditya": "dhata",
+    "being_name": "Rathakrit",
+    "being_type": "yaksha",
+    "being_slug": "dhata-yaksha"
+  },
+  {
+    "start": "2033-03-15T06:45:07.251Z",
+    "end": "2033-03-20T07:22:42.964Z",
+    "aditya": "dhata",
+    "being_name": "Kritasthali",
+    "being_type": "apsara",
+    "being_slug": "dhata-apsara"
+  },
+  {
+    "start": "2033-03-20T07:22:42.964Z",
+    "end": "2033-03-25T08:18:39.507Z",
+    "aditya": "aryama",
+    "being_name": "Punjikasthali",
+    "being_type": "apsara",
+    "being_slug": "aryama-apsara"
+  },
+  {
+    "start": "2033-03-25T08:18:39.507Z",
+    "end": "2033-04-01T10:08:20.098Z",
+    "aditya": "aryama",
+    "being_name": "Rathauja",
+    "being_type": "yaksha",
+    "being_slug": "aryama-yaksha"
+  },
+  {
+    "start": "2033-04-01T10:08:20.098Z",
+    "end": "2033-04-09T13:06:59.678Z",
+    "aditya": "aryama",
+    "being_name": "Pulaha",
+    "being_type": "rishi",
+    "being_slug": "aryama-rishi"
+  },
+  {
+    "start": "2033-04-09T13:06:59.678Z",
+    "end": "2033-04-14T15:29:35.830Z",
+    "aditya": "aryama",
+    "being_name": "Praheti",
+    "being_type": "rakshasa",
+    "being_slug": "aryama-rakshasa"
+  },
+  {
+    "start": "2033-04-14T15:29:35.830Z",
+    "end": "2033-04-19T18:13:07.061Z",
+    "aditya": "aryama",
+    "being_name": "Narada",
+    "being_type": "gandharva",
+    "being_slug": "aryama-gandharva"
+  },
+  {
+    "start": "2033-04-19T18:13:07.061Z",
+    "end": "2033-04-24T21:14:55.825Z",
+    "aditya": "mitra",
+    "being_name": "Haha",
+    "being_type": "gandharva",
+    "being_slug": "mitra-gandharva"
+  },
+  {
+    "start": "2033-04-24T21:14:55.825Z",
+    "end": "2033-04-30T00:34:27.847Z",
+    "aditya": "mitra",
+    "being_name": "Paurusheya",
+    "being_type": "rakshasa",
+    "being_slug": "mitra-rakshasa"
+  },
+  {
+    "start": "2033-04-30T00:34:27.847Z",
+    "end": "2033-05-08T06:35:46.948Z",
+    "aditya": "mitra",
+    "being_name": "Atri",
+    "being_type": "rishi",
+    "being_slug": "mitra-rishi"
+  },
+  {
+    "start": "2033-05-08T06:35:46.948Z",
+    "end": "2033-05-15T12:35:00.806Z",
+    "aditya": "mitra",
+    "being_name": "Rathasvana",
+    "being_type": "yaksha",
+    "being_slug": "mitra-yaksha"
+  },
+  {
+    "start": "2033-05-15T12:35:00.806Z",
+    "end": "2033-05-20T17:10:58.740Z",
+    "aditya": "mitra",
+    "being_name": "Menaka",
+    "being_type": "apsara",
+    "being_slug": "mitra-apsara"
+  },
+  {
+    "start": "2033-05-20T17:10:58.740Z",
+    "end": "2033-05-25T21:59:22.866Z",
+    "aditya": "varuna",
+    "being_name": "Sahajanya",
+    "being_type": "apsara",
+    "being_slug": "varuna-apsara"
+  },
+  {
+    "start": "2033-05-25T21:59:22.866Z",
+    "end": "2033-06-02T05:03:17.314Z",
+    "aditya": "varuna",
+    "being_name": "Rathacitra",
+    "being_type": "yaksha",
+    "being_slug": "varuna-yaksha"
+  },
+  {
+    "start": "2033-06-02T05:03:17.314Z",
+    "end": "2033-06-10T13:40:55.225Z",
+    "aditya": "varuna",
+    "being_name": "Vasishtha",
+    "being_type": "rishi",
+    "being_slug": "varuna-rishi"
+  },
+  {
+    "start": "2033-06-10T13:40:55.225Z",
+    "end": "2033-06-15T19:18:17.974Z",
+    "aditya": "varuna",
+    "being_name": "Chitrasvana",
+    "being_type": "rakshasa",
+    "being_slug": "varuna-rakshasa"
+  },
+  {
+    "start": "2033-06-15T19:18:17.974Z",
+    "end": "2033-06-21T01:01:08.994Z",
+    "aditya": "varuna",
+    "being_name": "Huhu",
+    "being_type": "gandharva",
+    "being_slug": "varuna-gandharva"
+  },
+  {
+    "start": "2033-06-21T01:01:08.994Z",
+    "end": "2033-06-26T06:45:55.371Z",
+    "aditya": "indra",
+    "being_name": "Vishvavasu",
+    "being_type": "gandharva",
+    "being_slug": "indra-gandharva"
+  },
+  {
+    "start": "2033-06-26T06:45:55.371Z",
+    "end": "2033-07-01T12:33:30.498Z",
+    "aditya": "indra",
+    "being_name": "Varya",
+    "being_type": "rakshasa",
+    "being_slug": "indra-rakshasa"
+  },
+  {
+    "start": "2033-07-01T12:33:30.498Z",
+    "end": "2033-07-09T21:56:53.892Z",
+    "aditya": "indra",
+    "being_name": "Angiras",
+    "being_type": "rishi",
+    "being_slug": "indra-rishi"
+  },
+  {
+    "start": "2033-07-09T21:56:53.892Z",
+    "end": "2033-07-17T06:09:11.074Z",
+    "aditya": "indra",
+    "being_name": "Shrota",
+    "being_type": "yaksha",
+    "being_slug": "indra-yaksha"
+  },
+  {
+    "start": "2033-07-17T06:09:11.074Z",
+    "end": "2033-07-22T11:52:49.556Z",
+    "aditya": "indra",
+    "being_name": "Pramlocha",
+    "being_type": "apsara",
+    "being_slug": "indra-apsara"
+  },
+  {
+    "start": "2033-07-22T11:52:49.556Z",
+    "end": "2033-07-27T17:27:42.671Z",
+    "aditya": "vivasvan",
+    "being_name": "Anumlocha",
+    "being_type": "apsara",
+    "being_slug": "vivasvan-apsara"
+  },
+  {
+    "start": "2033-07-27T17:27:42.671Z",
+    "end": "2033-08-04T01:04:32.021Z",
+    "aditya": "vivasvan",
+    "being_name": "Asarana",
+    "being_type": "yaksha",
+    "being_slug": "vivasvan-yaksha"
+  },
+  {
+    "start": "2033-08-04T01:04:32.021Z",
+    "end": "2033-08-12T09:26:35.215Z",
+    "aditya": "vivasvan",
+    "being_name": "Bhrigu",
+    "being_type": "rishi",
+    "being_slug": "vivasvan-rishi"
+  },
+  {
+    "start": "2033-08-12T09:26:35.215Z",
+    "end": "2033-08-17T14:23:10.430Z",
+    "aditya": "vivasvan",
+    "being_name": "Vyaghra",
+    "being_type": "rakshasa",
+    "being_slug": "vivasvan-rakshasa"
+  },
+  {
+    "start": "2033-08-17T14:23:10.430Z",
+    "end": "2033-08-22T19:01:51.841Z",
+    "aditya": "vivasvan",
+    "being_name": "Ugrasena",
+    "being_type": "gandharva",
+    "being_slug": "vivasvan-gandharva"
+  },
+  {
+    "start": "2033-08-22T19:01:51.841Z",
+    "end": "2033-08-27T23:23:40.752Z",
+    "aditya": "tvashta",
+    "being_name": "Dhritarashtra",
+    "being_type": "gandharva",
+    "being_slug": "tvashta-gandharva"
+  },
+  {
+    "start": "2033-08-27T23:23:40.752Z",
+    "end": "2033-09-02T03:29:47.695Z",
+    "aditya": "tvashta",
+    "being_name": "Brahmapeta",
+    "being_type": "rakshasa",
+    "being_slug": "tvashta-rakshasa"
+  },
+  {
+    "start": "2033-09-02T03:29:47.695Z",
+    "end": "2033-09-10T09:30:35.156Z",
+    "aditya": "tvashta",
+    "being_name": "Jamadagni",
+    "being_type": "rishi",
+    "being_slug": "tvashta-rishi"
+  },
+  {
+    "start": "2033-09-10T09:30:35.156Z",
+    "end": "2033-09-17T14:03:56.206Z",
+    "aditya": "tvashta",
+    "being_name": "Shatajit",
+    "being_type": "yaksha",
+    "being_slug": "tvashta-yaksha"
+  },
+  {
+    "start": "2033-09-17T14:03:56.206Z",
+    "end": "2033-09-22T16:51:40.562Z",
+    "aditya": "tvashta",
+    "being_name": "Tilottama",
+    "being_type": "apsara",
+    "being_slug": "tvashta-apsara"
+  },
+  {
+    "start": "2033-09-22T16:51:40.562Z",
+    "end": "2033-09-27T19:18:11.382Z",
+    "aditya": "vishnu",
+    "being_name": "Rambha",
+    "being_type": "apsara",
+    "being_slug": "vishnu-apsara"
+  },
+  {
+    "start": "2033-09-27T19:18:11.382Z",
+    "end": "2033-10-04T22:10:56.323Z",
+    "aditya": "vishnu",
+    "being_name": "Satyajit",
+    "being_type": "yaksha",
+    "being_slug": "vishnu-yaksha"
+  },
+  {
+    "start": "2033-10-04T22:10:56.323Z",
+    "end": "2033-10-13T00:41:41.587Z",
+    "aditya": "vishnu",
+    "being_name": "Vishvamitra",
+    "being_type": "rishi",
+    "being_slug": "vishnu-rishi"
+  },
+  {
+    "start": "2033-10-13T00:41:41.587Z",
+    "end": "2033-10-18T01:45:55.811Z",
+    "aditya": "vishnu",
+    "being_name": "Makhapeta",
+    "being_type": "rakshasa",
+    "being_slug": "vishnu-rakshasa"
+  },
+  {
+    "start": "2033-10-18T01:45:55.811Z",
+    "end": "2033-10-23T02:27:36.079Z",
+    "aditya": "vishnu",
+    "being_name": "Suryavarcas",
+    "being_type": "gandharva",
+    "being_slug": "vishnu-gandharva"
+  },
+  {
+    "start": "2033-10-23T02:27:36.079Z",
+    "end": "2033-10-28T02:48:56.206Z",
+    "aditya": "amshu",
+    "being_name": "Ritasena",
+    "being_type": "gandharva",
+    "being_slug": "amshu-gandharva"
+  },
+  {
+    "start": "2033-10-28T02:48:56.206Z",
+    "end": "2033-11-02T02:52:56.807Z",
+    "aditya": "amshu",
+    "being_name": "Vidyucchatru",
+    "being_type": "rakshasa",
+    "being_slug": "amshu-rakshasa"
+  },
+  {
+    "start": "2033-11-02T02:52:56.807Z",
+    "end": "2033-11-10T02:25:22.925Z",
+    "aditya": "amshu",
+    "being_name": "Kashyapa",
+    "being_type": "rishi",
+    "being_slug": "amshu-rishi"
+  },
+  {
+    "start": "2033-11-10T02:25:22.925Z",
+    "end": "2033-11-17T01:22:21.211Z",
+    "aditya": "amshu",
+    "being_name": "Tarkshya",
+    "being_type": "yaksha",
+    "being_slug": "amshu-yaksha"
+  },
+  {
+    "start": "2033-11-17T01:22:21.211Z",
+    "end": "2033-11-22T00:16:09.653Z",
+    "aditya": "amshu",
+    "being_name": "Urvashi",
+    "being_type": "apsara",
+    "being_slug": "amshu-apsara"
+  },
+  {
+    "start": "2033-11-22T00:16:09.653Z",
+    "end": "2033-11-26T22:55:39.185Z",
+    "aditya": "bhaga",
+    "being_name": "Purvacitti",
+    "being_type": "apsara",
+    "being_slug": "bhaga-apsara"
+  },
+  {
+    "start": "2033-11-26T22:55:39.185Z",
+    "end": "2033-12-03T20:45:59.546Z",
+    "aditya": "bhaga",
+    "being_name": "Arishtanemi",
+    "being_type": "yaksha",
+    "being_slug": "bhaga-yaksha"
+  },
+  {
+    "start": "2033-12-03T20:45:59.546Z",
+    "end": "2033-12-11T17:54:59.414Z",
+    "aditya": "bhaga",
+    "being_name": "Ayu",
+    "being_type": "rishi",
+    "being_slug": "bhaga-rishi"
+  },
+  {
+    "start": "2033-12-11T17:54:59.414Z",
+    "end": "2033-12-16T15:54:49.307Z",
+    "aditya": "bhaga",
+    "being_name": "Sphurja",
+    "being_type": "rakshasa",
+    "being_slug": "bhaga-rakshasa"
+  },
+  {
+    "start": "2033-12-16T15:54:49.307Z",
+    "end": "2033-12-21T13:45:59.766Z",
+    "aditya": "bhaga",
+    "being_name": "Urna",
+    "being_type": "gandharva",
+    "being_slug": "bhaga-gandharva"
+  },
+  {
+    "start": "2033-12-21T13:45:59.766Z",
+    "end": "2033-12-26T11:32:18.208Z",
+    "aditya": "pusha",
+    "being_name": "Suruci",
+    "being_type": "gandharva",
+    "being_slug": "pusha-gandharva"
+  },
+  {
+    "start": "2033-12-26T11:32:18.208Z",
+    "end": "2033-12-31T09:18:01.055Z",
+    "aditya": "pusha",
+    "being_name": "Vata",
+    "being_type": "rakshasa",
+    "being_slug": "pusha-rakshasa"
+  },
+  {
+    "start": "2033-12-31T09:18:01.055Z",
+    "end": "2034-01-08T05:44:40.444Z",
+    "aditya": "pusha",
+    "being_name": "Gautama",
+    "being_type": "rishi",
+    "being_slug": "pusha-rishi"
+  },
+  {
+    "start": "2034-01-08T05:44:40.444Z",
+    "end": "2034-01-15T02:38:32.622Z",
+    "aditya": "pusha",
+    "being_name": "Sushena",
+    "being_type": "yaksha",
+    "being_slug": "pusha-yaksha"
+  },
+  {
+    "start": "2034-01-15T02:38:32.622Z",
+    "end": "2034-01-20T00:27:16.743Z",
+    "aditya": "pusha",
+    "being_name": "Ghritachi",
+    "being_type": "apsara",
+    "being_slug": "pusha-apsara"
+  },
+  {
+    "start": "2034-01-20T00:27:16.743Z",
+    "end": "2034-01-24T22:21:43.638Z",
+    "aditya": "parjanya",
+    "being_name": "Vishvaci",
+    "being_type": "apsara",
+    "being_slug": "parjanya-apsara"
+  },
+  {
+    "start": "2034-01-24T22:21:43.638Z",
+    "end": "2034-01-31T19:42:36.738Z",
+    "aditya": "parjanya",
+    "being_name": "Senajit",
+    "being_type": "yaksha",
+    "being_slug": "parjanya-yaksha"
+  },
+  {
+    "start": "2034-01-31T19:42:36.738Z",
+    "end": "2034-02-08T17:07:10.664Z",
+    "aditya": "parjanya",
+    "being_name": "Bharadvaja",
+    "being_type": "rishi",
+    "being_slug": "parjanya-rishi"
+  },
+  {
+    "start": "2034-02-08T17:07:10.664Z",
+    "end": "2034-02-13T15:43:05.962Z",
+    "aditya": "parjanya",
+    "being_name": "Varca",
+    "being_type": "rakshasa",
+    "being_slug": "parjanya-rakshasa"
+  },
+  {
+    "start": "2034-02-13T15:43:05.962Z",
+    "end": "2034-02-18T14:30:10.986Z",
+    "aditya": "parjanya",
+    "being_name": "Vishvavasu",
+    "being_type": "gandharva",
+    "being_slug": "parjanya-gandharva"
+  },
+  {
+    "start": "2034-02-18T14:30:10.986Z",
+    "end": "2034-02-23T13:32:11.177Z",
+    "aditya": "dhata",
+    "being_name": "Tumburu",
+    "being_type": "gandharva",
+    "being_slug": "dhata-gandharva"
+  },
+  {
+    "start": "2034-02-23T13:32:11.177Z",
+    "end": "2034-02-28T12:52:29.561Z",
+    "aditya": "dhata",
+    "being_name": "Heti",
+    "being_type": "rakshasa",
+    "being_slug": "dhata-rakshasa"
+  },
+  {
+    "start": "2034-02-28T12:52:29.561Z",
+    "end": "2034-03-08T12:29:09.463Z",
+    "aditya": "dhata",
+    "being_name": "Pulastya",
+    "being_type": "rishi",
+    "being_slug": "dhata-rishi"
+  },
+  {
+    "start": "2034-03-08T12:29:09.463Z",
+    "end": "2034-03-15T12:45:09.229Z",
+    "aditya": "dhata",
+    "being_name": "Rathakrit",
+    "being_type": "yaksha",
+    "being_slug": "dhata-yaksha"
+  },
+  {
+    "start": "2034-03-15T12:45:09.229Z",
+    "end": "2034-03-20T13:17:29.194Z",
+    "aditya": "dhata",
+    "being_name": "Kritasthali",
+    "being_type": "apsara",
+    "being_slug": "dhata-apsara"
+  },
+  {
+    "start": "2034-03-20T13:17:29.194Z",
+    "end": "2034-03-25T14:10:18.530Z",
+    "aditya": "aryama",
+    "being_name": "Punjikasthali",
+    "being_type": "apsara",
+    "being_slug": "aryama-apsara"
+  },
+  {
+    "start": "2034-03-25T14:10:18.530Z",
+    "end": "2034-04-01T16:03:45.879Z",
+    "aditya": "aryama",
+    "being_name": "Rathauja",
+    "being_type": "yaksha",
+    "being_slug": "aryama-yaksha"
+  },
+  {
+    "start": "2034-04-01T16:03:45.879Z",
+    "end": "2034-04-09T19:06:35.288Z",
+    "aditya": "aryama",
+    "being_name": "Pulaha",
+    "being_type": "rishi",
+    "being_slug": "aryama-rishi"
+  },
+  {
+    "start": "2034-04-09T19:06:35.288Z",
+    "end": "2034-04-14T21:25:42.480Z",
+    "aditya": "aryama",
+    "being_name": "Praheti",
+    "being_type": "rakshasa",
+    "being_slug": "aryama-rakshasa"
+  },
+  {
+    "start": "2034-04-14T21:25:42.480Z",
+    "end": "2034-04-20T00:03:42.803Z",
+    "aditya": "aryama",
+    "being_name": "Narada",
+    "being_type": "gandharva",
+    "being_slug": "aryama-gandharva"
+  },
+  {
+    "start": "2034-04-20T00:03:42.803Z",
+    "end": "2034-04-25T03:02:59.297Z",
+    "aditya": "mitra",
+    "being_name": "Haha",
+    "being_type": "gandharva",
+    "being_slug": "mitra-gandharva"
+  },
+  {
+    "start": "2034-04-25T03:02:59.297Z",
+    "end": "2034-04-30T06:25:33.252Z",
+    "aditya": "mitra",
+    "being_name": "Paurusheya",
+    "being_type": "rakshasa",
+    "being_slug": "mitra-rakshasa"
+  },
+  {
+    "start": "2034-04-30T06:25:33.252Z",
+    "end": "2034-05-08T12:31:53.599Z",
+    "aditya": "mitra",
+    "being_name": "Atri",
+    "being_type": "rishi",
+    "being_slug": "mitra-rishi"
+  },
+  {
+    "start": "2034-05-08T12:31:53.599Z",
+    "end": "2034-05-15T18:26:18.076Z",
+    "aditya": "mitra",
+    "being_name": "Rathasvana",
+    "being_type": "yaksha",
+    "being_slug": "mitra-yaksha"
+  },
+  {
+    "start": "2034-05-15T18:26:18.076Z",
+    "end": "2034-05-20T22:56:53.672Z",
+    "aditya": "mitra",
+    "being_name": "Menaka",
+    "being_type": "apsara",
+    "being_slug": "mitra-apsara"
+  },
+  {
+    "start": "2034-05-20T22:56:53.672Z",
+    "end": "2034-05-26T03:44:41.543Z",
+    "aditya": "varuna",
+    "being_name": "Sahajanya",
+    "being_type": "apsara",
+    "being_slug": "varuna-apsara"
+  },
+  {
+    "start": "2034-05-26T03:44:41.543Z",
+    "end": "2034-06-02T10:54:53.042Z",
+    "aditya": "varuna",
+    "being_name": "Rathacitra",
+    "being_type": "yaksha",
+    "being_slug": "varuna-yaksha"
+  },
+  {
+    "start": "2034-06-02T10:54:53.042Z",
+    "end": "2034-06-10T19:33:07.866Z",
+    "aditya": "varuna",
+    "being_name": "Vasishtha",
+    "being_type": "rishi",
+    "being_slug": "varuna-rishi"
+  },
+  {
+    "start": "2034-06-10T19:33:07.866Z",
+    "end": "2034-06-16T01:05:20.801Z",
+    "aditya": "varuna",
+    "being_name": "Chitrasvana",
+    "being_type": "rakshasa",
+    "being_slug": "varuna-rakshasa"
+  },
+  {
+    "start": "2034-06-16T01:05:20.801Z",
+    "end": "2034-06-21T06:44:12.539Z",
+    "aditya": "varuna",
+    "being_name": "Huhu",
+    "being_type": "gandharva",
+    "being_slug": "varuna-gandharva"
+  },
+  {
+    "start": "2034-06-21T06:44:12.539Z",
+    "end": "2034-06-26T12:31:13.389Z",
+    "aditya": "indra",
+    "being_name": "Vishvavasu",
+    "being_type": "gandharva",
+    "being_slug": "indra-gandharva"
+  },
+  {
+    "start": "2034-06-26T12:31:13.389Z",
+    "end": "2034-07-01T18:23:43.828Z",
+    "aditya": "indra",
+    "being_name": "Varya",
+    "being_type": "rakshasa",
+    "being_slug": "indra-rakshasa"
+  },
+  {
+    "start": "2034-07-01T18:23:43.828Z",
+    "end": "2034-07-10T03:48:42.144Z",
+    "aditya": "indra",
+    "being_name": "Angiras",
+    "being_type": "rishi",
+    "being_slug": "indra-rishi"
+  },
+  {
+    "start": "2034-07-10T03:48:42.144Z",
+    "end": "2034-07-17T11:53:50.200Z",
+    "aditya": "indra",
+    "being_name": "Shrota",
+    "being_type": "yaksha",
+    "being_slug": "indra-yaksha"
+  },
+  {
+    "start": "2034-07-17T11:53:50.200Z",
+    "end": "2034-07-22T17:36:21.445Z",
+    "aditya": "indra",
+    "being_name": "Pramlocha",
+    "being_type": "apsara",
+    "being_slug": "indra-apsara"
+  },
+  {
+    "start": "2034-07-22T17:36:21.445Z",
+    "end": "2034-07-27T23:15:14.502Z",
+    "aditya": "vivasvan",
+    "being_name": "Anumlocha",
+    "being_type": "apsara",
+    "being_slug": "vivasvan-apsara"
+  },
+  {
+    "start": "2034-07-27T23:15:14.502Z",
+    "end": "2034-08-04T06:57:52.559Z",
+    "aditya": "vivasvan",
+    "being_name": "Asarana",
+    "being_type": "yaksha",
+    "being_slug": "vivasvan-yaksha"
+  },
+  {
+    "start": "2034-08-04T06:57:52.559Z",
+    "end": "2034-08-12T15:15:31.421Z",
+    "aditya": "vivasvan",
+    "being_name": "Bhrigu",
+    "being_type": "rishi",
+    "being_slug": "vivasvan-rishi"
+  },
+  {
+    "start": "2034-08-12T15:15:31.421Z",
+    "end": "2034-08-17T20:08:00.103Z",
+    "aditya": "vivasvan",
+    "being_name": "Vyaghra",
+    "being_type": "rakshasa",
+    "being_slug": "vivasvan-rakshasa"
+  },
+  {
+    "start": "2034-08-17T20:08:00.103Z",
+    "end": "2034-08-23T00:47:45.454Z",
+    "aditya": "vivasvan",
+    "being_name": "Ugrasena",
+    "being_type": "gandharva",
+    "being_slug": "vivasvan-gandharva"
+  },
+  {
+    "start": "2034-08-23T00:47:45.454Z",
+    "end": "2034-08-28T05:14:06.606Z",
+    "aditya": "tvashta",
+    "being_name": "Dhritarashtra",
+    "being_type": "gandharva",
+    "being_slug": "tvashta-gandharva"
+  },
+  {
+    "start": "2034-08-28T05:14:06.606Z",
+    "end": "2034-09-02T09:24:26.675Z",
+    "aditya": "tvashta",
+    "being_name": "Brahmapeta",
+    "being_type": "rakshasa",
+    "being_slug": "tvashta-rakshasa"
+  },
+  {
+    "start": "2034-09-02T09:24:26.675Z",
+    "end": "2034-09-10T15:21:10.898Z",
+    "aditya": "tvashta",
+    "being_name": "Jamadagni",
+    "being_type": "rishi",
+    "being_slug": "tvashta-rishi"
+  },
+  {
+    "start": "2034-09-10T15:21:10.898Z",
+    "end": "2034-09-17T19:49:55.752Z",
+    "aditya": "tvashta",
+    "being_name": "Shatajit",
+    "being_type": "yaksha",
+    "being_slug": "tvashta-yaksha"
+  },
+  {
+    "start": "2034-09-17T19:49:55.752Z",
+    "end": "2034-09-22T22:39:34.146Z",
+    "aditya": "tvashta",
+    "being_name": "Tilottama",
+    "being_type": "apsara",
+    "being_slug": "tvashta-apsara"
+  },
+  {
+    "start": "2034-09-22T22:39:34.146Z",
+    "end": "2034-09-28T01:10:56.982Z",
+    "aditya": "vishnu",
+    "being_name": "Rambha",
+    "being_type": "apsara",
+    "being_slug": "vishnu-apsara"
+  },
+  {
+    "start": "2034-09-28T01:10:56.982Z",
+    "end": "2034-10-05T04:06:23.423Z",
+    "aditya": "vishnu",
+    "being_name": "Satyajit",
+    "being_type": "yaksha",
+    "being_slug": "vishnu-yaksha"
+  },
+  {
+    "start": "2034-10-05T04:06:23.423Z",
+    "end": "2034-10-13T06:30:09.448Z",
+    "aditya": "vishnu",
+    "being_name": "Vishvamitra",
+    "being_type": "rishi",
+    "being_slug": "vishnu-rishi"
+  },
+  {
+    "start": "2034-10-13T06:30:09.448Z",
+    "end": "2034-10-18T07:32:27.656Z",
+    "aditya": "vishnu",
+    "being_name": "Makhapeta",
+    "being_type": "rakshasa",
+    "being_slug": "vishnu-rakshasa"
+  },
+  {
+    "start": "2034-10-18T07:32:27.656Z",
+    "end": "2034-10-23T08:16:27.671Z",
+    "aditya": "vishnu",
+    "being_name": "Suryavarcas",
+    "being_type": "gandharva",
+    "being_slug": "vishnu-gandharva"
+  },
+  {
+    "start": "2034-10-23T08:16:27.671Z",
+    "end": "2034-10-28T08:42:47.065Z",
+    "aditya": "amshu",
+    "being_name": "Ritasena",
+    "being_type": "gandharva",
+    "being_slug": "amshu-gandharva"
+  },
+  {
+    "start": "2034-10-28T08:42:47.065Z",
+    "end": "2034-11-02T08:48:46.978Z",
+    "aditya": "amshu",
+    "being_name": "Vidyucchatru",
+    "being_type": "rakshasa",
+    "being_slug": "amshu-rakshasa"
+  },
+  {
+    "start": "2034-11-02T08:48:46.978Z",
+    "end": "2034-11-10T08:15:08.569Z",
+    "aditya": "amshu",
+    "being_name": "Kashyapa",
+    "being_type": "rishi",
+    "being_slug": "amshu-rishi"
+  },
+  {
+    "start": "2034-11-10T08:15:08.569Z",
+    "end": "2034-11-17T07:08:31.304Z",
+    "aditya": "amshu",
+    "being_name": "Tarkshya",
+    "being_type": "yaksha",
+    "being_slug": "amshu-yaksha"
+  },
+  {
+    "start": "2034-11-17T07:08:31.304Z",
+    "end": "2034-11-22T06:04:57.949Z",
+    "aditya": "amshu",
+    "being_name": "Urvashi",
+    "being_type": "apsara",
+    "being_slug": "amshu-apsara"
+  },
+  {
+    "start": "2034-11-22T06:04:57.949Z",
+    "end": "2034-11-27T04:49:14.883Z",
+    "aditya": "bhaga",
+    "being_name": "Purvacitti",
+    "being_type": "apsara",
+    "being_slug": "bhaga-apsara"
+  },
+  {
+    "start": "2034-11-27T04:49:14.883Z",
+    "end": "2034-12-04T02:40:12.817Z",
+    "aditya": "bhaga",
+    "being_name": "Arishtanemi",
+    "being_type": "yaksha",
+    "being_slug": "bhaga-yaksha"
+  },
+  {
+    "start": "2034-12-04T02:40:12.817Z",
+    "end": "2034-12-11T23:42:15.425Z",
+    "aditya": "bhaga",
+    "being_name": "Ayu",
+    "being_type": "rishi",
+    "being_slug": "bhaga-rishi"
+  },
+  {
+    "start": "2034-12-11T23:42:15.425Z",
+    "end": "2034-12-16T21:40:05.347Z",
+    "aditya": "bhaga",
+    "being_name": "Sphurja",
+    "being_type": "rakshasa",
+    "being_slug": "bhaga-rakshasa"
+  },
+  {
+    "start": "2034-12-16T21:40:05.347Z",
+    "end": "2034-12-21T19:33:59.282Z",
+    "aditya": "bhaga",
+    "being_name": "Urna",
+    "being_type": "gandharva",
+    "being_slug": "bhaga-gandharva"
+  },
+  {
+    "start": "2034-12-21T19:33:59.282Z",
+    "end": "2034-12-26T17:24:54.580Z",
+    "aditya": "pusha",
+    "being_name": "Suruci",
+    "being_type": "gandharva",
+    "being_slug": "pusha-gandharva"
+  },
+  {
+    "start": "2034-12-26T17:24:54.580Z",
+    "end": "2034-12-31T15:12:09.712Z",
+    "aditya": "pusha",
+    "being_name": "Vata",
+    "being_type": "rakshasa",
+    "being_slug": "pusha-rakshasa"
+  },
+  {
+    "start": "2034-12-31T15:12:09.712Z",
+    "end": "2035-01-08T11:32:55.122Z",
+    "aditya": "pusha",
+    "being_name": "Gautama",
+    "being_type": "rishi",
+    "being_slug": "pusha-rishi"
+  },
+  {
+    "start": "2035-01-08T11:32:55.122Z",
+    "end": "2035-01-15T08:22:52.632Z",
+    "aditya": "pusha",
+    "being_name": "Sushena",
+    "being_type": "yaksha",
+    "being_slug": "pusha-yaksha"
+  },
+  {
+    "start": "2035-01-15T08:22:52.632Z",
+    "end": "2035-01-20T06:14:15.615Z",
+    "aditya": "pusha",
+    "being_name": "Ghritachi",
+    "being_type": "apsara",
+    "being_slug": "pusha-apsara"
+  },
+  {
+    "start": "2035-01-20T06:14:15.615Z",
+    "end": "2035-01-25T04:13:14.751Z",
+    "aditya": "parjanya",
+    "being_name": "Vishvaci",
+    "being_type": "apsara",
+    "being_slug": "parjanya-apsara"
+  },
+  {
+    "start": "2035-01-25T04:13:14.751Z",
+    "end": "2035-02-01T01:35:16.406Z",
+    "aditya": "parjanya",
+    "being_name": "Senajit",
+    "being_type": "yaksha",
+    "being_slug": "parjanya-yaksha"
+  },
+  {
+    "start": "2035-02-01T01:35:16.406Z",
+    "end": "2035-02-08T22:52:42.524Z",
+    "aditya": "parjanya",
+    "being_name": "Bharadvaja",
+    "being_type": "rishi",
+    "being_slug": "parjanya-rishi"
+  },
+  {
+    "start": "2035-02-08T22:52:42.524Z",
+    "end": "2035-02-13T21:26:31.260Z",
+    "aditya": "parjanya",
+    "being_name": "Varca",
+    "being_type": "rakshasa",
+    "being_slug": "parjanya-rakshasa"
+  },
+  {
+    "start": "2035-02-13T21:26:31.260Z",
+    "end": "2035-02-18T20:16:09.873Z",
+    "aditya": "parjanya",
+    "being_name": "Vishvavasu",
+    "being_type": "gandharva",
+    "being_slug": "parjanya-gandharva"
+  },
+  {
+    "start": "2035-02-18T20:16:09.873Z",
+    "end": "2035-02-23T19:22:48.896Z",
+    "aditya": "dhata",
+    "being_name": "Tumburu",
+    "being_type": "gandharva",
+    "being_slug": "dhata-gandharva"
+  },
+  {
+    "start": "2035-02-23T19:22:48.896Z",
+    "end": "2035-02-28T18:44:54.727Z",
+    "aditya": "dhata",
+    "being_name": "Heti",
+    "being_type": "rakshasa",
+    "being_slug": "dhata-rakshasa"
+  },
+  {
+    "start": "2035-02-28T18:44:54.727Z",
+    "end": "2035-03-08T18:15:21.533Z",
+    "aditya": "dhata",
+    "being_name": "Pulastya",
+    "being_type": "rishi",
+    "being_slug": "dhata-rishi"
+  },
+  {
+    "start": "2035-03-08T18:15:21.533Z",
+    "end": "2035-03-15T18:27:33.223Z",
+    "aditya": "dhata",
+    "being_name": "Rathakrit",
+    "being_type": "yaksha",
+    "being_slug": "dhata-yaksha"
+  },
+  {
+    "start": "2035-03-15T18:27:33.223Z",
+    "end": "2035-03-20T19:02:43.257Z",
+    "aditya": "dhata",
+    "being_name": "Kritasthali",
+    "being_type": "apsara",
+    "being_slug": "dhata-apsara"
+  },
+  {
+    "start": "2035-03-20T19:02:43.257Z",
+    "end": "2035-03-25T20:00:23.291Z",
+    "aditya": "aryama",
+    "being_name": "Punjikasthali",
+    "being_type": "apsara",
+    "being_slug": "aryama-apsara"
+  },
+  {
+    "start": "2035-03-25T20:00:23.291Z",
+    "end": "2035-04-01T21:53:59.209Z",
+    "aditya": "aryama",
+    "being_name": "Rathauja",
+    "being_type": "yaksha",
+    "being_slug": "aryama-yaksha"
+  },
+  {
+    "start": "2035-04-01T21:53:59.209Z",
+    "end": "2035-04-10T00:49:26.968Z",
+    "aditya": "aryama",
+    "being_name": "Pulaha",
+    "being_type": "rishi",
+    "being_slug": "aryama-rishi"
+  },
+  {
+    "start": "2035-04-10T00:49:26.968Z",
+    "end": "2035-04-15T03:07:05.830Z",
+    "aditya": "aryama",
+    "being_name": "Praheti",
+    "being_type": "rakshasa",
+    "being_slug": "aryama-rakshasa"
+  },
+  {
+    "start": "2035-04-15T03:07:05.830Z",
+    "end": "2035-04-20T05:48:58.843Z",
+    "aditya": "aryama",
+    "being_name": "Narada",
+    "being_type": "gandharva",
+    "being_slug": "aryama-gandharva"
+  },
+  {
+    "start": "2035-04-20T05:48:58.843Z",
+    "end": "2035-04-25T08:52:52.852Z",
+    "aditya": "mitra",
+    "being_name": "Haha",
+    "being_type": "gandharva",
+    "being_slug": "mitra-gandharva"
+  },
+  {
+    "start": "2035-04-25T08:52:52.852Z",
+    "end": "2035-04-30T12:15:26.147Z",
+    "aditya": "mitra",
+    "being_name": "Paurusheya",
+    "being_type": "rakshasa",
+    "being_slug": "mitra-rakshasa"
+  },
+  {
+    "start": "2035-04-30T12:15:26.147Z",
+    "end": "2035-05-08T18:14:40.005Z",
+    "aditya": "mitra",
+    "being_name": "Atri",
+    "being_type": "rishi",
+    "being_slug": "mitra-rishi"
+  },
+  {
+    "start": "2035-05-08T18:14:40.005Z",
+    "end": "2035-05-16T00:07:40.767Z",
+    "aditya": "mitra",
+    "being_name": "Rathasvana",
+    "being_type": "yaksha",
+    "being_slug": "mitra-yaksha"
+  },
+  {
+    "start": "2035-05-16T00:07:40.767Z",
+    "end": "2035-05-21T04:43:26.836Z",
+    "aditya": "mitra",
+    "being_name": "Menaka",
+    "being_type": "apsara",
+    "being_slug": "mitra-apsara"
+  },
+  {
+    "start": "2035-05-21T04:43:26.836Z",
+    "end": "2035-05-26T09:34:46.963Z",
+    "aditya": "varuna",
+    "being_name": "Sahajanya",
+    "being_type": "apsara",
+    "being_slug": "varuna-apsara"
+  },
+  {
+    "start": "2035-05-26T09:34:46.963Z",
+    "end": "2035-06-02T16:42:09.053Z",
+    "aditya": "varuna",
+    "being_name": "Rathacitra",
+    "being_type": "yaksha",
+    "being_slug": "varuna-yaksha"
+  },
+  {
+    "start": "2035-06-02T16:42:09.053Z",
+    "end": "2035-06-11T01:13:47.710Z",
+    "aditya": "varuna",
+    "being_name": "Vasishtha",
+    "being_type": "rishi",
+    "being_slug": "varuna-rishi"
+  },
+  {
+    "start": "2035-06-11T01:13:47.710Z",
+    "end": "2035-06-16T06:48:53.350Z",
+    "aditya": "varuna",
+    "being_name": "Chitrasvana",
+    "being_type": "rakshasa",
+    "being_slug": "varuna-rakshasa"
+  },
+  {
+    "start": "2035-06-16T06:48:53.350Z",
+    "end": "2035-06-21T12:33:08.745Z",
+    "aditya": "varuna",
+    "being_name": "Huhu",
+    "being_type": "gandharva",
+    "being_slug": "varuna-gandharva"
+  },
+  {
+    "start": "2035-06-21T12:33:08.745Z",
+    "end": "2035-06-26T18:22:21.431Z",
+    "aditya": "indra",
+    "being_name": "Vishvavasu",
+    "being_type": "gandharva",
+    "being_slug": "indra-gandharva"
+  },
+  {
+    "start": "2035-06-26T18:22:21.431Z",
+    "end": "2035-07-02T00:12:22.896Z",
+    "aditya": "indra",
+    "being_name": "Varya",
+    "being_type": "rakshasa",
+    "being_slug": "indra-rakshasa"
+  },
+  {
+    "start": "2035-07-02T00:12:22.896Z",
+    "end": "2035-07-10T09:30:56.909Z",
+    "aditya": "indra",
+    "being_name": "Angiras",
+    "being_type": "rishi",
+    "being_slug": "indra-rishi"
+  },
+  {
+    "start": "2035-07-10T09:30:56.909Z",
+    "end": "2035-07-17T17:41:26.646Z",
+    "aditya": "indra",
+    "being_name": "Shrota",
+    "being_type": "yaksha",
+    "being_slug": "indra-yaksha"
+  },
+  {
+    "start": "2035-07-17T17:41:26.646Z",
+    "end": "2035-07-22T23:28:41.997Z",
+    "aditya": "indra",
+    "being_name": "Pramlocha",
+    "being_type": "apsara",
+    "being_slug": "indra-apsara"
+  },
+  {
+    "start": "2035-07-22T23:28:41.997Z",
+    "end": "2035-07-28T05:08:29.106Z",
+    "aditya": "vivasvan",
+    "being_name": "Anumlocha",
+    "being_type": "apsara",
+    "being_slug": "vivasvan-apsara"
+  },
+  {
+    "start": "2035-07-28T05:08:29.106Z",
+    "end": "2035-08-04T12:44:54.067Z",
+    "aditya": "vivasvan",
+    "being_name": "Asarana",
+    "being_type": "yaksha",
+    "being_slug": "vivasvan-yaksha"
+  },
+  {
+    "start": "2035-08-04T12:44:54.067Z",
+    "end": "2035-08-12T21:02:44.136Z",
+    "aditya": "vivasvan",
+    "being_name": "Bhrigu",
+    "being_type": "rishi",
+    "being_slug": "vivasvan-rishi"
+  },
+  {
+    "start": "2035-08-12T21:02:44.136Z",
+    "end": "2035-08-18T02:00:23.950Z",
+    "aditya": "vivasvan",
+    "being_name": "Vyaghra",
+    "being_type": "rakshasa",
+    "being_slug": "vivasvan-rakshasa"
+  },
+  {
+    "start": "2035-08-18T02:00:23.950Z",
+    "end": "2035-08-23T06:44:10.562Z",
+    "aditya": "vivasvan",
+    "being_name": "Ugrasena",
+    "being_type": "gandharva",
+    "being_slug": "vivasvan-gandharva"
+  },
+  {
+    "start": "2035-08-23T06:44:10.562Z",
+    "end": "2035-08-28T11:09:28.433Z",
+    "aditya": "tvashta",
+    "being_name": "Dhritarashtra",
+    "being_type": "gandharva",
+    "being_slug": "tvashta-gandharva"
+  },
+  {
+    "start": "2035-08-28T11:09:28.433Z",
+    "end": "2035-09-02T15:14:51.211Z",
+    "aditya": "tvashta",
+    "being_name": "Brahmapeta",
+    "being_type": "rakshasa",
+    "being_slug": "tvashta-rakshasa"
+  },
+  {
+    "start": "2035-09-02T15:14:51.211Z",
+    "end": "2035-09-10T21:11:01.816Z",
+    "aditya": "tvashta",
+    "being_name": "Jamadagni",
+    "being_type": "rishi",
+    "being_slug": "tvashta-rishi"
+  },
+  {
+    "start": "2035-09-10T21:11:01.816Z",
+    "end": "2035-09-18T01:46:35.361Z",
+    "aditya": "tvashta",
+    "being_name": "Shatajit",
+    "being_type": "yaksha",
+    "being_slug": "tvashta-yaksha"
+  },
+  {
+    "start": "2035-09-18T01:46:35.361Z",
+    "end": "2035-09-23T04:38:56.572Z",
+    "aditya": "tvashta",
+    "being_name": "Tilottama",
+    "being_type": "apsara",
+    "being_slug": "tvashta-apsara"
+  },
+  {
+    "start": "2035-09-23T04:38:56.572Z",
+    "end": "2035-09-28T07:07:18.794Z",
+    "aditya": "vishnu",
+    "being_name": "Rambha",
+    "being_type": "apsara",
+    "being_slug": "vishnu-apsara"
+  },
+  {
+    "start": "2035-09-28T07:07:18.794Z",
+    "end": "2035-10-05T09:57:04.438Z",
+    "aditya": "vishnu",
+    "being_name": "Satyajit",
+    "being_type": "yaksha",
+    "being_slug": "vishnu-yaksha"
+  },
+  {
+    "start": "2035-10-05T09:57:04.438Z",
+    "end": "2035-10-13T12:23:53.057Z",
+    "aditya": "vishnu",
+    "being_name": "Vishvamitra",
+    "being_type": "rishi",
+    "being_slug": "vishnu-rishi"
+  },
+  {
+    "start": "2035-10-13T12:23:53.057Z",
+    "end": "2035-10-18T13:31:00.645Z",
+    "aditya": "vishnu",
+    "being_name": "Makhapeta",
+    "being_type": "rakshasa",
+    "being_slug": "vishnu-rakshasa"
+  },
+  {
+    "start": "2035-10-18T13:31:00.645Z",
+    "end": "2035-10-23T14:16:10.532Z",
+    "aditya": "vishnu",
+    "being_name": "Suryavarcas",
+    "being_type": "gandharva",
+    "being_slug": "vishnu-gandharva"
+  },
+  {
+    "start": "2035-10-23T14:16:10.532Z",
+    "end": "2035-10-28T14:38:31.963Z",
+    "aditya": "amshu",
+    "being_name": "Ritasena",
+    "being_type": "gandharva",
+    "being_slug": "amshu-gandharva"
+  },
+  {
+    "start": "2035-10-28T14:38:31.963Z",
+    "end": "2035-11-02T14:40:00.952Z",
+    "aditya": "amshu",
+    "being_name": "Vidyucchatru",
+    "being_type": "rakshasa",
+    "being_slug": "amshu-rakshasa"
+  },
+  {
+    "start": "2035-11-02T14:40:00.952Z",
+    "end": "2035-11-10T14:06:52.207Z",
+    "aditya": "amshu",
+    "being_name": "Kashyapa",
+    "being_type": "rishi",
+    "being_slug": "amshu-rishi"
+  },
+  {
+    "start": "2035-11-10T14:06:52.207Z",
+    "end": "2035-11-17T13:06:22.764Z",
+    "aditya": "amshu",
+    "being_name": "Tarkshya",
+    "being_type": "yaksha",
+    "being_slug": "amshu-yaksha"
+  },
+  {
+    "start": "2035-11-17T13:06:22.764Z",
+    "end": "2035-11-22T12:03:13.140Z",
+    "aditya": "amshu",
+    "being_name": "Urvashi",
+    "being_type": "apsara",
+    "being_slug": "amshu-apsara"
+  },
+  {
+    "start": "2035-11-22T12:03:13.140Z",
+    "end": "2035-11-27T10:43:27.495Z",
+    "aditya": "bhaga",
+    "being_name": "Purvacitti",
+    "being_type": "apsara",
+    "being_slug": "bhaga-apsara"
+  },
+  {
+    "start": "2035-11-27T10:43:27.495Z",
+    "end": "2035-12-04T08:28:56.499Z",
+    "aditya": "bhaga",
+    "being_name": "Arishtanemi",
+    "being_type": "yaksha",
+    "being_slug": "bhaga-yaksha"
+  },
+  {
+    "start": "2035-12-04T08:28:56.499Z",
+    "end": "2035-12-12T05:34:22.793Z",
+    "aditya": "bhaga",
+    "being_name": "Ayu",
+    "being_type": "rishi",
+    "being_slug": "bhaga-rishi"
+  },
+  {
+    "start": "2035-12-12T05:34:22.793Z",
+    "end": "2035-12-17T03:36:25.840Z",
+    "aditya": "bhaga",
+    "being_name": "Sphurja",
+    "being_type": "rakshasa",
+    "being_slug": "bhaga-rakshasa"
+  },
+  {
+    "start": "2035-12-17T03:36:25.840Z",
+    "end": "2035-12-22T01:30:52.734Z",
+    "aditya": "bhaga",
+    "being_name": "Urna",
+    "being_type": "gandharva",
+    "being_slug": "bhaga-gandharva"
+  },
+  {
+    "start": "2035-12-22T01:30:52.734Z",
+    "end": "2035-12-26T23:18:00.615Z",
+    "aditya": "pusha",
+    "being_name": "Suruci",
+    "being_type": "gandharva",
+    "being_slug": "pusha-gandharva"
+  },
+  {
+    "start": "2035-12-26T23:18:00.615Z",
+    "end": "2035-12-31T21:00:47.461Z",
+    "aditya": "pusha",
+    "being_name": "Vata",
+    "being_type": "rakshasa",
+    "being_slug": "pusha-rakshasa"
+  },
+  {
+    "start": "2035-12-31T21:00:47.461Z",
+    "end": "2036-01-01T00:00:00.000Z",
+    "aditya": "pusha",
+    "being_name": "Gautama",
+    "being_type": "rishi",
+    "being_slug": "pusha-rishi"
+  }
+]

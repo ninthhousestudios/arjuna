@@ -13,3 +13,5 @@ dependencies:
     path: ../options
   arrow_swe:
     path: ../swe
+  arrow_core:
+    path: ../core
