@@ -339,7 +339,7 @@ class SweFacade {
       ayanamsaValue = _handle(
         source,
         signMode,
-      ).getAyanamsaUt(jd, swe.CalcFlags.none);
+      ).getAyanamsaUt(jd, swe.CalcFlags.none).ayanamsa;
       _log.fine('ayanamsa=$ayanamsaValue');
     }
 
@@ -741,7 +741,7 @@ class SweFacade {
     return _handle(
       _defaultSource,
       siderealModeFor(ayanamsa),
-    ).getAyanamsaEx(swe.JdTt(jdEt), swe.CalcFlags.none);
+    ).getAyanamsaEx(swe.JdTt(jdEt), swe.CalcFlags.none).ayanamsa;
   }
 
   /// Ayanamsa value (arc-degrees) for universal time [jdUt] under [ayanamsa].
@@ -750,7 +750,7 @@ class SweFacade {
     return _handle(
       _defaultSource,
       siderealModeFor(ayanamsa),
-    ).getAyanamsaUt(swe.JdUt1(jdUt), swe.CalcFlags.none);
+    ).getAyanamsaUt(swe.JdUt1(jdUt), swe.CalcFlags.none).ayanamsa;
   }
 
   /// Sidereal ecliptic longitude of [sweId] at [jdUt] under [ayanamsa].

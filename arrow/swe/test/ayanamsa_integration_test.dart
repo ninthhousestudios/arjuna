@@ -44,7 +44,9 @@ void main() {
           siderealMode: swe.SiderealMode.lahiri,
         ),
       );
-      final expected = raw.getAyanamsaEx(swe.JdTt(jdEt), swe.CalcFlags.none);
+      final expected = raw
+          .getAyanamsaEx(swe.JdTt(jdEt), swe.CalcFlags.none)
+          .ayanamsa;
       raw.close();
       expect(
         facade.getAyanamsa(jdEt, Ayanamsa.lahiri),
