@@ -60,6 +60,45 @@ void main() {
       expect(et, closeTo(ut, 0.001));
     });
 
+    test('Dhruva returns the equatorial Ashvini-start offset', () {
+      final a = facade.getAyanamsaUt(jdUt, Ayanamsa.dhruva);
+      expect(a, inInclusiveRange(0.0, 360.0));
+
+      // Same offset calcDhruvaLongitude subtracts: the Sun's equatorial
+      // longitude minus its dhruva longitude is exactly the Ashvini start.
+      final dhruvaLon = facade.calcDhruvaLongitude(jdUt, 0); // SE_SUN
+      final raw = swe.Ephemeris(
+        swe.EphemerisConfig(
+          ephemerisSource: swe.EphemerisSource.swiss,
+          ephePath: ephePath,
+        ),
+      );
+      final sunEqu = raw
+          .calcUt(swe.JdUt1(jdUt), swe.Body.sun, swe.CalcFlags.equatorial)
+          .longitude;
+      raw.close();
+
+      expect((sunEqu - dhruvaLon + 360.0) % 360.0, closeTo(a, 1e-9));
+    });
+
+    test('Dhruva is rejected by the ephemeris-time variant', () {
+      expect(
+        () => facade.getAyanamsa(jdEt, Ayanamsa.dhruva),
+        throwsArgumentError,
+      );
+    });
+
+    test('custom non-standard ayanamsas throw', () {
+      for (final a in [
+        Ayanamsa.trueSidereal,
+        Ayanamsa.eclipticVedangaJyotisha,
+        Ayanamsa.equal28Nakshatras,
+      ]) {
+        expect(() => facade.getAyanamsaUt(jdUt, a), throwsArgumentError);
+        expect(() => facade.getAyanamsa(jdEt, a), throwsArgumentError);
+      }
+    });
+
     test('switching between ayanamsas is stateless from caller view', () {
       final lahiri = facade.getAyanamsa(jdEt, Ayanamsa.lahiri);
       final fagan = facade.getAyanamsa(jdEt, Ayanamsa.fagan);

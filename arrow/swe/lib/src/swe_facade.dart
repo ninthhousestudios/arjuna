@@ -736,8 +736,21 @@ class SweFacade {
   ///
   /// Returns 0.0 for tropical. For non-tropical standard ayanamsas, uses
   /// a handle constructed with the appropriate sidereal mode.
+  ///
+  /// [Ayanamsa.dhruva] is hand-rolled from a fixed-star lookup in universal
+  /// time and has no ephemeris-time form — use [getAyanamsaUt]. The other
+  /// custom ayanamsas (codes 97, 99-101) have no SWE sidereal mode and no
+  /// Arrow implementation; both cases throw [ArgumentError].
   double getAyanamsa(double jdEt, Ayanamsa ayanamsa) {
     if (ayanamsa.isTropical) return 0.0;
+    if (ayanamsa == Ayanamsa.dhruva) {
+      throw ArgumentError.value(
+        ayanamsa,
+        'ayanamsa',
+        'Dhruva is defined in universal time; use getAyanamsaUt',
+      );
+    }
+    if (!ayanamsa.isStandard) throw _unsupportedAyanamsa(ayanamsa);
     return _handle(
       _defaultSource,
       siderealModeFor(ayanamsa),
@@ -745,13 +758,29 @@ class SweFacade {
   }
 
   /// Ayanamsa value (arc-degrees) for universal time [jdUt] under [ayanamsa].
+  ///
+  /// Returns 0.0 for tropical. [Ayanamsa.dhruva] returns the equatorial-frame
+  /// offset (right ascension of the start of Ashvini) that
+  /// [calcDhruvaLongitude] subtracts — Dhruva tracks nakshatras along the
+  /// equator, so its offset is equatorial rather than ecliptic. The other
+  /// custom ayanamsas (codes 97, 99-101) throw [ArgumentError].
   double getAyanamsaUt(double jdUt, Ayanamsa ayanamsa) {
     if (ayanamsa.isTropical) return 0.0;
+    if (ayanamsa == Ayanamsa.dhruva) {
+      return dhruvaAshviniStart(_handle(_defaultSource), jdUt) % 360.0;
+    }
+    if (!ayanamsa.isStandard) throw _unsupportedAyanamsa(ayanamsa);
     return _handle(
       _defaultSource,
       siderealModeFor(ayanamsa),
     ).getAyanamsaUt(swe.JdUt1(jdUt), swe.CalcFlags.none).ayanamsa;
   }
+
+  ArgumentError _unsupportedAyanamsa(Ayanamsa a) => ArgumentError.value(
+    a,
+    'ayanamsa',
+    'no SWE sidereal mode and no Arrow implementation',
+  );
 
   /// Sidereal ecliptic longitude of [sweId] at [jdUt] under [ayanamsa].
   double calcSiderealLongitude(double jdUt, int sweId, Ayanamsa ayanamsa) {
@@ -774,6 +803,77 @@ class SweFacade {
       _handle(_defaultSource),
       jdUt,
       swe.Body.fromRawId(sweId),
+    );
+  }
+
+  /// True obliquity of the ecliptic (degrees) at [jd] — SE_ECL_NUT component 0.
+  double _trueObliquity(swe.Ephemeris eph, swe.JdUt1 jd) =>
+      eph.calcUt(jd, swe.Body.eclipticNutation, swe.CalcFlags.none).longitude;
+
+  /// Continuous house position (1.0-13.0) of an ecliptic point.
+  ///
+  /// [longitude] and [latitude] are interpreted in [SweConfig.signAyanamsa]'s
+  /// frame — i.e. straight from [EphSnapshot.bodiesEcliptic]. The sign-frame
+  /// ayanamsa is added back internally because the underlying computation is
+  /// tropical; house position itself is frame-invariant as long as the body
+  /// and the angles agree.
+  ///
+  /// [houseSystem] defaults to [SweConfig.houseSystem]; pass it explicitly for
+  /// system-specific measures such as Campanus digbala.
+  ///
+  /// Total over every [HouseSystem] Arrow exposes — the underlying
+  /// `swe_house_pos` only fails for Sunshine (needs a Sun declination) and APC,
+  /// neither of which Arrow offers. Degenerate geometry such as Placidus above
+  /// the polar circle degrades to a value rather than failing.
+  ///
+  /// Throws [ArgumentError] when [SweConfig.signAyanamsa] is a custom
+  /// non-standard ayanamsa, including Dhruva, which is equatorial-only and so
+  /// has no ecliptic house position.
+  double housePosition(
+    double jdUt,
+    Location location,
+    SweConfig sweConfig, {
+    required double longitude,
+    double latitude = 0.0,
+    HouseSystem? houseSystem,
+  }) {
+    final ayanamsa = sweConfig.signAyanamsa;
+    if (!ayanamsa.isTropical && !ayanamsa.isStandard) {
+      throw ArgumentError.value(
+        ayanamsa,
+        'sweConfig.signAyanamsa',
+        'house position requires a tropical or standard-SWE sign frame',
+      );
+    }
+
+    // Tropical handle: swe_house_pos is tropical math, unlike housesEx2 which
+    // has its own sidereal path.
+    final eph = _handle(_sourceFor(sweConfig.ephemerisSource));
+    final jd = swe.JdUt1(jdUt);
+    final hsys = swe.HouseSystem.fromCharCode(
+      (houseSystem ?? sweConfig.houseSystem).sweChar.codeUnitAt(0),
+    )!;
+
+    final tropicalLon = (longitude + getAyanamsaUt(jdUt, ayanamsa)) % 360.0;
+    final armc = eph
+        .housesEx2(
+          jd,
+          swe.CalcFlags.none,
+          location.latitude,
+          location.longitude,
+          hsys,
+        )
+        .ascmc
+        .armc;
+    final eps = _trueObliquity(eph, jd);
+
+    return swe.housePos(
+      armc,
+      location.latitude,
+      eps,
+      hsys,
+      tropicalLon,
+      latitude,
     );
   }
 
