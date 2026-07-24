@@ -4,6 +4,17 @@ Consumer-facing API surface for `arrow_options`, `arrow_swe`, `arrow_core`, `arr
 
 Generated from source on 2026-07-24 (post swisseph_rs migration). Refresh when API changes.
 
+Everything documented here is compile-pinned by
+`calc/test/api_reference_surface_test.dart` — a test whose probe functions
+reference every constructor, signature, field, and return type below without
+executing any of them. Change a documented API and that test stops compiling.
+Fix the probe *and* this file together.
+
+> **Name collision.** `Nakshatra` is declared in both `arrow_core` (the
+> chart-context class: which planets occupy nakshatra *n*) and `arrow_calc`
+> (the panchanga limb). Importing both barrels unprefixed is an
+> `ambiguous_import` error — `hide` or prefix one of them.
+
 ---
 
 ## Packages
@@ -549,8 +560,17 @@ Degree-based Parashara port. `Aspect.strength(from, fromLon, toLon)` (0-60),
 Mars/Jupiter/Saturn special overrides.
 
 ### `RashiAspect` — `calc/lib/src/vedic/rashi_aspect.dart:15`
-Sign-based (Jaimini) aspects, table selected by `RashiAspectMode`.
-`doesAspect(...)`, `doesAspectWithOccupants(...)`, `mutual(...)`.
+Sign-based (Jaimini) aspects. Signs in, signs out — no `Varga`. The mode is an
+optional positional defaulting to `RashiAspectMode.quadrant`.
+```dart
+static bool doesAspect(int fromSign, int toSign, [RashiAspectMode mode]);
+static bool doesAspectWithOccupants(
+  int fromSign, int toSign, bool fromHasGrahas, [RashiAspectMode mode]);
+static int  mutual(                              // 0 none, 1 →, 2 ←, 3 mutual
+  int sign1, int sign2, bool sign1HasGrahas, bool sign2HasGrahas,
+  [RashiAspectMode mode]);
+```
+`RashiAspectMode`: `quadrant, element, conventional`.
 
 ### `Shadbala` — `calc/lib/src/vedic/shadbala.dart:37`
 `Shadbala` holds the nine sub-balas in virupas with `sthanaBala`,
@@ -566,8 +586,10 @@ computation per sub-bala (`uccaBala`, `saptavargajaBala`, `samaVisamaBala`,
 `DashaYearLength` in options.
 
 ### `Jaimini` — `calc/lib/src/vedic/jaimini.dart:25`
-Arudha padas (`pada`, `arudhaLagna`, `upapada`, `allPadas`), `argala` →
-`ArgalaResult`, and sign-strength ordering (`firstStrength`, `secondStrength`).
+Arudha padas (`pada`, `arudhaLagna`, `upapada`, `allPadas`), `argala(varga,
+targetSign:)` → `ArgalaResult`, and sign-strength ordering:
+`firstStrength(varga, {knRao = false})` → ranked `List<int>`,
+`secondStrength(varga, {rashiAspectMode = RashiAspectMode.quadrant})`.
 
 ### `NabhasaYogaCalc` — `calc/lib/src/vedic/nabhasa_yoga.dart:76`
 `ashrayaYogas`, `dalaYogas`, `sankhyaYogas`, `akritiYogas` → `NabhasaYoga`;
