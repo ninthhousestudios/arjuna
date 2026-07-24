@@ -28,7 +28,9 @@ void main() {
 
     test('round-trips barycentric through JSON', () {
       const cfg = SweConfig(extraFrames: {ReferencePoint.barycentric});
-      final restored = SweConfig.fromJson(jsonDecode(jsonEncode(cfg.toJson())));
+      final restored = SweConfig.fromJson(
+        jsonDecode(jsonEncode(cfg.toJson())) as Map<String, dynamic>,
+      );
       expect(restored.extraFrames, equals({ReferencePoint.barycentric}));
     });
 
@@ -36,7 +38,9 @@ void main() {
       const cfg = SweConfig(
         extraFrames: {ReferencePoint.barycentric, ReferencePoint.heliocentric},
       );
-      final restored = SweConfig.fromJson(jsonDecode(jsonEncode(cfg.toJson())));
+      final restored = SweConfig.fromJson(
+        jsonDecode(jsonEncode(cfg.toJson())) as Map<String, dynamic>,
+      );
       expect(
         restored.extraFrames,
         equals({ReferencePoint.barycentric, ReferencePoint.heliocentric}),

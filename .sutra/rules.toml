@@ -1,0 +1,20 @@
+# .sutra/rules.toml — Architectural constraints for arjuna (workspace root)
+#
+# NOTE: sutra reads only this file for the arjuna workspace. The legacy
+# arrow/.sutra/rules.toml and quiver/.sutra/rules.toml date from when those
+# were registered as separate workspaces and are currently INERT — their
+# forbidden_dep constraints and convention suppressions are not enforced.
+# Migrating them here (with paths re-prefixed arrow/... quiver/...) is
+# pending triage.
+
+# ═══════════════════════════════════════════════════════════════════
+# Forbidden patterns (vidhi/language-rules/dart.toml)
+# ═══════════════════════════════════════════════════════════════════
+
+[[constraint]]
+kind = "forbidden_pattern"
+language = "dart"
+query = '((comment) @match (#match? @match "^//+ *ignore(_for_file)?:"))'
+name = "no-ignore-comments"
+severity = "blocking"
+provenance = "house analysis_options.yaml baseline"

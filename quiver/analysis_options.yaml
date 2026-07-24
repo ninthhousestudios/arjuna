@@ -1,5 +1,5 @@
 # House Dart analyzer baseline (canonical: vidhi/vidhi-dart/analysis_options.yaml)
-# Sub-packages (calc, core, options, swe) include this file by relative path.
+# Sub-packages (core, server, embedded) include this file by relative path.
 include: package:lints/recommended.yaml
 
 analyzer:
@@ -8,9 +8,9 @@ analyzer:
     strict-inference: true
     strict-raw-types: true
   exclude:
-    - claude/**
     - "**/*.g.dart"
     - "**/*.freezed.dart"
+    - "**/generated/**"
 
 linter:
   rules:
