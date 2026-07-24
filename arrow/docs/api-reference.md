@@ -154,6 +154,9 @@ class SweFacade {
 `ephePath` is required for `EphemerisSource.swissEph` precision and for
 fixstar lookups. `jplFile` is required for `EphemerisSource.jplEph`.
 
+For swisseph functions Arrow deliberately does not wrap (eclipse and
+occultation search), see [direct-swisseph-usage.md](direct-swisseph-usage.md).
+
 ### `EphSnapshot` — `swe/lib/src/eph_snapshot.dart:13`
 Freezed + JSON. Immutable bridge between SWE and non-SWE code.
 ```dart
