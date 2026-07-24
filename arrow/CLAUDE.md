@@ -98,7 +98,7 @@ Static data + computation lives in `core` as classes with private constructors a
 - `inSignLongitude` (0-30°) — `longitude % 30`
 - `nakshatra` (1-27), `pada` (1-4) — computed from nakshatra-specific longitude (which may be equatorial, per config)
 
-Sign and nakshatra use **independent** ayanamsas and reference frames. `signAyanamsa` (from SweConfig) controls signs. `nakAyanamsa` + `nakEquatorial` (from SweConfig/CalcConfig) control nakshatras. The Dhruva ayanamsa is equatorial-only.
+Sign and nakshatra use **independent** ayanamsas and reference frames. `signAyanamsa` (from SweConfig) controls signs. `nakAyanamsa` (SweConfig — the nak-frame longitudes are SWE-computed into the snapshot) + `nakEquatorial` (CalcConfig — picks which pre-computed map to read) control nakshatras. The Dhruva ayanamsa is equatorial-only.
 
 ## Chart and Varga
 
@@ -117,9 +117,9 @@ Sign and nakshatra use **independent** ayanamsas and reference frames. `signAyan
 
 Rahu/Ketu: Ketu is never directly calculated by SWE — computed as Rahu + 180°, latitude negated.
 
-## SWE global state
+## SWE handles
 
-`SweFacade.calcAll()` is synchronous. SWE uses global state internally, so ordering matters: all sign-frame work (including `getAyanamsaUt`) must complete before any nak-frame `setSidMode` call. `_ensureConfig()` re-applies ephePath/jplFile at every entry point because SWE global state can drift (e.g. Android resume).
+`SweFacade.calcAll()` is synchronous. Since the swisseph_rs migration there is no SWE global state to sequence around: config (ephe path, JPL file, sidereal mode, topocentric) lives in an `EphemerisConfig` attached to an `Ephemeris` handle, plus per-call overrides on `calcUtWithConfig`. `SweFacade` keeps a `Map<(EphemerisSource, SiderealMode?), Ephemeris>` cache because `housesEx2`/`getAyanamsaUt` read handle-level config with no per-call override. Call `dispose()` to close the handles.
 
 ## Testing
 
@@ -132,7 +132,7 @@ Integration tests (SWE-dependent) exist in `swe/test/` and `calc/test/integratio
 ## Presets
 
 `ArrowPresets` provides named configurations:
-- `ernst` — tropical + Campanus + Aditya circle + Dhruva nak (Ernst Wilhelm's system)
+- `aditya` — tropical + Campanus + Aditya circle + Dhruva nak (Ernst Wilhelm's system)
 - `lahiriVedic` — Lahiri sidereal + whole-sign + zodiac circle
 - `westernTropical` — tropical + Placidus + zodiac circle + 10 bodies
 
