@@ -1,11 +1,13 @@
 # .sutra/rules.toml — Architectural constraints for arjuna (workspace root)
 #
-# NOTE: sutra reads only this file for the arjuna workspace. The legacy
-# arrow/.sutra/rules.toml and quiver/.sutra/rules.toml date from when those
-# were registered as separate workspaces and are currently INERT — their
-# forbidden_dep constraints and convention suppressions are not enforced.
-# Migrating them here (with paths re-prefixed arrow/... quiver/...) is
-# pending triage.
+# sutra reads only this file for the arjuna workspace. arrow/ and quiver/ were
+# once registered as separate workspaces; their rules.toml files have been
+# folded in here with paths re-prefixed (arrow/..., quiver/...).
+#
+# Severity levels:
+#   blocking      — guard denies edits that introduce these
+#   advisory      — warning in review, agent proceeds
+#   informational — tracked in review output, silent otherwise
 
 # ═══════════════════════════════════════════════════════════════════
 # Forbidden patterns (vidhi/language-rules/dart.toml)
@@ -18,3 +20,180 @@ query = '((comment) @match (#match? @match "^//+ *ignore(_for_file)?:"))'
 name = "no-ignore-comments"
 severity = "blocking"
 provenance = "house analysis_options.yaml baseline"
+
+# ═══════════════════════════════════════════════════════════════════
+# Arrow package boundaries
+# ═══════════════════════════════════════════════════════════════════
+# Dependency flows strictly left-to-right: options → swe → core → calc.
+# Each package may only import from packages to its left.
+
+[[constraint]]
+kind = "forbidden_dep"
+from = "arrow/options/lib/**"
+to = "arrow/swe/lib/**"
+name = "options-must-not-import-swe"
+severity = "blocking"
+
+[[constraint]]
+kind = "forbidden_dep"
+from = "arrow/options/lib/**"
+to = "arrow/core/lib/**"
+name = "options-must-not-import-core"
+severity = "blocking"
+
+[[constraint]]
+kind = "forbidden_dep"
+from = "arrow/options/lib/**"
+to = "arrow/calc/lib/**"
+name = "options-must-not-import-calc"
+severity = "blocking"
+
+[[constraint]]
+kind = "forbidden_dep"
+from = "arrow/swe/lib/**"
+to = "arrow/core/lib/**"
+name = "swe-must-not-import-core"
+severity = "blocking"
+
+[[constraint]]
+kind = "forbidden_dep"
+from = "arrow/swe/lib/**"
+to = "arrow/calc/lib/**"
+name = "swe-must-not-import-calc"
+severity = "blocking"
+
+[[constraint]]
+kind = "forbidden_dep"
+from = "arrow/core/lib/**"
+to = "arrow/calc/lib/**"
+name = "core-must-not-import-calc"
+severity = "blocking"
+
+# ═══════════════════════════════════════════════════════════════════
+# Arrow calc subsystem isolation
+# ═══════════════════════════════════════════════════════════════════
+# vedic/ and zodiac/ are independent subsystems within calc.
+# Neither should depend on the other.
+
+[[constraint]]
+kind = "forbidden_dep"
+from = "arrow/calc/lib/src/vedic/**"
+to = "arrow/calc/lib/src/zodiac/**"
+name = "vedic-must-not-import-zodiac"
+severity = "blocking"
+
+[[constraint]]
+kind = "forbidden_dep"
+from = "arrow/calc/lib/src/zodiac/**"
+to = "arrow/calc/lib/src/vedic/**"
+name = "zodiac-must-not-import-vedic"
+severity = "blocking"
+
+# ═══════════════════════════════════════════════════════════════════
+# Quiver package layering
+# ═══════════════════════════════════════════════════════════════════
+# quiver/core/ is the shared foundation; quiver/server/ and quiver/embedded/
+# are independent deployment modes that depend on core/ but never on each other.
+
+[[constraint]]
+kind = "forbidden_dep"
+from = "quiver/core/**"
+to = "quiver/server/**"
+name = "core-no-server-dep"
+severity = "blocking"
+provenance = "quiver/CLAUDE.md: 'embedded/ and server/ do not depend on each other'"
+
+[[constraint]]
+kind = "forbidden_dep"
+from = "quiver/core/**"
+to = "quiver/embedded/**"
+name = "core-no-embedded-dep"
+severity = "blocking"
+provenance = "quiver/CLAUDE.md: 'embedded/ and server/ do not depend on each other'"
+
+[[constraint]]
+kind = "forbidden_dep"
+from = "quiver/embedded/**"
+to = "quiver/server/**"
+name = "embedded-no-server-dep"
+severity = "blocking"
+provenance = "quiver/CLAUDE.md: 'embedded/ and server/ do not depend on each other'"
+
+[[constraint]]
+kind = "forbidden_dep"
+from = "quiver/server/**"
+to = "quiver/embedded/**"
+name = "server-no-embedded-dep"
+severity = "blocking"
+provenance = "quiver/CLAUDE.md: 'embedded/ and server/ do not depend on each other'"
+
+# ═══════════════════════════════════════════════════════════════════
+# FFI encapsulation
+# ═══════════════════════════════════════════════════════════════════
+# Only arrow_swe imports the Swiss Ephemeris binding. Everything else
+# (quiver included) goes through SweFacade. In the pre-merge quiver
+# workspace this was a workspace-wide forbidden_external; now that arrow
+# lives in the same workspace it must be confined rather than forbidden.
+# arrow/tool/ is build-time fixture generation, not shipped library code, and
+# calls the binding directly (generate_solar_pulse.dart).
+
+[[constraint]]
+kind = "confined_external"
+crates = ["swisseph_rs", "swisseph"]
+allowed_in = ["arrow/swe/**", "arrow/tool/**"]
+name = "swisseph-only-in-arrow-swe"
+severity = "blocking"
+provenance = "arrow arch: only arrow_swe imports swisseph"
+
+# ═══════════════════════════════════════════════════════════════════
+# Cycle prevention
+# ═══════════════════════════════════════════════════════════════════
+# Each calculator/element should remain independently testable.
+
+[[constraint]]
+kind = "no_cycles"
+scope = "arrow/calc/lib/src/vedic/"
+name = "no-cycles-vedic-calcs"
+severity = "blocking"
+
+[[constraint]]
+kind = "no_cycles"
+scope = "arrow/calc/lib/src/vedic/panchanga/"
+name = "no-cycles-panchanga"
+severity = "blocking"
+
+[[constraint]]
+kind = "no_cycles"
+scope = "arrow/calc/lib/src/zodiac/"
+name = "no-cycles-zodiac"
+severity = "blocking"
+
+[[constraint]]
+kind = "no_cycles"
+scope = "arrow/options/lib/src/"
+name = "no-cycles-options"
+severity = "blocking"
+
+[[constraint]]
+kind = "no_cycles"
+scope = "quiver/server/lib/src/services/"
+name = "services-no-cycles"
+severity = "blocking"
+
+# ═══════════════════════════════════════════════════════════════════
+# Conventions
+# ═══════════════════════════════════════════════════════════════════
+# The legacy arrow/quiver suppress lists (20 + 34 hashes) were mined against
+# the old per-repo workspaces. Convention IDs hash the antecedent/consequent
+# pair plus component identity, and the merged workspace re-clustered into a
+# different component set, so all but the four below are unresolvable — they
+# name conventions that no longer exist. Re-deriving a full suppress list
+# against the merged corpus (2048 conventions) is tracked separately.
+
+[conventions]
+suppress = [
+  "d7ab72decd364f9d",  # vis:private → has_sig
+  "a9e333d778f72f6a",  # complexity:zero → kind:method
+  "ee8f8e91aa97b33e",  # complexity:zero → is_method
+  "38878d62e18e0054",  # returns_future → is_async
+]
