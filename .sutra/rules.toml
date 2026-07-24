@@ -183,17 +183,10 @@ severity = "blocking"
 # ═══════════════════════════════════════════════════════════════════
 # Conventions
 # ═══════════════════════════════════════════════════════════════════
-# The legacy arrow/quiver suppress lists (20 + 34 hashes) were mined against
-# the old per-repo workspaces. Convention IDs hash the antecedent/consequent
-# pair plus component identity, and the merged workspace re-clustered into a
-# different component set, so all but the four below are unresolvable — they
-# name conventions that no longer exist. Re-deriving a full suppress list
-# against the merged corpus (2048 conventions) is tracked separately.
-
-[conventions]
-suppress = [
-  "d7ab72decd364f9d",  # vis:private → has_sig
-  "a9e333d778f72f6a",  # complexity:zero → kind:method
-  "ee8f8e91aa97b33e",  # complexity:zero → is_method
-  "38878d62e18e0054",  # returns_future → is_async
-]
+# Deliberately absent. The legacy arrow/quiver files carried [conventions]
+# suppress lists (20 + 34 hashes), but sutra no longer reads them: sutra/234
+# replaced convention violations with an on-the-fly deviation report, and
+# detect_deviations takes no ConventionsConfig. The only reader of
+# config.suppress is FcaEngine::check, which has no production caller.
+# Don't re-add a suppress list here without first checking that something
+# consumes it.
