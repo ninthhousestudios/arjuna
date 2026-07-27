@@ -227,6 +227,13 @@ class SweFacade {
     bool includeStarData = false,       // magnitude + rise/set for fixed stars
   });
 
+  BodySnapshot calcBodies(              // positions only; 4-13x cheaper
+    double jdUt,
+    Location location,
+    SweConfig sweConfig, {
+    bool includePheno = true,
+  });
+
   double getAyanamsa  (double jdEt, Ayanamsa ayanamsa);   // ET; throws on Dhruva
   double getAyanamsaUt(double jdUt, Ayanamsa ayanamsa);   // UT; Dhruva supported
 
@@ -248,6 +255,16 @@ class SweFacade {
   });
 }
 ```
+`calcBodies` is the path for event scans, which call the facade thousands of
+times as a per-body position lookup. It returns a `BodySnapshot` —
+`bodiesEcliptic`, `bodiesEquatorial`, `phenoData` and the requested extra-frame
+maps, and nothing else — skipping the `housesEx2` and two `riseTrans` calls
+`calcAll` pays unconditionally. Positions are bit-identical to `calcAll`'s.
+Measured against real ephe files: a 1-body tropical config drops 278us → 22us,
+a 2-body Lahiri config 572us → 119us (`swe/benchmark/calc_bodies_bench.dart`).
+Callers needing cusps, angles, sun times, stars or nakshatra-frame longitudes
+want `calcAll`.
+
 Omit `ephePath` to fall back to Moshier (the default handle source is chosen by
 whether `ephePath` is set). `ephePath` is required for
 `EphemerisSource.swissEph` precision and for fixstar lookups; `jplFile` is
