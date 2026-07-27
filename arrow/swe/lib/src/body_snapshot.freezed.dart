@@ -17,7 +17,9 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$BodySnapshot {
 
- double get jdUt; Location get location; SweConfig get sweConfig; Map<Body, BodyPosition> get bodiesEcliptic; Map<Body, BodyPosition> get bodiesEquatorial; Map<Body, PhenoData> get phenoData;/// Null when [ReferencePoint.barycentric] was not in
+ double get jdUt; Location get location; SweConfig get sweConfig; Map<Body, BodyPosition> get bodiesEcliptic; Map<Body, BodyPosition> get bodiesEquatorial;/// Empty when `includePheno: false` was passed, and otherwise missing the
+/// nodes (which have no phenomena) plus any body whose pheno call failed.
+ Map<Body, PhenoData> get phenoData;/// Null when [ReferencePoint.barycentric] was not in
 /// [SweConfig.extraFrames] — distinct from an empty map.
  Map<Body, BodyPosition>? get bodiesEclipticBarycentric;/// Null when [ReferencePoint.heliocentric] was not in
 /// [SweConfig.extraFrames]. Never contains [Body.sun].
@@ -258,7 +260,11 @@ class _BodySnapshot implements BodySnapshot {
   return EqualUnmodifiableMapView(_bodiesEquatorial);
 }
 
+/// Empty when `includePheno: false` was passed, and otherwise missing the
+/// nodes (which have no phenomena) plus any body whose pheno call failed.
  final  Map<Body, PhenoData> _phenoData;
+/// Empty when `includePheno: false` was passed, and otherwise missing the
+/// nodes (which have no phenomena) plus any body whose pheno call failed.
 @override Map<Body, PhenoData> get phenoData {
   if (_phenoData is EqualUnmodifiableMapView) return _phenoData;
   // ignore: implicit_dynamic_type
