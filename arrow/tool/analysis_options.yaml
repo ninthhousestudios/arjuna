@@ -1,0 +1,6 @@
+include: ../analysis_options.yaml
+
+linter:
+  rules:
+    # arrow/tool is a CLI binary: stdout is the product, not a debug leak.
+    avoid_print: false
