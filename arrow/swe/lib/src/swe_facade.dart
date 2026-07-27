@@ -8,6 +8,7 @@ import 'package:swisseph_rs/swisseph_rs.dart' as swe;
 import 'asc_mc_points.dart';
 import 'ayanamsa_sid_mode.dart';
 import 'body_position.dart';
+import 'body_snapshot.dart';
 import 'body_swe_id.dart';
 import 'cardinal_points.dart';
 import 'dhruva.dart';
@@ -72,24 +73,35 @@ class SweFacade {
         ),
       );
 
-  /// Compute a complete ephemeris snapshot.
-  EphSnapshot calcAll(
+  /// Positions, pheno and extra-frame positions only — no house cusps, angles,
+  /// sunrise/sunset, fixed stars, or nakshatra-frame longitudes.
+  ///
+  /// This is the path for event scans, which use the facade as a per-body
+  /// position lookup thousands of times per run. [calcAll] pays ~140us per
+  /// call for `housesEx2` plus two `riseTrans` calls whether or not the caller
+  /// reads them; this method skips that floor entirely. Pass
+  /// `includePheno: false` to drop the per-body pheno call as well.
+  ///
+  /// Positions are bit-identical to [calcAll]'s for the same arguments.
+  BodySnapshot calcBodies(
     double jdUt,
     Location location,
     SweConfig sweConfig, {
-    bool includeStarData = false,
-  }) {
-    final loc = location;
-    final source = _sourceFor(sweConfig.ephemerisSource);
-    final eph = _handle(source);
-    final jd = swe.JdUt1(jdUt);
+    bool includePheno = true,
+  }) => _calcBodies(
+    _setup(jdUt, location, sweConfig),
+    jdUt,
+    location,
+    sweConfig,
+    includePheno: includePheno,
+  );
 
-    _log.info(
-      'calcAll jdUt=$jdUt bodies=${sweConfig.bodies.length} '
-      'extraFrames=${sweConfig.extraFrames}',
-    );
-
-    // Fail-fast: barycentric is not supported under Moshier.
+  /// Derive the handle, flags and per-call overrides shared by [calcBodies]
+  /// and [calcAll].
+  ///
+  /// Throws [ArgumentError] when barycentric positions are requested under
+  /// Moshier, which cannot produce them.
+  _CallSetup _setup(double jdUt, Location location, SweConfig sweConfig) {
     if (sweConfig.extraFrames.contains(ReferencePoint.barycentric) &&
         sweConfig.ephemerisSource == EphemerisSource.moshier) {
       throw ArgumentError(
@@ -97,6 +109,8 @@ class SweFacade {
         'use EphemerisSource.swissEph or .jplEph',
       );
     }
+
+    final source = _sourceFor(sweConfig.ephemerisSource);
 
     // Sidereal mode for per-call overrides.
     final isSidereal = !sweConfig.signAyanamsa.isTropical;
@@ -108,16 +122,11 @@ class SweFacade {
     // Topocentric config for per-call overrides.
     final swe.TopoPosition? topo = sweConfig.topocentric
         ? swe.TopoPosition(
-            longitude: loc.longitude,
-            latitude: loc.latitude,
-            altitude: loc.altitude,
+            longitude: location.longitude,
+            latitude: location.latitude,
+            altitude: location.altitude,
           )
         : null;
-
-    final callConfig = swe.EphemerisConfig(
-      siderealMode: signMode,
-      topographic: topo,
-    );
 
     // Base flags.
     var baseEclFlags =
@@ -126,13 +135,41 @@ class SweFacade {
     if (sweConfig.topocentric) {
       baseEclFlags = baseEclFlags | swe.CalcFlags.topoctr;
     }
-    final equatorialFlags = baseEclFlags | swe.CalcFlags.equatorial;
 
     // Extra-frame flags strip topocentric — it is Earth-surface–specific and
     // meaningless against the SSB / Sun origin.
     var extraBase =
         ephemerisFlag(sweConfig.ephemerisSource) | swe.CalcFlags.speed;
     if (isSidereal) extraBase = extraBase | swe.CalcFlags.sidereal;
+
+    return _CallSetup(
+      source: source,
+      eph: _handle(source),
+      jd: swe.JdUt1(jdUt),
+      isSidereal: isSidereal,
+      signMode: signMode,
+      topo: topo,
+      callConfig: swe.EphemerisConfig(
+        siderealMode: signMode,
+        topographic: topo,
+      ),
+      baseEclFlags: baseEclFlags,
+      equatorialFlags: baseEclFlags | swe.CalcFlags.equatorial,
+      extraBase: extraBase,
+    );
+  }
+
+  /// The per-body calculation loop, against an already-derived [setup].
+  BodySnapshot _calcBodies(
+    _CallSetup setup,
+    double jdUt,
+    Location location,
+    SweConfig sweConfig, {
+    required bool includePheno,
+  }) {
+    final eph = setup.eph;
+    final jd = setup.jd;
+    final callConfig = setup.callConfig;
 
     final bodiesEcliptic = <Body, BodyPosition>{};
     final bodiesEquatorial = <Body, BodyPosition>{};
@@ -158,13 +195,16 @@ class SweFacade {
           ? (sweConfig.trueNode ? swe.Body.trueNode : swe.Body.meanNode)
           : sweBodyFor(body);
 
-      _log.fine('calc body=$body sweBody=$sweBody');
-
-      final ecl = eph.calcUtWithConfig(jd, sweBody, baseEclFlags, callConfig);
+      final ecl = eph.calcUtWithConfig(
+        jd,
+        sweBody,
+        setup.baseEclFlags,
+        callConfig,
+      );
       final equ = eph.calcUtWithConfig(
         jd,
         sweBody,
-        equatorialFlags,
+        setup.equatorialFlags,
         callConfig,
       );
 
@@ -174,8 +214,10 @@ class SweFacade {
       bodiesEcliptic[body] = eclPos;
       bodiesEquatorial[body] = equPos;
 
-      final pheno = _safePheno(eph, jd, body, sweBody, sweConfig, topo);
-      if (pheno != null) phenoResults[body] = pheno;
+      if (includePheno) {
+        final pheno = _safePheno(eph, jd, body, sweBody, sweConfig, setup.topo);
+        if (pheno != null) phenoResults[body] = pheno;
+      }
 
       if (body == Body.rahu) {
         rahuEcl = eclPos;
@@ -186,7 +228,7 @@ class SweFacade {
         final r = eph.calcUtWithConfig(
           jd,
           sweBody,
-          extraBase | swe.CalcFlags.baryctr,
+          setup.extraBase | swe.CalcFlags.baryctr,
           callConfig,
         );
         final pos = _fromCalcResult(r);
@@ -197,7 +239,7 @@ class SweFacade {
         final r = eph.calcUtWithConfig(
           jd,
           sweBody,
-          extraBase | swe.CalcFlags.helctr,
+          setup.extraBase | swe.CalcFlags.helctr,
           callConfig,
         );
         final pos = _fromCalcResult(r);
@@ -220,10 +262,64 @@ class SweFacade {
       }
     }
 
+    return BodySnapshot(
+      jdUt: jdUt,
+      location: location,
+      sweConfig: sweConfig,
+      bodiesEcliptic: bodiesEcliptic,
+      bodiesEquatorial: bodiesEquatorial,
+      phenoData: phenoResults,
+      bodiesEclipticBarycentric: baryEcl,
+      bodiesEclipticHeliocentric: helioEcl,
+    );
+  }
+
+  /// Compute a complete ephemeris snapshot.
+  EphSnapshot calcAll(
+    double jdUt,
+    Location location,
+    SweConfig sweConfig, {
+    bool includeStarData = false,
+  }) {
+    final loc = location;
+
+    if (_log.isLoggable(Level.INFO)) {
+      _log.info(
+        'calcAll jdUt=$jdUt bodies=${sweConfig.bodies.length} '
+        'extraFrames=${sweConfig.extraFrames}',
+      );
+    }
+
+    final setup = _setup(jdUt, location, sweConfig);
+    final eph = setup.eph;
+    final jd = setup.jd;
+    final source = setup.source;
+    final isSidereal = setup.isSidereal;
+    final signMode = setup.signMode;
+    final topo = setup.topo;
+    final callConfig = setup.callConfig;
+    final baseEclFlags = setup.baseEclFlags;
+    final equatorialFlags = setup.equatorialFlags;
+
+    final bodies = _calcBodies(
+      setup,
+      jdUt,
+      location,
+      sweConfig,
+      includePheno: true,
+    );
+    final bodiesEcliptic = bodies.bodiesEcliptic;
+    final bodiesEquatorial = bodies.bodiesEquatorial;
+    final phenoResults = bodies.phenoData;
+    final baryEcl = bodies.bodiesEclipticBarycentric;
+    final helioEcl = bodies.bodiesEclipticHeliocentric;
+
     // Fixed stars — build StarPosition (ecliptic + equatorial + optional data).
     final starsMap = <Star, StarPosition>{};
     for (final star in sweConfig.stars) {
-      _log.fine('calc star=${star.label} sweName=${sweNameFor(star)}');
+      if (_log.isLoggable(Level.FINE)) {
+        _log.fine('calc star=${star.label} sweName=${sweNameFor(star)}');
+      }
       try {
         final ecl = eph.fixstar2UtWithConfig(
           sweNameFor(star),
@@ -253,7 +349,7 @@ class SweFacade {
     // Custom star names (arbitrary SWE nomen strings with % fallback).
     final customStarsMap = <String, StarPosition>{};
     for (final name in sweConfig.customStarNames) {
-      _log.fine('calc customStar=$name');
+      if (_log.isLoggable(Level.FINE)) _log.fine('calc customStar=$name');
       try {
         final ecl = eph.fixstar2UtWithConfig(
           name,
@@ -340,12 +436,14 @@ class SweFacade {
         source,
         signMode,
       ).getAyanamsaUt(jd, swe.CalcFlags.none).ayanamsa;
-      _log.fine('ayanamsa=$ayanamsaValue');
+      if (_log.isLoggable(Level.FINE)) _log.fine('ayanamsa=$ayanamsaValue');
     }
 
     // ── Nakshatra-frame longitudes ──
     final nakAyanamsa = sweConfig.nakAyanamsa;
-    _log.fine('nakAyanamsa=${nakAyanamsa.label}');
+    if (_log.isLoggable(Level.FINE)) {
+      _log.fine('nakAyanamsa=${nakAyanamsa.label}');
+    }
 
     final bodiesNakEclLon = <Body, double>{};
     final bodiesNakEquLon = <Body, double>{};
@@ -893,4 +991,38 @@ class SweFacade {
       southernSolstice: eph.solcrossUt(270.0, jdStart, flags),
     );
   }
+}
+
+/// The handle, flags and per-call overrides derived once from a
+/// (jdUt, location, SweConfig) triple.
+///
+/// Exists so [SweFacade.calcBodies] and [SweFacade.calcAll] derive them the
+/// same way exactly once — [SweFacade.calcAll] delegates its body loop and
+/// then reuses the same setup for houses, stars and the nakshatra frame.
+class _CallSetup {
+  const _CallSetup({
+    required this.source,
+    required this.eph,
+    required this.jd,
+    required this.isSidereal,
+    required this.signMode,
+    required this.topo,
+    required this.callConfig,
+    required this.baseEclFlags,
+    required this.equatorialFlags,
+    required this.extraBase,
+  });
+
+  final swe.EphemerisSource source;
+  final swe.Ephemeris eph;
+  final swe.JdUt1 jd;
+  final bool isSidereal;
+  final swe.SiderealMode? signMode;
+  final swe.TopoPosition? topo;
+  final swe.EphemerisConfig callConfig;
+  final swe.CalcFlags baseEclFlags;
+  final swe.CalcFlags equatorialFlags;
+
+  /// Extra-frame (barycentric/heliocentric) base flags — topocentric stripped.
+  final swe.CalcFlags extraBase;
 }

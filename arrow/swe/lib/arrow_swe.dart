@@ -6,6 +6,7 @@ library;
 
 export 'src/asc_mc_points.dart';
 export 'src/body_position.dart';
+export 'src/body_snapshot.dart';
 export 'src/cardinal_points.dart';
 export 'src/eph_snapshot.dart';
 export 'src/ephemeris_flag.dart';
