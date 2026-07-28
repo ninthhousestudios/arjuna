@@ -58,6 +58,9 @@ RUN protoc \
 
 # dart compile exe (3.12) does not invoke native asset build hooks, so the
 # pre-built .so from the host workspace is copied in via the build context.
+# `dart pub get` does NOT refresh that file, so it silently goes stale on a
+# swisseph_rs bump: run scripts/check-quiver-native-lib.sh before building.
+# See docs/swisseph-rs-native-lib.md.
 COPY arrow/swe/.dart_tool/lib/libswisseph_rs_dart.so /app/lib/
 
 RUN mkdir -p /app/bin && \
