@@ -654,10 +654,10 @@ packages:
     dependency: transitive
     description:
       name: swisseph_rs
-      sha256: c352fe4974b59ec543e0fb6f76300cdff078c801f921f012b457eb1f64e7d6cb
+      sha256: "37fffeaa9192ece5803603276bef9293babcbcf72d575459fb0572f9eb2840ee"
       url: "https://pub.dev"
     source: hosted
-    version: "0.3.0"
+    version: "0.3.1"
   term_glyph:
     dependency: transitive
     description:
