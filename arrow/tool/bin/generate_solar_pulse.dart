@@ -45,12 +45,18 @@ BeingType _trimsamsaType(int sign, double inSignDeg) {
   }
 }
 
+bool _isMoonHora(int sign, double inSignDeg) {
+  final firstHalf = inSignDeg < 15;
+  return firstHalf != sign.isOdd;
+}
+
 class _SolarBeing {
   final int sign;
   final String aditya;
   final String beingName;
   final BeingType beingType;
   final String beingSlug;
+  final bool moonHora;
 
   _SolarBeing(double tropicalLon)
     : sign = _adityaSign(tropicalLon),
@@ -62,10 +68,13 @@ class _SolarBeing {
       beingType = _trimsamsaType(_adityaSign(tropicalLon), tropicalLon % 30),
       beingSlug =
           '${_adityaNames[_adityaSign(tropicalLon)]!}-'
-          '${_trimsamsaType(_adityaSign(tropicalLon), tropicalLon % 30).name}';
+          '${_trimsamsaType(_adityaSign(tropicalLon), tropicalLon % 30).name}',
+      moonHora = _isMoonHora(_adityaSign(tropicalLon), tropicalLon % 30);
 
   bool sameAs(_SolarBeing other) =>
-      sign == other.sign && beingType == other.beingType;
+      sign == other.sign &&
+      beingType == other.beingType &&
+      moonHora == other.moonHora;
 }
 
 double _sunLongitude(swe.Ephemeris eph, double jdUt) {
@@ -106,6 +115,24 @@ void main() {
 
   const stepDays = 0.5; // 12 hours — Sun moves ~0.5°/day
 
+  Map<String, String> _entry(_SolarBeing b, String start, String end) {
+    final e = <String, String>{
+      'start': start,
+      'end': end,
+      'aditya': b.aditya,
+      'being_name': b.beingName,
+      'being_type': b.beingType.name,
+      'being_slug': b.beingSlug,
+      'hora': b.moonHora ? 'moon' : 'sun',
+    };
+    if (b.moonHora) {
+      final naga = BeingData.forSign(b.sign, BeingType.naga);
+      e['naga_name'] = naga.name;
+      e['naga_slug'] = '${b.aditya}-naga';
+    }
+    return e;
+  }
+
   final entries = <Map<String, String>>[];
   var currentJd = startJd;
   var current = _beingAt(eph, currentJd);
@@ -119,14 +146,13 @@ void main() {
       final crossDt = fromJulianDay(crossJd);
       final segStartDt = fromJulianDay(segmentStartJd);
 
-      entries.add({
-        'start': segStartDt.toIso8601String(),
-        'end': crossDt.toIso8601String(),
-        'aditya': current.aditya,
-        'being_name': current.beingName,
-        'being_type': current.beingType.name,
-        'being_slug': current.beingSlug,
-      });
+      entries.add(
+        _entry(
+          current,
+          segStartDt.toIso8601String(),
+          crossDt.toIso8601String(),
+        ),
+      );
 
       segmentStartJd = crossJd;
       current = _beingAt(eph, crossJd);
@@ -135,14 +161,13 @@ void main() {
   }
 
   // Final segment to the end boundary.
-  entries.add({
-    'start': fromJulianDay(segmentStartJd).toIso8601String(),
-    'end': fromJulianDay(endJd).toIso8601String(),
-    'aditya': current.aditya,
-    'being_name': current.beingName,
-    'being_type': current.beingType.name,
-    'being_slug': current.beingSlug,
-  });
+  entries.add(
+    _entry(
+      current,
+      fromJulianDay(segmentStartJd).toIso8601String(),
+      fromJulianDay(endJd).toIso8601String(),
+    ),
+  );
 
   eph.close();
 
