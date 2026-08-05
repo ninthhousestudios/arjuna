@@ -11,6 +11,9 @@
 .dart_tool/
 pubspec.lock
 
+# Birth data — local only
+calc/test/charts/
+
 # IDE
 .idea/
 *.iml

@@ -12,6 +12,7 @@ export 'src/vedic/jagradadi.dart';
 export 'src/vedic/jaimini.dart';
 export 'src/vedic/lajjitaadi.dart';
 export 'src/vedic/nabhasa_yoga.dart';
+export 'src/vedic/planet_health.dart';
 export 'src/vedic/rashi_aspect.dart';
 export 'src/vedic/shadbala.dart';
 export 'src/vedic/shadbala_const.dart';

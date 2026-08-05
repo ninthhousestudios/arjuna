@@ -15,3 +15,9 @@ dependencies:
     path: ../swe
   arrow_core:
     path: ../core
+  arrow_calc:
+    path: ../calc
+  charts_dart:
+    git:
+      url: https://gitlab.com/ninthhouse/charts_dart.git
+      ref: main

@@ -40,6 +40,22 @@ enum LajjitaadiState {
   String get libadityaName => _names[index];
 }
 
+/// The three compound conditions that, combined with a Sun/Mars/Saturn
+/// conjunction, produce [LajjitaadiState.shamed] (`avasthas.py:149-175`).
+///
+/// [label] is the free-form string libaditya writes into the factor's
+/// `detail` field; the enum exists so consumers (ranking, reports) can
+/// discriminate the conditions without matching on prose.
+enum ShameCondition {
+  conjunctNodes('conjunct Rahu/Ketu'),
+  inFifthSign('in 5th sign'),
+  conjunctFifthCusp('conjunct 5th cusp');
+
+  const ShameCondition(this.label);
+
+  final String label;
+}
+
 /// A single contributing factor to a [LajjitaadiState] for one karaka.
 ///
 /// Mirrors libaditya's factor dict (`avasthas.py:88+`). Fields are optional
@@ -66,9 +82,15 @@ class LajjitaadiFactor {
   /// 'EX' (exalted) or 'MT' (moolatrikona) — only set for proud factors.
   final String? dignity;
 
+  /// Which compound trigger fired — only set for shamed `condition` factors.
+  final ShameCondition? condition;
+
+  final String? _detail;
+
   /// Free-form condition description — only set for shamed `condition`
   /// factors ("conjunct Rahu/Ketu", "in 5th sign", "conjunct 5th cusp").
-  final String? detail;
+  /// Derived from [condition] when one is set.
+  String? get detail => _detail ?? condition?.label;
 
   /// When present, marks this factor as one the karaka is *giving* to [to]
   /// rather than receiving. libaditya populates this in `avasthas.py:183+`.
@@ -80,9 +102,10 @@ class LajjitaadiFactor {
     this.lord,
     this.strength,
     this.dignity,
-    this.detail,
+    this.condition,
+    String? detail,
     this.to,
-  });
+  }) : _detail = detail;
 
   LajjitaadiFactor toGiving(Body recipient) => LajjitaadiFactor(
     source: source,
@@ -90,7 +113,8 @@ class LajjitaadiFactor {
     lord: lord,
     strength: strength,
     dignity: dignity,
-    detail: detail,
+    condition: condition,
+    detail: _detail,
     to: recipient,
   );
 
@@ -307,7 +331,7 @@ class Lajjitaadi {
       _add(
         avasthas,
         LajjitaadiState.starved,
-        LajjitaadiFactor(
+        const LajjitaadiFactor(
           source: 'conjunction',
           planet: Body.saturn,
           strength: 60,
@@ -335,7 +359,11 @@ class Lajjitaadi {
       _add(
         avasthas,
         LajjitaadiState.agitated,
-        LajjitaadiFactor(source: 'conjunction', planet: Body.sun, strength: 60),
+        const LajjitaadiFactor(
+          source: 'conjunction',
+          planet: Body.sun,
+          strength: 60,
+        ),
       );
     }
     // avasthas.py:112 — aspected by natural enemy who is a malefic.
@@ -459,7 +487,7 @@ class Lajjitaadi {
         LajjitaadiState.shamed,
         const LajjitaadiFactor(
           source: 'condition',
-          detail: 'conjunct Rahu/Ketu',
+          condition: ShameCondition.conjunctNodes,
         ),
       );
     }
@@ -467,7 +495,10 @@ class Lajjitaadi {
       _add(
         avasthas,
         LajjitaadiState.shamed,
-        const LajjitaadiFactor(source: 'condition', detail: 'in 5th sign'),
+        const LajjitaadiFactor(
+          source: 'condition',
+          condition: ShameCondition.inFifthSign,
+        ),
       );
     }
     if (conjFifthCusp && !inFifthSign) {
@@ -476,7 +507,7 @@ class Lajjitaadi {
         LajjitaadiState.shamed,
         const LajjitaadiFactor(
           source: 'condition',
-          detail: 'conjunct 5th cusp',
+          condition: ShameCondition.conjunctFifthCusp,
         ),
       );
     }
