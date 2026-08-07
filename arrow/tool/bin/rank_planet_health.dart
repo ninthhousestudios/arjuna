@@ -78,6 +78,14 @@ void main(List<String> args) {
       'Chart settings: ${_presetLabel()}. Ephemeris: '
       '${ephePath ?? 'Moshier (built-in)'}.',
     )
+    ..writeln()
+    ..writeln(
+      'Ranking follows Laura\'s precedence rule: the **Strong** subtotal '
+      '(dignity, sign, conjunction, shame) ranks a planet first, and the '
+      '**Aspect** subtotal only breaks ties among planets it leaves level. '
+      '**Total** = Strong + Aspect is shown for reference, but a lower total '
+      'can still rank higher when its strong subtotal wins.',
+    )
     ..writeln();
 
   for (final file in files) {
@@ -141,14 +149,18 @@ void _writeChart(
     )
     ..writeln()
     ..writeln(
-      '| # | Planet | Virupas | Aditya | Hora | Trimsamsa being | '
-      'Hora being | Avasthas |',
+      '| # | Planet | Strong | Aspect | Total | Aditya | Hora | '
+      'Trimsamsa being | Hora being | Avasthas |',
     )
-    ..writeln('|---|----|--------:|----|------|---------|------|----|');
+    ..writeln(
+      '|---|----|------:|------:|------:|----|------|---------|------|----|',
+    );
   for (final r in ranked) {
     out.writeln(
       '| ${r.rank} '
       '| ${_title(r.body.name)} '
+      '| ${_v(r.score.strongVirupas)} '
+      '| ${_v(r.score.aspectVirupas)} '
       '| ${_v(r.virupas)} '
       '| ${r.aditya.name} '
       '| ${r.hora == Hora.sun ? 'Sun' : 'Moon'} '
