@@ -13,72 +13,72 @@ Chart settings: circle=aditya, sign ayanamsa=tropical, houses=campanus. Ephemeri
 
 | # | Planet | Virupas | Aditya | Hora | Trimsamsa being | Hora being | Avasthas |
 |---|----|--------:|----|------|---------|------|----|
-| 1 | Moon | 75.0 | Varuna | Moon | Vasishtha (Rishi) | Shukra (Naga) | agitated -30.0, healthy 45.0, delighted 60.0 |
-| 2 | Mars | 28.4 | Varuna | Moon | Sahajanya (Apsara) | Shukra (Naga) | starved -45.0, agitated -30.0, delighted 103.4 |
-| 3 | Saturn | 17.4 | Aryama | Moon | Rathauja (Yaksha) | Kacchanira (Naga) | starved -9.2, agitated -6.1, delighted 32.7 |
-| 4 | Jupiter | 6.9 | Pusha | Moon | Gautama (Rishi) | Dhananjaya (Naga) | starved -63.2, delighted 70.1 |
-| 5 | Sun | -22.5 | Varuna | Sun | Chitrasvana (Rakshasa) | Varuna (Aditya) | starved -83.3, agitated -25.5, thirsty -12.8, delighted 99.1 |
-| 6 | Mercury | -60.0 | Varuna | Moon | Sahajanya (Apsara) | Shukra (Naga) | starved -90.0, agitated -30.0, delighted 60.0 |
-| 7 | Venus | -107.7 | Varuna | Sun | Vasishtha (Rishi) | Varuna (Aditya) | starved -135.0, agitated -30.0, delighted 57.3 |
+| 1 | Moon | 30.0 | Varuna | Moon | Vasishtha (Rishi) | Shukra (Naga) | agitated -30.0, delighted 30.0, healthy 30.0 |
+| 2 | Saturn | 1.0 | Aryama | Moon | Rathauja (Yaksha) | Kacchanira (Naga) | starved -9.2, agitated -6.1, delighted 16.4 |
+| 3 | Jupiter | -28.1 | Pusha | Moon | Gautama (Rishi) | Dhananjaya (Naga) | starved -63.2, delighted 35.1 |
+| 4 | Sun | -72.1 | Varuna | Sun | Chitrasvana (Rakshasa) | Varuna (Aditya) | starved -83.3, agitated -25.5, thirsty -12.8, delighted 49.6 |
+| 5 | Mars | -23.3 | Varuna | Moon | Sahajanya (Apsara) | Shukra (Naga) | starved -45.0, agitated -30.0, delighted 51.7 |
+| 6 | Mercury | -90.0 | Varuna | Moon | Sahajanya (Apsara) | Shukra (Naga) | starved -90.0, agitated -30.0, delighted 30.0 |
+| 7 | Venus | -136.4 | Varuna | Sun | Vasishtha (Rishi) | Varuna (Aditya) | starved -135.0, agitated -30.0, delighted 28.6 |
 
 <details><summary>Factor breakdown</summary>
 
-**Moon** — 75.0v
+**Moon** — 30.0v
 
-- `delighted` via conjunction Sun @ 60.0/60 → **30.0v**
-- `delighted` via conjunction Mercury @ 60.0/60 → **30.0v**
+- `delighted` via conjunction Sun @ 60.0/60 → **15.0v**
+- `delighted` via conjunction Mercury @ 60.0/60 → **15.0v**
 - `agitated` via conjunction Sun @ 60.0/60 → **-30.0v**
-- `healthy` via sign @ 60.0/60 → **45.0v**
+- `healthy` via sign @ 60.0/60 → **30.0v**
 
-**Mars** — 28.4v
+**Saturn** — 1.0v
 
-- `delighted` via conjunction Sun @ 60.0/60 → **30.0v**
-- `delighted` via conjunction Moon @ 60.0/60 → **30.0v**
-- `delighted` via aspect Jupiter @ 26.8/60 → **13.4v**
-- `delighted` via sign lord Moon @ 60.0/60 → **30.0v**
-- `starved` via conjunction Mercury @ 60.0/60 → **-45.0v**
-- `agitated` via conjunction Sun @ 60.0/60 → **-30.0v**
-
-**Saturn** — 17.4v
-
-- `delighted` via aspect Venus @ 5.4/60 → **2.7v**
-- `delighted` via sign lord Venus @ 60.0/60 → **30.0v**
+- `delighted` via aspect Venus @ 5.4/60 → **1.4v**
+- `delighted` via sign lord Venus @ 60.0/60 → **15.0v**
 - `starved` via aspect Sun @ 8.9/60 → **-6.7v**
 - `starved` via aspect Moon @ 3.4/60 → **-2.5v**
 - `agitated` via aspect Sun @ 8.9/60 → **-4.5v**
 - `agitated` via aspect Moon @ 3.4/60 → **-1.7v**
 
-**Jupiter** — 6.9v
+**Jupiter** — -28.1v
 
-- `delighted` via aspect Sun @ 49.6/60 → **24.8v**
-- `delighted` via aspect Moon @ 44.0/60 → **22.0v**
-- `delighted` via aspect Mars @ 46.6/60 → **23.3v**
+- `delighted` via aspect Sun @ 49.6/60 → **12.4v**
+- `delighted` via aspect Moon @ 44.0/60 → **11.0v**
+- `delighted` via aspect Mars @ 46.6/60 → **11.7v**
 - `starved` via aspect Mercury @ 38.1/60 → **-28.6v**
 - `starved` via aspect Venus @ 46.1/60 → **-34.6v**
 
-**Sun** — -22.5v
+**Sun** — -72.1v
 
-- `delighted` via conjunction Moon @ 60.0/60 → **30.0v**
-- `delighted` via conjunction Mars @ 60.0/60 → **30.0v**
-- `delighted` via aspect Jupiter @ 18.2/60 → **9.1v**
-- `delighted` via sign lord Moon @ 60.0/60 → **30.0v**
+- `delighted` via conjunction Moon @ 60.0/60 → **15.0v**
+- `delighted` via conjunction Mars @ 60.0/60 → **15.0v**
+- `delighted` via aspect Jupiter @ 18.2/60 → **4.6v**
+- `delighted` via sign lord Moon @ 60.0/60 → **15.0v**
 - `starved` via conjunction Venus @ 60.0/60 → **-45.0v**
 - `starved` via aspect Saturn @ 51.1/60 → **-38.3v**
 - `agitated` via aspect Saturn @ 51.1/60 → **-25.5v**
 - `thirsty` via aspect Saturn @ 51.1/60 → **-12.8v**
 
-**Mercury** — -60.0v
+**Mars** — -23.3v
 
-- `delighted` via conjunction Sun @ 60.0/60 → **30.0v**
-- `delighted` via conjunction Venus @ 60.0/60 → **30.0v**
+- `delighted` via conjunction Sun @ 60.0/60 → **15.0v**
+- `delighted` via conjunction Moon @ 60.0/60 → **15.0v**
+- `delighted` via aspect Jupiter @ 26.8/60 → **6.7v**
+- `delighted` via sign lord Moon @ 60.0/60 → **15.0v**
+- `starved` via conjunction Mercury @ 60.0/60 → **-45.0v**
+- `agitated` via conjunction Sun @ 60.0/60 → **-30.0v**
+
+**Mercury** — -90.0v
+
+- `delighted` via conjunction Sun @ 60.0/60 → **15.0v**
+- `delighted` via conjunction Venus @ 60.0/60 → **15.0v**
 - `starved` via conjunction Moon @ 60.0/60 → **-45.0v**
 - `starved` via sign lord Moon @ 60.0/60 → **-45.0v**
 - `agitated` via conjunction Sun @ 60.0/60 → **-30.0v**
 
-**Venus** — -107.7v
+**Venus** — -136.4v
 
-- `delighted` via conjunction Mercury @ 60.0/60 → **30.0v**
-- `delighted` via aspect Saturn @ 54.6/60 → **27.3v**
+- `delighted` via conjunction Mercury @ 60.0/60 → **15.0v**
+- `delighted` via aspect Saturn @ 54.6/60 → **13.6v**
 - `starved` via conjunction Sun @ 60.0/60 → **-45.0v**
 - `starved` via conjunction Moon @ 60.0/60 → **-45.0v**
 - `starved` via sign lord Moon @ 60.0/60 → **-45.0v**
@@ -95,64 +95,64 @@ Chart settings: circle=aditya, sign ayanamsa=tropical, houses=campanus. Ephemeri
 
 | # | Planet | Virupas | Aditya | Hora | Trimsamsa being | Hora being | Avasthas |
 |---|----|--------:|----|------|---------|------|----|
-| 1 | Jupiter | 71.1 | Varuna | Sun | Huhu (Gandharva) | Varuna (Aditya) | starved -61.6, thirsty -20.5, proud 60.0, delighted 93.3 |
-| 2 | Mars | 37.4 | Pusha | Sun | Vata (Rakshasa) | Pusha (Aditya) | delighted 37.4 |
-| 3 | Sun | 0.4 | Amshu | Moon | Urvashi (Apsara) | Mahashankha (Naga) | starved -36.2, agitated -24.1, delighted 60.8 |
-| 4 | Moon | 0.0 | Amshu | Sun | Vidyucchatru (Rakshasa) | Amshu (Aditya) | agitated -30.0, delighted 30.0 |
+| 1 | Jupiter | 9.5 | Varuna | Sun | Huhu (Gandharva) | Varuna (Aditya) | starved -61.6, thirsty -20.5, proud 45.0, delighted 46.6 |
+| 2 | Sun | -29.9 | Amshu | Moon | Urvashi (Apsara) | Mahashankha (Naga) | starved -36.2, agitated -24.1, delighted 30.4 |
+| 3 | Venus | -26.1 | Pusha | Moon | Gautama (Rishi) | Dhananjaya (Naga) | starved -24.6, agitated -16.4, delighted 15.0 |
+| 4 | Mars | 18.7 | Pusha | Sun | Vata (Rakshasa) | Pusha (Aditya) | delighted 18.7 |
 | 5 | Mercury | -7.7 | Bhaga | Sun | Ayu (Rishi) | Bhaga (Aditya) | starved -4.6, agitated -3.1 |
-| 6 | Venus | -11.1 | Pusha | Moon | Gautama (Rishi) | Dhananjaya (Naga) | starved -24.6, agitated -16.4, delighted 30.0 |
-| 7 | Saturn | -130.3 | Dhata | Sun | Pulastya (Rishi) | Dhata (Aditya) | starved -110.9, agitated -43.9, delighted 24.5 |
+| 6 | Moon | -15.0 | Amshu | Sun | Vidyucchatru (Rakshasa) | Amshu (Aditya) | agitated -30.0, delighted 15.0 |
+| 7 | Saturn | -142.6 | Dhata | Sun | Pulastya (Rishi) | Dhata (Aditya) | starved -110.9, agitated -43.9, delighted 12.3 |
 
 <details><summary>Factor breakdown</summary>
 
-**Jupiter** — 71.1v
+**Jupiter** — 9.5v
 
-- `delighted` via aspect Sun @ 44.6/60 → **22.3v**
-- `delighted` via aspect Moon @ 33.4/60 → **16.7v**
-- `delighted` via aspect Mars @ 48.5/60 → **24.3v**
-- `delighted` via sign lord Moon @ 60.0/60 → **30.0v**
+- `delighted` via aspect Sun @ 44.6/60 → **11.2v**
+- `delighted` via aspect Moon @ 33.4/60 → **8.4v**
+- `delighted` via aspect Mars @ 48.5/60 → **12.1v**
+- `delighted` via sign lord Moon @ 60.0/60 → **15.0v**
 - `starved` via aspect Mercury @ 54.6/60 → **-41.0v**
 - `starved` via aspect Venus @ 27.5/60 → **-20.7v**
 - `thirsty` via aspect Mercury @ 54.6/60 → **-13.7v**
 - `thirsty` via aspect Venus @ 27.5/60 → **-6.9v**
-- `proud` via dignity EX @ 60.0/60 → **60.0v**
+- `proud` via dignity EX @ 60.0/60 → **45.0v**
 
-**Mars** — 37.4v
+**Sun** — -29.9v
 
-- `delighted` via aspect Sun @ 3.3/60 → **1.6v**
-- `delighted` via aspect Moon @ 14.4/60 → **7.2v**
-- `delighted` via aspect Jupiter @ 57.1/60 → **28.6v**
-
-**Sun** — 0.4v
-
-- `delighted` via conjunction Moon @ 60.0/60 → **30.0v**
-- `delighted` via aspect Jupiter @ 1.6/60 → **0.8v**
-- `delighted` via sign lord Jupiter @ 60.0/60 → **30.0v**
+- `delighted` via conjunction Moon @ 60.0/60 → **15.0v**
+- `delighted` via aspect Jupiter @ 1.6/60 → **0.4v**
+- `delighted` via sign lord Jupiter @ 60.0/60 → **15.0v**
 - `starved` via aspect Saturn @ 48.3/60 → **-36.2v**
 - `agitated` via aspect Saturn @ 48.3/60 → **-24.1v**
 
-**Moon** — 0.0v
+**Venus** — -26.1v
 
-- `delighted` via conjunction Sun @ 60.0/60 → **30.0v**
-- `agitated` via conjunction Sun @ 60.0/60 → **-30.0v**
+- `delighted` via sign lord Saturn @ 60.0/60 → **15.0v**
+- `starved` via aspect Sun @ 8.5/60 → **-6.4v**
+- `starved` via aspect Moon @ 24.3/60 → **-18.3v**
+- `agitated` via aspect Sun @ 8.5/60 → **-4.3v**
+- `agitated` via aspect Moon @ 24.3/60 → **-12.2v**
+
+**Mars** — 18.7v
+
+- `delighted` via aspect Sun @ 3.3/60 → **0.8v**
+- `delighted` via aspect Moon @ 14.4/60 → **3.6v**
+- `delighted` via aspect Jupiter @ 57.1/60 → **14.3v**
 
 **Mercury** — -7.7v
 
 - `starved` via aspect Moon @ 6.2/60 → **-4.6v**
 - `agitated` via aspect Moon @ 6.2/60 → **-3.1v**
 
-**Venus** — -11.1v
+**Moon** — -15.0v
 
-- `delighted` via sign lord Saturn @ 60.0/60 → **30.0v**
-- `starved` via aspect Sun @ 8.5/60 → **-6.4v**
-- `starved` via aspect Moon @ 24.3/60 → **-18.3v**
-- `agitated` via aspect Sun @ 8.5/60 → **-4.3v**
-- `agitated` via aspect Moon @ 24.3/60 → **-12.2v**
+- `delighted` via conjunction Sun @ 60.0/60 → **15.0v**
+- `agitated` via conjunction Sun @ 60.0/60 → **-30.0v**
 
-**Saturn** — -130.3v
+**Saturn** — -142.6v
 
-- `delighted` via aspect Mercury @ 36.7/60 → **18.3v**
-- `delighted` via aspect Venus @ 12.4/60 → **6.2v**
+- `delighted` via aspect Mercury @ 36.7/60 → **9.2v**
+- `delighted` via aspect Venus @ 12.4/60 → **3.1v**
 - `starved` via aspect Sun @ 39.1/60 → **-29.4v**
 - `starved` via aspect Moon @ 25.9/60 → **-19.5v**
 - `starved` via aspect Mars @ 22.8/60 → **-17.1v**
@@ -172,65 +172,65 @@ Chart settings: circle=aditya, sign ayanamsa=tropical, houses=campanus. Ephemeri
 
 | # | Planet | Virupas | Aditya | Hora | Trimsamsa being | Hora being | Avasthas |
 |---|----|--------:|----|------|---------|------|----|
-| 1 | Jupiter | 118.4 | Varuna | Sun | Huhu (Gandharva) | Varuna (Aditya) | starved -18.9, thirsty -6.3, proud 60.0, delighted 83.6 |
-| 2 | Mars | 32.5 | Amshu | Sun | Vidyucchatru (Rakshasa) | Amshu (Aditya) | starved -23.2, delighted 55.7 |
-| 3 | Moon | 32.2 | Bhaga | Sun | Urna (Gandharva) | Bhaga (Aditya) | delighted 32.2 |
-| 4 | Mercury | 21.4 | Vivasvan | Sun | Vyaghra (Rakshasa) | Vivasvan (Aditya) | starved -23.6, healthy 45.0 |
-| 5 | Venus | 18.2 | Vishnu | Sun | Vishvamitra (Rishi) | Vishnu (Aditya) | starved -5.7, thirsty -1.9, agitated -1.8, delighted 27.6 |
-| 6 | Sun | -88.1 | Tvashta | Sun | Jamadagni (Rishi) | Tvashta (Aditya) | starved -86.1, agitated -27.4, delighted 25.4 |
-| 7 | Saturn | -147.3 | Dhata | Sun | Pulastya (Rishi) | Dhata (Aditya) | starved -132.4, agitated -42.1, delighted 27.2 |
+| 1 | Jupiter | 61.6 | Varuna | Sun | Huhu (Gandharva) | Varuna (Aditya) | starved -18.9, thirsty -6.3, delighted 41.8, proud 45.0 |
+| 2 | Mercury | 6.4 | Vivasvan | Sun | Vyaghra (Rakshasa) | Vivasvan (Aditya) | starved -23.6, healthy 30.0 |
+| 3 | Mars | 4.7 | Amshu | Sun | Vidyucchatru (Rakshasa) | Amshu (Aditya) | starved -23.2, delighted 27.8 |
+| 4 | Moon | 16.1 | Bhaga | Sun | Urna (Gandharva) | Bhaga (Aditya) | delighted 16.1 |
+| 5 | Venus | 4.4 | Vishnu | Sun | Vishvamitra (Rishi) | Vishnu (Aditya) | starved -5.7, thirsty -1.9, agitated -1.8, delighted 13.8 |
+| 6 | Sun | -100.8 | Tvashta | Sun | Jamadagni (Rishi) | Tvashta (Aditya) | starved -86.1, agitated -27.4, delighted 12.7 |
+| 7 | Saturn | -160.9 | Dhata | Sun | Pulastya (Rishi) | Dhata (Aditya) | starved -132.4, agitated -42.1, delighted 13.6 |
 
 <details><summary>Factor breakdown</summary>
 
-**Jupiter** — 118.4v
+**Jupiter** — 61.6v
 
-- `delighted` via aspect Sun @ 6.7/60 → **3.3v**
-- `delighted` via aspect Moon @ 59.2/60 → **29.6v**
-- `delighted` via aspect Mars @ 41.4/60 → **20.7v**
-- `delighted` via sign lord Moon @ 60.0/60 → **30.0v**
+- `delighted` via aspect Sun @ 6.7/60 → **1.7v**
+- `delighted` via aspect Moon @ 59.2/60 → **14.8v**
+- `delighted` via aspect Mars @ 41.4/60 → **10.3v**
+- `delighted` via sign lord Moon @ 60.0/60 → **15.0v**
 - `starved` via aspect Venus @ 25.2/60 → **-18.9v**
 - `thirsty` via aspect Venus @ 25.2/60 → **-6.3v**
-- `proud` via dignity EX @ 60.0/60 → **60.0v**
+- `proud` via dignity EX @ 60.0/60 → **45.0v**
 
-**Mars** — 32.5v
-
-- `delighted` via aspect Sun @ 14.0/60 → **7.0v**
-- `delighted` via aspect Jupiter @ 37.3/60 → **18.6v**
-- `delighted` via sign lord Jupiter @ 60.0/60 → **30.0v**
-- `starved` via aspect Mercury @ 30.9/60 → **-23.2v**
-
-**Moon** — 32.2v
-
-- `delighted` via aspect Sun @ 37.4/60 → **18.7v**
-- `delighted` via aspect Mercury @ 27.0/60 → **13.5v**
-
-**Mercury** — 21.4v
+**Mercury** — 6.4v
 
 - `starved` via aspect Moon @ 31.5/60 → **-23.6v**
-- `healthy` via sign @ 60.0/60 → **45.0v**
+- `healthy` via sign @ 60.0/60 → **30.0v**
 
-**Venus** — 18.2v
+**Mars** — 4.7v
 
-- `delighted` via aspect Mercury @ 12.5/60 → **6.3v**
-- `delighted` via aspect Saturn @ 42.7/60 → **21.4v**
+- `delighted` via aspect Sun @ 14.0/60 → **3.5v**
+- `delighted` via aspect Jupiter @ 37.3/60 → **9.3v**
+- `delighted` via sign lord Jupiter @ 60.0/60 → **15.0v**
+- `starved` via aspect Mercury @ 30.9/60 → **-23.2v**
+
+**Moon** — 16.1v
+
+- `delighted` via aspect Sun @ 37.4/60 → **9.4v**
+- `delighted` via aspect Mercury @ 27.0/60 → **6.7v**
+
+**Venus** — 4.4v
+
+- `delighted` via aspect Mercury @ 12.5/60 → **3.1v**
+- `delighted` via aspect Saturn @ 42.7/60 → **10.7v**
 - `starved` via aspect Sun @ 3.6/60 → **-2.7v**
 - `starved` via aspect Moon @ 4.0/60 → **-3.0v**
 - `agitated` via aspect Sun @ 3.6/60 → **-1.8v**
 - `thirsty` via aspect Sun @ 3.6/60 → **-0.9v**
 - `thirsty` via aspect Moon @ 4.0/60 → **-1.0v**
 
-**Sun** — -88.1v
+**Sun** — -100.8v
 
-- `delighted` via aspect Moon @ 22.6/60 → **11.3v**
-- `delighted` via aspect Jupiter @ 28.3/60 → **14.2v**
+- `delighted` via aspect Moon @ 22.6/60 → **5.6v**
+- `delighted` via aspect Jupiter @ 28.3/60 → **7.1v**
 - `starved` via aspect Saturn @ 54.8/60 → **-41.1v**
 - `starved` via sign lord Venus @ 60.0/60 → **-45.0v**
 - `agitated` via aspect Saturn @ 54.8/60 → **-27.4v**
 
-**Saturn** — -147.3v
+**Saturn** — -160.9v
 
-- `delighted` via aspect Mercury @ 49.8/60 → **24.9v**
-- `delighted` via aspect Venus @ 4.6/60 → **2.3v**
+- `delighted` via aspect Mercury @ 49.8/60 → **12.4v**
+- `delighted` via aspect Venus @ 4.6/60 → **1.1v**
 - `starved` via aspect Sun @ 58.7/60 → **-44.0v**
 - `starved` via aspect Moon @ 32.5/60 → **-24.3v**
 - `starved` via aspect Mars @ 25.4/60 → **-19.1v**
@@ -249,57 +249,57 @@ Chart settings: circle=aditya, sign ayanamsa=tropical, houses=campanus. Ephemeri
 
 | # | Planet | Virupas | Aditya | Hora | Trimsamsa being | Hora being | Avasthas |
 |---|----|--------:|----|------|---------|------|----|
-| 1 | Sun | 80.7 | Indra | Sun | Varya (Rakshasa) | Indra (Aditya) | starved -7.2, agitated -4.8, delighted 32.7, proud 60.0 |
-| 2 | Jupiter | 47.4 | Amshu | Moon | Urvashi (Apsara) | Mahashankha (Naga) | starved -24.7, delighted 27.1, healthy 45.0 |
-| 3 | Mars | 39.0 | Parjanya | Sun | Varca (Rakshasa) | Parjanya (Aditya) | starved -31.2, thirsty -10.4, delighted 80.5 |
-| 4 | Mercury | 30.0 | Indra | Sun | Angiras (Rishi) | Indra (Aditya) | agitated -30.0, delighted 60.0 |
-| 5 | Moon | 14.7 | Tvashta | Sun | Brahmapeta (Rakshasa) | Tvashta (Aditya) | delighted 14.7 |
-| 6 | Saturn | -93.9 | Varuna | Moon | Sahajanya (Apsara) | Shukra (Naga) | starved -89.1, agitated -20.1, thirsty -14.7, delighted 30.0 |
+| 1 | Sun | 49.4 | Indra | Sun | Varya (Rakshasa) | Indra (Aditya) | starved -7.2, agitated -4.8, delighted 16.3, proud 45.0 |
+| 2 | Jupiter | 18.9 | Amshu | Moon | Urvashi (Apsara) | Mahashankha (Naga) | starved -24.7, delighted 13.6, healthy 30.0 |
+| 3 | Mars | -1.3 | Parjanya | Sun | Varca (Rakshasa) | Parjanya (Aditya) | starved -31.2, thirsty -10.4, delighted 40.3 |
+| 4 | Moon | 7.4 | Tvashta | Sun | Brahmapeta (Rakshasa) | Tvashta (Aditya) | delighted 7.4 |
+| 5 | Mercury | 0.0 | Indra | Sun | Angiras (Rishi) | Indra (Aditya) | agitated -30.0, delighted 30.0 |
+| 6 | Saturn | -108.9 | Varuna | Moon | Sahajanya (Apsara) | Shukra (Naga) | starved -89.1, agitated -20.1, thirsty -14.7, delighted 15.0 |
 | 7 | Venus | -99.4 | Varuna | Sun | Vasishtha (Rishi) | Varuna (Aditya) | starved -97.1, thirsty -2.4 |
 
 <details><summary>Factor breakdown</summary>
 
-**Sun** — 80.7v
+**Sun** — 49.4v
 
-- `delighted` via aspect Moon @ 1.2/60 → **0.6v**
-- `delighted` via aspect Mars @ 15.0/60 → **7.5v**
-- `delighted` via aspect Jupiter @ 49.1/60 → **24.6v**
+- `delighted` via aspect Moon @ 1.2/60 → **0.3v**
+- `delighted` via aspect Mars @ 15.0/60 → **3.8v**
+- `delighted` via aspect Jupiter @ 49.1/60 → **12.3v**
 - `starved` via aspect Saturn @ 9.5/60 → **-7.2v**
 - `agitated` via aspect Saturn @ 9.5/60 → **-4.8v**
-- `proud` via dignity MT @ 60.0/60 → **60.0v**
+- `proud` via dignity MT @ 60.0/60 → **45.0v**
 
-**Jupiter** — 47.4v
+**Jupiter** — 18.9v
 
-- `delighted` via aspect Sun @ 8.2/60 → **4.1v**
-- `delighted` via aspect Moon @ 34.4/60 → **17.2v**
-- `delighted` via aspect Mars @ 11.6/60 → **5.8v**
+- `delighted` via aspect Sun @ 8.2/60 → **2.1v**
+- `delighted` via aspect Moon @ 34.4/60 → **8.6v**
+- `delighted` via aspect Mars @ 11.6/60 → **2.9v**
 - `starved` via aspect Mercury @ 16.4/60 → **-12.3v**
 - `starved` via aspect Venus @ 16.5/60 → **-12.4v**
-- `healthy` via sign @ 60.0/60 → **45.0v**
+- `healthy` via sign @ 60.0/60 → **30.0v**
 
-**Mars** — 39.0v
+**Mars** — -1.3v
 
-- `delighted` via aspect Sun @ 37.5/60 → **18.7v**
-- `delighted` via aspect Moon @ 25.3/60 → **12.7v**
-- `delighted` via aspect Jupiter @ 38.3/60 → **19.1v**
-- `delighted` via sign lord Jupiter @ 60.0/60 → **30.0v**
+- `delighted` via aspect Sun @ 37.5/60 → **9.4v**
+- `delighted` via aspect Moon @ 25.3/60 → **6.3v**
+- `delighted` via aspect Jupiter @ 38.3/60 → **9.6v**
+- `delighted` via sign lord Jupiter @ 60.0/60 → **15.0v**
 - `starved` via aspect Mercury @ 41.6/60 → **-31.2v**
 - `thirsty` via aspect Mercury @ 41.6/60 → **-10.4v**
 
-**Mercury** — 30.0v
+**Moon** — 7.4v
 
-- `delighted` via conjunction Sun @ 60.0/60 → **30.0v**
-- `delighted` via sign lord Sun @ 60.0/60 → **30.0v**
+- `delighted` via aspect Sun @ 17.4/60 → **4.3v**
+- `delighted` via aspect Mercury @ 12.1/60 → **3.0v**
+
+**Mercury** — 0.0v
+
+- `delighted` via conjunction Sun @ 60.0/60 → **15.0v**
+- `delighted` via sign lord Sun @ 60.0/60 → **15.0v**
 - `agitated` via conjunction Sun @ 60.0/60 → **-30.0v**
 
-**Moon** — 14.7v
+**Saturn** — -108.9v
 
-- `delighted` via aspect Sun @ 17.4/60 → **8.7v**
-- `delighted` via aspect Mercury @ 12.1/60 → **6.0v**
-
-**Saturn** — -93.9v
-
-- `delighted` via conjunction Venus @ 60.0/60 → **30.0v**
+- `delighted` via conjunction Venus @ 60.0/60 → **15.0v**
 - `starved` via aspect Moon @ 18.6/60 → **-13.9v**
 - `starved` via aspect Mars @ 40.2/60 → **-30.2v**
 - `starved` via sign lord Moon @ 60.0/60 → **-45.0v**
@@ -325,67 +325,67 @@ Chart settings: circle=aditya, sign ayanamsa=tropical, houses=campanus. Ephemeri
 
 | # | Planet | Virupas | Aditya | Hora | Trimsamsa being | Hora being | Avasthas |
 |---|----|--------:|----|------|---------|------|----|
-| 1 | Jupiter | 21.8 | Amshu | Sun | Ritasena (Gandharva) | Amshu (Aditya) | starved -79.6, delighted 41.4, proud 60.0 |
-| 2 | Moon | 20.1 | Pusha | Sun | Suruci (Gandharva) | Pusha (Aditya) | delighted 20.1 |
-| 3 | Mercury | 12.1 | Aryama | Sun | Pulaha (Rishi) | Aryama (Aditya) | agitated -49.1, starved -28.7, delighted 90.0 |
-| 4 | Venus | -42.2 | Aryama | Sun | Praheti (Rakshasa) | Aryama (Aditya) | starved -70.3, agitated -46.9, delighted 30.0, healthy 45.0 |
-| 5 | Saturn | -45.1 | Mitra | Sun | Paurusheya (Rakshasa) | Mitra (Aditya) | starved -63.1, agitated -12.0, delighted 30.0 |
-| 6 | Mars | -53.7 | Mitra | Moon | Atri (Rishi) | Takshaka (Naga) | starved -90.3, delighted 36.6 |
-| 7 | Sun | -64.2 | Aryama | Moon | Rathauja (Yaksha) | Kacchanira (Naga) | starved -90.0, delighted 25.8 |
+| 1 | Jupiter | -13.9 | Amshu | Sun | Ritasena (Gandharva) | Amshu (Aditya) | starved -79.6, delighted 20.7, proud 45.0 |
+| 2 | Mercury | -32.9 | Aryama | Sun | Pulaha (Rishi) | Aryama (Aditya) | agitated -49.1, starved -28.7, delighted 45.0 |
+| 3 | Moon | 10.0 | Pusha | Sun | Suruci (Gandharva) | Pusha (Aditya) | delighted 10.0 |
+| 4 | Saturn | -60.1 | Mitra | Sun | Paurusheya (Rakshasa) | Mitra (Aditya) | starved -63.1, agitated -12.0, delighted 15.0 |
+| 5 | Venus | -72.2 | Aryama | Sun | Praheti (Rakshasa) | Aryama (Aditya) | starved -70.3, agitated -46.9, delighted 15.0, healthy 30.0 |
+| 6 | Mars | -72.0 | Mitra | Moon | Atri (Rishi) | Takshaka (Naga) | starved -90.3, delighted 18.3 |
+| 7 | Sun | -77.1 | Aryama | Moon | Rathauja (Yaksha) | Kacchanira (Naga) | starved -90.0, delighted 12.9 |
 
 <details><summary>Factor breakdown</summary>
 
-**Jupiter** — 21.8v
+**Jupiter** — -13.9v
 
-- `delighted` via aspect Sun @ 47.5/60 → **23.7v**
-- `delighted` via aspect Mars @ 35.2/60 → **17.6v**
+- `delighted` via aspect Sun @ 47.5/60 → **11.9v**
+- `delighted` via aspect Mars @ 35.2/60 → **8.8v**
 - `starved` via aspect Mercury @ 50.8/60 → **-38.1v**
 - `starved` via aspect Venus @ 55.3/60 → **-41.5v**
-- `proud` via dignity MT @ 60.0/60 → **60.0v**
+- `proud` via dignity MT @ 60.0/60 → **45.0v**
 
-**Moon** — 20.1v
+**Mercury** — -32.9v
 
-- `delighted` via aspect Sun @ 18.4/60 → **9.2v**
-- `delighted` via aspect Mercury @ 21.7/60 → **10.9v**
-
-**Mercury** — 12.1v
-
-- `delighted` via conjunction Sun @ 60.0/60 → **30.0v**
-- `delighted` via conjunction Venus @ 60.0/60 → **30.0v**
-- `delighted` via sign lord Venus @ 60.0/60 → **30.0v**
+- `delighted` via conjunction Sun @ 60.0/60 → **15.0v**
+- `delighted` via conjunction Venus @ 60.0/60 → **15.0v**
+- `delighted` via sign lord Venus @ 60.0/60 → **15.0v**
 - `starved` via aspect Moon @ 38.3/60 → **-28.7v**
 - `agitated` via conjunction Sun @ 60.0/60 → **-30.0v**
 - `agitated` via aspect Moon @ 38.3/60 → **-19.1v**
 
-**Venus** — -42.2v
+**Moon** — 10.0v
 
-- `delighted` via conjunction Mercury @ 60.0/60 → **30.0v**
-- `starved` via conjunction Sun @ 60.0/60 → **-45.0v**
-- `starved` via aspect Moon @ 33.8/60 → **-25.3v**
-- `agitated` via conjunction Sun @ 60.0/60 → **-30.0v**
-- `agitated` via aspect Moon @ 33.8/60 → **-16.9v**
-- `healthy` via sign @ 60.0/60 → **45.0v**
+- `delighted` via aspect Sun @ 18.4/60 → **4.6v**
+- `delighted` via aspect Mercury @ 21.7/60 → **5.4v**
 
-**Saturn** — -45.1v
+**Saturn** — -60.1v
 
-- `delighted` via sign lord Mercury @ 60.0/60 → **30.0v**
+- `delighted` via sign lord Mercury @ 60.0/60 → **15.0v**
 - `starved` via aspect Moon @ 24.1/60 → **-18.1v**
 - `starved` via conjunction Mars @ 60.0/60 → **-45.0v**
 - `agitated` via aspect Moon @ 24.1/60 → **-12.0v**
 
-**Mars** — -53.7v
+**Venus** — -72.2v
 
-- `delighted` via aspect Sun @ 3.7/60 → **1.9v**
-- `delighted` via aspect Moon @ 15.8/60 → **7.9v**
-- `delighted` via aspect Jupiter @ 53.8/60 → **26.9v**
+- `delighted` via conjunction Mercury @ 60.0/60 → **15.0v**
+- `starved` via conjunction Sun @ 60.0/60 → **-45.0v**
+- `starved` via aspect Moon @ 33.8/60 → **-25.3v**
+- `agitated` via conjunction Sun @ 60.0/60 → **-30.0v**
+- `agitated` via aspect Moon @ 33.8/60 → **-16.9v**
+- `healthy` via sign @ 60.0/60 → **30.0v**
+
+**Mars** — -72.0v
+
+- `delighted` via aspect Sun @ 3.7/60 → **0.9v**
+- `delighted` via aspect Moon @ 15.8/60 → **3.9v**
+- `delighted` via aspect Jupiter @ 53.8/60 → **13.5v**
 - `starved` via aspect Mercury @ 0.4/60 → **-0.3v**
 - `starved` via conjunction Saturn @ 60.0/60 → **-45.0v**
 - `starved` via sign lord Mercury @ 60.0/60 → **-45.0v**
 
-**Sun** — -64.2v
+**Sun** — -77.1v
 
-- `delighted` via aspect Moon @ 41.6/60 → **20.8v**
-- `delighted` via aspect Jupiter @ 10.0/60 → **5.0v**
+- `delighted` via aspect Moon @ 41.6/60 → **10.4v**
+- `delighted` via aspect Jupiter @ 10.0/60 → **2.5v**
 - `starved` via conjunction Venus @ 60.0/60 → **-45.0v**
 - `starved` via sign lord Venus @ 60.0/60 → **-45.0v**
 
@@ -400,66 +400,66 @@ Chart settings: circle=aditya, sign ayanamsa=tropical, houses=campanus. Ephemeri
 
 | # | Planet | Virupas | Aditya | Hora | Trimsamsa being | Hora being | Avasthas |
 |---|----|--------:|----|------|---------|------|----|
-| 1 | Moon | 63.5 | Varuna | Sun | Vasishtha (Rishi) | Varuna (Aditya) | delighted 18.5, healthy 45.0 |
-| 2 | Mars | 22.3 | Pusha | Moon | Gautama (Rishi) | Dhananjaya (Naga) | agitated -30.0, delighted 52.3 |
-| 3 | Saturn | 22.2 | Parjanya | Moon | Vishvaci (Apsara) | Airavata (Naga) | starved -28.4, thirsty -9.5, delighted 60.0 |
-| 4 | Sun | -39.9 | Pusha | Moon | Ghritachi (Apsara) | Dhananjaya (Naga) | starved -90.0, delighted 50.1 |
-| 5 | Venus | -76.1 | Pusha | Moon | Sushena (Yaksha) | Dhananjaya (Naga) | starved -76.1, agitated -30.0, delighted 30.0 |
-| 6 | Jupiter | -149.2 | Parjanya | Moon | Bharadvaja (Rishi) | Airavata (Naga) | shamed -120.0, starved -90.0, delighted 15.8, healthy 45.0 |
-| 7 | Mercury | -166.2 | Parjanya | Moon | Bharadvaja (Rishi) | Airavata (Naga) | shamed -120.0, starved -68.4, thirsty -7.8, delighted 30.0 |
+| 1 | Moon | 39.3 | Varuna | Sun | Vasishtha (Rishi) | Varuna (Aditya) | delighted 9.3, healthy 30.0 |
+| 2 | Saturn | -7.8 | Parjanya | Moon | Vishvaci (Apsara) | Airavata (Naga) | starved -28.4, thirsty -9.5, delighted 30.0 |
+| 3 | Mars | -3.8 | Pusha | Moon | Gautama (Rishi) | Dhananjaya (Naga) | agitated -30.0, delighted 26.2 |
+| 4 | Venus | -91.1 | Pusha | Moon | Sushena (Yaksha) | Dhananjaya (Naga) | starved -76.1, agitated -30.0, delighted 15.0 |
+| 5 | Sun | -64.9 | Pusha | Moon | Ghritachi (Apsara) | Dhananjaya (Naga) | starved -90.0, delighted 25.1 |
+| 6 | Mercury | -181.2 | Parjanya | Moon | Bharadvaja (Rishi) | Airavata (Naga) | shamed -120.0, starved -68.4, thirsty -7.8, delighted 15.0 |
+| 7 | Jupiter | -172.1 | Parjanya | Moon | Bharadvaja (Rishi) | Airavata (Naga) | shamed -120.0, starved -90.0, delighted 7.9, healthy 30.0 |
 
 <details><summary>Factor breakdown</summary>
 
-**Moon** — 63.5v
+**Moon** — 39.3v
 
-- `delighted` via aspect Sun @ 9.5/60 → **4.8v**
-- `delighted` via aspect Mercury @ 27.5/60 → **13.8v**
-- `healthy` via sign @ 60.0/60 → **45.0v**
+- `delighted` via aspect Sun @ 9.5/60 → **2.4v**
+- `delighted` via aspect Mercury @ 27.5/60 → **6.9v**
+- `healthy` via sign @ 60.0/60 → **30.0v**
 
-**Mars** — 22.3v
+**Saturn** — -7.8v
 
-- `delighted` via conjunction Sun @ 60.0/60 → **30.0v**
-- `delighted` via aspect Moon @ 44.6/60 → **22.3v**
-- `agitated` via conjunction Sun @ 60.0/60 → **-30.0v**
-
-**Saturn** — 22.2v
-
-- `delighted` via conjunction Mercury @ 60.0/60 → **30.0v**
-- `delighted` via conjunction Jupiter @ 60.0/60 → **30.0v**
+- `delighted` via conjunction Mercury @ 60.0/60 → **15.0v**
+- `delighted` via conjunction Jupiter @ 60.0/60 → **15.0v**
 - `starved` via aspect Moon @ 37.8/60 → **-28.4v**
 - `thirsty` via aspect Moon @ 37.8/60 → **-9.5v**
 
-**Sun** — -39.9v
+**Mars** — -3.8v
 
-- `delighted` via aspect Moon @ 40.2/60 → **20.1v**
-- `delighted` via conjunction Mars @ 60.0/60 → **30.0v**
-- `starved` via conjunction Venus @ 60.0/60 → **-45.0v**
-- `starved` via sign lord Saturn @ 60.0/60 → **-45.0v**
+- `delighted` via conjunction Sun @ 60.0/60 → **15.0v**
+- `delighted` via aspect Moon @ 44.6/60 → **11.2v**
+- `agitated` via conjunction Sun @ 60.0/60 → **-30.0v**
 
-**Venus** — -76.1v
+**Venus** — -91.1v
 
-- `delighted` via sign lord Saturn @ 60.0/60 → **30.0v**
+- `delighted` via sign lord Saturn @ 60.0/60 → **15.0v**
 - `starved` via conjunction Sun @ 60.0/60 → **-45.0v**
 - `starved` via aspect Moon @ 41.5/60 → **-31.1v**
 - `agitated` via conjunction Sun @ 60.0/60 → **-30.0v**
 
-**Jupiter** — -149.2v
+**Sun** — -64.9v
 
-- `delighted` via aspect Moon @ 31.5/60 → **15.8v**
-- `starved` via conjunction Mercury @ 60.0/60 → **-45.0v**
-- `starved` via conjunction Saturn @ 60.0/60 → **-45.0v**
-- `shamed` via conjunction Saturn @ 60.0/60 → **-60.0v**
-- `shamed` via condition — conjunct Rahu/Ketu @ 60.0/60 → **-60.0v**
-- `healthy` via sign @ 60.0/60 → **45.0v**
+- `delighted` via aspect Moon @ 40.2/60 → **10.1v**
+- `delighted` via conjunction Mars @ 60.0/60 → **15.0v**
+- `starved` via conjunction Venus @ 60.0/60 → **-45.0v**
+- `starved` via sign lord Saturn @ 60.0/60 → **-45.0v**
 
-**Mercury** — -166.2v
+**Mercury** — -181.2v
 
-- `delighted` via conjunction Jupiter @ 60.0/60 → **30.0v**
+- `delighted` via conjunction Jupiter @ 60.0/60 → **15.0v**
 - `starved` via aspect Moon @ 31.2/60 → **-23.4v**
 - `starved` via conjunction Saturn @ 60.0/60 → **-45.0v**
 - `thirsty` via aspect Moon @ 31.2/60 → **-7.8v**
 - `shamed` via conjunction Saturn @ 60.0/60 → **-60.0v**
 - `shamed` via condition — conjunct Rahu/Ketu @ 60.0/60 → **-60.0v**
+
+**Jupiter** — -172.1v
+
+- `delighted` via aspect Moon @ 31.5/60 → **7.9v**
+- `starved` via conjunction Mercury @ 60.0/60 → **-45.0v**
+- `starved` via conjunction Saturn @ 60.0/60 → **-45.0v**
+- `shamed` via conjunction Saturn @ 60.0/60 → **-60.0v**
+- `shamed` via condition — conjunct Rahu/Ketu @ 60.0/60 → **-60.0v**
+- `healthy` via sign @ 60.0/60 → **30.0v**
 
 </details>
 
@@ -472,64 +472,64 @@ Chart settings: circle=aditya, sign ayanamsa=tropical, houses=campanus. Ephemeri
 
 | # | Planet | Virupas | Aditya | Hora | Trimsamsa being | Hora being | Avasthas |
 |---|----|--------:|----|------|---------|------|----|
-| 1 | Jupiter | 99.9 | Varuna | Sun | Chitrasvana (Rakshasa) | Varuna (Aditya) | starved -8.4, thirsty -2.8, delighted 51.2, proud 60.0 |
-| 2 | Mars | 72.1 | Vishnu | Sun | Vishvamitra (Rishi) | Vishnu (Aditya) | starved -6.7, thirsty -2.2, delighted 36.0, healthy 45.0 |
-| 3 | Venus | 65.9 | Tvashta | Sun | Brahmapeta (Rakshasa) | Tvashta (Aditya) | starved -45.0, delighted 50.9, proud 60.0 |
-| 4 | Moon | 33.4 | Tvashta | Moon | Shatajit (Yaksha) | Kambala (Naga) | delighted 33.4 |
-| 5 | Mercury | 15.0 | Tvashta | Sun | Dhritarashtra (Gandharva) | Tvashta (Aditya) | starved -45.0, delighted 60.0 |
-| 6 | Sun | -3.9 | Vivasvan | Moon | Asarana (Yaksha) | Shankhapala (Naga) | starved -6.1, agitated -4.1, delighted 6.4 |
-| 7 | Saturn | -81.3 | Dhata | Moon | Pulastya (Rishi) | Vasuki (Naga) | starved -113.8, agitated -21.2, delighted 53.6 |
+| 1 | Jupiter | 59.4 | Varuna | Sun | Chitrasvana (Rakshasa) | Varuna (Aditya) | starved -8.4, thirsty -2.8, delighted 25.6, proud 45.0 |
+| 2 | Mars | 39.1 | Vishnu | Sun | Vishvamitra (Rishi) | Vishnu (Aditya) | starved -6.7, thirsty -2.2, delighted 18.0, healthy 30.0 |
+| 3 | Venus | 25.4 | Tvashta | Sun | Brahmapeta (Rakshasa) | Tvashta (Aditya) | starved -45.0, delighted 25.4, proud 45.0 |
+| 4 | Moon | 16.7 | Tvashta | Moon | Shatajit (Yaksha) | Kambala (Naga) | delighted 16.7 |
+| 5 | Sun | -7.1 | Vivasvan | Moon | Asarana (Yaksha) | Shankhapala (Naga) | starved -6.1, agitated -4.1, delighted 3.2 |
+| 6 | Mercury | -15.0 | Tvashta | Sun | Dhritarashtra (Gandharva) | Tvashta (Aditya) | starved -45.0, delighted 30.0 |
+| 7 | Saturn | -108.2 | Dhata | Moon | Pulastya (Rishi) | Vasuki (Naga) | starved -113.8, agitated -21.2, delighted 26.8 |
 
 <details><summary>Factor breakdown</summary>
 
-**Jupiter** — 99.9v
+**Jupiter** — 59.4v
 
-- `delighted` via aspect Moon @ 14.6/60 → **7.3v**
-- `delighted` via aspect Mars @ 27.7/60 → **13.9v**
-- `delighted` via sign lord Moon @ 60.0/60 → **30.0v**
+- `delighted` via aspect Moon @ 14.6/60 → **3.7v**
+- `delighted` via aspect Mars @ 27.7/60 → **6.9v**
+- `delighted` via sign lord Moon @ 60.0/60 → **15.0v**
 - `starved` via aspect Mercury @ 3.8/60 → **-2.9v**
 - `starved` via aspect Venus @ 7.4/60 → **-5.6v**
 - `thirsty` via aspect Mercury @ 3.8/60 → **-1.0v**
 - `thirsty` via aspect Venus @ 7.4/60 → **-1.9v**
-- `proud` via dignity EX @ 60.0/60 → **60.0v**
+- `proud` via dignity EX @ 60.0/60 → **45.0v**
 
-**Mars** — 72.1v
+**Mars** — 39.1v
 
-- `delighted` via aspect Sun @ 24.7/60 → **12.3v**
-- `delighted` via aspect Jupiter @ 47.3/60 → **23.6v**
+- `delighted` via aspect Sun @ 24.7/60 → **6.2v**
+- `delighted` via aspect Jupiter @ 47.3/60 → **11.8v**
 - `starved` via aspect Mercury @ 8.9/60 → **-6.7v**
 - `thirsty` via aspect Mercury @ 8.9/60 → **-2.2v**
-- `healthy` via sign @ 60.0/60 → **45.0v**
+- `healthy` via sign @ 60.0/60 → **30.0v**
 
-**Venus** — 65.9v
+**Venus** — 25.4v
 
-- `delighted` via conjunction Mercury @ 60.0/60 → **30.0v**
-- `delighted` via aspect Saturn @ 41.8/60 → **20.9v**
+- `delighted` via conjunction Mercury @ 60.0/60 → **15.0v**
+- `delighted` via aspect Saturn @ 41.8/60 → **10.4v**
 - `starved` via conjunction Moon @ 60.0/60 → **-45.0v**
-- `proud` via dignity MT @ 60.0/60 → **60.0v**
+- `proud` via dignity MT @ 60.0/60 → **45.0v**
 
-**Moon** — 33.4v
+**Moon** — 16.7v
 
-- `delighted` via aspect Sun @ 6.8/60 → **3.4v**
-- `delighted` via conjunction Mercury @ 60.0/60 → **30.0v**
+- `delighted` via aspect Sun @ 6.8/60 → **1.7v**
+- `delighted` via conjunction Mercury @ 60.0/60 → **15.0v**
 
-**Mercury** — 15.0v
+**Sun** — -7.1v
 
-- `delighted` via conjunction Venus @ 60.0/60 → **30.0v**
-- `delighted` via sign lord Venus @ 60.0/60 → **30.0v**
-- `starved` via conjunction Moon @ 60.0/60 → **-45.0v**
-
-**Sun** — -3.9v
-
-- `delighted` via aspect Mars @ 4.8/60 → **2.4v**
-- `delighted` via aspect Jupiter @ 7.9/60 → **3.9v**
+- `delighted` via aspect Mars @ 4.8/60 → **1.2v**
+- `delighted` via aspect Jupiter @ 7.9/60 → **2.0v**
 - `starved` via aspect Saturn @ 8.2/60 → **-6.1v**
 - `agitated` via aspect Saturn @ 8.2/60 → **-4.1v**
 
-**Saturn** — -81.3v
+**Mercury** — -15.0v
 
-- `delighted` via aspect Mercury @ 51.8/60 → **25.9v**
-- `delighted` via aspect Venus @ 55.4/60 → **27.7v**
+- `delighted` via conjunction Venus @ 60.0/60 → **15.0v**
+- `delighted` via sign lord Venus @ 60.0/60 → **15.0v**
+- `starved` via conjunction Moon @ 60.0/60 → **-45.0v**
+
+**Saturn** — -108.2v
+
+- `delighted` via aspect Mercury @ 51.8/60 → **13.0v**
+- `delighted` via aspect Venus @ 55.4/60 → **13.9v**
 - `starved` via aspect Sun @ 40.9/60 → **-30.7v**
 - `starved` via aspect Moon @ 49.3/60 → **-37.0v**
 - `starved` via aspect Mars @ 1.5/60 → **-1.1v**
@@ -548,68 +548,68 @@ Chart settings: circle=aditya, sign ayanamsa=tropical, houses=campanus. Ephemeri
 
 | # | Planet | Virupas | Aditya | Hora | Trimsamsa being | Hora being | Avasthas |
 |---|----|--------:|----|------|---------|------|----|
-| 1 | Moon | 60.0 | Mitra | Sun | Atri (Rishi) | Mitra (Aditya) | delighted 60.0 |
-| 2 | Jupiter | 45.6 | Varuna | Sun | Vasishtha (Rishi) | Varuna (Aditya) | starved -45.0, agitated -30.0, proud 60.0, delighted 60.6 |
-| 3 | Mars | 35.9 | Indra | Moon | Shrota (Yaksha) | Elapatra (Naga) | starved -8.3, delighted 44.2 |
-| 4 | Sun | 12.9 | Varuna | Moon | Rathacitra (Yaksha) | Shukra (Naga) | starved -46.1, agitated -0.7, thirsty -0.4, delighted 60.0 |
-| 5 | Mercury | 0.0 | Mitra | Moon | Menaka (Apsara) | Takshaka (Naga) | starved -45.0, healthy 45.0 |
-| 6 | Saturn | -43.6 | Pusha | Sun | Gautama (Rishi) | Pusha (Aditya) | starved -89.1, agitated -59.4, delighted 44.9, proud 60.0 |
-| 7 | Venus | -85.5 | Varuna | Sun | Huhu (Gandharva) | Varuna (Aditya) | starved -94.6, agitated -33.1, thirsty -1.5, delighted 43.8 |
+| 1 | Saturn | -81.0 | Pusha | Sun | Gautama (Rishi) | Pusha (Aditya) | starved -89.1, agitated -59.4, delighted 22.5, proud 45.0 |
+| 2 | Moon | 30.0 | Mitra | Sun | Atri (Rishi) | Mitra (Aditya) | delighted 30.0 |
+| 3 | Mars | 13.8 | Indra | Moon | Shrota (Yaksha) | Elapatra (Naga) | starved -8.3, delighted 22.1 |
+| 4 | Jupiter | 0.3 | Varuna | Sun | Vasishtha (Rishi) | Varuna (Aditya) | starved -45.0, agitated -30.0, delighted 30.3, proud 45.0 |
+| 5 | Mercury | -15.0 | Mitra | Moon | Menaka (Apsara) | Takshaka (Naga) | starved -45.0, healthy 30.0 |
+| 6 | Sun | -17.1 | Varuna | Moon | Rathacitra (Yaksha) | Shukra (Naga) | starved -46.1, agitated -0.7, thirsty -0.4, delighted 30.0 |
+| 7 | Venus | -107.3 | Varuna | Sun | Huhu (Gandharva) | Varuna (Aditya) | starved -94.6, agitated -33.1, thirsty -1.5, delighted 21.9 |
 
 <details><summary>Factor breakdown</summary>
 
-**Moon** — 60.0v
+**Saturn** — -81.0v
 
-- `delighted` via conjunction Mercury @ 60.0/60 → **30.0v**
-- `delighted` via sign lord Mercury @ 60.0/60 → **30.0v**
-
-**Jupiter** — 45.6v
-
-- `delighted` via conjunction Sun @ 60.0/60 → **30.0v**
-- `delighted` via aspect Moon @ 1.3/60 → **0.6v**
-- `delighted` via sign lord Moon @ 60.0/60 → **30.0v**
-- `starved` via conjunction Venus @ 60.0/60 → **-45.0v**
-- `agitated` via conjunction Sun @ 60.0/60 → **-30.0v**
-- `proud` via dignity EX @ 60.0/60 → **60.0v**
-
-**Mars** — 35.9v
-
-- `delighted` via aspect Sun @ 4.8/60 → **2.4v**
-- `delighted` via aspect Moon @ 21.7/60 → **10.8v**
-- `delighted` via aspect Jupiter @ 2.0/60 → **1.0v**
-- `delighted` via sign lord Sun @ 60.0/60 → **30.0v**
-- `starved` via aspect Mercury @ 11.1/60 → **-8.3v**
-
-**Sun** — 12.9v
-
-- `delighted` via conjunction Jupiter @ 60.0/60 → **30.0v**
-- `delighted` via sign lord Moon @ 60.0/60 → **30.0v**
-- `starved` via conjunction Venus @ 60.0/60 → **-45.0v**
-- `starved` via aspect Saturn @ 1.4/60 → **-1.1v**
-- `agitated` via aspect Saturn @ 1.4/60 → **-0.7v**
-- `thirsty` via aspect Saturn @ 1.4/60 → **-0.4v**
-
-**Mercury** — 0.0v
-
-- `starved` via conjunction Moon @ 60.0/60 → **-45.0v**
-- `healthy` via sign @ 60.0/60 → **45.0v**
-
-**Saturn** — -43.6v
-
-- `delighted` via aspect Mercury @ 37.9/60 → **19.0v**
-- `delighted` via aspect Venus @ 51.9/60 → **25.9v**
+- `delighted` via aspect Mercury @ 37.9/60 → **9.5v**
+- `delighted` via aspect Venus @ 51.9/60 → **13.0v**
 - `starved` via aspect Sun @ 44.3/60 → **-33.2v**
 - `starved` via aspect Moon @ 30.7/60 → **-23.0v**
 - `starved` via aspect Mars @ 43.8/60 → **-32.8v**
 - `agitated` via aspect Sun @ 44.3/60 → **-22.1v**
 - `agitated` via aspect Moon @ 30.7/60 → **-15.4v**
 - `agitated` via aspect Mars @ 43.8/60 → **-21.9v**
-- `proud` via dignity MT @ 60.0/60 → **60.0v**
+- `proud` via dignity MT @ 60.0/60 → **45.0v**
 
-**Venus** — -85.5v
+**Moon** — 30.0v
 
-- `delighted` via conjunction Jupiter @ 60.0/60 → **30.0v**
-- `delighted` via aspect Saturn @ 27.5/60 → **13.8v**
+- `delighted` via conjunction Mercury @ 60.0/60 → **15.0v**
+- `delighted` via sign lord Mercury @ 60.0/60 → **15.0v**
+
+**Mars** — 13.8v
+
+- `delighted` via aspect Sun @ 4.8/60 → **1.2v**
+- `delighted` via aspect Moon @ 21.7/60 → **5.4v**
+- `delighted` via aspect Jupiter @ 2.0/60 → **0.5v**
+- `delighted` via sign lord Sun @ 60.0/60 → **15.0v**
+- `starved` via aspect Mercury @ 11.1/60 → **-8.3v**
+
+**Jupiter** — 0.3v
+
+- `delighted` via conjunction Sun @ 60.0/60 → **15.0v**
+- `delighted` via aspect Moon @ 1.3/60 → **0.3v**
+- `delighted` via sign lord Moon @ 60.0/60 → **15.0v**
+- `starved` via conjunction Venus @ 60.0/60 → **-45.0v**
+- `agitated` via conjunction Sun @ 60.0/60 → **-30.0v**
+- `proud` via dignity EX @ 60.0/60 → **45.0v**
+
+**Mercury** — -15.0v
+
+- `starved` via conjunction Moon @ 60.0/60 → **-45.0v**
+- `healthy` via sign @ 60.0/60 → **30.0v**
+
+**Sun** — -17.1v
+
+- `delighted` via conjunction Jupiter @ 60.0/60 → **15.0v**
+- `delighted` via sign lord Moon @ 60.0/60 → **15.0v**
+- `starved` via conjunction Venus @ 60.0/60 → **-45.0v**
+- `starved` via aspect Saturn @ 1.4/60 → **-1.1v**
+- `agitated` via aspect Saturn @ 1.4/60 → **-0.7v**
+- `thirsty` via aspect Saturn @ 1.4/60 → **-0.4v**
+
+**Venus** — -107.3v
+
+- `delighted` via conjunction Jupiter @ 60.0/60 → **15.0v**
+- `delighted` via aspect Saturn @ 27.5/60 → **6.9v**
 - `starved` via conjunction Sun @ 60.0/60 → **-45.0v**
 - `starved` via aspect Moon @ 6.1/60 → **-4.6v**
 - `starved` via sign lord Moon @ 60.0/60 → **-45.0v**
@@ -628,39 +628,39 @@ Chart settings: circle=aditya, sign ayanamsa=tropical, houses=campanus. Ephemeri
 
 | # | Planet | Virupas | Aditya | Hora | Trimsamsa being | Hora being | Avasthas |
 |---|----|--------:|----|------|---------|------|----|
-| 1 | Mars | 90.0 | Vishnu | Sun | Vishvamitra (Rishi) | Vishnu (Aditya) | starved -25.9, thirsty -8.6, healthy 45.0, delighted 79.6 |
-| 2 | Sun | 12.0 | Indra | Moon | Angiras (Rishi) | Elapatra (Naga) | starved -90.0, delighted 42.0, proud 60.0 |
-| 3 | Jupiter | -11.9 | Aryama | Moon | Rathauja (Yaksha) | Kacchanira (Naga) | starved -65.9, delighted 54.0 |
+| 1 | Mars | 35.2 | Vishnu | Sun | Vishvamitra (Rishi) | Vishnu (Aditya) | starved -25.9, thirsty -8.6, healthy 30.0, delighted 39.8 |
+| 2 | Sun | -24.0 | Indra | Moon | Angiras (Rishi) | Elapatra (Naga) | starved -90.0, delighted 21.0, proud 45.0 |
+| 3 | Jupiter | -38.9 | Aryama | Moon | Rathauja (Yaksha) | Kacchanira (Naga) | starved -65.9, delighted 27.0 |
 | 4 | Mercury | -67.9 | Varuna | Sun | Huhu (Gandharva) | Varuna (Aditya) | starved -62.2, thirsty -5.7 |
-| 5 | Moon | -80.9 | Vishnu | Moon | Vishvamitra (Rishi) | Ashvatara (Naga) | shamed -120.0, delighted 39.1 |
-| 6 | Saturn | -131.5 | Indra | Sun | Varya (Rakshasa) | Indra (Aditya) | starved -120.7, agitated -40.8, delighted 30.0 |
+| 5 | Saturn | -146.5 | Indra | Sun | Varya (Rakshasa) | Indra (Aditya) | starved -120.7, agitated -40.8, delighted 15.0 |
+| 6 | Moon | -100.4 | Vishnu | Moon | Vishvamitra (Rishi) | Ashvatara (Naga) | shamed -120.0, delighted 19.6 |
 | 7 | Venus | -175.9 | Indra | Sun | Angiras (Rishi) | Indra (Aditya) | starved -145.9, agitated -30.0 |
 
 <details><summary>Factor breakdown</summary>
 
-**Mars** — 90.0v
+**Mars** — 35.2v
 
-- `delighted` via aspect Sun @ 44.4/60 → **22.2v**
-- `delighted` via conjunction Moon @ 60.0/60 → **30.0v**
-- `delighted` via aspect Jupiter @ 54.8/60 → **27.4v**
+- `delighted` via aspect Sun @ 44.4/60 → **11.1v**
+- `delighted` via conjunction Moon @ 60.0/60 → **15.0v**
+- `delighted` via aspect Jupiter @ 54.8/60 → **13.7v**
 - `starved` via aspect Mercury @ 34.6/60 → **-25.9v**
 - `thirsty` via aspect Mercury @ 34.6/60 → **-8.6v**
-- `healthy` via sign @ 60.0/60 → **45.0v**
+- `healthy` via sign @ 60.0/60 → **30.0v**
 
-**Sun** — 12.0v
+**Sun** — -24.0v
 
-- `delighted` via aspect Moon @ 13.1/60 → **6.5v**
-- `delighted` via aspect Mars @ 15.6/60 → **7.8v**
-- `delighted` via aspect Jupiter @ 55.4/60 → **27.7v**
+- `delighted` via aspect Moon @ 13.1/60 → **3.3v**
+- `delighted` via aspect Mars @ 15.6/60 → **3.9v**
+- `delighted` via aspect Jupiter @ 55.4/60 → **13.8v**
 - `starved` via conjunction Venus @ 60.0/60 → **-45.0v**
 - `starved` via conjunction Saturn @ 60.0/60 → **-45.0v**
-- `proud` via dignity MT @ 60.0/60 → **60.0v**
+- `proud` via dignity MT @ 60.0/60 → **45.0v**
 
-**Jupiter** — -11.9v
+**Jupiter** — -38.9v
 
-- `delighted` via aspect Sun @ 19.6/60 → **9.8v**
-- `delighted` via aspect Moon @ 49.2/60 → **24.6v**
-- `delighted` via aspect Mars @ 39.3/60 → **19.6v**
+- `delighted` via aspect Sun @ 19.6/60 → **4.9v**
+- `delighted` via aspect Moon @ 49.2/60 → **12.3v**
+- `delighted` via aspect Mars @ 39.3/60 → **9.8v**
 - `starved` via aspect Mercury @ 9.8/60 → **-7.3v**
 - `starved` via aspect Venus @ 18.1/60 → **-13.6v**
 - `starved` via sign lord Venus @ 60.0/60 → **-45.0v**
@@ -671,22 +671,22 @@ Chart settings: circle=aditya, sign ayanamsa=tropical, houses=campanus. Ephemeri
 - `starved` via sign lord Moon @ 60.0/60 → **-45.0v**
 - `thirsty` via aspect Moon @ 22.9/60 → **-5.7v**
 
-**Moon** — -80.9v
+**Saturn** — -146.5v
 
-- `delighted` via aspect Sun @ 41.2/60 → **20.6v**
-- `delighted` via aspect Mercury @ 37.1/60 → **18.5v**
-- `shamed` via conjunction Mars @ 60.0/60 → **-60.0v**
-- `shamed` via condition — conjunct Rahu/Ketu @ 60.0/60 → **-60.0v**
-
-**Saturn** — -131.5v
-
-- `delighted` via conjunction Venus @ 60.0/60 → **30.0v**
+- `delighted` via conjunction Venus @ 60.0/60 → **15.0v**
 - `starved` via conjunction Sun @ 60.0/60 → **-45.0v**
 - `starved` via aspect Moon @ 19.2/60 → **-14.4v**
 - `starved` via aspect Mars @ 21.7/60 → **-16.3v**
 - `starved` via sign lord Sun @ 60.0/60 → **-45.0v**
 - `agitated` via conjunction Sun @ 60.0/60 → **-30.0v**
 - `agitated` via aspect Mars @ 21.7/60 → **-10.8v**
+
+**Moon** — -100.4v
+
+- `delighted` via aspect Sun @ 41.2/60 → **10.3v**
+- `delighted` via aspect Mercury @ 37.1/60 → **9.3v**
+- `shamed` via conjunction Mars @ 60.0/60 → **-60.0v**
+- `shamed` via condition — conjunct Rahu/Ketu @ 60.0/60 → **-60.0v**
 
 **Venus** — -175.9v
 
@@ -707,65 +707,65 @@ Chart settings: circle=aditya, sign ayanamsa=tropical, houses=campanus. Ephemeri
 
 | # | Planet | Virupas | Aditya | Hora | Trimsamsa being | Hora being | Avasthas |
 |---|----|--------:|----|------|---------|------|----|
-| 1 | Sun | 102.7 | Vishnu | Moon | Vishvamitra (Rishi) | Ashvatara (Naga) | starved -1.5, thirsty -0.5, delighted 104.7 |
-| 2 | Mars | 87.5 | Vishnu | Sun | Vishvamitra (Rishi) | Vishnu (Aditya) | agitated -30.0, healthy 45.0, delighted 72.5 |
-| 3 | Venus | 43.5 | Tvashta | Sun | Brahmapeta (Rakshasa) | Tvashta (Aditya) | starved -41.1, delighted 24.6, proud 60.0 |
-| 4 | Saturn | 32.4 | Bhaga | Moon | Purvacitti (Apsara) | Karkotaka (Naga) | starved -23.2, agitated -9.2, delighted 19.8, healthy 45.0 |
-| 5 | Moon | 23.9 | Parjanya | Sun | Vishvavasu (Gandharva) | Parjanya (Aditya) | delighted 23.9 |
-| 6 | Jupiter | 6.2 | Dhata | Moon | Kritasthali (Apsara) | Vasuki (Naga) | starved -45.6, delighted 51.9 |
-| 7 | Mercury | -13.3 | Amshu | Sun | Vidyucchatru (Rakshasa) | Amshu (Aditya) | starved -19.9, delighted 6.6 |
+| 1 | Venus | 16.2 | Tvashta | Sun | Brahmapeta (Rakshasa) | Tvashta (Aditya) | starved -41.1, delighted 12.3, proud 45.0 |
+| 2 | Sun | 50.3 | Vishnu | Moon | Vishvamitra (Rishi) | Ashvatara (Naga) | starved -1.5, thirsty -0.5, delighted 52.3 |
+| 3 | Saturn | 7.5 | Bhaga | Moon | Purvacitti (Apsara) | Karkotaka (Naga) | starved -23.2, agitated -9.2, delighted 9.9, healthy 30.0 |
+| 4 | Mars | 36.3 | Vishnu | Sun | Vishvamitra (Rishi) | Vishnu (Aditya) | agitated -30.0, healthy 30.0, delighted 36.3 |
+| 5 | Jupiter | -19.7 | Dhata | Moon | Kritasthali (Apsara) | Vasuki (Naga) | starved -45.6, delighted 25.9 |
+| 6 | Moon | 12.0 | Parjanya | Sun | Vishvavasu (Gandharva) | Parjanya (Aditya) | delighted 12.0 |
+| 7 | Mercury | -16.6 | Amshu | Sun | Vidyucchatru (Rakshasa) | Amshu (Aditya) | starved -19.9, delighted 3.3 |
 
 <details><summary>Factor breakdown</summary>
 
-**Sun** — 102.7v
+**Venus** — 16.2v
 
-- `delighted` via aspect Moon @ 37.8/60 → **18.9v**
-- `delighted` via conjunction Mars @ 60.0/60 → **30.0v**
-- `delighted` via aspect Jupiter @ 51.5/60 → **25.8v**
-- `delighted` via sign lord Mars @ 60.0/60 → **30.0v**
+- `delighted` via aspect Saturn @ 49.1/60 → **12.3v**
+- `starved` via aspect Moon @ 54.8/60 → **-41.1v**
+- `proud` via dignity MT @ 60.0/60 → **45.0v**
+
+**Sun** — 50.3v
+
+- `delighted` via aspect Moon @ 37.8/60 → **9.5v**
+- `delighted` via conjunction Mars @ 60.0/60 → **15.0v**
+- `delighted` via aspect Jupiter @ 51.5/60 → **12.9v**
+- `delighted` via sign lord Mars @ 60.0/60 → **15.0v**
 - `starved` via aspect Venus @ 2.0/60 → **-1.5v**
 - `thirsty` via aspect Venus @ 2.0/60 → **-0.5v**
 
-**Mars** — 87.5v
+**Saturn** — 7.5v
 
-- `delighted` via conjunction Sun @ 60.0/60 → **30.0v**
-- `delighted` via aspect Moon @ 35.6/60 → **17.8v**
-- `delighted` via aspect Jupiter @ 49.4/60 → **24.7v**
-- `agitated` via conjunction Sun @ 60.0/60 → **-30.0v**
-- `healthy` via sign @ 60.0/60 → **45.0v**
-
-**Venus** — 43.5v
-
-- `delighted` via aspect Saturn @ 49.1/60 → **24.6v**
-- `starved` via aspect Moon @ 54.8/60 → **-41.1v**
-- `proud` via dignity MT @ 60.0/60 → **60.0v**
-
-**Saturn** — 32.4v
-
-- `delighted` via aspect Venus @ 39.6/60 → **19.8v**
+- `delighted` via aspect Venus @ 39.6/60 → **9.9v**
 - `starved` via aspect Sun @ 10.3/60 → **-7.7v**
 - `starved` via aspect Moon @ 12.5/60 → **-9.4v**
 - `starved` via aspect Mars @ 8.1/60 → **-6.1v**
 - `agitated` via aspect Sun @ 10.3/60 → **-5.1v**
 - `agitated` via aspect Mars @ 8.1/60 → **-4.1v**
-- `healthy` via sign @ 60.0/60 → **45.0v**
+- `healthy` via sign @ 60.0/60 → **30.0v**
 
-**Moon** — 23.9v
+**Mars** — 36.3v
 
-- `delighted` via aspect Sun @ 14.4/60 → **7.2v**
-- `delighted` via aspect Mercury @ 33.4/60 → **16.7v**
+- `delighted` via conjunction Sun @ 60.0/60 → **15.0v**
+- `delighted` via aspect Moon @ 35.6/60 → **8.9v**
+- `delighted` via aspect Jupiter @ 49.4/60 → **12.3v**
+- `agitated` via conjunction Sun @ 60.0/60 → **-30.0v**
+- `healthy` via sign @ 60.0/60 → **30.0v**
 
-**Jupiter** — 6.2v
+**Jupiter** — -19.7v
 
-- `delighted` via aspect Sun @ 26.2/60 → **13.1v**
-- `delighted` via aspect Mars @ 17.5/60 → **8.8v**
-- `delighted` via sign lord Mars @ 60.0/60 → **30.0v**
+- `delighted` via aspect Sun @ 26.2/60 → **6.5v**
+- `delighted` via aspect Mars @ 17.5/60 → **4.4v**
+- `delighted` via sign lord Mars @ 60.0/60 → **15.0v**
 - `starved` via aspect Mercury @ 9.4/60 → **-7.0v**
 - `starved` via aspect Venus @ 51.5/60 → **-38.6v**
 
-**Mercury** — -13.3v
+**Moon** — 12.0v
 
-- `delighted` via aspect Venus @ 13.2/60 → **6.6v**
+- `delighted` via aspect Sun @ 14.4/60 → **3.6v**
+- `delighted` via aspect Mercury @ 33.4/60 → **8.4v**
+
+**Mercury** — -16.6v
+
+- `delighted` via aspect Venus @ 13.2/60 → **3.3v**
 - `starved` via aspect Moon @ 26.6/60 → **-19.9v**
 
 </details>
@@ -779,65 +779,65 @@ Chart settings: circle=aditya, sign ayanamsa=tropical, houses=campanus. Ephemeri
 
 | # | Planet | Virupas | Aditya | Hora | Trimsamsa being | Hora being | Avasthas |
 |---|----|--------:|----|------|---------|------|----|
-| 1 | Moon | 77.9 | Indra | Moon | Shrota (Yaksha) | Elapatra (Naga) | delighted 77.9 |
-| 2 | Jupiter | 0.8 | Dhata | Sun | Heti (Rakshasa) | Dhata (Aditya) | starved -56.5, delighted 57.3 |
-| 3 | Mercury | -6.8 | Bhaga | Sun | Ayu (Rishi) | Bhaga (Aditya) | starved -4.1, agitated -2.7 |
-| 4 | Venus | -15.9 | Amshu | Moon | Tarkshya (Yaksha) | Mahashankha (Naga) | starved -21.0, agitated -14.0, delighted 19.1 |
-| 5 | Mars | -22.2 | Mitra | Sun | Atri (Rishi) | Mitra (Aditya) | starved -45.9, delighted 23.7 |
-| 6 | Saturn | -28.0 | Aryama | Moon | Rathauja (Yaksha) | Kacchanira (Naga) | starved -48.8, agitated -32.5, delighted 53.2 |
-| 7 | Sun | -88.4 | Pusha | Sun | Vata (Rakshasa) | Pusha (Aditya) | starved -94.6, agitated -29.3, delighted 35.5 |
+| 1 | Moon | 39.0 | Indra | Moon | Shrota (Yaksha) | Elapatra (Naga) | delighted 39.0 |
+| 2 | Jupiter | -27.9 | Dhata | Sun | Heti (Rakshasa) | Dhata (Aditya) | starved -56.5, delighted 28.7 |
+| 3 | Saturn | -54.6 | Aryama | Moon | Rathauja (Yaksha) | Kacchanira (Naga) | starved -48.8, agitated -32.5, delighted 26.6 |
+| 4 | Mercury | -6.8 | Bhaga | Sun | Ayu (Rishi) | Bhaga (Aditya) | starved -4.1, agitated -2.7 |
+| 5 | Venus | -25.5 | Amshu | Moon | Tarkshya (Yaksha) | Mahashankha (Naga) | starved -21.0, agitated -14.0, delighted 9.6 |
+| 6 | Mars | -34.0 | Mitra | Sun | Atri (Rishi) | Mitra (Aditya) | starved -45.9, delighted 11.9 |
+| 7 | Sun | -106.1 | Pusha | Sun | Vata (Rakshasa) | Pusha (Aditya) | starved -94.6, agitated -29.3, delighted 17.7 |
 
 <details><summary>Factor breakdown</summary>
 
-**Moon** — 77.9v
+**Moon** — 39.0v
 
-- `delighted` via aspect Sun @ 53.5/60 → **26.8v**
-- `delighted` via aspect Mercury @ 42.3/60 → **21.1v**
-- `delighted` via sign lord Sun @ 60.0/60 → **30.0v**
+- `delighted` via aspect Sun @ 53.5/60 → **13.4v**
+- `delighted` via aspect Mercury @ 42.3/60 → **10.6v**
+- `delighted` via sign lord Sun @ 60.0/60 → **15.0v**
 
-**Jupiter** — 0.8v
+**Jupiter** — -27.9v
 
-- `delighted` via aspect Sun @ 15.9/60 → **7.9v**
-- `delighted` via aspect Moon @ 36.0/60 → **18.0v**
-- `delighted` via aspect Mars @ 2.7/60 → **1.4v**
-- `delighted` via sign lord Mars @ 60.0/60 → **30.0v**
+- `delighted` via aspect Sun @ 15.9/60 → **4.0v**
+- `delighted` via aspect Moon @ 36.0/60 → **9.0v**
+- `delighted` via aspect Mars @ 2.7/60 → **0.7v**
+- `delighted` via sign lord Mars @ 60.0/60 → **15.0v**
 - `starved` via aspect Mercury @ 38.4/60 → **-28.8v**
 - `starved` via aspect Venus @ 37.0/60 → **-27.8v**
+
+**Saturn** — -54.6v
+
+- `delighted` via aspect Mercury @ 33.0/60 → **8.3v**
+- `delighted` via aspect Venus @ 13.4/60 → **3.4v**
+- `delighted` via sign lord Venus @ 60.0/60 → **15.0v**
+- `starved` via aspect Sun @ 44.3/60 → **-33.2v**
+- `starved` via aspect Moon @ 20.7/60 → **-15.6v**
+- `agitated` via aspect Sun @ 44.3/60 → **-22.1v**
+- `agitated` via aspect Moon @ 20.7/60 → **-10.4v**
 
 **Mercury** — -6.8v
 
 - `starved` via aspect Moon @ 5.4/60 → **-4.1v**
 - `agitated` via aspect Moon @ 5.4/60 → **-2.7v**
 
-**Venus** — -15.9v
+**Venus** — -25.5v
 
-- `delighted` via aspect Saturn @ 38.3/60 → **19.1v**
+- `delighted` via aspect Saturn @ 38.3/60 → **9.6v**
 - `starved` via aspect Moon @ 28.0/60 → **-21.0v**
 - `agitated` via aspect Moon @ 28.0/60 → **-14.0v**
 
-**Mars** — -22.2v
+**Mars** — -34.0v
 
-- `delighted` via aspect Sun @ 23.6/60 → **11.8v**
-- `delighted` via aspect Moon @ 3.3/60 → **1.6v**
-- `delighted` via aspect Jupiter @ 20.5/60 → **10.2v**
+- `delighted` via aspect Sun @ 23.6/60 → **5.9v**
+- `delighted` via aspect Moon @ 3.3/60 → **0.8v**
+- `delighted` via aspect Jupiter @ 20.5/60 → **5.1v**
 - `starved` via aspect Mercury @ 1.2/60 → **-0.9v**
 - `starved` via sign lord Mercury @ 60.0/60 → **-45.0v**
 
-**Saturn** — -28.0v
+**Sun** — -106.1v
 
-- `delighted` via aspect Mercury @ 33.0/60 → **16.5v**
-- `delighted` via aspect Venus @ 13.4/60 → **6.7v**
-- `delighted` via sign lord Venus @ 60.0/60 → **30.0v**
-- `starved` via aspect Sun @ 44.3/60 → **-33.2v**
-- `starved` via aspect Moon @ 20.7/60 → **-15.6v**
-- `agitated` via aspect Sun @ 44.3/60 → **-22.1v**
-- `agitated` via aspect Moon @ 20.7/60 → **-10.4v**
-
-**Sun** — -88.4v
-
-- `delighted` via aspect Moon @ 34.2/60 → **17.1v**
-- `delighted` via aspect Mars @ 36.4/60 → **18.2v**
-- `delighted` via aspect Jupiter @ 0.4/60 → **0.2v**
+- `delighted` via aspect Moon @ 34.2/60 → **8.5v**
+- `delighted` via aspect Mars @ 36.4/60 → **9.1v**
+- `delighted` via aspect Jupiter @ 0.4/60 → **0.1v**
 - `starved` via aspect Venus @ 7.6/60 → **-5.7v**
 - `starved` via aspect Saturn @ 58.5/60 → **-43.9v**
 - `starved` via sign lord Saturn @ 60.0/60 → **-45.0v**
@@ -854,84 +854,84 @@ Chart settings: circle=aditya, sign ayanamsa=tropical, houses=campanus. Ephemeri
 
 | # | Planet | Virupas | Aditya | Hora | Trimsamsa being | Hora being | Avasthas |
 |---|----|--------:|----|------|---------|------|----|
-| 1 | Jupiter | 105.7 | Varuna | Sun | Vasishtha (Rishi) | Varuna (Aditya) | starved -14.3, thirsty -4.8, proud 60.0, delighted 64.8 |
-| 2 | Moon | 59.6 | Indra | Sun | Angiras (Rishi) | Indra (Aditya) | delighted 59.6 |
-| 3 | Sun | -86.6 | Pusha | Moon | Ghritachi (Apsara) | Dhananjaya (Naga) | starved -128.0, agitated -25.3, delighted 66.7 |
-| 4 | Mars | -108.6 | Amshu | Moon | Kashyapa (Rishi) | Mahashankha (Naga) | shamed -105.0, starved -49.7, delighted 46.1 |
-| 5 | Mercury | -128.9 | Pusha | Moon | Ghritachi (Apsara) | Dhananjaya (Naga) | shamed -120.0, starved -38.9, agitated -30.0, delighted 60.0 |
-| 6 | Venus | -149.7 | Pusha | Moon | Sushena (Yaksha) | Dhananjaya (Naga) | shamed -120.0, starved -85.8, agitated -30.0, delighted 86.0 |
-| 7 | Saturn | -176.8 | Amshu | Sun | Vidyucchatru (Rakshasa) | Amshu (Aditya) | shamed -105.0, starved -76.2, agitated -4.7, delighted 9.2 |
+| 1 | Jupiter | 58.3 | Varuna | Sun | Vasishtha (Rishi) | Varuna (Aditya) | starved -14.3, thirsty -4.8, delighted 32.4, proud 45.0 |
+| 2 | Moon | 29.8 | Indra | Sun | Angiras (Rishi) | Indra (Aditya) | delighted 29.8 |
+| 3 | Mars | -86.6 | Amshu | Moon | Kashyapa (Rishi) | Mahashankha (Naga) | shamed -60.0, starved -49.7, delighted 23.0 |
+| 4 | Sun | -119.9 | Pusha | Moon | Ghritachi (Apsara) | Dhananjaya (Naga) | starved -128.0, agitated -25.3, delighted 33.4 |
+| 5 | Saturn | -136.3 | Amshu | Sun | Vidyucchatru (Rakshasa) | Amshu (Aditya) | starved -76.2, shamed -60.0, agitated -4.7, delighted 4.6 |
+| 6 | Mercury | -158.9 | Pusha | Moon | Ghritachi (Apsara) | Dhananjaya (Naga) | shamed -120.0, starved -38.9, agitated -30.0, delighted 30.0 |
+| 7 | Venus | -192.7 | Pusha | Moon | Sushena (Yaksha) | Dhananjaya (Naga) | shamed -120.0, starved -85.8, agitated -30.0, delighted 43.0 |
 
 <details><summary>Factor breakdown</summary>
 
-**Jupiter** — 105.7v
+**Jupiter** — 58.3v
 
-- `delighted` via aspect Sun @ 10.0/60 → **5.0v**
-- `delighted` via aspect Mars @ 59.6/60 → **29.8v**
-- `delighted` via sign lord Moon @ 60.0/60 → **30.0v**
+- `delighted` via aspect Sun @ 10.0/60 → **2.5v**
+- `delighted` via aspect Mars @ 59.6/60 → **14.9v**
+- `delighted` via sign lord Moon @ 60.0/60 → **15.0v**
 - `starved` via aspect Mercury @ 12.0/60 → **-9.0v**
 - `starved` via aspect Venus @ 7.1/60 → **-5.3v**
 - `thirsty` via aspect Mercury @ 12.0/60 → **-3.0v**
 - `thirsty` via aspect Venus @ 7.1/60 → **-1.8v**
-- `proud` via dignity EX @ 60.0/60 → **60.0v**
+- `proud` via dignity EX @ 60.0/60 → **45.0v**
 
-**Moon** — 59.6v
+**Moon** — 29.8v
 
-- `delighted` via aspect Sun @ 31.6/60 → **15.8v**
-- `delighted` via aspect Mercury @ 27.5/60 → **13.8v**
-- `delighted` via sign lord Sun @ 60.0/60 → **30.0v**
+- `delighted` via aspect Sun @ 31.6/60 → **7.9v**
+- `delighted` via aspect Mercury @ 27.5/60 → **6.9v**
+- `delighted` via sign lord Sun @ 60.0/60 → **15.0v**
 
-**Sun** — -86.6v
+**Mars** — -86.6v
 
-- `delighted` via aspect Moon @ 52.9/60 → **26.5v**
-- `delighted` via aspect Mars @ 30.6/60 → **15.3v**
-- `delighted` via aspect Jupiter @ 50.0/60 → **25.0v**
+- `delighted` via aspect Sun @ 5.2/60 → **1.3v**
+- `delighted` via aspect Moon @ 26.2/60 → **6.5v**
+- `delighted` via aspect Jupiter @ 0.8/60 → **0.2v**
+- `delighted` via sign lord Jupiter @ 60.0/60 → **15.0v**
+- `starved` via aspect Mercury @ 6.2/60 → **-4.7v**
+- `starved` via conjunction Saturn @ 60.0/60 → **-45.0v**
+- `shamed` via conjunction Saturn @ 60.0/60 → **-60.0v**
+- `shamed` via condition — conjunct 5th cusp @ 0.0/60 → **-0.0v**
+
+**Sun** — -119.9v
+
+- `delighted` via aspect Moon @ 52.9/60 → **13.2v**
+- `delighted` via aspect Mars @ 30.6/60 → **7.6v**
+- `delighted` via aspect Jupiter @ 50.0/60 → **12.5v**
 - `starved` via conjunction Venus @ 60.0/60 → **-45.0v**
 - `starved` via aspect Saturn @ 50.6/60 → **-38.0v**
 - `starved` via sign lord Saturn @ 60.0/60 → **-45.0v**
 - `agitated` via aspect Saturn @ 50.6/60 → **-25.3v**
 
-**Mars** — -108.6v
+**Saturn** — -136.3v
 
-- `delighted` via aspect Sun @ 5.2/60 → **2.6v**
-- `delighted` via aspect Moon @ 26.2/60 → **13.1v**
-- `delighted` via aspect Jupiter @ 0.8/60 → **0.4v**
-- `delighted` via sign lord Jupiter @ 60.0/60 → **30.0v**
-- `starved` via aspect Mercury @ 6.2/60 → **-4.7v**
-- `starved` via conjunction Saturn @ 60.0/60 → **-45.0v**
-- `shamed` via conjunction Saturn @ 60.0/60 → **-60.0v**
-- `shamed` via condition — conjunct 5th cusp @ 45.0/60 → **-45.0v**
-
-**Mercury** — -128.9v
-
-- `delighted` via conjunction Sun @ 60.0/60 → **30.0v**
-- `delighted` via conjunction Venus @ 60.0/60 → **30.0v**
-- `starved` via aspect Moon @ 51.9/60 → **-38.9v**
-- `agitated` via conjunction Sun @ 60.0/60 → **-30.0v**
-- `shamed` via conjunction Sun @ 60.0/60 → **-60.0v**
-- `shamed` via condition — conjunct Rahu/Ketu @ 60.0/60 → **-60.0v**
-
-**Venus** — -149.7v
-
-- `delighted` via conjunction Mercury @ 60.0/60 → **30.0v**
-- `delighted` via aspect Saturn @ 52.1/60 → **26.0v**
-- `delighted` via sign lord Saturn @ 60.0/60 → **30.0v**
-- `starved` via conjunction Sun @ 60.0/60 → **-45.0v**
-- `starved` via aspect Moon @ 54.4/60 → **-40.8v**
-- `agitated` via conjunction Sun @ 60.0/60 → **-30.0v**
-- `shamed` via conjunction Sun @ 60.0/60 → **-60.0v**
-- `shamed` via condition — conjunct Rahu/Ketu @ 60.0/60 → **-60.0v**
-
-**Saturn** — -176.8v
-
-- `delighted` via aspect Mercury @ 10.4/60 → **5.2v**
-- `delighted` via aspect Venus @ 7.9/60 → **4.0v**
+- `delighted` via aspect Mercury @ 10.4/60 → **2.6v**
+- `delighted` via aspect Venus @ 7.9/60 → **2.0v**
 - `starved` via aspect Sun @ 9.4/60 → **-7.0v**
 - `starved` via aspect Moon @ 32.3/60 → **-24.2v**
 - `starved` via conjunction Mars @ 60.0/60 → **-45.0v**
 - `agitated` via aspect Sun @ 9.4/60 → **-4.7v**
 - `shamed` via conjunction Mars @ 60.0/60 → **-60.0v**
-- `shamed` via condition — conjunct 5th cusp @ 45.0/60 → **-45.0v**
+- `shamed` via condition — conjunct 5th cusp @ 0.0/60 → **-0.0v**
+
+**Mercury** — -158.9v
+
+- `delighted` via conjunction Sun @ 60.0/60 → **15.0v**
+- `delighted` via conjunction Venus @ 60.0/60 → **15.0v**
+- `starved` via aspect Moon @ 51.9/60 → **-38.9v**
+- `agitated` via conjunction Sun @ 60.0/60 → **-30.0v**
+- `shamed` via conjunction Sun @ 60.0/60 → **-60.0v**
+- `shamed` via condition — conjunct Rahu/Ketu @ 60.0/60 → **-60.0v**
+
+**Venus** — -192.7v
+
+- `delighted` via conjunction Mercury @ 60.0/60 → **15.0v**
+- `delighted` via aspect Saturn @ 52.1/60 → **13.0v**
+- `delighted` via sign lord Saturn @ 60.0/60 → **15.0v**
+- `starved` via conjunction Sun @ 60.0/60 → **-45.0v**
+- `starved` via aspect Moon @ 54.4/60 → **-40.8v**
+- `agitated` via conjunction Sun @ 60.0/60 → **-30.0v**
+- `shamed` via conjunction Sun @ 60.0/60 → **-60.0v**
+- `shamed` via condition — conjunct Rahu/Ketu @ 60.0/60 → **-60.0v**
 
 </details>
 
@@ -944,34 +944,34 @@ Chart settings: circle=aditya, sign ayanamsa=tropical, houses=campanus. Ephemeri
 
 | # | Planet | Virupas | Aditya | Hora | Trimsamsa being | Hora being | Avasthas |
 |---|----|--------:|----|------|---------|------|----|
-| 1 | Moon | 75.0 | Vivasvan | Moon | Bhrigu (Rishi) | Shankhapala (Naga) | delighted 75.0 |
-| 2 | Venus | 35.1 | Bhaga | Sun | Sphurja (Rakshasa) | Bhaga (Aditya) | starved -14.1, agitated -9.4, delighted 58.6 |
-| 3 | Saturn | -29.3 | Varuna | Sun | Huhu (Gandharva) | Varuna (Aditya) | starved -59.5, agitated -9.7, thirsty -4.8, delighted 44.7 |
-| 4 | Sun | -67.2 | Parjanya | Moon | Senajit (Yaksha) | Airavata (Naga) | shamed -120.0, starved -34.6, agitated -18.9, thirsty -11.5, delighted 117.8 |
-| 5 | Mars | -86.7 | Parjanya | Moon | Vishvaci (Apsara) | Airavata (Naga) | shamed -120.0, starved -45.0, agitated -30.0, delighted 108.3 |
-| 6 | Jupiter | -144.5 | Parjanya | Sun | Vishvavasu (Gandharva) | Parjanya (Aditya) | shamed -180.0, starved -60.3, agitated -30.0, thirsty -5.1, healthy 45.0, delighted 85.9 |
-| 7 | Mercury | -220.1 | Parjanya | Sun | Vishvavasu (Gandharva) | Parjanya (Aditya) | shamed -180.0, agitated -56.4, starved -39.6, thirsty -13.2, delighted 69.1 |
+| 1 | Moon | 37.5 | Vivasvan | Moon | Bhrigu (Rishi) | Shankhapala (Naga) | delighted 37.5 |
+| 2 | Venus | 5.8 | Bhaga | Sun | Sphurja (Rakshasa) | Bhaga (Aditya) | starved -14.1, agitated -9.4, delighted 29.3 |
+| 3 | Saturn | -51.6 | Varuna | Sun | Huhu (Gandharva) | Varuna (Aditya) | starved -59.5, agitated -9.7, thirsty -4.8, delighted 22.4 |
+| 4 | Sun | -126.1 | Parjanya | Moon | Senajit (Yaksha) | Airavata (Naga) | shamed -120.0, starved -34.6, agitated -18.9, thirsty -11.5, delighted 58.9 |
+| 5 | Mars | -140.9 | Parjanya | Moon | Vishvaci (Apsara) | Airavata (Naga) | shamed -120.0, starved -45.0, agitated -30.0, delighted 54.1 |
+| 6 | Mercury | -254.6 | Parjanya | Sun | Vishvavasu (Gandharva) | Parjanya (Aditya) | shamed -180.0, agitated -56.4, starved -39.6, thirsty -13.2, delighted 34.6 |
+| 7 | Jupiter | -202.4 | Parjanya | Sun | Vishvavasu (Gandharva) | Parjanya (Aditya) | shamed -180.0, starved -60.3, agitated -30.0, thirsty -5.1, healthy 30.0, delighted 42.9 |
 
 <details><summary>Factor breakdown</summary>
 
-**Moon** — 75.0v
+**Moon** — 37.5v
 
-- `delighted` via aspect Sun @ 58.9/60 → **29.5v**
-- `delighted` via aspect Mercury @ 31.2/60 → **15.6v**
-- `delighted` via sign lord Mercury @ 60.0/60 → **30.0v**
+- `delighted` via aspect Sun @ 58.9/60 → **14.7v**
+- `delighted` via aspect Mercury @ 31.2/60 → **7.8v**
+- `delighted` via sign lord Mercury @ 60.0/60 → **15.0v**
 
-**Venus** — 35.1v
+**Venus** — 5.8v
 
-- `delighted` via aspect Mercury @ 1.6/60 → **0.8v**
-- `delighted` via aspect Saturn @ 55.6/60 → **27.8v**
-- `delighted` via sign lord Saturn @ 60.0/60 → **30.0v**
+- `delighted` via aspect Mercury @ 1.6/60 → **0.4v**
+- `delighted` via aspect Saturn @ 55.6/60 → **13.9v**
+- `delighted` via sign lord Saturn @ 60.0/60 → **15.0v**
 - `starved` via aspect Moon @ 18.8/60 → **-14.1v**
 - `agitated` via aspect Moon @ 18.8/60 → **-9.4v**
 
-**Saturn** — -29.3v
+**Saturn** — -51.6v
 
-- `delighted` via aspect Mercury @ 30.5/60 → **15.3v**
-- `delighted` via aspect Venus @ 58.9/60 → **29.5v**
+- `delighted` via aspect Mercury @ 30.5/60 → **7.6v**
+- `delighted` via aspect Venus @ 58.9/60 → **14.7v**
 - `starved` via aspect Sun @ 14.4/60 → **-10.8v**
 - `starved` via aspect Mars @ 4.9/60 → **-3.7v**
 - `starved` via sign lord Moon @ 60.0/60 → **-45.0v**
@@ -980,12 +980,12 @@ Chart settings: circle=aditya, sign ayanamsa=tropical, houses=campanus. Ephemeri
 - `thirsty` via aspect Sun @ 14.4/60 → **-3.6v**
 - `thirsty` via aspect Mars @ 4.9/60 → **-1.2v**
 
-**Sun** — -67.2v
+**Sun** — -126.1v
 
-- `delighted` via aspect Moon @ 55.6/60 → **27.8v**
-- `delighted` via conjunction Mars @ 60.0/60 → **30.0v**
-- `delighted` via conjunction Jupiter @ 60.0/60 → **30.0v**
-- `delighted` via sign lord Jupiter @ 60.0/60 → **30.0v**
+- `delighted` via aspect Moon @ 55.6/60 → **13.9v**
+- `delighted` via conjunction Mars @ 60.0/60 → **15.0v**
+- `delighted` via conjunction Jupiter @ 60.0/60 → **15.0v**
+- `delighted` via sign lord Jupiter @ 60.0/60 → **15.0v**
 - `starved` via aspect Venus @ 8.3/60 → **-6.2v**
 - `starved` via aspect Saturn @ 37.8/60 → **-28.3v**
 - `agitated` via aspect Saturn @ 37.8/60 → **-18.9v**
@@ -994,36 +994,22 @@ Chart settings: circle=aditya, sign ayanamsa=tropical, houses=campanus. Ephemeri
 - `shamed` via conjunction Mars @ 60.0/60 → **-60.0v**
 - `shamed` via condition — conjunct Rahu/Ketu @ 60.0/60 → **-60.0v**
 
-**Mars** — -86.7v
+**Mars** — -140.9v
 
-- `delighted` via conjunction Sun @ 60.0/60 → **30.0v**
-- `delighted` via aspect Moon @ 36.5/60 → **18.3v**
-- `delighted` via conjunction Jupiter @ 60.0/60 → **30.0v**
-- `delighted` via sign lord Jupiter @ 60.0/60 → **30.0v**
+- `delighted` via conjunction Sun @ 60.0/60 → **15.0v**
+- `delighted` via aspect Moon @ 36.5/60 → **9.1v**
+- `delighted` via conjunction Jupiter @ 60.0/60 → **15.0v**
+- `delighted` via sign lord Jupiter @ 60.0/60 → **15.0v**
 - `starved` via conjunction Mercury @ 60.0/60 → **-45.0v**
 - `agitated` via conjunction Sun @ 60.0/60 → **-30.0v**
 - `shamed` via conjunction Sun @ 60.0/60 → **-60.0v**
 - `shamed` via condition — conjunct Rahu/Ketu @ 60.0/60 → **-60.0v**
 
-**Jupiter** — -144.5v
+**Mercury** — -254.6v
 
-- `delighted` via conjunction Sun @ 60.0/60 → **30.0v**
-- `delighted` via aspect Moon @ 51.7/60 → **25.9v**
-- `delighted` via conjunction Mars @ 60.0/60 → **30.0v**
-- `starved` via conjunction Mercury @ 60.0/60 → **-45.0v**
-- `starved` via aspect Venus @ 20.3/60 → **-15.3v**
-- `agitated` via conjunction Sun @ 60.0/60 → **-30.0v**
-- `thirsty` via aspect Venus @ 20.3/60 → **-5.1v**
-- `shamed` via conjunction Sun @ 60.0/60 → **-60.0v**
-- `shamed` via conjunction Mars @ 60.0/60 → **-60.0v**
-- `shamed` via condition — conjunct Rahu/Ketu @ 60.0/60 → **-60.0v**
-- `healthy` via sign @ 60.0/60 → **45.0v**
-
-**Mercury** — -220.1v
-
-- `delighted` via conjunction Sun @ 60.0/60 → **30.0v**
-- `delighted` via conjunction Jupiter @ 60.0/60 → **30.0v**
-- `delighted` via aspect Venus @ 18.2/60 → **9.1v**
+- `delighted` via conjunction Sun @ 60.0/60 → **15.0v**
+- `delighted` via conjunction Jupiter @ 60.0/60 → **15.0v**
+- `delighted` via aspect Venus @ 18.2/60 → **4.6v**
 - `starved` via aspect Moon @ 52.8/60 → **-39.6v**
 - `agitated` via conjunction Sun @ 60.0/60 → **-30.0v**
 - `agitated` via aspect Moon @ 52.8/60 → **-26.4v**
@@ -1031,6 +1017,20 @@ Chart settings: circle=aditya, sign ayanamsa=tropical, houses=campanus. Ephemeri
 - `shamed` via conjunction Sun @ 60.0/60 → **-60.0v**
 - `shamed` via conjunction Mars @ 60.0/60 → **-60.0v**
 - `shamed` via condition — conjunct Rahu/Ketu @ 60.0/60 → **-60.0v**
+
+**Jupiter** — -202.4v
+
+- `delighted` via conjunction Sun @ 60.0/60 → **15.0v**
+- `delighted` via aspect Moon @ 51.7/60 → **12.9v**
+- `delighted` via conjunction Mars @ 60.0/60 → **15.0v**
+- `starved` via conjunction Mercury @ 60.0/60 → **-45.0v**
+- `starved` via aspect Venus @ 20.3/60 → **-15.3v**
+- `agitated` via conjunction Sun @ 60.0/60 → **-30.0v**
+- `thirsty` via aspect Venus @ 20.3/60 → **-5.1v**
+- `shamed` via conjunction Sun @ 60.0/60 → **-60.0v**
+- `shamed` via conjunction Mars @ 60.0/60 → **-60.0v**
+- `shamed` via condition — conjunct Rahu/Ketu @ 60.0/60 → **-60.0v**
+- `healthy` via sign @ 60.0/60 → **30.0v**
 
 </details>
 
@@ -1043,58 +1043,35 @@ Chart settings: circle=aditya, sign ayanamsa=tropical, houses=campanus. Ephemeri
 
 | # | Planet | Virupas | Aditya | Hora | Trimsamsa being | Hora being | Avasthas |
 |---|----|--------:|----|------|---------|------|----|
-| 1 | Mars | 106.7 | Vishnu | Sun | Vishvamitra (Rishi) | Vishnu (Aditya) | healthy 45.0, delighted 61.7 |
-| 2 | Mercury | 30.0 | Tvashta | Moon | Tilottama (Apsara) | Kambala (Naga) | delighted 30.0 |
-| 3 | Moon | 2.5 | Vishnu | Moon | Satyajit (Yaksha) | Ashvatara (Naga) | delighted 2.5 |
-| 4 | Venus | -17.0 | Vivasvan | Sun | Ugrasena (Gandharva) | Vivasvan (Aditya) | starved -45.0, agitated -30.0, delighted 58.0 |
-| 5 | Jupiter | -31.9 | Aryama | Sun | Pulaha (Rishi) | Aryama (Aditya) | starved -106.8, delighted 74.9 |
-| 6 | Sun | -93.6 | Vivasvan | Sun | Ugrasena (Gandharva) | Vivasvan (Aditya) | starved -86.3, agitated -27.5, delighted 20.3 |
-| 7 | Saturn | -96.0 | Parjanya | Sun | Bharadvaja (Rishi) | Parjanya (Aditya) | starved -65.8, agitated -33.9, thirsty -21.9, delighted 25.7 |
+| 1 | Mars | 60.9 | Vishnu | Sun | Vishvamitra (Rishi) | Vishnu (Aditya) | healthy 30.0, delighted 30.9 |
+| 2 | Mercury | 15.0 | Tvashta | Moon | Tilottama (Apsara) | Kambala (Naga) | delighted 15.0 |
+| 3 | Moon | 1.3 | Vishnu | Moon | Satyajit (Yaksha) | Ashvatara (Naga) | delighted 1.3 |
+| 4 | Saturn | -108.8 | Parjanya | Sun | Bharadvaja (Rishi) | Parjanya (Aditya) | starved -65.8, agitated -33.9, thirsty -21.9, delighted 12.8 |
+| 5 | Jupiter | -69.3 | Aryama | Sun | Pulaha (Rishi) | Aryama (Aditya) | starved -106.8, delighted 37.5 |
+| 6 | Sun | -103.7 | Vivasvan | Sun | Ugrasena (Gandharva) | Vivasvan (Aditya) | starved -86.3, agitated -27.5, delighted 10.1 |
+| 7 | Venus | -46.0 | Vivasvan | Sun | Ugrasena (Gandharva) | Vivasvan (Aditya) | starved -45.0, agitated -30.0, delighted 29.0 |
 
 <details><summary>Factor breakdown</summary>
 
-**Mars** — 106.7v
+**Mars** — 60.9v
 
-- `delighted` via aspect Sun @ 8.8/60 → **4.4v**
-- `delighted` via conjunction Moon @ 60.0/60 → **30.0v**
-- `delighted` via aspect Jupiter @ 54.7/60 → **27.3v**
-- `healthy` via sign @ 60.0/60 → **45.0v**
+- `delighted` via aspect Sun @ 8.8/60 → **2.2v**
+- `delighted` via conjunction Moon @ 60.0/60 → **15.0v**
+- `delighted` via aspect Jupiter @ 54.7/60 → **13.7v**
+- `healthy` via sign @ 60.0/60 → **30.0v**
 
-**Mercury** — 30.0v
+**Mercury** — 15.0v
 
-- `delighted` via sign lord Venus @ 60.0/60 → **30.0v**
+- `delighted` via sign lord Venus @ 60.0/60 → **15.0v**
 
-**Moon** — 2.5v
+**Moon** — 1.3v
 
-- `delighted` via aspect Sun @ 5.1/60 → **2.5v**
+- `delighted` via aspect Sun @ 5.1/60 → **1.3v**
 
-**Venus** — -17.0v
+**Saturn** — -108.8v
 
-- `delighted` via aspect Saturn @ 56.1/60 → **28.0v**
-- `delighted` via sign lord Mercury @ 60.0/60 → **30.0v**
-- `starved` via conjunction Sun @ 60.0/60 → **-45.0v**
-- `agitated` via conjunction Sun @ 60.0/60 → **-30.0v**
-
-**Jupiter** — -31.9v
-
-- `delighted` via aspect Sun @ 34.9/60 → **17.4v**
-- `delighted` via aspect Moon @ 55.0/60 → **27.5v**
-- `delighted` via aspect Mars @ 60.0/60 → **30.0v**
-- `starved` via aspect Mercury @ 48.5/60 → **-36.4v**
-- `starved` via aspect Venus @ 33.9/60 → **-25.4v**
-- `starved` via sign lord Venus @ 60.0/60 → **-45.0v**
-
-**Sun** — -93.6v
-
-- `delighted` via aspect Jupiter @ 40.5/60 → **20.3v**
-- `starved` via conjunction Venus @ 60.0/60 → **-45.0v**
-- `starved` via aspect Saturn @ 55.1/60 → **-41.3v**
-- `agitated` via aspect Saturn @ 55.1/60 → **-27.5v**
-
-**Saturn** — -96.0v
-
-- `delighted` via aspect Mercury @ 7.1/60 → **3.6v**
-- `delighted` via aspect Venus @ 44.3/60 → **22.1v**
+- `delighted` via aspect Mercury @ 7.1/60 → **1.8v**
+- `delighted` via aspect Venus @ 44.3/60 → **11.1v**
 - `starved` via aspect Sun @ 40.3/60 → **-30.2v**
 - `starved` via aspect Moon @ 20.1/60 → **-15.0v**
 - `starved` via aspect Mars @ 27.5/60 → **-20.6v**
@@ -1103,6 +1080,29 @@ Chart settings: circle=aditya, sign ayanamsa=tropical, houses=campanus. Ephemeri
 - `thirsty` via aspect Sun @ 40.3/60 → **-10.1v**
 - `thirsty` via aspect Moon @ 20.1/60 → **-5.0v**
 - `thirsty` via aspect Mars @ 27.5/60 → **-6.9v**
+
+**Jupiter** — -69.3v
+
+- `delighted` via aspect Sun @ 34.9/60 → **8.7v**
+- `delighted` via aspect Moon @ 55.0/60 → **13.7v**
+- `delighted` via aspect Mars @ 60.0/60 → **15.0v**
+- `starved` via aspect Mercury @ 48.5/60 → **-36.4v**
+- `starved` via aspect Venus @ 33.9/60 → **-25.4v**
+- `starved` via sign lord Venus @ 60.0/60 → **-45.0v**
+
+**Sun** — -103.7v
+
+- `delighted` via aspect Jupiter @ 40.5/60 → **10.1v**
+- `starved` via conjunction Venus @ 60.0/60 → **-45.0v**
+- `starved` via aspect Saturn @ 55.1/60 → **-41.3v**
+- `agitated` via aspect Saturn @ 55.1/60 → **-27.5v**
+
+**Venus** — -46.0v
+
+- `delighted` via aspect Saturn @ 56.1/60 → **14.0v**
+- `delighted` via sign lord Mercury @ 60.0/60 → **15.0v**
+- `starved` via conjunction Sun @ 60.0/60 → **-45.0v**
+- `agitated` via conjunction Sun @ 60.0/60 → **-30.0v**
 
 </details>
 
@@ -1115,65 +1115,65 @@ Chart settings: circle=aditya, sign ayanamsa=tropical, houses=campanus. Ephemeri
 
 | # | Planet | Virupas | Aditya | Hora | Trimsamsa being | Hora being | Avasthas |
 |---|----|--------:|----|------|---------|------|----|
-| 1 | Venus | 44.3 | Parjanya | Moon | Bharadvaja (Rishi) | Airavata (Naga) | starved -10.5, agitated -7.0, thirsty -3.5, delighted 5.4, proud 60.0 |
-| 2 | Moon | 30.0 | Bhaga | Sun | Ayu (Rishi) | Bhaga (Aditya) | delighted 30.0 |
-| 3 | Mars | -42.7 | Pusha | Moon | Sushena (Yaksha) | Dhananjaya (Naga) | starved -45.0, agitated -30.0, delighted 32.3 |
-| 4 | Mercury | -45.0 | Bhaga | Sun | Sphurja (Rakshasa) | Bhaga (Aditya) | starved -45.0 |
-| 5 | Jupiter | -46.0 | Vivasvan | Sun | Vyaghra (Rakshasa) | Vivasvan (Aditya) | starved -109.6, delighted 63.6 |
-| 6 | Sun | -52.7 | Pusha | Sun | Gautama (Rishi) | Pusha (Aditya) | starved -90.0, delighted 37.3 |
-| 7 | Saturn | -79.9 | Pusha | Moon | Sushena (Yaksha) | Dhananjaya (Naga) | starved -93.3, agitated -32.2, delighted 0.6, healthy 45.0 |
+| 1 | Venus | 26.6 | Parjanya | Moon | Bharadvaja (Rishi) | Airavata (Naga) | starved -10.5, agitated -7.0, thirsty -3.5, delighted 2.7, proud 45.0 |
+| 2 | Moon | 15.0 | Bhaga | Sun | Ayu (Rishi) | Bhaga (Aditya) | delighted 15.0 |
+| 3 | Mercury | -45.0 | Bhaga | Sun | Sphurja (Rakshasa) | Bhaga (Aditya) | starved -45.0 |
+| 4 | Jupiter | -77.8 | Vivasvan | Sun | Vyaghra (Rakshasa) | Vivasvan (Aditya) | starved -109.6, delighted 31.8 |
+| 5 | Mars | -58.8 | Pusha | Moon | Sushena (Yaksha) | Dhananjaya (Naga) | starved -45.0, agitated -30.0, delighted 16.2 |
+| 6 | Sun | -71.4 | Pusha | Sun | Gautama (Rishi) | Pusha (Aditya) | starved -90.0, delighted 18.6 |
+| 7 | Saturn | -95.2 | Pusha | Moon | Sushena (Yaksha) | Dhananjaya (Naga) | starved -93.3, agitated -32.2, delighted 0.3, healthy 30.0 |
 
 <details><summary>Factor breakdown</summary>
 
-**Venus** — 44.3v
+**Venus** — 26.6v
 
-- `delighted` via aspect Mercury @ 10.9/60 → **5.4v**
+- `delighted` via aspect Mercury @ 10.9/60 → **2.7v**
 - `starved` via aspect Moon @ 14.1/60 → **-10.5v**
 - `agitated` via aspect Moon @ 14.1/60 → **-7.0v**
 - `thirsty` via aspect Moon @ 14.1/60 → **-3.5v**
-- `proud` via dignity EX @ 60.0/60 → **60.0v**
+- `proud` via dignity EX @ 60.0/60 → **45.0v**
 
-**Moon** — 30.0v
+**Moon** — 15.0v
 
-- `delighted` via conjunction Mercury @ 60.0/60 → **30.0v**
-
-**Mars** — -42.7v
-
-- `delighted` via conjunction Sun @ 60.0/60 → **30.0v**
-- `delighted` via aspect Moon @ 2.5/60 → **1.3v**
-- `delighted` via aspect Jupiter @ 2.1/60 → **1.1v**
-- `starved` via conjunction Saturn @ 60.0/60 → **-45.0v**
-- `agitated` via conjunction Sun @ 60.0/60 → **-30.0v**
+- `delighted` via conjunction Mercury @ 60.0/60 → **15.0v**
 
 **Mercury** — -45.0v
 
 - `starved` via conjunction Moon @ 60.0/60 → **-45.0v**
 
-**Jupiter** — -46.0v
+**Jupiter** — -77.8v
 
-- `delighted` via aspect Sun @ 41.4/60 → **20.7v**
-- `delighted` via aspect Moon @ 27.0/60 → **13.5v**
-- `delighted` via aspect Mars @ 58.9/60 → **29.5v**
+- `delighted` via aspect Sun @ 41.4/60 → **10.3v**
+- `delighted` via aspect Moon @ 27.0/60 → **6.7v**
+- `delighted` via aspect Mars @ 58.9/60 → **14.7v**
 - `starved` via aspect Mercury @ 30.2/60 → **-22.6v**
 - `starved` via aspect Venus @ 56.0/60 → **-42.0v**
 - `starved` via sign lord Mercury @ 60.0/60 → **-45.0v**
 
-**Sun** — -52.7v
+**Mars** — -58.8v
 
-- `delighted` via conjunction Mars @ 60.0/60 → **30.0v**
-- `delighted` via aspect Jupiter @ 14.6/60 → **7.3v**
+- `delighted` via conjunction Sun @ 60.0/60 → **15.0v**
+- `delighted` via aspect Moon @ 2.5/60 → **0.6v**
+- `delighted` via aspect Jupiter @ 2.1/60 → **0.5v**
+- `starved` via conjunction Saturn @ 60.0/60 → **-45.0v**
+- `agitated` via conjunction Sun @ 60.0/60 → **-30.0v**
+
+**Sun** — -71.4v
+
+- `delighted` via conjunction Mars @ 60.0/60 → **15.0v**
+- `delighted` via aspect Jupiter @ 14.6/60 → **3.6v**
 - `starved` via conjunction Saturn @ 60.0/60 → **-45.0v**
 - `starved` via sign lord Saturn @ 60.0/60 → **-45.0v**
 
-**Saturn** — -79.9v
+**Saturn** — -95.2v
 
-- `delighted` via aspect Mercury @ 1.3/60 → **0.6v**
+- `delighted` via aspect Mercury @ 1.3/60 → **0.3v**
 - `starved` via conjunction Sun @ 60.0/60 → **-45.0v**
 - `starved` via aspect Moon @ 4.5/60 → **-3.3v**
 - `starved` via conjunction Mars @ 60.0/60 → **-45.0v**
 - `agitated` via conjunction Sun @ 60.0/60 → **-30.0v**
 - `agitated` via aspect Moon @ 4.5/60 → **-2.2v**
-- `healthy` via sign @ 60.0/60 → **45.0v**
+- `healthy` via sign @ 60.0/60 → **30.0v**
 
 </details>
 
@@ -1186,64 +1186,64 @@ Chart settings: circle=aditya, sign ayanamsa=tropical, houses=campanus. Ephemeri
 
 | # | Planet | Virupas | Aditya | Hora | Trimsamsa being | Hora being | Avasthas |
 |---|----|--------:|----|------|---------|------|----|
-| 1 | Mercury | 31.0 | Mitra | Sun | Atri (Rishi) | Mitra (Aditya) | agitated -50.2, starved -30.3, healthy 45.0, delighted 66.4 |
-| 2 | Mars | 17.6 | Aryama | Sun | Praheti (Rakshasa) | Aryama (Aditya) | delighted 17.6 |
-| 3 | Moon | 17.1 | Parjanya | Moon | Vishvaci (Apsara) | Airavata (Naga) | delighted 17.1 |
-| 4 | Venus | 16.9 | Dhata | Moon | Pulastya (Rishi) | Vasuki (Naga) | starved -5.1, agitated -3.4, delighted 25.4 |
-| 5 | Sun | 13.7 | Mitra | Sun | Haha (Gandharva) | Mitra (Aditya) | starved -25.3, agitated -13.0, delighted 52.0 |
-| 6 | Saturn | -6.3 | Bhaga | Sun | Urna (Gandharva) | Bhaga (Aditya) | starved -44.7, agitated -29.8, delighted 23.2, healthy 45.0 |
-| 7 | Jupiter | -90.7 | Mitra | Moon | Menaka (Apsara) | Takshaka (Naga) | starved -108.2, agitated -30.0, delighted 47.5 |
+| 1 | Mercury | -17.3 | Mitra | Sun | Atri (Rishi) | Mitra (Aditya) | agitated -50.2, starved -30.3, healthy 30.0, delighted 33.2 |
+| 2 | Saturn | -32.9 | Bhaga | Sun | Urna (Gandharva) | Bhaga (Aditya) | starved -44.7, agitated -29.8, delighted 11.6, healthy 30.0 |
+| 3 | Sun | -12.3 | Mitra | Sun | Haha (Gandharva) | Mitra (Aditya) | starved -25.3, agitated -13.0, delighted 26.0 |
+| 4 | Mars | 8.8 | Aryama | Sun | Praheti (Rakshasa) | Aryama (Aditya) | delighted 8.8 |
+| 5 | Moon | 8.5 | Parjanya | Moon | Vishvaci (Apsara) | Airavata (Naga) | delighted 8.5 |
+| 6 | Venus | 4.3 | Dhata | Moon | Pulastya (Rishi) | Vasuki (Naga) | starved -5.1, agitated -3.4, delighted 12.7 |
+| 7 | Jupiter | -114.5 | Mitra | Moon | Menaka (Apsara) | Takshaka (Naga) | starved -108.2, agitated -30.0, delighted 23.7 |
 
 <details><summary>Factor breakdown</summary>
 
-**Mercury** — 31.0v
+**Mercury** — -17.3v
 
-- `delighted` via conjunction Sun @ 60.0/60 → **30.0v**
-- `delighted` via conjunction Jupiter @ 60.0/60 → **30.0v**
-- `delighted` via aspect Venus @ 12.9/60 → **6.4v**
+- `delighted` via conjunction Sun @ 60.0/60 → **15.0v**
+- `delighted` via conjunction Jupiter @ 60.0/60 → **15.0v**
+- `delighted` via aspect Venus @ 12.9/60 → **3.2v**
 - `starved` via aspect Moon @ 40.4/60 → **-30.3v**
 - `agitated` via conjunction Sun @ 60.0/60 → **-30.0v**
 - `agitated` via aspect Moon @ 40.4/60 → **-20.2v**
-- `healthy` via sign @ 60.0/60 → **45.0v**
+- `healthy` via sign @ 60.0/60 → **30.0v**
 
-**Mars** — 17.6v
+**Saturn** — -32.9v
 
-- `delighted` via aspect Moon @ 35.2/60 → **17.6v**
-
-**Moon** — 17.1v
-
-- `delighted` via aspect Sun @ 14.5/60 → **7.2v**
-- `delighted` via aspect Mercury @ 19.6/60 → **9.8v**
-
-**Venus** — 16.9v
-
-- `delighted` via aspect Saturn @ 50.7/60 → **25.4v**
-- `starved` via aspect Moon @ 6.7/60 → **-5.1v**
-- `agitated` via aspect Moon @ 6.7/60 → **-3.4v**
-
-**Sun** — 13.7v
-
-- `delighted` via aspect Moon @ 44.0/60 → **22.0v**
-- `delighted` via conjunction Jupiter @ 60.0/60 → **30.0v**
-- `starved` via aspect Venus @ 7.8/60 → **-5.8v**
-- `starved` via aspect Saturn @ 26.0/60 → **-19.5v**
-- `agitated` via aspect Saturn @ 26.0/60 → **-13.0v**
-
-**Saturn** — -6.3v
-
-- `delighted` via aspect Mercury @ 37.1/60 → **18.6v**
-- `delighted` via aspect Venus @ 9.3/60 → **4.6v**
+- `delighted` via aspect Mercury @ 37.1/60 → **9.3v**
+- `delighted` via aspect Venus @ 9.3/60 → **2.3v**
 - `starved` via aspect Sun @ 32.0/60 → **-24.0v**
 - `starved` via aspect Mars @ 27.6/60 → **-20.7v**
 - `agitated` via aspect Sun @ 32.0/60 → **-16.0v**
 - `agitated` via aspect Mars @ 27.6/60 → **-13.8v**
-- `healthy` via sign @ 60.0/60 → **45.0v**
+- `healthy` via sign @ 60.0/60 → **30.0v**
 
-**Jupiter** — -90.7v
+**Sun** — -12.3v
 
-- `delighted` via conjunction Sun @ 60.0/60 → **30.0v**
-- `delighted` via aspect Moon @ 33.6/60 → **16.8v**
-- `delighted` via aspect Mars @ 1.3/60 → **0.6v**
+- `delighted` via aspect Moon @ 44.0/60 → **11.0v**
+- `delighted` via conjunction Jupiter @ 60.0/60 → **15.0v**
+- `starved` via aspect Venus @ 7.8/60 → **-5.8v**
+- `starved` via aspect Saturn @ 26.0/60 → **-19.5v**
+- `agitated` via aspect Saturn @ 26.0/60 → **-13.0v**
+
+**Mars** — 8.8v
+
+- `delighted` via aspect Moon @ 35.2/60 → **8.8v**
+
+**Moon** — 8.5v
+
+- `delighted` via aspect Sun @ 14.5/60 → **3.6v**
+- `delighted` via aspect Mercury @ 19.6/60 → **4.9v**
+
+**Venus** — 4.3v
+
+- `delighted` via aspect Saturn @ 50.7/60 → **12.7v**
+- `starved` via aspect Moon @ 6.7/60 → **-5.1v**
+- `agitated` via aspect Moon @ 6.7/60 → **-3.4v**
+
+**Jupiter** — -114.5v
+
+- `delighted` via conjunction Sun @ 60.0/60 → **15.0v**
+- `delighted` via aspect Moon @ 33.6/60 → **8.4v**
+- `delighted` via aspect Mars @ 1.3/60 → **0.3v**
 - `starved` via conjunction Mercury @ 60.0/60 → **-45.0v**
 - `starved` via aspect Venus @ 24.3/60 → **-18.2v**
 - `starved` via sign lord Mercury @ 60.0/60 → **-45.0v**
@@ -1273,20 +1273,20 @@ Chart settings: circle=aditya, sign ayanamsa=tropical, houses=campanus. Ephemeri
 
 | Chart | Healthiest | Virupas | Its being | Least healthy | Virupas | Its being |
 |-------|-----------|--------:|-----|----|--------:|----|
-| Aurora | Moon | 75.0 | Vasishtha / Shukra | Venus | -107.7 | Vasishtha / Varuna |
-| Bjork | Jupiter | 71.1 | Huhu / Varuna | Saturn | -130.3 | Pulastya / Dhata |
-| Charlie Sheen | Jupiter | 118.4 | Huhu / Varuna | Saturn | -147.3 | Pulastya / Dhata |
-| Elon Musk | Sun | 80.7 | Varya / Indra | Venus | -99.4 | Vasishtha / Varuna |
-| Ernst Wilhelm | Jupiter | 21.8 | Ritasena / Amshu | Sun | -64.2 | Rathauja / Kacchanira |
-| Jim Carrey | Moon | 63.5 | Vasishtha / Varuna | Mercury | -166.2 | Bharadvaja / Airavata |
-| JK Rowling | Jupiter | 99.9 | Chitrasvana / Varuna | Saturn | -81.3 | Pulastya / Vasuki |
-| Josh | Moon | 60.0 | Atri / Mitra | Venus | -85.5 | Huhu / Varuna |
-| Nikola Tesla | Mars | 90.0 | Vishvamitra / Vishnu | Venus | -175.9 | Angiras / Indra |
-| R.D. Laing | Sun | 102.7 | Vishvamitra / Ashvatara | Mercury | -13.3 | Vidyucchatru / Amshu |
-| Ramana Maharshi | Moon | 77.9 | Shrota / Elapatra | Sun | -88.4 | Vata / Pusha |
-| RFK, Jr. | Jupiter | 105.7 | Vasishtha / Varuna | Saturn | -176.8 | Vidyucchatru / Amshu |
-| Thomas Merton | Moon | 75.0 | Bhrigu / Shankhapala | Mercury | -220.1 | Vishvavasu / Parjanya |
-| Tori Amos | Mars | 106.7 | Vishvamitra / Vishnu | Saturn | -96.0 | Bharadvaja / Parjanya |
-| Umberto Eco | Venus | 44.3 | Bharadvaja / Airavata | Saturn | -79.9 | Sushena / Dhananjaya |
-| Vladimir Lenin | Mercury | 31.0 | Atri / Mitra | Jupiter | -90.7 | Menaka / Takshaka |
+| Aurora | Moon | 30.0 | Vasishtha / Shukra | Venus | -136.4 | Vasishtha / Varuna |
+| Bjork | Jupiter | 9.5 | Huhu / Varuna | Saturn | -142.6 | Pulastya / Dhata |
+| Charlie Sheen | Jupiter | 61.6 | Huhu / Varuna | Saturn | -160.9 | Pulastya / Dhata |
+| Elon Musk | Sun | 49.4 | Varya / Indra | Venus | -99.4 | Vasishtha / Varuna |
+| Ernst Wilhelm | Jupiter | -13.9 | Ritasena / Amshu | Sun | -77.1 | Rathauja / Kacchanira |
+| Jim Carrey | Moon | 39.3 | Vasishtha / Varuna | Jupiter | -172.1 | Bharadvaja / Airavata |
+| JK Rowling | Jupiter | 59.4 | Chitrasvana / Varuna | Saturn | -108.2 | Pulastya / Vasuki |
+| Josh | Saturn | -81.0 | Gautama / Pusha | Venus | -107.3 | Huhu / Varuna |
+| Nikola Tesla | Mars | 35.2 | Vishvamitra / Vishnu | Venus | -175.9 | Angiras / Indra |
+| R.D. Laing | Venus | 16.2 | Brahmapeta / Tvashta | Mercury | -16.6 | Vidyucchatru / Amshu |
+| Ramana Maharshi | Moon | 39.0 | Shrota / Elapatra | Sun | -106.1 | Vata / Pusha |
+| RFK, Jr. | Jupiter | 58.3 | Vasishtha / Varuna | Venus | -192.7 | Sushena / Dhananjaya |
+| Thomas Merton | Moon | 37.5 | Bhrigu / Shankhapala | Jupiter | -202.4 | Vishvavasu / Parjanya |
+| Tori Amos | Mars | 60.9 | Vishvamitra / Vishnu | Venus | -46.0 | Ugrasena / Vivasvan |
+| Umberto Eco | Venus | 26.6 | Bharadvaja / Airavata | Saturn | -95.2 | Sushena / Dhananjaya |
+| Vladimir Lenin | Mercury | -17.3 | Atri / Mitra | Jupiter | -114.5 | Menaka / Takshaka |
 

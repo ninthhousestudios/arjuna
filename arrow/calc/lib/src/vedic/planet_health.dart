@@ -13,9 +13,13 @@ import 'lajjitaadi.dart';
 /// avastha carries a signed virupa value; the four afflicted states are
 /// negative, the three healthy states positive.
 ///
-/// The default ladder follows Laura's affliction/health ordering
-/// (shamed worst → thirsty least bad; proud best → delighted least good),
-/// spaced so shamed/proud carry a full rupa and each step down drops 15:
+/// The default ladder follows Laura's affliction/health ordering. The four
+/// afflictions occupy the full −60/−45/−30/−15 rungs; the three healthy
+/// states are shifted one rung *down* the same ladder (+45/+30/+15) so that
+/// afflictions weigh more than health. Laura settled this in review: "healthy
+/// planets just act like they are supposed to… afflictions are what screw up
+/// our lives, so afflictions should have more value." The rung-shift is the
+/// chosen reading of that — not a literal halving.
 ///
 /// | State     | Virupas |
 /// |-----------|---------|
@@ -23,9 +27,9 @@ import 'lajjitaadi.dart';
 /// | starved   | -45     |
 /// | agitated  | -30     |
 /// | thirsty   | -15     |
-/// | delighted | +30     |
-/// | healthy   | +45     |
-/// | proud     | +60     |
+/// | delighted | +15     |
+/// | healthy   | +30     |
+/// | proud     | +45     |
 ///
 /// Every field is overridable so the ladder can be retuned without touching
 /// the scorer.
@@ -42,10 +46,15 @@ class LajjitaadiWeights {
   ///
   /// The Sun/Mars/Saturn conjunctions that fire shame already carry a
   /// strength of 60; the [ShameCondition] factors carry none, because
-  /// libaditya records them as bare conditions. These weights supply it,
-  /// grading shame by *how* it was caused — a node conjunction is a hard
-  /// hit, a 5th-cusp contact is a degree-exact one, mere residence in the
-  /// 5th sign is the softest.
+  /// libaditya records them as bare conditions. These weights supply it.
+  ///
+  /// Laura settled the grading in review: shame ranks equally whether the
+  /// trigger is conjunction with the nodes or residence in the 5th whole
+  /// sign, so both carry full strength (60). Cusps are not used for shame —
+  /// it is a whole-sign phenomenon like yogas — so [conjunctFifthCuspStrength]
+  /// defaults to 0. The condition is still detected in [Lajjitaadi] and the
+  /// [ShameCondition.conjunctFifthCusp] enum value is retained; it simply
+  /// contributes nothing here. Raise it to re-enable degree-exact cusp shame.
   final double conjunctNodesStrength;
   final double conjunctFifthCuspStrength;
   final double inFifthSignStrength;
@@ -55,12 +64,12 @@ class LajjitaadiWeights {
     this.starved = -45,
     this.agitated = -30,
     this.thirsty = -15,
-    this.delighted = 30,
-    this.healthy = 45,
-    this.proud = 60,
+    this.delighted = 15,
+    this.healthy = 30,
+    this.proud = 45,
     this.conjunctNodesStrength = 60,
-    this.conjunctFifthCuspStrength = 45,
-    this.inFifthSignStrength = 30,
+    this.conjunctFifthCuspStrength = 0,
+    this.inFifthSignStrength = 60,
   });
 
   static const defaults = LajjitaadiWeights();
@@ -116,8 +125,22 @@ class ScoredFactor {
 class PlanetHealthScore {
   final Body body;
 
-  /// Sum of every [ScoredFactor.virupas]. Positive = net healthy.
+  /// Sum of every [ScoredFactor.virupas]. Positive = net healthy. This is
+  /// the whole picture for display; ranking uses [strongVirupas] then
+  /// [aspectVirupas], not this total (see [PlanetHealth.rank]).
   final double virupas;
+
+  /// Sum of the non-aspect factors: dignity, sign placement, sign lord,
+  /// conjunction, and the shame conditions. Laura's precedence rule — "the
+  /// LA of the planet in a Sign is always stronger than the aspect… the only
+  /// time this does not apply is with conjunctions" — makes these the primary
+  /// ranking key.
+  final double strongVirupas;
+
+  /// Sum of the aspect factors, each prorated by Parashara aspect strength.
+  /// Subordinate to [strongVirupas]: aspects only order planets whose strong
+  /// totals are equal.
+  final double aspectVirupas;
 
   /// Per-state subtotals, so a total can be read back to its causes.
   final Map<LajjitaadiState, double> byState;
@@ -128,6 +151,8 @@ class PlanetHealthScore {
   const PlanetHealthScore({
     required this.body,
     required this.virupas,
+    required this.strongVirupas,
+    required this.aspectVirupas,
     required this.byState,
     required this.factors,
   });
@@ -206,12 +231,25 @@ class BeingHealth {
 /// 3. Score each remaining factor as `virupasFor(state) * strength / 60`,
 ///    so conjunction/sign/dignity factors land at full weight and aspect
 ///    factors are prorated by Parashara aspect strength.
-/// 4. Sum. Most virupas = healthiest.
+/// 4. Split each planet's total into a *strong* subtotal (dignity, sign, sign
+///    lord, conjunction, shame conditions) and an *aspect* subtotal.
+/// 5. Rank by strong subtotal first; the aspect subtotal only orders planets
+///    whose strong subtotals are equal.
 ///
-/// The model is deliberately purely additive: no state trumps another, and
-/// a planet can be both proud and shamed. That is visible in the output
-/// rather than resolved by the scorer — [PlanetHealthScore.byState] and
-/// [PlanetHealthScore.factors] preserve the whole picture.
+/// Step 5 is Laura's precedence rule: "the LA of the planet in a Sign is
+/// always stronger than the aspect… if Saturn is exalted but also aspected by
+/// Mars, the exaltation is stronger… the only time this does not apply is with
+/// conjunctions." So sign- and conjunction-caused avasthas rank a planet, and
+/// aspects — however many pile on — can only break ties among planets those
+/// stronger causes leave level. This is what keeps an exalted-but-aspect-
+/// afflicted planet (Josh's Saturn, starved *and* agitated by Sun/Moon/Mars)
+/// from being dragged below planets with genuinely worse dignity: its aspect
+/// pile lives in the subordinate tier.
+///
+/// Within each tier the score stays additive — no state trumps another, a
+/// planet can be both proud and shamed, and multiple malefics stack. The full
+/// picture is preserved in [PlanetHealthScore.byState] and
+/// [PlanetHealthScore.factors].
 class PlanetHealth {
   const PlanetHealth._();
 
@@ -237,21 +275,27 @@ class PlanetHealth {
     final scores = score(varga, weights: weights);
     final ordered = varga.karakas.toList()
       ..sort((a, b) {
-        final byVirupas = scores[b.body]!.virupas.compareTo(
-          scores[a.body]!.virupas,
-        );
+        final sa = scores[a.body]!;
+        final sb = scores[b.body]!;
+        // Precedence: strong (sign/conjunction) causes rank first; aspects
+        // only order planets those leave level.
+        final byStrong = sb.strongVirupas.compareTo(sa.strongVirupas);
+        if (byStrong != 0) return byStrong;
+        final byAspect = sb.aspectVirupas.compareTo(sa.aspectVirupas);
+        if (byAspect != 0) return byAspect;
         // Dart's sort is not stable — fall back to karaka order for ties.
-        return byVirupas != 0
-            ? byVirupas
-            : a.body.index.compareTo(b.body.index);
+        return a.body.index.compareTo(b.body.index);
       });
 
     final ranked = <BeingHealth>[];
     for (var i = 0; i < ordered.length; i++) {
       final karaka = ordered[i];
       final score = scores[karaka.body]!;
+      final previous = i > 0 ? scores[ordered[i - 1].body]! : null;
       final tiedWithPrevious =
-          i > 0 && scores[ordered[i - 1].body]!.virupas == score.virupas;
+          previous != null &&
+          previous.strongVirupas == score.strongVirupas &&
+          previous.aspectVirupas == score.aspectVirupas;
       ranked.add(
         BeingHealth(
           rank: tiedWithPrevious ? ranked[i - 1].rank : i + 1,
@@ -274,7 +318,8 @@ class PlanetHealth {
   ) {
     final factors = <ScoredFactor>[];
     final byState = <LajjitaadiState, double>{};
-    var total = 0.0;
+    var strong = 0.0;
+    var aspect = 0.0;
 
     for (final state in LajjitaadiState.values) {
       final raw = result?.avasthas[state];
@@ -295,14 +340,20 @@ class PlanetHealth {
           ),
         );
         stateTotal += virupas;
+        if (factor.source == 'aspect') {
+          aspect += virupas;
+        } else {
+          strong += virupas;
+        }
       }
       byState[state] = stateTotal;
-      total += stateTotal;
     }
 
     return PlanetHealthScore(
       body: body,
-      virupas: total,
+      virupas: strong + aspect,
+      strongVirupas: strong,
+      aspectVirupas: aspect,
       byState: byState,
       factors: factors,
     );

@@ -64,17 +64,19 @@ void main() {
       }
     });
 
-    test('proud (exalted) scores +60', () {
-      // Sun exalted in Aries at 10°.
+    test('proud (exalted) scores +45', () {
+      // Sun exalted in Aries at 10°. Healthy states ride the shifted-down
+      // ladder so afflictions outweigh them.
       final v = _scattered(override: {Body.sun: 10.0});
       final sun = PlanetHealth.score(v)[Body.sun]!;
       expect(sun.isProud, isTrue);
-      expect(_stateTotal(sun, LajjitaadiState.proud), 60.0);
+      expect(_stateTotal(sun, LajjitaadiState.proud), 45.0);
     });
 
-    test('shame conditions carry their graded strength', () {
+    test('nodes and 5th-sign shame carry equal strength', () {
       // Moon in Leo (5th sign from Aries lagna) conjunct Mars and Rahu:
-      // one malefic trigger (-60) + nodes condition (-60) + 5th sign (-30).
+      // one malefic trigger (-60) + nodes condition (-60) + 5th sign (-60).
+      // Laura: shame ranks equally whether by nodes or in the 5th whole sign.
       final v = _scattered(
         override: {Body.moon: 120.0, Body.mars: 125.0, Body.rahu: 128.0},
       );
@@ -91,9 +93,9 @@ void main() {
         (f) => f.factor.condition == ShameCondition.inFifthSign,
       );
       expect(nodes.virupas, -60.0);
-      expect(fifth.virupas, -30.0);
-      // Nodes must outweigh mere residence in the 5th.
-      expect(nodes.virupas, lessThan(fifth.virupas));
+      expect(fifth.virupas, -60.0);
+      // Shame is a whole-sign phenomenon: nodes and 5th sign weigh the same.
+      expect(nodes.virupas, fifth.virupas);
     });
 
     test('weights are overridable without touching the scorer', () {
@@ -115,16 +117,29 @@ void main() {
   });
 
   group('PlanetHealth.rank', () {
-    test('orders healthiest first and covers all seven karakas', () {
+    test('orders by strong subtotal first, aspects only breaking ties', () {
       final ranked = PlanetHealth.rank(_scattered());
       expect(ranked, hasLength(7));
       expect(ranked.map((r) => r.body).toSet(), Body.karakas.toSet());
       for (var i = 1; i < ranked.length; i++) {
+        final prev = ranked[i - 1].score;
+        final cur = ranked[i].score;
+        final reason = '${ranked[i - 1].body.name} vs ${ranked[i].body.name}';
+        // Strong (sign/conjunction) subtotal is the primary key; a lower
+        // strong subtotal can never rank above a higher one, however the
+        // aspects fall.
         expect(
-          ranked[i - 1].virupas,
-          greaterThanOrEqualTo(ranked[i].virupas),
-          reason: '${ranked[i - 1].body.name} vs ${ranked[i].body.name}',
+          prev.strongVirupas,
+          greaterThanOrEqualTo(cur.strongVirupas),
+          reason: reason,
         );
+        if (prev.strongVirupas == cur.strongVirupas) {
+          expect(
+            prev.aspectVirupas,
+            greaterThanOrEqualTo(cur.aspectVirupas),
+            reason: reason,
+          );
+        }
       }
       expect(ranked.first.rank, 1);
     });
@@ -132,7 +147,12 @@ void main() {
     test('ties share a rank', () {
       final ranked = PlanetHealth.rank(_scattered());
       for (var i = 1; i < ranked.length; i++) {
-        if (ranked[i].virupas == ranked[i - 1].virupas) {
+        final prev = ranked[i - 1].score;
+        final cur = ranked[i].score;
+        final tied =
+            prev.strongVirupas == cur.strongVirupas &&
+            prev.aspectVirupas == cur.aspectVirupas;
+        if (tied) {
           expect(ranked[i].rank, ranked[i - 1].rank);
         } else {
           expect(ranked[i].rank, greaterThan(ranked[i - 1].rank));
