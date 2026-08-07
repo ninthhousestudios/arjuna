@@ -105,6 +105,58 @@ void main() {
       expect(_stateTotal(sun, LajjitaadiState.proud), 10.0);
     });
 
+    test('every factor source routes to the right subtotal', () {
+      // The strong/aspect split hinges on a single string check
+      // (source == 'aspect'). Lock it: only 'aspect' is subordinate, every
+      // other cause is strong, and the two subtotals partition the factors
+      // exactly. A renamed or newly added source in lajjitaadi.dart would
+      // otherwise fall silently into the Strong tier and skew ranking.
+      const knownSources = {
+        'conjunction',
+        'aspect',
+        'sign',
+        'dignity',
+        'condition',
+      };
+      // A chart rich enough to exercise every source: Sun exalted (dignity),
+      // Moon shamed in the 5th with Mars + Rahu (conjunction + condition),
+      // plus the mutual aspects and sign placements the spread produces.
+      final v = _scattered(
+        override: {
+          Body.sun: 10.0,
+          Body.moon: 120.0,
+          Body.mars: 125.0,
+          Body.rahu: 128.0,
+        },
+      );
+      final seenSources = <String>{};
+      for (final score in PlanetHealth.score(v).values) {
+        var strong = 0.0;
+        var aspect = 0.0;
+        for (final f in score.factors) {
+          seenSources.add(f.factor.source);
+          expect(
+            knownSources,
+            contains(f.factor.source),
+            reason:
+                'unknown factor source "${f.factor.source}" — assign it to a '
+                'tier in PlanetHealth._scoreOne before adding it',
+          );
+          if (f.factor.source == 'aspect') {
+            aspect += f.virupas;
+          } else {
+            strong += f.virupas;
+          }
+        }
+        expect(score.strongVirupas, closeTo(strong, 1e-9));
+        expect(score.aspectVirupas, closeTo(aspect, 1e-9));
+        expect(score.virupas, closeTo(strong + aspect, 1e-9));
+      }
+      // Guard the guard: the fixture must actually exercise the split.
+      expect(seenSources, contains('aspect'));
+      expect(seenSources.any((s) => s != 'aspect'), isTrue);
+    });
+
     test('karakas Lajjitaadi omits score zero', () {
       // Everything mutually unaspected is impossible with 7 planets, so
       // assert the weaker invariant: every karaka is present in the map.
