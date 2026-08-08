@@ -2,6 +2,9 @@
 // Copyright (C) 2026 Ninth House Studios LLC
 
 // Quiver public API
+export 'src/generated/quiver/being_health.pb.dart';
+export 'src/generated/quiver/being_health.pbenum.dart';
+export 'src/generated/quiver/being_health.pbgrpc.dart';
 export 'src/generated/quiver/chart.pb.dart';
 export 'src/generated/quiver/chart.pbgrpc.dart';
 export 'src/generated/quiver/health.pbgrpc.dart';

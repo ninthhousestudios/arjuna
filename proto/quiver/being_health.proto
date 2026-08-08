@@ -1,0 +1,173 @@
+syntax = "proto3";
+package quiver;
+
+option java_package = "com.arjuna.quiver";
+
+import "quiver/types.proto";
+
+// Avastha-based being selection. Wraps arrow's `PlanetHealth.rank(varga)` →
+// `List<BeingHealth>`: the seven embodied karakas ranked healthiest first by
+// their weighted Lajjitaadi avasthas, each paired with the beings it activates.
+//
+// Ranking is NOT by a single virupa total. Each score splits into
+// `strong_virupas` (dignity / sign / conjunction / shame) and `aspect_virupas`;
+// planets rank by strong first, aspect only breaking ties — so a *lower* total
+// can rank *higher*. Consumers must respect `rank`, not re-sort on `virupas`.
+//
+// Selection is delivered as the full ranked list (7 entries), not a pre-cut
+// top-N; the consumer takes top-N for thriving and bottom-N for pathology.
+// Rahu/Ketu are absent — they have no Lajjitaadi avastha of their own.
+//
+// Model + field semantics: arrow/docs/planet-health-ranking.md.
+service BeingHealthService {
+  rpc RankBeings (BeingHealthRequest) returns (BeingHealthResponse);
+}
+
+// Birth data. Mirrors `CalcRequest` (chart.proto) — same preset-only contract.
+message BeingHealthRequest {
+  string datetime_iso = 1;
+  Location location = 2;
+  CalculationPreset preset = 3;
+  TimeUncertainty time_uncertainty = 4;
+}
+
+// The full ranked list, healthiest first. Ties share a rank.
+message BeingHealthResponse {
+  repeated BeingHealth beings = 1;
+}
+
+// One ranked karaka together with the beings it activates.
+message BeingHealth {
+  // 1 = healthiest. Ties share a rank (competition ranking).
+  int32 rank = 1;
+
+  // The activating planet (one of the seven karakas).
+  Body body = 2;
+
+  PlanetHealthScore score = 3;
+
+  // Sign number 1..12 in the configured circle — an Aditya number under the
+  // Aditya circle.
+  int32 sign = 4;
+
+  Hora hora = 5;
+
+  // The being the Trimsamsa segment activates (Gandharva / Rakshasa / Rishi /
+  // Yaksha / Apsara).
+  Being trimsamsa_being = 6;
+
+  // The Hora being — the Aditya itself (Sun hora) or its Naga (Moon hora).
+  Being hora_being = 7;
+
+  // The parent Aditya of `sign`, regardless of hora.
+  Being aditya = 8;
+}
+
+// The summed Lajjitaadi health of one karaka, in virupas.
+message PlanetHealthScore {
+  Body body = 1;
+
+  // Sum of every factor's virupas. Positive = net healthy. For display only;
+  // ranking uses strong_virupas then aspect_virupas, NOT this total.
+  double virupas = 2;
+
+  // Non-aspect factors: dignity, sign placement, sign lord, conjunction, and
+  // the shame conditions. The primary ranking key (Laura's precedence rule).
+  double strong_virupas = 3;
+
+  // Aspect factors, each prorated by Parashara aspect strength. Subordinate to
+  // strong_virupas: aspects only order planets whose strong totals are equal.
+  double aspect_virupas = 4;
+
+  // Per-state subtotals, so a total can be read back to its causes.
+  repeated StateVirupas by_state = 5;
+
+  // Every scored factor, deduplicated, in state order.
+  repeated ScoredFactor factors = 6;
+}
+
+// A per-state subtotal (proto3 has no enum-keyed maps).
+message StateVirupas {
+  LajjitaadiState state = 1;
+  double virupas = 2;
+}
+
+// One LajjitaadiFactor with its virupa contribution resolved.
+message ScoredFactor {
+  LajjitaadiState state = 1;
+
+  // Strength 0..60 actually used. Conjunction / sign / dignity → 60; aspect →
+  // Parashara degree-based strength; shame conditions → weight-supplied value.
+  double strength = 2;
+
+  // virupas_for(state) * strength / 60 — signed.
+  double virupas = 3;
+
+  LajjitaadiFactor factor = 4;
+}
+
+// A single contributing factor to a Lajjitaadi state. Fields are optional
+// because not all sources populate all of them:
+//   - conjunction / aspect: planet + strength
+//   - sign (friend/enemy of sign lord): lord + strength
+//   - sign (own sign, healthy): strength only
+//   - dignity (proud): dignity + strength
+//   - condition (shamed trigger): condition + detail
+message LajjitaadiFactor {
+  FactorSource source = 1;
+
+  // Triggering body for conjunction / aspect factors.
+  optional Body planet = 2;
+
+  // Sign lord for sign-based factors (when lord != karaka).
+  optional Body lord = 3;
+
+  // Strength 0..60.
+  optional double strength = 4;
+
+  // 'EX' (exalted) or 'MT' (moolatrikona) — only set for proud factors.
+  optional string dignity = 5;
+
+  // Which compound trigger fired — only set for shamed condition factors.
+  optional ShameCondition condition = 6;
+
+  // Free-form condition description — only set for shamed condition factors
+  // ("conjunct Rahu/Ketu", "in 5th sign", "conjunct 5th cusp").
+  optional string detail = 7;
+
+  // When present, marks this factor as one the karaka is *giving* to `to`
+  // rather than receiving. Ranking scores only received/self factors, so this
+  // is unset in scored factors; carried for the full relational shape.
+  optional Body to = 8;
+}
+
+// The seven Lajjitaadi avastha states (avasthas.py:88+).
+enum LajjitaadiState {
+  LAJJITAADI_STATE_UNSPECIFIED = 0;
+  DELIGHTED = 1;
+  STARVED = 2;
+  AGITATED = 3;
+  THIRSTY = 4;
+  SHAMED = 5;
+  HEALTHY = 6;
+  PROUD = 7;
+}
+
+// The trigger kind behind a factor (LajjitaadiFactor.source).
+enum FactorSource {
+  FACTOR_SOURCE_UNSPECIFIED = 0;
+  CONJUNCTION = 1;
+  ASPECT = 2;
+  SIGN = 3;
+  DIGNITY = 4;
+  CONDITION = 5;
+}
+
+// The compound conditions that, with a Sun/Mars/Saturn conjunction, produce
+// SHAMED (avasthas.py:149-175).
+enum ShameCondition {
+  SHAME_CONDITION_UNSPECIFIED = 0;
+  CONJUNCT_NODES = 1;
+  IN_FIFTH_SIGN = 2;
+  CONJUNCT_FIFTH_CUSP = 3;
+}
