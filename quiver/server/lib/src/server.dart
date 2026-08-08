@@ -10,6 +10,7 @@ import 'package:quiver_core/quiver_core.dart';
 
 import 'isolate_pool.dart';
 import 'logging_interceptor.dart';
+import 'services/being_health_service.dart';
 import 'services/chart_service.dart';
 import 'services/health_service.dart';
 
@@ -35,7 +36,12 @@ class QuiverServer {
     final gateway = QuiverGateway.fromCalculator(pool.calculate);
 
     _server = Server.create(
-      services: [GrpcHealthService(), HealthService(), ChartService(gateway)],
+      services: [
+        GrpcHealthService(),
+        HealthService(),
+        ChartService(gateway),
+        BeingHealthService(gateway),
+      ],
       serverInterceptors: [LoggingInterceptor()],
     );
 

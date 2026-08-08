@@ -31,9 +31,22 @@ message BeingHealthRequest {
   TimeUncertainty time_uncertainty = 4;
 }
 
-// The full ranked list, healthiest first. Ties share a rank.
+// One ranking per computed chart. A certain time yields a single entry; an
+// uncertain time (period / unknown) yields one entry per sampled chart — the
+// consumer sees how the ranking shifts across the time window rather than a
+// pre-merged envelope.
 message BeingHealthResponse {
-  repeated BeingHealth beings = 1;
+  repeated BeingRanking rankings = 1;
+}
+
+// The ranked beings for one chart (one sampled instant).
+message BeingRanking {
+  // Julian Day (UT) of the chart this ranking was computed for — identifies
+  // which sampled instant produced it.
+  double jd_ut = 1;
+
+  // The seven karakas, healthiest first. Ties share a rank.
+  repeated BeingHealth beings = 2;
 }
 
 // One ranked karaka together with the beings it activates.

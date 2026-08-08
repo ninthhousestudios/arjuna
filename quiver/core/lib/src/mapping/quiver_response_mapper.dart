@@ -7,6 +7,7 @@ import 'package:arrow_options/arrow_options.dart' as arrow;
 import '../generated/quiver/chart.pb.dart' as qpb;
 import '../generated/quiver/types.pb.dart' as qt;
 import '../generated/quiver/types.pbenum.dart' as qe;
+import 'quiver_type_mapper.dart';
 
 class QuiverResponseMapper {
   static qpb.CalcResponse fromCharts(List<core.Chart> charts) {
@@ -99,39 +100,12 @@ class QuiverResponseMapper {
     return qpb.UncertainAtmakaraka(options: options);
   }
 
-  static qt.Being _mapBeing(arrow.Being being) {
-    return qt.Being(
-      name: being.name,
-      type: _mapBeingType(being.type),
-      signNumber: being.signNumber,
-    );
-  }
+  static qt.Being _mapBeing(arrow.Being being) => QuiverTypeMapper.being(being);
 
-  static qe.BeingType _mapBeingType(arrow.BeingType type) => switch (type) {
-    arrow.BeingType.gandharva => qe.BeingType.GANDHARVA,
-    arrow.BeingType.rakshasa => qe.BeingType.RAKSHASA,
-    arrow.BeingType.rishi => qe.BeingType.RISHI,
-    arrow.BeingType.yaksha => qe.BeingType.YAKSHA,
-    arrow.BeingType.apsara => qe.BeingType.APSARA,
-    arrow.BeingType.aditya => qe.BeingType.ADITYA_BEING,
-    arrow.BeingType.naga => qe.BeingType.NAGA,
-  };
+  static qe.BeingType _mapBeingType(arrow.BeingType type) =>
+      QuiverTypeMapper.beingType(type);
 
-  static qe.Hora _mapHora(arrow.Hora hora) => switch (hora) {
-    arrow.Hora.sun => qe.Hora.SUN_HORA,
-    arrow.Hora.moon => qe.Hora.MOON_HORA,
-  };
+  static qe.Hora _mapHora(arrow.Hora hora) => QuiverTypeMapper.hora(hora);
 
-  static qe.Body _mapBody(arrow.Body body) => switch (body) {
-    arrow.Body.sun => qe.Body.SUN,
-    arrow.Body.moon => qe.Body.MOON,
-    arrow.Body.mercury => qe.Body.MERCURY,
-    arrow.Body.venus => qe.Body.VENUS,
-    arrow.Body.mars => qe.Body.MARS,
-    arrow.Body.jupiter => qe.Body.JUPITER,
-    arrow.Body.saturn => qe.Body.SATURN,
-    arrow.Body.rahu => qe.Body.RAHU,
-    arrow.Body.ketu => qe.Body.KETU,
-    _ => qe.Body.BODY_UNSPECIFIED,
-  };
+  static qe.Body _mapBody(arrow.Body body) => QuiverTypeMapper.body(body);
 }

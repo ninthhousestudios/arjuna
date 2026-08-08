@@ -1,15 +1,18 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // Copyright (C) 2026 Ninth House Studios LLC
 
+import 'package:arrow_calc/arrow_calc.dart' show PlanetHealth;
 import 'package:arrow_core/arrow_core.dart';
 import 'package:arrow_options/arrow_options.dart';
 import 'package:arrow_swe/arrow_swe.dart';
 import 'package:grpc/grpc.dart';
 import 'package:logging/logging.dart';
 
+import '../generated/quiver/being_health.pb.dart' as qbh;
 import '../generated/quiver/chart.pb.dart' as qpb;
 import '../generated/quiver/types.pb.dart' as qt;
 import '../generated/quiver/types.pbenum.dart' as qe;
+import '../mapping/being_health_mapper.dart';
 import '../mapping/quiver_response_mapper.dart';
 
 final _log = Logger('Quiver.Gateway');
@@ -31,7 +34,10 @@ class QuiverGateway {
 
     final location = _toLocation(request.location);
     final options = _resolvePreset(request.preset);
-    final jds = _resolveTimes(request);
+    final jds = _resolveTimes(
+      request.datetimeIso,
+      request.hasTimeUncertainty() ? request.timeUncertainty : null,
+    );
 
     _log.info(
       'calculate samples=${jds.length} '
@@ -47,31 +53,72 @@ class QuiverGateway {
     return QuiverResponseMapper.fromCharts(charts);
   }
 
+  /// Rank the seven karakas by Lajjitaadi health, one list per computed chart.
+  /// A certain time yields a single ranking; an uncertain time yields one per
+  /// sampled instant.
+  Future<qbh.BeingHealthResponse> rankBeings(
+    qbh.BeingHealthRequest request,
+  ) async {
+    _validateBirthData(
+      request.hasDatetimeIso() && request.datetimeIso.isNotEmpty,
+      request.hasLocation(),
+    );
+
+    final location = _toLocation(request.location);
+    final options = _resolvePreset(request.preset);
+    final jds = _resolveTimes(
+      request.datetimeIso,
+      request.hasTimeUncertainty() ? request.timeUncertainty : null,
+    );
+
+    _log.info(
+      'rankBeings samples=${jds.length} '
+      'lat=${location.latitude} lon=${location.longitude}',
+    );
+
+    final rankings = <qbh.BeingRanking>[];
+    for (final jd in jds) {
+      final snapshot = await _calculate(jd, location, options);
+      final chart = Chart(snapshot, options.calcConfig);
+      rankings.add(
+        BeingHealthMapper.ranking(jd, PlanetHealth.rank(chart.rashi)),
+      );
+    }
+
+    return qbh.BeingHealthResponse(rankings: rankings);
+  }
+
   void _validateRequest(qpb.CalcRequest request) {
-    if (!request.hasDatetimeIso() || request.datetimeIso.isEmpty) {
+    _validateBirthData(
+      request.hasDatetimeIso() && request.datetimeIso.isNotEmpty,
+      request.hasLocation(),
+    );
+  }
+
+  void _validateBirthData(bool hasDatetime, bool hasLocation) {
+    if (!hasDatetime) {
       throw GrpcError.invalidArgument('datetime_iso is required');
     }
-    if (!request.hasLocation()) {
+    if (!hasLocation) {
       throw GrpcError.invalidArgument('location is required');
     }
   }
 
-  List<double> _resolveTimes(qpb.CalcRequest request) {
-    final iso = request.datetimeIso;
+  List<double> _resolveTimes(String iso, qt.TimeUncertainty? uncertainty) {
     final baseJd = _parseIsoToJd(iso);
 
-    if (!request.hasTimeUncertainty() ||
-        request.timeUncertainty.whichKind() == qt.TimeUncertainty_Kind.notSet ||
-        request.timeUncertainty.whichKind() == qt.TimeUncertainty_Kind.exact) {
+    if (uncertainty == null ||
+        uncertainty.whichKind() == qt.TimeUncertainty_Kind.notSet ||
+        uncertainty.whichKind() == qt.TimeUncertainty_Kind.exact) {
       return [baseJd];
     }
 
-    final uncertainty = _mapUncertainty(request.timeUncertainty);
+    final mapped = _mapUncertainty(uncertainty);
     final offset = _parseUtcOffset(iso);
     // sampleTimes needs local wall-clock date; pass a pseudo-UTC DateTime
     // with the local y/m/d so hour boundaries are in local time.
     final localDt = _parseLocalDateTime(iso);
-    final samples = sampleTimes(localDt, uncertainty);
+    final samples = sampleTimes(localDt, mapped);
     // Each sample is local wall-clock as pseudo-UTC; subtract offset to get
     // true UTC, then convert to Julian Day.
     return samples

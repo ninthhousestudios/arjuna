@@ -22,6 +22,7 @@ core/  ←  server/
 Source protos live at `proto/arrow/` and `proto/quiver/` (monorepo root). Generated Dart lands in `core/lib/src/generated/`. Regenerate with `melos protogen` from the monorepo root.
 
 - `chart.proto` — `ChartService.Calculate` RPC, `CalcRequest`, `CalcResponse`
+- `being_health.proto` — `BeingHealthService.RankBeings` RPC; wraps `PlanetHealth.rank`, returns one `BeingRanking` per computed chart (7 karakas ranked, full `PlanetHealthScore` breakdown). Rank by `strong_virupas` then `aspect_virupas`, never the total.
 - `types.proto` — `Body`, `CalculationPreset`, `BeingType`, `Hora`, `Being`, `PlanetPlacement`, `EphSnapshot`, etc.
 - `health.proto` — `HealthService`
 
