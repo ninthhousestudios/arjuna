@@ -68,13 +68,21 @@ class BeingHealthMapper {
     calc.LajjitaadiState.proud => bhe.LajjitaadiState.PROUD,
   };
 
+  // arrow's LajjitaadiFactor.source is a String, so this switch can't be
+  // exhaustive at compile time the way _state/_condition are. Fail loud on an
+  // unrecognized source rather than shipping FACTOR_SOURCE_UNSPECIFIED — a
+  // hollow wire value would hide the mapping gap from the report consumer.
   static bhe.FactorSource _source(String source) => switch (source) {
     'conjunction' => bhe.FactorSource.CONJUNCTION,
     'aspect' => bhe.FactorSource.ASPECT,
     'sign' => bhe.FactorSource.SIGN,
     'dignity' => bhe.FactorSource.DIGNITY,
     'condition' => bhe.FactorSource.CONDITION,
-    _ => bhe.FactorSource.FACTOR_SOURCE_UNSPECIFIED,
+    _ => throw ArgumentError.value(
+      source,
+      'source',
+      'unknown arrow LajjitaadiFactor source — add it to BeingHealthMapper._source',
+    ),
   };
 
   static bhe.ShameCondition _condition(calc.ShameCondition c) => switch (c) {

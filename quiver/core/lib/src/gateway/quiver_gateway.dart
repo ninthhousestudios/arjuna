@@ -97,10 +97,10 @@ class QuiverGateway {
 
   void _validateBirthData(bool hasDatetime, bool hasLocation) {
     if (!hasDatetime) {
-      throw GrpcError.invalidArgument('datetime_iso is required');
+      throw const GrpcError.invalidArgument('datetime_iso is required');
     }
     if (!hasLocation) {
-      throw GrpcError.invalidArgument('location is required');
+      throw const GrpcError.invalidArgument('location is required');
     }
   }
 
