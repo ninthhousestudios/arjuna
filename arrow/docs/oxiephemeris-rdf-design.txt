@@ -1,0 +1,220 @@
+==================== USER ====================
+i just found this on crates.io. i was just published a few hours ago.
+one thing i particularly interested in is cartes/oxiephemeris-rdf
+"oxi" reminds me of "oxigraph" which we just in ../manas/vidya
+so help me to understand exactly the purpose of oxiephemeri-rdf and how that relates to our use of oxigraph and rdf in vidya
+
+==================== ASSISTANT ====================
+Let me look at this repo and the RDF subcrate, then check how vidya uses oxigraph.
+
+==================== ASSISTANT ====================
+[TOOL_USE: ToolSearch] {"query": "select:mcp__sutra__sutra_status,mcp__sutra__sutra_map,mcp__sutra__sutra_explore", "max_results": 3}
+
+==================== USER ====================
+[TOOL_RESULT]   
+
+==================== ASSISTANT ====================
+[TOOL_USE: mcp__sutra__sutra_status] {"path": "/home/josh/soft/oxiephemeris"}
+
+==================== ASSISTANT ====================
+[TOOL_USE: mcp__sutra__sutra_status] {"path": "/home/josh/soft/manas/vidya"}
+
+==================== USER ====================
+[TOOL_RESULT] {"files":162,"is_stale":false,"last_parse":"2026-07-11T15:50:36.923146990+00:00","root":"/home/josh/soft/oxiephemeris","status":"ready","symbols":3331,"workspace":"oxiephemeris"}
+
+==================== USER ====================
+[TOOL_RESULT] {"files":26,"is_stale":false,"last_parse":"2026-07-03T16:40:29.833827039+00:00","root":"/home/josh/soft/manas/vidya","status":"ready","symbols":573,"workspace":"vidya"}
+
+==================== ASSISTANT ====================
+[TOOL_USE: mcp__sutra__sutra_map] {"workspace": "oxiephemeris", "path_prefix": "crates/oxiephemeris-rdf"}
+
+==================== ASSISTANT ====================
+[TOOL_USE: mcp__sutra__sutra_explore] {"workspace": "vidya", "query": "oxigraph rdf"}
+
+==================== USER ====================
+[TOOL_RESULT] {"_meta":{"freshness":{"edited":0,"fresh":14,"stale":0}},"as_of":"2026-07-11T15:50:36.923146990+00:00","files":[{"_freshness":"fresh","avg_cognitive":0.7272727272727273,"blast_radius":65,"fan_in_files":13,"importance":232,"language":"rust","line_count":598,"max_cognitive":1,"pagerank":0.006264035274689711,"path":"crates/oxiephemeris-rdf/src/model.rs","symbols":134},{"_freshness":"fresh","avg_cognitive":0.9512195121951219,"blast_radius":82,"fan_in_files":9,"importance":174,"language":"rust","line
+
+==================== USER ====================
+[TOOL_RESULT] {"as_of":"2026-07-03T16:40:29.833827039+00:00","edges":[],"is_stale":false,"items":[{"component":"src","estimated_tokens":412,"fetch":"sutra_read(symbol='tests::rdf_star_reifiers_differentiate_by_triple')","file":"vidya-core/src/skolem.rs","kind":"method","lines":103,"reason":"direct_match","symbol":"tests::rdf_star_reifiers_differentiate_by_triple"},{"component":"src","estimated_tokens":24,"fetch":"sutra_read(symbol='tests::shorten_rdfs_iri')","file":"vidya-core/src/query.rs","kind":"method","l
+
+==================== ASSISTANT ====================
+[TOOL_USE: ToolSearch] {"query": "select:mcp__sutra__sutra_read,mcp__sutra__sutra_outline", "max_results": 2}
+
+==================== USER ====================
+[TOOL_RESULT]  
+
+==================== ASSISTANT ====================
+[TOOL_USE: mcp__sutra__sutra_outline] {"workspace": "oxiephemeris", "path": "crates/oxiephemeris-rdf/src/lib.rs", "compact": true}
+
+==================== USER ====================
+[TOOL_RESULT] {"as_of":"2026-07-11T15:50:36.923146990+00:00","is_stale":false,"language":"rust","path":"crates/oxiephemeris-rdf/src/lib.rs","symbols":[{"end_line":11,"kind":"module","qualified_name":"builder","start_line":11,"visibility":null},{"end_line":12,"kind":"module","qualified_name":"chart","start_line":12,"visibility":"pub"},{"end_line":13,"kind":"module","qualified_name":"comparison","start_line":13,"visibility":"pub"},{"end_line":14,"kind":"module","qualified_name":"error","start_line":14,"visibili
+
+==================== ASSISTANT ====================
+[TOOL_USE: mcp__sutra__sutra_outline] {"workspace": "oxiephemeris", "path": "crates/oxiephemeris-rdf/src/ontology.rs", "compact": true}
+
+==================== USER ====================
+[TOOL_RESULT] {"as_of":"2026-07-11T15:50:36.923146990+00:00","is_stale":false,"language":"rust","path":"crates/oxiephemeris-rdf/src/ontology.rs","symbols":[{"end_line":31,"kind":"function","qualified_name":"ontology_iri","start_line":29,"visibility":"pub"},{"end_line":39,"kind":"struct","qualified_name":"ClassDef","start_line":34,"visibility":null},{"end_line":35,"kind":"field","qualified_name":"ClassDef::term","start_line":35,"visibility":null},{"end_line":36,"kind":"field","qualified_name":"ClassDef::en","s
+
+==================== ASSISTANT ====================
+[TOOL_USE: mcp__sutra__sutra_outline] {"workspace": "oxiephemeris", "path": "crates/oxiephemeris-rdf/src/model.rs", "compact": true}
+
+==================== USER ====================
+[TOOL_RESULT] {"as_of":"2026-07-11T15:50:36.923146990+00:00","is_stale":false,"language":"rust","path":"crates/oxiephemeris-rdf/src/model.rs","symbols":[{"end_line":31,"kind":"enum","qualified_name":"ChartKind","start_line":22,"visibility":"pub"},{"end_line":53,"kind":"impl","qualified_name":"ChartKind","start_line":33,"visibility":null},{"end_line":40,"kind":"const","qualified_name":"ChartKind::ALL","start_line":35,"visibility":"pub"},{"end_line":52,"kind":"method","qualified_name":"ChartKind::name","start_l
+
+==================== ASSISTANT ====================
+[TOOL_USE: mcp__sutra__sutra_outline] {"workspace": "oxiephemeris", "path": "crates/oxiephemeris-rdf/src/serialize.rs", "compact": true}
+
+==================== USER ====================
+[TOOL_RESULT] {"as_of":"2026-07-11T15:50:36.923146990+00:00","is_stale":false,"language":"rust","path":"crates/oxiephemeris-rdf/src/serialize.rs","symbols":[{"end_line":44,"kind":"function","qualified_name":"sorted_triples","start_line":29,"visibility":"pub"},{"end_line":66,"kind":"function","qualified_name":"write_turtle","start_line":53,"visibility":"pub"},{"end_line":82,"kind":"function","qualified_name":"write_ntriples","start_line":73,"visibility":"pub"},{"end_line":99,"kind":"function","qualified_name":
+
+==================== ASSISTANT ====================
+[TOOL_USE: mcp__sutra__sutra_explore] {"workspace": "vidya", "query": "oxigraph store graph knowledge"}
+
+==================== USER ====================
+[TOOL_RESULT] {"as_of":"2026-07-03T16:40:29.833827039+00:00","edges":[],"is_stale":false,"items":[{"component":"src","estimated_tokens":12,"fetch":"sutra_read(symbol='KnowledgeStore::graph_count')","file":"vidya-core/src/store.rs","kind":"method","lines":3,"reason":"direct_match","symbol":"KnowledgeStore::graph_count"},{"component":"src","estimated_tokens":24,"fetch":"sutra_read(symbol='KnowledgeStore')","file":"vidya-core/src/store.rs","kind":"struct","lines":6,"reason":"direct_match","symbol":"KnowledgeStor
+
+==================== ASSISTANT ====================
+[TOOL_USE: Read] {"file_path": "/home/josh/soft/oxiephemeris/crates/oxiephemeris-rdf/Cargo.toml"}
+
+==================== USER ====================
+[TOOL_RESULT] 1	[package]
+2	name = "oxiephemeris-rdf"
+3	version.workspace = true
+4	edition.workspace = true
+5	rust-version.workspace = true
+6	license.workspace = true
+7	readme = "README.md"
+8	authors.workspace = true
+9	repository.workspace = true
+10	description = "OxiEphemeris: Linked Open Data layer — RDF graphs, SKOS vocabulary, and PROV-O provenance for astrological charts"
+11	keywords = ["rdf", "skos", "linked-data", "astrology", "provenance"]
+12	categories = ["science", "data-structures"]
+13	
+14	[depende
+
+==================== ASSISTANT ====================
+[TOOL_USE: mcp__sutra__sutra_read] {"workspace": "vidya", "symbol": "KnowledgeStore", "limit": 40}
+
+==================== USER ====================
+[TOOL_RESULT] {"as_of":"2026-07-03T16:40:29.833827039+00:00","content":"   16 pub struct ResolveContext {\n   17     pub vocab: SchemaVocab,\n   18     pub vsa: EntityIndex<Hrr>,\n   19 }\n   20 \n   21 pub struct KnowledgeStore {\n   22     store: Store,\n   23     resolve_cache: RwLock<HashMap<String, Arc<ResolveContext>>>,\n   24     cache_generation: AtomicU64,\n   25     synonyms: RwLock<HashMap<String, SynonymTable>>,\n   26 }\n   27 \n   28 impl KnowledgeStore {\n   29     pub fn open(path: impl AsRef<
+
+==================== ASSISTANT ====================
+Now I have the full picture. Here's the breakdown:
+
+---
+
+## oxiephemeris-rdf — what it does
+
+It's a **serialization/output layer** that converts computed astrological chart data (natal charts, transits, synastry comparisons, composites) into **RDF graphs**. It depends on `oxrdf` and `oxttl` — the low-level data model and Turtle serializer from the oxigraph ecosystem — but **not** on `oxigraph` (the store/query engine) itself.
+
+Concretely it:
+1. **Defines an OWL ontology** for astrology — classes like `NatalChart`, `Transit`, properties like `hasLongitude`, `inSign`, `hasAspect`, with multilingual labels (en/ja) via SKOS.
+2. **Mints IRIs** for chart instances (content-addressed via SHA-256 of the epoch + observer).
+3. **Emits triples** for every computed fact — body placements, house cusps, aspects, dignities, etc.
+4. **Attaches PROV-O provenance** (which software version, which ephemeris file produced the data).
+5. **Serializes** the resulting graph to deterministic Turtle or N-Triples.
+
+The output is Linked Open Data: self-describing, portable, mergeable, queryable by anything that speaks SPARQL.
+
+---
+
+## How this relates to vidya + oxigraph
+
+**vidya** wraps `oxigraph::store::Store` in its `KnowledgeStore` — a persistent RDF triple store you can load graphs into and query with SPARQL. It resolves domain vocabulary, manages named graphs per domain, and does schema-aware operations (synonyms, skolemization, etc.).
+
+The connection is straightforward and complementary:
+
+| | oxiephemeris-rdf | vidya |
+|---|---|---|
+| **Role** | *Producer* — generates RDF triples | *Consumer* — stores/queries/reasons over RDF |
+| **Oxigraph dep** | `oxrdf` + `oxttl` (data model + serializer only) | `oxigraph` (full store + SPARQL engine) |
+| **Output** | Turtle/N-Triples files | SPARQL query results, resolved entities |
+
+**They sit at opposite ends of the same pipeline**: oxiephemeris-rdf produces well-typed Linked Data that something like vidya's KnowledgeStore could ingest directly — load the Turtle, query across charts, run SPARQL to find all transits with applying squares, merge charts from different sources, etc.
+
+The "oxi" prefix is shared heritage — `oxrdf`, `oxttl`, `oxigraph`, `oxsdatatypes` are all from the [oxigraph project](https://github.com/oxigraph/oxigraph) by Thomas Tanon. oxiephemeris-rdf uses the lightweight serialization pieces; vidya uses the full engine. If you ever wanted to load astrological chart data into vidya's knowledge store, oxiephemeris-rdf's Turtle output would be the ingest format — no adapter needed, it's already valid RDF with a proper ontology.
+
+==================== USER ====================
+interesting. so we could add something like this /home/josh/nhs/soft/astrology/arjuna/arrow?
+our calc engine could output rdf's of any chart. so that would make it easier to search charts basically?
+what other uses could this be put to?
+
+==================== ASSISTANT ====================
+Yes — if arjuna's calc engine emits RDF (using an ontology like oxiephemeris-rdf defines, or your own), you get a lot more than just "easier search." Let me lay out what RDF representation actually buys you over, say, storing charts as JSON/structs in a regular DB:
+
+**What becomes trivial with charts-as-RDF in a store like vidya:**
+
+1. **SPARQL queries across all charts** — "find every chart where Mars is in the 7th house applying a square to Venus within 3°" becomes a declarative query, not imperative code iterating over records. The graph structure means you don't need to pre-decide which questions are askable.
+
+2. **Schema-aware merging** — charts from different sources (different calc engines, different house systems, different ephemerides) can coexist in the same store with provenance tracking. You know *which* engine produced *which* triples and can filter/compare accordingly.
+
+3. **Inference/reasoning** — with an OWL ontology declaring class hierarchies (e.g., "a NatalChart is a Chart", "domicile is a DignityTier"), you get entailment for free. Query for "all dignity placements" and get domicile, exaltation, triplicity without enumerating them.
+
+4. **Linked Data interop** — connect charts to external datasets. Link a birth chart's observer location to a Wikidata entity. Link planetary positions to JPL ephemeris identifiers. Once it's RDF, joining across datasets is just adding triples.
+
+5. **Pattern libraries as data** — define aspect patterns, chart signatures, or traditional configurations (T-squares, grand trines, stelliums) as SPARQL graph patterns or SHACL shapes. Then *matching* is query execution, not custom code per pattern.
+
+6. **Temporal/comparative queries** — "show me every transit where Saturn crossed my natal Sun across 40 years of computed transits" is one query if all those transits are triples in the store.
+
+7. **Research corpus** — accumulate thousands of charts (from Astro-Databank, from clients, from historical records) and do statistical queries: "what percentage of charts with Sun in Aries also have Mars in a fire sign?" Exploratory analysis without writing bespoke aggregation code each time.
+
+**The real unlock** isn't any single query — it's that you stop pre-deciding what questions matter. JSON/struct storage optimizes for the access patterns you anticipated. RDF lets you ask questions you haven't thought of yet, across data you haven't ingested yet, and merge it with knowledge from domains you haven't connected yet.
+
+The practical path: arjuna computes → emits Turtle → vidya ingests into oxigraph → you query with SPARQL. The ontology is the contract between producer and consumer; everything else flows from it.
+
+==================== USER ====================
+so in /home/josh/nhs/soft/astrology/aion/docs/chart-db-design.md we are limited by the questions we can ask?
+but for the rdf case, we still have to encode all of the information right?
+
+==================== ASSISTANT ====================
+[TOOL_USE: Read] {"file_path": "/home/josh/nhs/soft/astrology/aion/docs/chart-db-design.md"}
+
+==================== USER ====================
+[TOOL_RESULT] 1	# chart-db design
+2	
+3	2026-04-24 — storage architecture for chart database.
+4	
+5	## identity
+6	
+7	chart-db is the persistent storage layer for aion. it stores birth data,
+8	organizes charts into collections, and provides similarity search via
+9	structured chart vectors.
+10	
+11	chart-db does not store text embeddings — those belong to chitta.
+12	chart-db does not perform calculations — it calls drishti (via the
+13	plugin host) to compute charts, then extracts and stores the results.
+14	
+15	## 
+
+==================== ASSISTANT ====================
+Right. So here's the honest comparison:
+
+**You're not "limited" in what you store** — chart-db stores the full computed chart and extracts vectors from it. You encode all the information either way. The difference is in **what you can ask without writing new code**.
+
+chart-db is optimized for two specific query shapes:
+1. **Text/metadata search** — FTS on name/place/notes, filter by tags/collections/date
+2. **Vector similarity** — "find charts that look like this one" via KNN on the feature vector
+
+Those are powerful and fast. But if you want to ask "show me every chart where Mars is retrograde in the 12th house applying a square to Saturn within 2°" — that's not a KNN query and it's not a text search. You'd have to write custom Dart code to deserialize the full chart JSON, filter by those specific conditions, and iterate. Every new question shape = new code.
+
+**With RDF in a SPARQL store**, that Mars/Saturn query is just:
+
+```sparql
+SELECT ?chart WHERE {
+  ?chart oxa:hasPlacement ?mars .
+  ?mars oxa:body oxa:Mars ; oxa:house 12 ; oxa:motion "retrograde" .
+  ?chart oxa:hasAspect ?asp .
+  ?asp oxa:body1 oxa:Mars ; oxa:body2 oxa:Saturn ;
+       oxa:kind "square" ; oxa:applying true ;
+       oxa:offset ?orb . FILTER(?orb < 2.0)
+}
+```
+
+No new code. The triples are the index.
+
+**But** — and this is the tradeoff — you still have to encode all the information as triples up front. The ontology design is the work: deciding that `oxa:motion` is a property, that `"retrograde"` is its value, that aspects are reified nodes with orb/applying/kind. That's what oxiephemeris-rdf's 5000 lines are doing. The encoding cost is real — it's just front-loaded into the ontology + serializer rather than spread across ad-hoc query code.
+
+**So is it worth it for you?** The question is: how many novel query shapes do you anticipate? If chart-db's two modes (similarity + text) cover 90% of what aion needs, RDF is over-engineering. If you find yourself repeatedly wanting to query specific astrological conditions across a corpus — research questions, pattern mining, "find all charts matching this traditional configuration" — then RDF earns its keep because each new question is a query, not a feature.
+
+The hybrid answer: chart-db for the fast UI path (similarity, browsing, collections), and an RDF export for the research/agent path when you want open-ended interrogation of the corpus. They don't have to be either/or.
+
