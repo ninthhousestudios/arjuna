@@ -78,8 +78,8 @@ final class NQuadsDocument {
 /// same bits (a spec-defined algorithm, stable across versions/platforms). For
 /// this project's value ranges (jd ~2.4e6, coords, degrees [0,360)) it never
 /// reaches exponent notation and matches the hand-authored ARP-2 golden's
-/// lexical form exactly. The assert is a tripwire: a value extreme enough to
-/// fall to exponent form would be out-of-domain and a bug to surface.
+/// lexical form exactly. A value extreme enough to fall to exponent form would
+/// be out-of-domain, so it throws rather than emit an unstable lexical form.
 String canonicalDouble(double value) {
   if (value.isNaN || value.isInfinite) {
     throw ArgumentError.value(
@@ -89,9 +89,13 @@ String canonicalDouble(double value) {
     );
   }
   final text = value.toString();
-  assert(
-    !text.contains('e') && !text.contains('E'),
-    'invariant: xsd:double lexical form fell to exponent notation: $text',
-  );
+  if (text.contains('e') || text.contains('E')) {
+    throw ArgumentError.value(
+      value,
+      'value',
+      'invariant: xsd:double lexical form fell to exponent notation ($text) — '
+          'out of the project value domain',
+    );
+  }
   return text;
 }

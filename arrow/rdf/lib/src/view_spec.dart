@@ -44,14 +44,16 @@ final class ViewSpec {
     required this.provenance,
   });
 
-  /// The canonical, stable string form of the config — the SOLE input to the
-  /// View IRI (I3). Two [ViewSpec]s mint the same View IRI iff this matches;
-  /// provenance is excluded (it stamps, it does not identify).
-  String get canonicalConfig =>
-      'circle=${circle.name};ayanamsa=${signAyanamsa.name};'
-      'house=${houseSystem.name}';
-
-  /// A readable, IRI-safe slug of the config for the View IRI path segment.
+  /// The View's identity for deterministic IRI minting (I3): a readable,
+  /// IRI-safe path segment such that two [ViewSpec]s mint the same View IRI iff
+  /// this matches. Provenance is excluded (it stamps, it does not identify).
+  ///
+  /// Deliberately built from arrow's enum *identifiers* ([Circle], [Ayanamsa],
+  /// [HouseSystem] `.name`), so those identifiers are part of the corpus IRI
+  /// contract: renaming one is a corpus migration, not a free refactor. The
+  /// serializer golden pins the emitted IRIs, so a rename touching a covered
+  /// config fails loudly — add golden coverage as the view slate (I11) grows so
+  /// new configs are guarded too.
   String get slug => '${circle.name}-${signAyanamsa.name}-${houseSystem.name}';
 
   /// The ontology's `chart:circle` value: the tropical/sidereal/aditya

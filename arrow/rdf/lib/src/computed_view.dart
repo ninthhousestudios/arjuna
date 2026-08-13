@@ -46,3 +46,11 @@ final class ComputedView {
 
   const ComputedView({required this.lagnaSign, required this.placements});
 }
+
+/// Whole-sign house of a body from its [bodySign] and the [lagnaSign] (both
+/// 1..12), result 1..12: `((bodySign - lagnaSign) mod 12) + 1`. Pure and
+/// SWE-free so it is unit-testable without an ephemeris. Relies on Dart's `%`
+/// yielding a non-negative result for a positive divisor (e.g. `-4 % 12 == 8`),
+/// so a body in a sign earlier than the lagna wraps forward correctly.
+int wholeSignHouse(int bodySign, int lagnaSign) =>
+    (bodySign - lagnaSign) % 12 + 1;

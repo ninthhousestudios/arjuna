@@ -55,16 +55,12 @@ final class ChartComputer {
           body: graha.body,
           longitude: graha.rawLongitude,
           sign: graha.sign,
-          house: _wholeSignHouse(graha.sign, lagnaSign),
+          house: wholeSignHouse(graha.sign, lagnaSign),
           retrograde: graha.isRetrograde,
         ),
     ];
     return ComputedView(lagnaSign: lagnaSign, placements: placements);
   }
-
-  /// Whole-sign house of a body from its sign and the lagna sign, 1..12.
-  static int _wholeSignHouse(int bodySign, int lagnaSign) =>
-      (bodySign - lagnaSign) % 12 + 1;
 
   static String? _genderString(oacf.Gender? gender) => switch (gender) {
     oacf.Gender.male => 'male',

@@ -75,10 +75,11 @@ final class Quad {
   });
 }
 
-/// XSD datatype IRIs used in literal serialization.
+/// XSD datatype IRIs used in literal serialization. String literals carry no
+/// datatype IRI — a bare `"…"` N-Quads literal is `xsd:string` by definition
+/// (RDF 1.1 §3.3), so an explicit `^^xsd:string` would be redundant.
 final class Xsd {
   Xsd._();
   static const Iri xdouble = Iri('${Namespaces.xsd}double');
-  static const Iri xstring = Iri('${Namespaces.xsd}string');
   static const Iri xboolean = Iri('${Namespaces.xsd}boolean');
 }
