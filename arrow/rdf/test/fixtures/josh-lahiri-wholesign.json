@@ -1,0 +1,94 @@
+{
+  "identity": {
+    "jd": 2447679.3388888887,
+    "lat": 40.04596111111111,
+    "lon": -86.02363333333334,
+    "name": "Josh",
+    "gender": "male",
+    "rodden": null,
+    "tags": [],
+    "placename": "Noblesville, IN",
+    "country": "USA",
+    "civilDate": "1989-06-01",
+    "civilTime": "15:08:00",
+    "utcOffset": -5.0
+  },
+  "view": {
+    "circle": "zodiac",
+    "signAyanamsa": "lahiri",
+    "houseSystem": "wholeSigns",
+    "provenance": {
+      "engine": "arrow",
+      "engineVersion": "0.1.0",
+      "ephemeris": "swiss-ephemeris"
+    }
+  },
+  "computed": {
+    "lagnaSign": 6,
+    "placements": [
+      {
+        "body": "sun",
+        "longitude": 47.57796274438522,
+        "sign": 2,
+        "house": 9,
+        "retrograde": false
+      },
+      {
+        "body": "moon",
+        "longitude": 20.464037904112523,
+        "sign": 1,
+        "house": 8,
+        "retrograde": false
+      },
+      {
+        "body": "mercury",
+        "longitude": 34.884300375803114,
+        "sign": 2,
+        "house": 9,
+        "retrograde": true
+      },
+      {
+        "body": "venus",
+        "longitude": 62.760680454689364,
+        "sign": 3,
+        "house": 10,
+        "retrograde": false
+      },
+      {
+        "body": "mars",
+        "longitude": 87.12588854621299,
+        "sign": 3,
+        "house": 10,
+        "retrograde": false
+      },
+      {
+        "body": "jupiter",
+        "longitude": 53.051387794437204,
+        "sign": 2,
+        "house": 9,
+        "retrograde": false
+      },
+      {
+        "body": "saturn",
+        "longitude": 259.0019353512833,
+        "sign": 9,
+        "house": 4,
+        "retrograde": true
+      },
+      {
+        "body": "rahu",
+        "longitude": 305.53663059382404,
+        "sign": 11,
+        "house": 6,
+        "retrograde": true
+      },
+      {
+        "body": "ketu",
+        "longitude": 125.53663059382404,
+        "sign": 5,
+        "house": 12,
+        "retrograde": true
+      }
+    ]
+  }
+}

@@ -10,6 +10,7 @@ workspace:
   - arrow/swe
   - arrow/core
   - arrow/calc
+  - arrow/rdf
   - arrow/tool
   - quiver/core
   - quiver/server
