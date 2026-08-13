@@ -2,7 +2,10 @@
 // Copyright (C) 2026 Ninth House Studios LLC
 
 /// Test fixture tools for Arrow.
+///
+/// The chart data model and .chtk parsing are re-exported from charts_dart —
+/// the single home of chtk parsing. This package keeps no duplicate copy.
 library;
 
-export 'src/chart_data.dart';
-export 'src/chtk.dart';
+export 'package:charts_dart/charts_dart.dart'
+    show ChartData, GeoLocation, Gender, ChtkFormat;
