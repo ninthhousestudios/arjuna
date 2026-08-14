@@ -38,14 +38,30 @@ final class IriMinter {
 
   /// View IRI: the chart's hash (per-chart, since it owns this chart's
   /// placements) plus the readable config [ViewSpec.slug].
-  Iri viewIri({required Iri chart, required ViewSpec view}) {
-    final chartId = chart.value.split('/').last;
-    return Iri('${Namespaces.corpus}view/$chartId/${view.slug}');
-  }
+  Iri viewIri({required Iri chart, required ViewSpec view}) =>
+      Iri('${Namespaces.corpus}view/${_chartId(chart)}/${view.slug}');
 
   /// Placement IRI: the view path plus the body's canon local name.
   Iri placementIri({required Iri view, required Body body}) =>
       Iri('${view.value}/${CanonIri.grahaLocalName(body)}');
+
+  /// Named-graph IRI for a chart's identity graph — distinct from the chart
+  /// *subject* IRI. Corpus named graphs live under the disjoint
+  /// `…/corpus/graph/*` namespace so vidya's instance-vs-canon classification
+  /// (I7) is a clean prefix check that never collides with subject IRIs
+  /// (`…/corpus/chart|view/*`). Identity is its own per-chart graph so
+  /// `drop-view` can remove a single view without destroying the Chart the
+  /// corpus's other views still reference.
+  Iri chartGraphIri({required Iri chart}) =>
+      Iri('${Namespaces.corpus}graph/${_chartId(chart)}/identity');
+
+  /// Named-graph IRI for one view of a chart (graph-per-view, per I5). Under
+  /// `…/corpus/graph/*` like [chartGraphIri]; this is the IRI that
+  /// `vidya drop-view` targets.
+  Iri viewGraphIri({required Iri chart, required ViewSpec view}) =>
+      Iri('${Namespaces.corpus}graph/${_chartId(chart)}/${view.slug}');
+
+  static String _chartId(Iri chart) => chart.value.split('/').last;
 
   static String _hash16(String input) =>
       sha256.convert(utf8.encode(input)).toString().substring(0, 16);

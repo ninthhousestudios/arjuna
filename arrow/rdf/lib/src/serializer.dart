@@ -59,15 +59,20 @@ final class ChartRdfSerializer {
       name: chart.name,
     );
     final viewIri = minter.viewIri(chart: chartIri, view: view);
+    // Named graphs live in the disjoint `…/corpus/graph/*` namespace (distinct
+    // from the subject IRIs above) so vidya's I7 instance-vs-canon guard is a
+    // clean prefix check. See [IriMinter.chartGraphIri].
+    final chartGraph = minter.chartGraphIri(chart: chartIri);
+    final viewGraph = minter.viewGraphIri(chart: chartIri, view: view);
     final quads = <Quad>[];
 
-    // ── Identity graph (named by the chart IRI) ──
+    // ── Identity graph (named by the chart's identity graph IRI) ──
     void identity(Iri predicate, RdfTerm object) => quads.add(
       Quad(
         subject: chartIri,
         predicate: predicate,
         object: object,
-        graph: chartIri,
+        graph: chartGraph,
       ),
     );
 
@@ -110,13 +115,13 @@ final class ChartRdfSerializer {
     }
     identity(_c('hasView'), IriTerm(viewIri));
 
-    // ── View graph (named by the view IRI) ──
+    // ── View graph (named by the view's graph IRI) ──
     void view0(Iri subject, Iri predicate, RdfTerm object) => quads.add(
       Quad(
         subject: subject,
         predicate: predicate,
         object: object,
-        graph: viewIri,
+        graph: viewGraph,
       ),
     );
 

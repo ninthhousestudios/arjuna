@@ -103,6 +103,64 @@ void main() {
     });
   });
 
+  group('graph IRIs', () {
+    test('name graphs under the disjoint corpus/graph namespace (I7)', () {
+      final c = chart();
+      expect(
+        minter.chartGraphIri(chart: c).value,
+        startsWith('${Namespaces.corpus}graph/'),
+      );
+      expect(
+        minter.viewGraphIri(chart: c, view: view).value,
+        startsWith('${Namespaces.corpus}graph/'),
+      );
+    });
+
+    test('are deterministic', () {
+      final c = chart();
+      expect(minter.chartGraphIri(chart: c), minter.chartGraphIri(chart: c));
+      expect(
+        minter.viewGraphIri(chart: c, view: view),
+        minter.viewGraphIri(chart: c, view: view),
+      );
+    });
+
+    test('identity graph is distinct from any view graph', () {
+      final c = chart();
+      expect(
+        minter.chartGraphIri(chart: c),
+        isNot(minter.viewGraphIri(chart: c, view: view)),
+      );
+    });
+
+    test('view graph differs per config, tracking the view IRI slug', () {
+      const otherConfig = ViewSpec(
+        circle: Circle.aditya,
+        signAyanamsa: Ayanamsa.tropical,
+        houseSystem: HouseSystem.wholeSigns,
+        provenance: Provenance(
+          engine: 'arrow',
+          engineVersion: '0.1.0',
+          ephemeris: 'swiss',
+        ),
+      );
+      final c = chart();
+      expect(
+        minter.viewGraphIri(chart: c, view: view),
+        isNot(minter.viewGraphIri(chart: c, view: otherConfig)),
+      );
+    });
+
+    test('graph IRI is distinct from the subject IRI it contains', () {
+      final c = chart();
+      expect(minter.chartGraphIri(chart: c), isNot(c));
+      expect(
+        minter.viewGraphIri(chart: c, view: view),
+        isNot(minter.viewIri(chart: c, view: view)),
+      );
+    });
+  });
+
   group('placementIri', () {
     test('is distinct per body and nested under the view', () {
       final v = minter.viewIri(chart: chart(), view: view);

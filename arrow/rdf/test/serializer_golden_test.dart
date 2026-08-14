@@ -66,6 +66,20 @@ void main() {
     });
   });
 
+  // The loader contract (vidya ARP-5 I7): every named graph must live under the
+  // disjoint `…/corpus/graph/*` namespace, or `load-corpus` rejects the whole
+  // payload. Pin it here at the serializer boundary — this is the seam ARP-6
+  // exposed.
+  test('every quad names a graph under the corpus/graph namespace', () {
+    final graphs = doc.quads.map((q) => q.graph.value).toSet();
+    expect(graphs, isNotEmpty);
+    expect(
+      graphs,
+      everyElement(startsWith('${Namespaces.corpus}graph/')),
+      reason: 'load-corpus rejects any graph outside …/corpus/graph/*',
+    );
+  });
+
   test('golden covers the full 9-graha view + identity', () {
     final placements = doc.quads
         .where((q) => q.predicate.value == '${Namespaces.chart}hasPlacement')
