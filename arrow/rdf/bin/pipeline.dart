@@ -164,11 +164,14 @@ _SerializeResult _serializeCorpus(_Options opts) {
       try {
         final chart = TomlChartFormat.read(file.path);
         final identity = computer.identity(chart);
-        // The identity graph is per-chart, not per-view; each serialize() bundles
-        // it with the view. Emit it once (from the first view) and keep only the
-        // view graph from the rest, so the corpus .nq carries no duplicate
-        // identity quads. (vidya's set semantics would collapse them anyway, but
-        // a clean, diffable file is the point of a canonical serializer.)
+        // The identity graph is per-chart, not per-view, so each serialize()
+        // re-emits its whole payload (name, jd, tags, …) — EXCEPT chart:hasView,
+        // which names *this* view and so genuinely differs across the slate.
+        // Emit the identity payload once (first view) but always keep every
+        // view's hasView link, so the corpus .nq carries no duplicate identity
+        // quads yet still links the Chart to all its views. (vidya's set
+        // semantics would collapse the dups anyway, but a clean, diffable .nq
+        // is the point of a canonical serializer.)
         final identityGraph = minter.chartGraphIri(
           chart: minter.chartIri(
             jd: identity.jd,
@@ -184,7 +187,11 @@ _SerializeResult _serializeCorpus(_Options opts) {
               .serialize(chart: identity, view: view, computed: computed)
               .quads;
           for (final q in quads) {
-            if (first || q.graph != identityGraph) {
+            final isRedundantIdentity =
+                !first &&
+                q.graph == identityGraph &&
+                q.predicate.value != '${Namespaces.chart}hasView';
+            if (!isRedundantIdentity) {
               allQuads.add(q);
             }
           }
