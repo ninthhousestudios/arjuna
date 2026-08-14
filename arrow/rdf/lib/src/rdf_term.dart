@@ -73,6 +73,23 @@ final class Quad {
     required this.object,
     required this.graph,
   });
+
+  /// Value equality over all four positions, so byte-identical quads collapse in
+  /// a [Set]. This is what lets the corpus pipeline merge a chart's views by
+  /// set-union: the identity graph each view re-emits is identical (and
+  /// collapses), while each view's distinct `chart:hasView` differs by object
+  /// and is kept. [Iri] and every [RdfTerm] already delegate equality to their
+  /// underlying value.
+  @override
+  bool operator ==(Object other) =>
+      other is Quad &&
+      other.subject == subject &&
+      other.predicate == predicate &&
+      other.object == object &&
+      other.graph == graph;
+
+  @override
+  int get hashCode => Object.hash(subject, predicate, object, graph);
 }
 
 /// XSD datatype IRIs used in literal serialization. String literals carry no

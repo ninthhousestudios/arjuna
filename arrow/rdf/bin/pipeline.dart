@@ -152,7 +152,6 @@ _SerializeResult _serializeCorpus(_Options opts) {
 
   final facade = SweFacade.create(ephePath: ephe);
   const serializer = ChartRdfSerializer();
-  const minter = IriMinter();
   final allQuads = <Quad>[];
   final failures = <String>[];
   var charts = 0;
@@ -167,36 +166,20 @@ _SerializeResult _serializeCorpus(_Options opts) {
         // The identity graph is per-chart, not per-view, so each serialize()
         // re-emits its whole payload (name, jd, tags, …) — EXCEPT chart:hasView,
         // which names *this* view and so genuinely differs across the slate.
-        // Emit the identity payload once (first view) but always keep every
-        // view's hasView link, so the corpus .nq carries no duplicate identity
-        // quads yet still links the Chart to all its views. (vidya's set
-        // semantics would collapse the dups anyway, but a clean, diffable .nq
-        // is the point of a canonical serializer.)
-        final identityGraph = minter.chartGraphIri(
-          chart: minter.chartIri(
-            jd: identity.jd,
-            lat: identity.lat,
-            lon: identity.lon,
-            name: identity.name,
-          ),
-        );
-        var first = true;
-        for (final view in _views) {
-          final computed = computer.compute(chart, view);
-          final quads = serializer
-              .serialize(chart: identity, view: view, computed: computed)
-              .quads;
-          for (final q in quads) {
-            final isRedundantIdentity =
-                !first &&
-                q.graph == identityGraph &&
-                q.predicate.value != '${Namespaces.chart}hasView';
-            if (!isRedundantIdentity) {
-              allQuads.add(q);
-            }
-          }
-          first = false;
-        }
+        // Merging the views by Quad set-union emits the identity payload once
+        // yet keeps every view's distinct hasView, so the corpus .nq carries no
+        // duplicate identity quads while still linking the Chart to all its
+        // views. (vidya's set semantics would collapse dups anyway, but a clean,
+        // diffable .nq is the point of a canonical serializer.)
+        final views = <NQuadsDocument>[
+          for (final view in _views)
+            serializer.serialize(
+              chart: identity,
+              view: view,
+              computed: computer.compute(chart, view),
+            ),
+        ];
+        allQuads.addAll(NQuadsDocument.merge(views).quads);
         charts++;
       } catch (e) {
         failures.add('  $rel: $e');

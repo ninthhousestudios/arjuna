@@ -12,6 +12,24 @@ final class NQuadsDocument {
   final List<Quad> quads;
   const NQuadsDocument(this.quads);
 
+  /// Merge per-view serializations of one chart into a single document,
+  /// collapsing byte-identical quads by [Quad] value equality. The identity
+  /// graph that every view re-emits is identical across views and collapses to
+  /// one copy; each view's distinct `chart:hasView` differs by object and so is
+  /// kept, linking the Chart to every view (the invariant 805ce43 restored).
+  ///
+  /// This replaces recomputing the identity-graph IRI to recognise "redundant"
+  /// quads: nothing here needs to know which graph is the identity graph, so the
+  /// merge can't drift from the serializer's IRI derivation. Output order is
+  /// irrelevant — [write] sorts.
+  factory NQuadsDocument.merge(Iterable<NQuadsDocument> docs) {
+    final merged = <Quad>{};
+    for (final doc in docs) {
+      merged.addAll(doc.quads);
+    }
+    return NQuadsDocument(merged.toList());
+  }
+
   /// Canonical N-Quads text (LF-terminated lines, sorted, UTF-8). Deterministic.
   String write() {
     final lines = quads.map(_line).toList()..sort();
