@@ -1,0 +1,215 @@
+[[waiver]]
+constraint = "no-ignore-comments"
+file = "arrow/calc/test/smoke_test.dart"
+rationale = "export-surface smoke test — the ignored unused_import is the import under test"
+by = "claude (vidhi/11 adoption)"
+
+[[waiver]]
+constraint = "no-ignore-comments"
+file = "arrow/options/lib/src/arrow_options_data.freezed.dart"
+rationale = "freezed-generated code — ignore headers emitted by build_runner, never hand-written"
+by = "claude (vidhi/11 adoption)"
+
+[[waiver]]
+constraint = "no-ignore-comments"
+file = "arrow/options/lib/src/calc_config.freezed.dart"
+rationale = "freezed-generated code — ignore headers emitted by build_runner, never hand-written"
+by = "claude (vidhi/11 adoption)"
+
+[[waiver]]
+constraint = "no-ignore-comments"
+file = "arrow/options/lib/src/location.freezed.dart"
+rationale = "freezed-generated code — ignore headers emitted by build_runner, never hand-written"
+by = "claude (vidhi/11 adoption)"
+
+[[waiver]]
+constraint = "no-ignore-comments"
+file = "arrow/options/lib/src/swe_config.freezed.dart"
+rationale = "freezed-generated code — ignore headers emitted by build_runner, never hand-written"
+by = "claude (vidhi/11 adoption)"
+
+[[waiver]]
+constraint = "no-ignore-comments"
+file = "arrow/options/lib/src/vedic_config.freezed.dart"
+rationale = "freezed-generated code — ignore headers emitted by build_runner, never hand-written"
+by = "claude (vidhi/11 adoption)"
+
+[[waiver]]
+constraint = "no-ignore-comments"
+file = "arrow/swe/lib/src/asc_mc_points.freezed.dart"
+rationale = "freezed-generated code — ignore headers emitted by build_runner, never hand-written"
+by = "claude (vidhi/11 adoption)"
+
+[[waiver]]
+constraint = "no-ignore-comments"
+file = "arrow/swe/lib/src/body_position.freezed.dart"
+rationale = "freezed-generated code — ignore headers emitted by build_runner, never hand-written"
+by = "claude (vidhi/11 adoption)"
+
+[[waiver]]
+constraint = "no-ignore-comments"
+file = "arrow/swe/lib/src/cardinal_points.freezed.dart"
+rationale = "freezed-generated code — ignore headers emitted by build_runner, never hand-written"
+by = "claude (vidhi/11 adoption)"
+
+[[waiver]]
+constraint = "no-ignore-comments"
+file = "arrow/swe/lib/src/eph_snapshot.freezed.dart"
+rationale = "freezed-generated code — ignore headers emitted by build_runner, never hand-written"
+by = "claude (vidhi/11 adoption)"
+
+[[waiver]]
+constraint = "no-ignore-comments"
+file = "arrow/swe/lib/src/pheno_data.freezed.dart"
+rationale = "freezed-generated code — ignore headers emitted by build_runner, never hand-written"
+by = "claude (vidhi/11 adoption)"
+
+[[waiver]]
+constraint = "no-ignore-comments"
+file = "arrow/swe/lib/src/star_data.freezed.dart"
+rationale = "freezed-generated code — ignore headers emitted by build_runner, never hand-written"
+by = "claude (vidhi/11 adoption)"
+
+[[waiver]]
+constraint = "no-ignore-comments"
+file = "arrow/swe/lib/src/star_position.freezed.dart"
+rationale = "freezed-generated code — ignore headers emitted by build_runner, never hand-written"
+by = "claude (vidhi/11 adoption)"
+
+[[waiver]]
+constraint = "no-ignore-comments"
+file = "arrow/swe/lib/src/sun_times.freezed.dart"
+rationale = "freezed-generated code — ignore headers emitted by build_runner, never hand-written"
+by = "claude (vidhi/11 adoption)"
+
+[[waiver]]
+constraint = "no-ignore-comments"
+file = "quiver/core/lib/src/generated/arrow/chart.pb.dart"
+rationale = "protoc-generated code — ignore_for_file headers emitted by the generator, never hand-written"
+by = "claude (vidhi/11 adoption)"
+
+[[waiver]]
+constraint = "no-ignore-comments"
+file = "quiver/core/lib/src/generated/arrow/chart.pbenum.dart"
+rationale = "protoc-generated code — ignore_for_file headers emitted by the generator, never hand-written"
+by = "claude (vidhi/11 adoption)"
+
+[[waiver]]
+constraint = "no-ignore-comments"
+file = "quiver/core/lib/src/generated/arrow/chart.pbgrpc.dart"
+rationale = "protoc-generated code — ignore_for_file headers emitted by the generator, never hand-written"
+by = "claude (vidhi/11 adoption)"
+
+[[waiver]]
+constraint = "no-ignore-comments"
+file = "quiver/core/lib/src/generated/arrow/chart.pbjson.dart"
+rationale = "protoc-generated code — ignore_for_file headers emitted by the generator, never hand-written"
+by = "claude (vidhi/11 adoption)"
+
+[[waiver]]
+constraint = "no-ignore-comments"
+file = "quiver/core/lib/src/generated/arrow/types.pb.dart"
+rationale = "protoc-generated code — ignore_for_file headers emitted by the generator, never hand-written"
+by = "claude (vidhi/11 adoption)"
+
+[[waiver]]
+constraint = "no-ignore-comments"
+file = "quiver/core/lib/src/generated/arrow/types.pbenum.dart"
+rationale = "protoc-generated code — ignore_for_file headers emitted by the generator, never hand-written"
+by = "claude (vidhi/11 adoption)"
+
+[[waiver]]
+constraint = "no-ignore-comments"
+file = "quiver/core/lib/src/generated/arrow/types.pbjson.dart"
+rationale = "protoc-generated code — ignore_for_file headers emitted by the generator, never hand-written"
+by = "claude (vidhi/11 adoption)"
+
+[[waiver]]
+constraint = "no-ignore-comments"
+file = "quiver/core/lib/src/generated/grpc/health/v1/health.pb.dart"
+rationale = "protoc-generated code — ignore_for_file headers emitted by the generator, never hand-written"
+by = "claude (vidhi/11 adoption)"
+
+[[waiver]]
+constraint = "no-ignore-comments"
+file = "quiver/core/lib/src/generated/grpc/health/v1/health.pbenum.dart"
+rationale = "protoc-generated code — ignore_for_file headers emitted by the generator, never hand-written"
+by = "claude (vidhi/11 adoption)"
+
+[[waiver]]
+constraint = "no-ignore-comments"
+file = "quiver/core/lib/src/generated/grpc/health/v1/health.pbgrpc.dart"
+rationale = "protoc-generated code — ignore_for_file headers emitted by the generator, never hand-written"
+by = "claude (vidhi/11 adoption)"
+
+[[waiver]]
+constraint = "no-ignore-comments"
+file = "quiver/core/lib/src/generated/grpc/health/v1/health.pbjson.dart"
+rationale = "protoc-generated code — ignore_for_file headers emitted by the generator, never hand-written"
+by = "claude (vidhi/11 adoption)"
+
+[[waiver]]
+constraint = "no-ignore-comments"
+file = "quiver/core/lib/src/generated/quiver/chart.pb.dart"
+rationale = "protoc-generated code — ignore_for_file headers emitted by the generator, never hand-written"
+by = "claude (vidhi/11 adoption)"
+
+[[waiver]]
+constraint = "no-ignore-comments"
+file = "quiver/core/lib/src/generated/quiver/chart.pbenum.dart"
+rationale = "protoc-generated code — ignore_for_file headers emitted by the generator, never hand-written"
+by = "claude (vidhi/11 adoption)"
+
+[[waiver]]
+constraint = "no-ignore-comments"
+file = "quiver/core/lib/src/generated/quiver/chart.pbgrpc.dart"
+rationale = "protoc-generated code — ignore_for_file headers emitted by the generator, never hand-written"
+by = "claude (vidhi/11 adoption)"
+
+[[waiver]]
+constraint = "no-ignore-comments"
+file = "quiver/core/lib/src/generated/quiver/chart.pbjson.dart"
+rationale = "protoc-generated code — ignore_for_file headers emitted by the generator, never hand-written"
+by = "claude (vidhi/11 adoption)"
+
+[[waiver]]
+constraint = "no-ignore-comments"
+file = "quiver/core/lib/src/generated/quiver/health.pb.dart"
+rationale = "protoc-generated code — ignore_for_file headers emitted by the generator, never hand-written"
+by = "claude (vidhi/11 adoption)"
+
+[[waiver]]
+constraint = "no-ignore-comments"
+file = "quiver/core/lib/src/generated/quiver/health.pbenum.dart"
+rationale = "protoc-generated code — ignore_for_file headers emitted by the generator, never hand-written"
+by = "claude (vidhi/11 adoption)"
+
+[[waiver]]
+constraint = "no-ignore-comments"
+file = "quiver/core/lib/src/generated/quiver/health.pbgrpc.dart"
+rationale = "protoc-generated code — ignore_for_file headers emitted by the generator, never hand-written"
+by = "claude (vidhi/11 adoption)"
+
+[[waiver]]
+constraint = "no-ignore-comments"
+file = "quiver/core/lib/src/generated/quiver/health.pbjson.dart"
+rationale = "protoc-generated code — ignore_for_file headers emitted by the generator, never hand-written"
+by = "claude (vidhi/11 adoption)"
+
+[[waiver]]
+constraint = "no-ignore-comments"
+file = "quiver/core/lib/src/generated/quiver/types.pb.dart"
+rationale = "protoc-generated code — ignore_for_file headers emitted by the generator, never hand-written"
+by = "claude (vidhi/11 adoption)"
+
+[[waiver]]
+constraint = "no-ignore-comments"
+file = "quiver/core/lib/src/generated/quiver/types.pbenum.dart"
+rationale = "protoc-generated code — ignore_for_file headers emitted by the generator, never hand-written"
+by = "claude (vidhi/11 adoption)"
+
+[[waiver]]
+constraint = "no-ignore-comments"
+file = "quiver/core/lib/src/generated/quiver/types.pbjson.dart"
+rationale = "protoc-generated code — ignore_for_file headers emitted by the generator, never hand-written"
+by = "claude (vidhi/11 adoption)"
