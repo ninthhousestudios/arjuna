@@ -36,7 +36,7 @@ const ViewSpec tracerView = ViewSpec(
 void main(List<String> args) {
   final home = Platform.environment['HOME'] ?? '';
   final chartPath = args.isNotEmpty ? args[0] : '$home/charts/mine/josh.toml';
-  final ephePath = _findEphePath();
+  final ephePath = findEphePath();
   if (ephePath == null) {
     stderr.writeln('no ephe path found; set ARROW_EPHE_PATH');
     exit(1);
@@ -112,21 +112,3 @@ Map<String, Object?> _computedJson(ComputedView computed) => <String, Object?>{
       },
   ],
 };
-
-String? _findEphePath() {
-  final env = Platform.environment['ARROW_EPHE_PATH'];
-  if (env != null && Directory(env).existsSync()) {
-    return env;
-  }
-  final home = Platform.environment['HOME'] ?? '';
-  for (final p in <String>[
-    '$home/nhs/soft/astrology/libaditya/libaditya/ephe',
-    '$home/.arrow/ephe',
-    '/usr/local/share/swisseph',
-  ]) {
-    if (Directory(p).existsSync()) {
-      return p;
-    }
-  }
-  return null;
-}

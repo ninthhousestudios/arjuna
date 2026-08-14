@@ -11,6 +11,7 @@ export 'src/canon_iri.dart';
 export 'src/chart_computer.dart';
 export 'src/chart_identity.dart';
 export 'src/computed_view.dart';
+export 'src/ephe_path.dart';
 export 'src/iri.dart';
 export 'src/iri_minter.dart';
 export 'src/nquads.dart';
