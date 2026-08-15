@@ -181,6 +181,60 @@ name = "services-no-cycles"
 severity = "blocking"
 
 # ═══════════════════════════════════════════════════════════════════
+# Checkpoint 2026-08-15 — arrow/rdf serializer (checkpoint:vidya/astrology-research/6)
+# ═══════════════════════════════════════════════════════════════════
+# The arrow_rdf package (arrow/rdf/lib/src/: serializer, nquads, computed_view,
+# view_spec, chart_computer, iri*, chart_identity, rdf_term) is the RDF/N-Quads
+# serialization sink — it consumes options/swe/core (via the arrow_swe facade,
+# not swisseph directly, so swisseph-only-in-arrow-swe holds) and emits canon.
+# It was an entire package with no governance until this tend. Both rules below
+# bind clean today (0 cycles workspace-wide; no compute→rdf edges), so blocking
+# is honest.
+
+# Each serializer unit (serializer/nquads/iri/view_spec/computed_view/…) should
+# stay independently testable — same discipline as the calc subsystems above.
+[[constraint]]
+kind = "no_cycles"
+scope = "arrow/rdf/lib/src/"
+name = "no-cycles-arrow-rdf"
+severity = "blocking"
+provenance = "checkpoint:vidya/astrology-research/6 — arrow/rdf serializer emergent structure"
+
+# arrow/rdf is a sink: serialization stays at the edge, the compute layers
+# (options/swe/core/calc) must never depend back on the emitter.
+[[constraint]]
+kind = "forbidden_dep"
+from = "arrow/options/lib/**"
+to = "arrow/rdf/lib/**"
+name = "options-must-not-import-rdf"
+severity = "blocking"
+provenance = "checkpoint:vidya/astrology-research/6 — arrow/rdf is a serialization sink"
+
+[[constraint]]
+kind = "forbidden_dep"
+from = "arrow/swe/lib/**"
+to = "arrow/rdf/lib/**"
+name = "swe-must-not-import-rdf"
+severity = "blocking"
+provenance = "checkpoint:vidya/astrology-research/6 — arrow/rdf is a serialization sink"
+
+[[constraint]]
+kind = "forbidden_dep"
+from = "arrow/core/lib/**"
+to = "arrow/rdf/lib/**"
+name = "core-must-not-import-rdf"
+severity = "blocking"
+provenance = "checkpoint:vidya/astrology-research/6 — arrow/rdf is a serialization sink"
+
+[[constraint]]
+kind = "forbidden_dep"
+from = "arrow/calc/lib/**"
+to = "arrow/rdf/lib/**"
+name = "calc-must-not-import-rdf"
+severity = "blocking"
+provenance = "checkpoint:vidya/astrology-research/6 — arrow/rdf is a serialization sink"
+
+# ═══════════════════════════════════════════════════════════════════
 # Conventions
 # ═══════════════════════════════════════════════════════════════════
 # Deliberately absent. The legacy arrow/quiver files carried [conventions]
