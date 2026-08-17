@@ -17,6 +17,7 @@ COPY arrow/options/pubspec.yaml arrow/options/
 COPY arrow/swe/pubspec.yaml arrow/swe/
 COPY arrow/core/pubspec.yaml arrow/core/
 COPY arrow/calc/pubspec.yaml arrow/calc/
+COPY arrow/rdf/pubspec.yaml arrow/rdf/
 COPY arrow/tool/pubspec.yaml arrow/tool/
 COPY quiver/core/pubspec.yaml quiver/core/
 COPY quiver/server/pubspec.yaml quiver/server/
