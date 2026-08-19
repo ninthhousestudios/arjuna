@@ -225,7 +225,7 @@ return $default(_that.circle,_that.nakEquatorial,_that.traditions,_that.zodiacSy
 @JsonSerializable()
 
 class _CalcConfig implements CalcConfig {
-  const _CalcConfig({this.circle = Circle.aditya, this.nakEquatorial = true, final  Set<Tradition> traditions = const {Tradition.vedic}, this.zodiacSystem = ZodiacSystem.sidereal12, this.vedic = const VedicConfig()}): _traditions = traditions;
+  const _CalcConfig({this.circle = Circle.aditya, this.nakEquatorial = true, final  Set<Tradition> traditions = const {Tradition.vedic}, this.zodiacSystem = ZodiacSystem.tropical12, this.vedic = const VedicConfig()}): _traditions = traditions;
   factory _CalcConfig.fromJson(Map<String, dynamic> json) => _$CalcConfigFromJson(json);
 
 @override@JsonKey() final  Circle circle;

@@ -19,7 +19,7 @@ _CalcConfig _$CalcConfigFromJson(Map<String, dynamic> json) => _CalcConfig(
       const {Tradition.vedic},
   zodiacSystem:
       $enumDecodeNullable(_$ZodiacSystemEnumMap, json['zodiacSystem']) ??
-      ZodiacSystem.sidereal12,
+      ZodiacSystem.tropical12,
   vedic: json['vedic'] == null
       ? const VedicConfig()
       : VedicConfig.fromJson(json['vedic'] as Map<String, dynamic>),
