@@ -126,20 +126,16 @@ class PlanetHealthScore {
   final Body body;
 
   /// Sum of every [ScoredFactor.virupas]. Positive = net healthy. This is
-  /// the whole picture for display; ranking uses [strongVirupas] then
-  /// [aspectVirupas], not this total (see [PlanetHealth.rank]).
+  /// the ranking key (see [PlanetHealth.rank]).
   final double virupas;
 
   /// Sum of the non-aspect factors: dignity, sign placement, sign lord,
-  /// conjunction, and the shame conditions. Laura's precedence rule — "the
-  /// LA of the planet in a Sign is always stronger than the aspect… the only
-  /// time this does not apply is with conjunctions" — makes these the primary
-  /// ranking key.
+  /// conjunction, and the shame conditions. Reported so a total can be read
+  /// back to sign-level vs aspect-level causes; not a ranking key.
   final double strongVirupas;
 
   /// Sum of the aspect factors, each prorated by Parashara aspect strength.
-  /// Subordinate to [strongVirupas]: aspects only order planets whose strong
-  /// totals are equal.
+  /// Weighted the same as [strongVirupas] in [virupas].
   final double aspectVirupas;
 
   /// Per-state subtotals, so a total can be read back to its causes.
@@ -231,25 +227,18 @@ class BeingHealth {
 /// 3. Score each remaining factor as `virupasFor(state) * strength / 60`,
 ///    so conjunction/sign/dignity factors land at full weight and aspect
 ///    factors are prorated by Parashara aspect strength.
-/// 4. Split each planet's total into a *strong* subtotal (dignity, sign, sign
-///    lord, conjunction, shame conditions) and an *aspect* subtotal.
-/// 5. Rank by strong subtotal first; the aspect subtotal only orders planets
-///    whose strong subtotals are equal.
+/// 4. Sum every factor into the planet's total, and rank by that total.
 ///
-/// Step 5 is Laura's precedence rule: "the LA of the planet in a Sign is
-/// always stronger than the aspect… if Saturn is exalted but also aspected by
-/// Mars, the exaltation is stronger… the only time this does not apply is with
-/// conjunctions." So sign- and conjunction-caused avasthas rank a planet, and
-/// aspects — however many pile on — can only break ties among planets those
-/// stronger causes leave level. This is what keeps an exalted-but-aspect-
-/// afflicted planet (Josh's Saturn, starved *and* agitated by Sun/Moon/Mars)
-/// from being dragged below planets with genuinely worse dignity: its aspect
-/// pile lives in the subordinate tier.
+/// Aspects are not discounted beyond their Parashara strength: a full (60/60)
+/// aspect that starves costs −45, the same as starvation by sign or
+/// conjunction; a half-strength (30/60) aspect costs half that. A malefic
+/// enemy's aspect both starves and agitates, and both count. The total is
+/// still split into *strong* (dignity, sign, sign lord, conjunction, shame
+/// conditions) and *aspect* subtotals for reporting.
 ///
-/// Within each tier the score stays additive — no state trumps another, a
-/// planet can be both proud and shamed, and multiple malefics stack. The full
-/// picture is preserved in [PlanetHealthScore.byState] and
-/// [PlanetHealthScore.factors].
+/// The score is additive — no state trumps another, a planet can be both
+/// proud and shamed, and multiple malefics stack. The full picture is
+/// preserved in [PlanetHealthScore.byState] and [PlanetHealthScore.factors].
 class PlanetHealth {
   const PlanetHealth._();
 
@@ -275,14 +264,10 @@ class PlanetHealth {
     final scores = score(varga, weights: weights);
     final ordered = varga.karakas.toList()
       ..sort((a, b) {
-        final sa = scores[a.body]!;
-        final sb = scores[b.body]!;
-        // Precedence: strong (sign/conjunction) causes rank first; aspects
-        // only order planets those leave level.
-        final byStrong = sb.strongVirupas.compareTo(sa.strongVirupas);
-        if (byStrong != 0) return byStrong;
-        final byAspect = sb.aspectVirupas.compareTo(sa.aspectVirupas);
-        if (byAspect != 0) return byAspect;
+        final byTotal = scores[b.body]!.virupas.compareTo(
+          scores[a.body]!.virupas,
+        );
+        if (byTotal != 0) return byTotal;
         // Dart's sort is not stable — fall back to karaka order for ties.
         return a.body.index.compareTo(b.body.index);
       });
@@ -293,9 +278,7 @@ class PlanetHealth {
       final score = scores[karaka.body]!;
       final previous = i > 0 ? scores[ordered[i - 1].body]! : null;
       final tiedWithPrevious =
-          previous != null &&
-          previous.strongVirupas == score.strongVirupas &&
-          previous.aspectVirupas == score.aspectVirupas;
+          previous != null && previous.virupas == score.virupas;
       ranked.add(
         BeingHealth(
           rank: tiedWithPrevious ? ranked[i - 1].rank : i + 1,

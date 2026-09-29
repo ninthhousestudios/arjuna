@@ -80,11 +80,10 @@ void main(List<String> args) {
     )
     ..writeln()
     ..writeln(
-      'Ranking follows Laura\'s precedence rule: the **Strong** subtotal '
-      '(dignity, sign, conjunction, shame) ranks a planet first, and the '
-      '**Aspect** subtotal only breaks ties among planets it leaves level. '
-      '**Total** = Strong + Aspect is shown for reference, but a lower total '
-      'can still rank higher when its strong subtotal wins.',
+      'Planets rank by **Total** = Strong + Aspect. **Strong** is the '
+      'dignity, sign, conjunction, and shame subtotal; **Aspect** is the '
+      'aspect subtotal, each aspect prorated by its Parashara strength and '
+      'otherwise weighted the same as a sign cause.',
     )
     ..writeln();
 

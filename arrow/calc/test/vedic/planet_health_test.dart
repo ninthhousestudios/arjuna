@@ -107,10 +107,11 @@ void main() {
 
     test('every factor source routes to the right subtotal', () {
       // The strong/aspect split hinges on a single string check
-      // (source == 'aspect'). Lock it: only 'aspect' is subordinate, every
-      // other cause is strong, and the two subtotals partition the factors
-      // exactly. A renamed or newly added source in lajjitaadi.dart would
-      // otherwise fall silently into the Strong tier and skew ranking.
+      // (source == 'aspect'). Lock it: only 'aspect' is an aspect cause,
+      // every other cause is strong, and the two subtotals partition the
+      // factors exactly. A renamed or newly added source in lajjitaadi.dart
+      // would otherwise fall silently into the Strong subtotal and mislabel
+      // the breakdown.
       const knownSources = {
         'conjunction',
         'aspect',
@@ -140,7 +141,7 @@ void main() {
             contains(f.factor.source),
             reason:
                 'unknown factor source "${f.factor.source}" — assign it to a '
-                'tier in PlanetHealth._scoreOne before adding it',
+                'subtotal in PlanetHealth._scoreOne before adding it',
           );
           if (f.factor.source == 'aspect') {
             aspect += f.virupas;
@@ -169,29 +170,18 @@ void main() {
   });
 
   group('PlanetHealth.rank', () {
-    test('orders by strong subtotal first, aspects only breaking ties', () {
+    test('orders by total, aspects weighted like sign causes', () {
       final ranked = PlanetHealth.rank(_scattered());
       expect(ranked, hasLength(7));
       expect(ranked.map((r) => r.body).toSet(), Body.karakas.toSet());
       for (var i = 1; i < ranked.length; i++) {
         final prev = ranked[i - 1].score;
         final cur = ranked[i].score;
-        final reason = '${ranked[i - 1].body.name} vs ${ranked[i].body.name}';
-        // Strong (sign/conjunction) subtotal is the primary key; a lower
-        // strong subtotal can never rank above a higher one, however the
-        // aspects fall.
         expect(
-          prev.strongVirupas,
-          greaterThanOrEqualTo(cur.strongVirupas),
-          reason: reason,
+          prev.virupas,
+          greaterThanOrEqualTo(cur.virupas),
+          reason: '${ranked[i - 1].body.name} vs ${ranked[i].body.name}',
         );
-        if (prev.strongVirupas == cur.strongVirupas) {
-          expect(
-            prev.aspectVirupas,
-            greaterThanOrEqualTo(cur.aspectVirupas),
-            reason: reason,
-          );
-        }
       }
       expect(ranked.first.rank, 1);
     });
@@ -201,10 +191,7 @@ void main() {
       for (var i = 1; i < ranked.length; i++) {
         final prev = ranked[i - 1].score;
         final cur = ranked[i].score;
-        final tied =
-            prev.strongVirupas == cur.strongVirupas &&
-            prev.aspectVirupas == cur.aspectVirupas;
-        if (tied) {
+        if (prev.virupas == cur.virupas) {
           expect(ranked[i].rank, ranked[i - 1].rank);
         } else {
           expect(ranked[i].rank, greaterThan(ranked[i - 1].rank));

@@ -9,10 +9,9 @@ import "quiver/types.proto";
 // `List<BeingHealth>`: the seven embodied karakas ranked healthiest first by
 // their weighted Lajjitaadi avasthas, each paired with the beings it activates.
 //
-// Ranking is NOT by a single virupa total. Each score splits into
-// `strong_virupas` (dignity / sign / conjunction / shame) and `aspect_virupas`;
-// planets rank by strong first, aspect only breaking ties — so a *lower* total
-// can rank *higher*. Consumers must respect `rank`, not re-sort on `virupas`.
+// Ranking is by the virupa total, `virupas` = `strong_virupas` (dignity / sign
+// / conjunction / shame) + `aspect_virupas`. The split is for display.
+// Consumers should still read `rank`, which carries tie handling.
 //
 // Selection is delivered as the full ranked list (7 entries), not a pre-cut
 // top-N; the consumer takes top-N for thriving and bottom-N for pathology.
@@ -80,16 +79,15 @@ message BeingHealth {
 message PlanetHealthScore {
   Body body = 1;
 
-  // Sum of every factor's virupas. Positive = net healthy. For display only;
-  // ranking uses strong_virupas then aspect_virupas, NOT this total.
+  // Sum of every factor's virupas. Positive = net healthy. The ranking key.
   double virupas = 2;
 
   // Non-aspect factors: dignity, sign placement, sign lord, conjunction, and
-  // the shame conditions. The primary ranking key (Laura's precedence rule).
+  // the shame conditions. Display only.
   double strong_virupas = 3;
 
-  // Aspect factors, each prorated by Parashara aspect strength. Subordinate to
-  // strong_virupas: aspects only order planets whose strong totals are equal.
+  // Aspect factors, each prorated by Parashara aspect strength and otherwise
+  // weighted the same as strong_virupas. Display only.
   double aspect_virupas = 4;
 
   // Per-state subtotals, so a total can be read back to its causes.
