@@ -414,12 +414,13 @@ String _writeReport({
       'reachable being at both extremes.',
     )
     ..writeln()
-    ..writeln('| # | Chart | Corpus | Date (UT) | Place |')
-    ..writeln('|---|-------|--------|-----------|-------|');
+    ..writeln('| # | Chart | Corpus | File | Date (UT) | Place |')
+    ..writeln('|---|-------|--------|------|-----------|-------|');
   for (var i = 0; i < cover.selected.length; i++) {
     final c = cover.selected[i];
     out.writeln(
-      '| ${i + 1} | ${c.name} | ${c.corpus} | ${_fmt(c.utc)} '
+      '| ${i + 1} | ${c.name} | ${c.corpus} '
+      '| `${_relativeTo(c.path, corporaUsed)}` | ${_fmt(c.utc)} '
       '| ${_place(c.location)} |',
     );
   }
@@ -558,6 +559,16 @@ DateTime _utcDateTime(ChartData data) {
       minutes: ((data.utcOffsetHours + data.dstOffsetHours) * 60).round(),
     ),
   );
+}
+
+/// [path] relative to whichever corpus directory contains it, so the chart
+/// set can be located (and copied) from the report.
+String _relativeTo(String path, List<String> corpora) {
+  for (final dir in corpora) {
+    final root = dir.endsWith('/') ? dir : '$dir/';
+    if (path.startsWith(root)) return path.substring(root.length);
+  }
+  return path;
 }
 
 String _corpusLabel(String dir) {
