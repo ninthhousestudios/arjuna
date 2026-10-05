@@ -8,7 +8,7 @@ Corpora consulted, in priority order:
 
 - `/home/josh/charts/database`
 
-1786 charts read, 0 unreadable/skipped. **60 charts** witness all reachable slots.
+1786 charts read, 0 unreadable/skipped. **63 charts** witness all reachable slots.
 
 ## Coverage
 
@@ -19,70 +19,73 @@ Corpora consulted, in priority order:
 
 ## The chart set
 
-The 60 charts below, together, witness every reachable being at both extremes.
+The 63 charts below, together, witness every reachable being at both extremes.
 
 | # | Chart | Corpus | File | Date (UT) | Place |
 |---|-------|--------|------|-----------|-------|
-| 1 | Jean Gabin | database | `Actors/Jean Gabin.chtk` | 1904-05-17 01:51 | Paris, 0, France (48.87, 2.33) |
-| 2 | Anna Nicole Smith | database | `Actresses/Anna Nicole Smith.chtk` | 1967-11-28 09:15 | Mexia, TX, USA (31.68, -96.48) |
-| 3 | Jennifer Capriati | database | `Famous/Jennifer Capriati.chtk` | 1976-03-29 17:00 | New York, NY, USA (30.67, -81.46) |
-| 4 | Stephen Colbert | database | `Famous/Stephen Colbert.chtk` | 1964-05-14 00:00 | Washington, DC, USA (38.89, -77.04) |
-| 5 | Thomas Paine | database | `Politicians_Rulers/Thomas Paine.chtk` | 1737-01-29 11:27 | Thetford, 0, United Kingdom (52.42, 0.75) |
-| 6 | Tiffany Trump | database | `Trumps/Trump Tiffany.chtk` | 1993-10-13 16:50 | West Palm Beach, FL, USA (26.71, -80.05) |
-| 7 | Amitabh Bachchan | database | `Actors/Amitabh Bachchan.chtk` | 1942-10-11 23:00 | Allahabad, Uttar Pradesh, India (25.45, 81.85) |
-| 8 | Andre Gregory | database | `Actors/Andre Gregory.chtk` | 1934-05-11 18:10 | Paris, 0, France (48.87, 2.33) |
-| 9 | Andre the Giant | database | `Actors/Andre the Giant.chtk` | 1946-05-19 11:00 | Grenoble,, France (45.17, 5.72) |
-| 10 | Anthony Hopkins | database | `Actors/Anthony Hopkins.chtk` | 1937-12-31 09:15 | Port Talbot, Wales (51.60, -3.78) |
-| 11 | Arsenio Hall | database | `Actors/Arsenio Hall.chtk` | 1956-02-12 08:18 | Cleveland, OH, USA (41.50, -81.70) |
-| 12 | Arthur Godfrey | database | `Actors/Arthur Godfrey.chtk` | 1903-08-31 06:30 | New York,NY, USA (40.71, -74.01) |
-| 13 | Ashton Kutcher | database | `Actors/Ashton Kutcher.chtk` | 1978-02-07 06:30 | Cedar Rapids, IA, USA (42.01, -91.64) |
-| 14 | Beau Bridges | database | `Actors/Beau Bridges.chtk` | 1941-12-09 11:56 | Los Angeles, CA, USA (34.05, -118.24) |
-| 15 | Brad Pitt | database | `Actors/Brad Pitt.chtk` | 1963-12-18 12:31 | Shawnee, OK, USA (35.33, -96.93) |
-| 16 | Cary Grant | database | `Actors/Cary Grant.chtk` | 1904-01-18 01:07 | Bristol, England (51.45, -2.58) |
-| 17 | Charles Chaplin | database | `Actors/Charles Chaplin.chtk` | 1889-04-16 20:00 | London, England (51.50, -0.17) |
+| 1 | Car Accident and Electrocution | database | `Accidents/Car Accident and Electrocution.chtk` | 2012-08-23 03:35 | North Hollywood, CA, USA (34.17, -118.38) |
+| 2 | Greece Train Wreck | database | `Accidents/Greece Train Wreck.chtk` | 2023-02-28 21:21 | Larissa, 21, Greece (39.63, 22.42) |
+| 3 | Abishek Bachan | database | `Actors/Abishek Bachan.chtk` | 1976-02-05 06:30 | Mumbai, Maharashtra, India (18.97, 72.83) |
+| 4 | Amitabh Bachchan | database | `Actors/Amitabh Bachchan.chtk` | 1942-10-11 23:00 | Allahabad, Uttar Pradesh, India (25.45, 81.85) |
+| 5 | Andre Gregory | database | `Actors/Andre Gregory.chtk` | 1934-05-11 18:10 | Paris, 0, France (48.87, 2.33) |
+| 6 | Andre the Giant | database | `Actors/Andre the Giant.chtk` | 1946-05-19 11:00 | Grenoble,, France (45.17, 5.72) |
+| 7 | Anthony Hopkins | database | `Actors/Anthony Hopkins.chtk` | 1937-12-31 09:15 | Port Talbot, Wales (51.60, -3.78) |
+| 8 | Armani Shephard | database | `Actors/Armani Shephard.chtk` | 1972-03-31 05:35 | Eastbourne, 0, United Kingdom (50.80, 0.25) |
+| 9 | Arnold Schwarzenegger | database | `Actors/Arnold Schwarzenegger.chtk` | 1947-07-30 02:10 | Graz, Austria (47.08, 15.45) |
+| 10 | Arsenio Hall | database | `Actors/Arsenio Hall.chtk` | 1956-02-12 08:18 | Cleveland, OH, USA (41.50, -81.70) |
+| 11 | Arthur Godfrey | database | `Actors/Arthur Godfrey.chtk` | 1903-08-31 06:30 | New York,NY, USA (40.71, -74.01) |
+| 12 | Ashton Kutcher | database | `Actors/Ashton Kutcher.chtk` | 1978-02-07 06:30 | Cedar Rapids, IA, USA (42.01, -91.64) |
+| 13 | Beau Bridges | database | `Actors/Beau Bridges.chtk` | 1941-12-09 11:56 | Los Angeles, CA, USA (34.05, -118.24) |
+| 14 | Brad Pitt | database | `Actors/Brad Pitt.chtk` | 1963-12-18 12:31 | Shawnee, OK, USA (35.33, -96.93) |
+| 15 | Cary Grant | database | `Actors/Cary Grant.chtk` | 1904-01-18 01:07 | Bristol, England (51.45, -2.58) |
+| 16 | Charles Chaplin | database | `Actors/Charles Chaplin.chtk` | 1889-04-16 20:00 | London, England (51.50, -0.17) |
+| 17 | Charlton Heston | database | `Actors/Charlton Heston.chtk` | 1923-10-04 13:55 | Evanston,IL, USA (42.04, -87.69) |
 | 18 | Christian Bale | database | `Actors/Christian Bale.chtk` | 1974-01-30 12:00 | Haverfordwest, 0, United Kingdom (51.82, -4.97) |
 | 19 | Clark Gable | database | `Actors/Clark Gable.chtk` | 1901-02-01 10:30 | Cadiz,OH, USA (40.27, -81.00) |
 | 20 | David Hasselhoff | database | `Actors/David Hasselhoff.chtk` | 1952-07-21 10:20 | Baltimore, MD (39.28, -76.60) |
-| 21 | Groucho Marx | database | `Actors/Groucho Marx.chtk` | 1890-10-02 13:35 | New York,NY, USA (40.71, -74.01) |
-| 22 | Humphrey Bogart | database | `Actors/Humphrey Bogart.chtk` | 1899-12-25 18:30 | New York, NY, USA (40.71, -74.01) |
-| 23 | Jack Benny | database | `Actors/Jack Benny.chtk` | 1894-02-14 10:04 | Waukegan, IL, USA (42.36, -87.84) |
-| 24 | Jackie Gleason | database | `Actors/Jackie Gleason.chtk` | 1916-02-26 07:13 | New York,NY, USA (40.71, -74.01) |
-| 25 | Jay Leno | database | `Actors/Jay Leno.chtk` | 1950-04-28 07:03 | New Rochelle, NY, USA (40.91, -73.78) |
-| 26 | John Belushi | database | `Actors/John Belushi.chtk` | 1949-01-25 11:12 | Chicago,IL, USA (41.85, -87.65) |
-| 27 | John Travolta | database | `Actors/John Travolta.chtk` | 1954-02-18 19:53 | Englewood,NJ, USA (40.89, -73.97) |
-| 28 | Lee Van Cleef | database | `Actors/Lee Van Cleef.chtk` | 1925-01-09 10:00 | Somerville, NJ, USA (40.57, -74.61) |
-| 29 | Peter Fonda | database | `Actors/Peter Fonda.chtk` | 1939-02-23 16:33 | New York, NY, USA (40.71, -74.01) |
-| 30 | Peter Max | database | `Actors/Peter Max.chtk` | 1937-10-19 01:30 | Berlin, Germany (52.50, 13.37) |
-| 31 | Robert Deniro | database | `Actors/Robert Deniro.chtk` | 1943-08-17 07:00 | Brooklyn,NY, USA (40.63, -73.93) |
-| 32 | Robert Redford | database | `Actors/Robert Redford.chtk` | 1936-08-19 04:02 | Santa Monica, CA, USA (34.02, -118.49) |
-| 33 | Roy Rogers | database | `Actors/Roy Rogers.chtk` | 1911-11-05 18:15 | Cincinnati, OH, USA (39.16, -84.46) |
-| 34 | Val Kilmer | database | `Actors/Val Kilmer.chtk` | 1959-12-31 15:58 | Los Angeles, CA, USA (34.05, -118.24) |
-| 35 | Walter Cronkhite | database | `Actors/Walter Cronkhite.chtk` | 1916-11-04 12:00 | Saint Joseph,MO, USA (39.77, -94.85) |
-| 36 | Bach, Barbara | database | `Actresses/Barbara Bach.chtk` | 1946-08-28 07:30 | New York, NY (40.70, -74.00) |
-| 37 | Charlize Theron | database | `Actresses/Charlize Theron.chtk` | 1975-08-07 06:23 | Benoni, Transvaal, South Africa (-26.18, 28.32) |
-| 38 | Jodie Foster | database | `Actresses/Jodie Foster.chtk` | 1962-11-19 16:14 | Los Angeles, CA, USA (34.05, -118.24) |
-| 39 | Marilyn Monroe | database | `Actresses/Marilyn Monroe.chtk` | 1926-06-01 17:30 | Los Angeles,CA, USA (34.05, -118.24) |
-| 40 | Monica Bellucci | database | `Actresses/Monica Bellucci.chtk` | 1964-09-30 13:30 | Citta di Castello, I (43.45, 12.23) |
-| 41 | Lethbridge, Thomas Charles | database | `Adventurers/Lethbridge, Thomas Charles.chtk` | 1901-03-23 04:00 | Dunster, 0, United Kingdom (51.20, -3.58) |
-| 42 | Audrey Hepburn | database | `Animal Lovers/Audrey Hepburn.chtk` | 1929-05-04 05:00 | Ixelles, Brabant, Belgium (50.83, 4.37) |
-| 43 | Charles Filiger | database | `Architects, Art Critics, Cartoonists, Designers, Visual Artists/Charles Filiger.chtk` | 1863-11-28 02:32 | Thann,, france (47.82, 7.08) |
-| 44 | Frederic Bazille | database | `Architects, Art Critics, Cartoonists, Designers, Visual Artists/Frederic Bazille.chtk` | 1841-12-06 20:00 | Montpellier,, france (43.60, 3.88) |
-| 45 | Robert Rauschenberg | database | `Architects, Art Critics, Cartoonists, Designers, Visual Artists/Robert Rauschenberg.chtk` | 1925-10-22 16:00 | Port Arthur, TX, usa (29.90, -93.93) |
-| 46 | Étienne Carjat | database | `Architects, Art Critics, Cartoonists, Designers, Visual Artists/Étienne Carjat.chtk` | 1828-03-28 15:00 | Fareins,, france (46.02, 4.77) |
-| 47 | Paul Dunne | database | `Atheletes/Paul Dunne British Open Am.chtk` | 1992-11-26 12:00 | Greystones, Wicklow, Ireland (53.14, -6.06) |
-| 48 | Ronaldo | database | `Atheletes/Ronaldo.chtk` | 1985-02-05 05:25 | Funchal, Funchai, Portugal (32.63, -16.90) |
-| 49 | Bridge Problems | database | `Diseases/Bridge Problems.chtk` | 1949-09-16 12:40 | Phoenix, AZ, USA (33.45, -112.07) |
-| 50 | Tom Morello | database | `Famous/Tom Morello.chtk` | 1964-05-30 16:00 | Harlem, NY, USA (40.81, -73.95) |
-| 51 | Venus Williams | database | `Famous/Venus Williams.chtk` | 1980-06-17 21:12 | Lynwood, CA, USA (33.93, -118.21) |
-| 52 | George McClellan | database | `Military/George McClellan.chtk` | 1826-12-03 05:06 | Philadelphia, PA, USA (39.95, -75.16) |
-| 53 | Maureen | database | `Politicians_Rulers/Maureen.chtk` | 1949-11-05 12:18 | Inglewood, CA, USA (33.96, -118.35) |
-| 54 | Darby Crash | database | `Suicides/Darby Crash.chtk` | 1958-09-27 06:00 | Los Angeles Community Hospital, CA, usa (34.02, -118.19) |
-| 55 | George Clooney | database | `Actors/George Clooney.chtk` | 1961-05-06 07:58 | Lexington Manor, KY, USA (38.04, -84.47) |
-| 56 | Griffin, Merv | database | `Actors/Griffin, Merv.chtk` | 1925-07-06 12:45 | San Mateo, CA (37.57, -122.32) |
-| 57 | Elizabeth Taylor | database | `Actresses/Elizabeth Taylor.chtk` | 1932-02-27 20:00 | London, England (51.50, -0.17) |
-| 58 | Greta Garbo | database | `Actresses/Greta Garbo.chtk` | 1905-09-18 18:30 | Stockholm, Sweden (59.33, 18.05) |
-| 59 | Streep, Meryl | database | `Actresses/Streep, Meryl.chtk` | 1949-06-22 12:05 | Summit, NJ (40.72, -74.37) |
-| 60 | Gus Arriola | database | `Architects, Art Critics, Cartoonists, Designers, Visual Artists/Gus Arriola.chtk` | 1917-07-24 02:00 | Florence, AZ, usa (33.03, -111.39) |
+| 21 | Don Johnson | database | `Actors/Don Johnson.chtk` | 1949-12-16 04:30 | Flat Creek,MO, USA (36.76, -93.61) |
+| 22 | Griffin, Merv | database | `Actors/Griffin, Merv.chtk` | 1925-07-06 12:45 | San Mateo, CA (37.57, -122.32) |
+| 23 | Groucho Marx | database | `Actors/Groucho Marx.chtk` | 1890-10-02 13:35 | New York,NY, USA (40.71, -74.01) |
+| 24 | Humphrey Bogart | database | `Actors/Humphrey Bogart.chtk` | 1899-12-25 18:30 | New York, NY, USA (40.71, -74.01) |
+| 25 | Jackie Gleason | database | `Actors/Jackie Gleason.chtk` | 1916-02-26 07:13 | New York,NY, USA (40.71, -74.01) |
+| 26 | Jay Leno | database | `Actors/Jay Leno.chtk` | 1950-04-28 07:03 | New Rochelle, NY, USA (40.91, -73.78) |
+| 27 | Jean Gabin | database | `Actors/Jean Gabin.chtk` | 1904-05-17 01:51 | Paris, 0, France (48.87, 2.33) |
+| 28 | John Belushi | database | `Actors/John Belushi.chtk` | 1949-01-25 11:12 | Chicago,IL, USA (41.85, -87.65) |
+| 29 | John Travolta | database | `Actors/John Travolta.chtk` | 1954-02-18 19:53 | Englewood,NJ, USA (40.89, -73.97) |
+| 30 | Lee Van Cleef | database | `Actors/Lee Van Cleef.chtk` | 1925-01-09 10:00 | Somerville, NJ, USA (40.57, -74.61) |
+| 31 | Omar Sharif | database | `Actors/Omar Sharif.chtk` | 1932-04-10 15:30 | (31.22, 29.92) |
+| 32 | Peter Max | database | `Actors/Peter Max.chtk` | 1937-10-19 01:30 | Berlin, Germany (52.50, 13.37) |
+| 33 | Richard Chamberlin | database | `Actors/Richard Chamberlin.chtk` | 1934-04-01 02:20 | Los Angeles,CA, USA (34.05, -118.24) |
+| 34 | Robert Redford | database | `Actors/Robert Redford.chtk` | 1936-08-19 04:02 | Santa Monica, CA, USA (34.02, -118.49) |
+| 35 | Roy Rogers | database | `Actors/Roy Rogers.chtk` | 1911-11-05 18:15 | Cincinnati, OH, USA (39.16, -84.46) |
+| 36 | Sylvester Stallone | database | `Actors/Sylvester Stallone.chtk` | 1946-07-06 22:44 | New York, NY, USA (40.71, -74.01) |
+| 37 | Ted Turner | database | `Actors/Ted Turner.chtk` | 1938-11-19 13:50 | Cincinnati,OH, USA (39.16, -84.46) |
+| 38 | Tom Snyder | database | `Actors/Tom Snyder.chtk` | 1936-05-12 11:30 | Milwaukee, WI, USA (43.04, -87.91) |
+| 39 | Val Kilmer | database | `Actors/Val Kilmer.chtk` | 1959-12-31 15:58 | Los Angeles, CA, USA (34.05, -118.24) |
+| 40 | Walter Cronkhite | database | `Actors/Walter Cronkhite.chtk` | 1916-11-04 12:00 | Saint Joseph,MO, USA (39.77, -94.85) |
+| 41 | Bach, Barbara | database | `Actresses/Barbara Bach.chtk` | 1946-08-28 07:30 | New York, NY (40.70, -74.00) |
+| 42 | Charlize Theron | database | `Actresses/Charlize Theron.chtk` | 1975-08-07 06:23 | Benoni, Transvaal, South Africa (-26.18, 28.32) |
+| 43 | Jodie Foster | database | `Actresses/Jodie Foster.chtk` | 1962-11-19 16:14 | Los Angeles, CA, USA (34.05, -118.24) |
+| 44 | Sandra Bullock | database | `Actresses/Sandra Bullock.chtk` | 1964-07-26 07:15 | Arlington, VA, USA (38.89, -77.08) |
+| 45 | Lethbridge, Thomas Charles | database | `Adventurers/Lethbridge, Thomas Charles.chtk` | 1901-03-23 04:00 | Dunster, 0, United Kingdom (51.20, -3.58) |
+| 46 | Spyk, Papa | database | `Adventurers/Spyk, Papa.chtk` | 1963-06-28 02:45 | Liege, Liege, belgium (50.63, 5.57) |
+| 47 | Audrey Hepburn | database | `Animal Lovers/Audrey Hepburn.chtk` | 1929-05-04 05:00 | Ixelles, Brabant, Belgium (50.83, 4.37) |
+| 48 | Frederic Bazille | database | `Architects, Art Critics, Cartoonists, Designers, Visual Artists/Frederic Bazille.chtk` | 1841-12-06 20:00 | Montpellier,, france (43.60, 3.88) |
+| 49 | Étienne Carjat | database | `Architects, Art Critics, Cartoonists, Designers, Visual Artists/Étienne Carjat.chtk` | 1828-03-28 15:00 | Fareins,, france (46.02, 4.77) |
+| 50 | Coach John Wooden | database | `Atheletes/Coach John Wooden.chtk` | 1910-10-14 18:00 | Hall, IN, USA (39.55, -86.54) |
+| 51 | Hank Aaron | database | `Atheletes/Hank Aaron.chtk` | 1934-02-06 01:45 | Mobile, AL, USA (30.69, -88.04) |
+| 52 | Pistorius | database | `Atheletes/Pistorius.chtk` | 1986-11-22 08:30 | Sandton, Transvaal, South Africa (-26.05, 27.97) |
+| 53 | Bridge Problems | database | `Diseases/Bridge Problems.chtk` | 1949-09-16 12:40 | Phoenix, AZ, USA (33.45, -112.07) |
+| 54 | Cerebal Palsey | database | `Diseases/Cerebal Palsey.chtk` | 1994-03-15 23:39 | Newport Beach, CA, USA (33.62, -117.93) |
+| 55 | Venus Williams | database | `Famous/Venus Williams.chtk` | 1980-06-17 21:12 | Lynwood, CA, USA (33.93, -118.21) |
+| 56 | George McClellan | database | `Military/George McClellan.chtk` | 1826-12-03 05:06 | Philadelphia, PA, USA (39.95, -75.16) |
+| 57 | Maureen | database | `Politicians_Rulers/Maureen.chtk` | 1949-11-05 12:18 | Inglewood, CA, USA (33.96, -118.35) |
+| 58 | George Clooney | database | `Actors/George Clooney.chtk` | 1961-05-06 07:58 | Lexington Manor, KY, USA (38.04, -84.47) |
+| 59 | Sorbo, Kevin | database | `Actors/Kevin Sorbo.chtk` | 1958-09-24 13:48 | Minneapolis, MN (44.97, -93.25) |
+| 60 | Robin Williams | database | `Actors/Robin Williams.chtk` | 1951-07-21 18:34 | Chicago,IL, USA (41.85, -87.65) |
+| 61 | Greta Garbo | database | `Actresses/Greta Garbo.chtk` | 1905-09-18 18:30 | Stockholm, Sweden (59.33, 18.05) |
+| 62 | Streep, Meryl | database | `Actresses/Streep, Meryl.chtk` | 1949-06-22 12:05 | Summit, NJ (40.72, -74.37) |
+| 63 | Gus Arriola | database | `Architects, Art Critics, Cartoonists, Designers, Visual Artists/Gus Arriola.chtk` | 1917-07-24 02:00 | Florence, AZ, usa (33.03, -111.39) |
 
 ## Per-being witnesses
 
@@ -90,53 +93,53 @@ Score is the virupa health of the activating planet in the witness chart (higher
 
 | Being | Sign | Type | Healthiest in | Score | Unhealthiest in | Score |
 |-------|-----:|------|---------------|------:|-----------------|------:|
-| Tumburu | 1 | Gandharva | Peter Fonda | 80.1 | Tom Morello | -70.8 |
-| Heti | 1 | Rakshasa | Jackie Gleason | 46.5 | Elizabeth Taylor | -243.3 |
-| Pulastya | 1 | Rishi | Robert Deniro | 25.5 | John Travolta | -57.0 |
+| Tumburu | 1 | Gandharva | Hank Aaron | 63.0 | Sandra Bullock | -113.6 |
+| Heti | 1 | Rakshasa | Jackie Gleason | 46.5 | Cerebal Palsey | -165.0 |
+| Pulastya | 1 | Rishi | Greece Train Wreck | 70.8 | John Travolta | -57.0 |
 | Rathakrit | 1 | Yaksha | Lethbridge, Thomas Charles | 29.2 | Robert Redford | -176.5 |
-| Kritasthali | 1 | Apsara | Jennifer Capriati | 0.0 | Anthony Hopkins | -166.4 |
+| Kritasthali | 1 | Apsara | Cerebal Palsey | 39.6 | Anthony Hopkins | -166.4 |
 | Narada | 2 | Gandharva | Andre Gregory | 45.0 | Walter Cronkhite | -108.8 |
 | Praheti | 2 | Rakshasa | Audrey Hepburn | 29.2 | Charlize Theron | -82.9 |
-| Pulaha | 2 | Rishi | Peter Max | 67.0 | Peter Fonda | -63.0 |
-| Rathauja | 2 | Yaksha | Jennifer Capriati | 0.0 | Anna Nicole Smith | -85.9 |
+| Pulaha | 2 | Rishi | Peter Max | 67.0 | Abishek Bachan | -87.1 |
+| Rathauja | 2 | Yaksha | Abishek Bachan | 71.5 | Greece Train Wreck | -92.7 |
 | Punjikasthali | 2 | Apsara | Arsenio Hall | 35.3 | Lethbridge, Thomas Charles | -87.7 |
-| Haha | 3 | Gandharva | Christian Bale | 28.9 | Stephen Colbert | -90.0 |
-| Paurusheya | 3 | Rakshasa | Maureen | 42.3 | Stephen Colbert | -90.0 |
+| Haha | 3 | Gandharva | Christian Bale | 28.9 | Coach John Wooden | -118.8 |
+| Paurusheya | 3 | Rakshasa | Maureen | 42.3 | Tom Snyder | -101.3 |
 | Atri | 3 | Rishi | Streep, Meryl | 15.0 | Andre Gregory | -93.7 |
 | Rathasvana | 3 | Yaksha | Jean Gabin | 30.0 | Audrey Hepburn | -172.5 |
 | Menaka | 3 | Apsara | Jay Leno | 2.3 | Jean Gabin | -103.6 |
 | Huhu | 4 | Gandharva | Ashton Kutcher | 36.3 | Christian Bale | -79.9 |
-| Chitrasvana | 4 | Rakshasa | Stephen Colbert | 32.7 | Venus Williams | -108.4 |
-| Vasishtha | 4 | Rishi | Jean Gabin | 30.0 | Amitabh Bachchan | -174.4 |
-| Rathacitra | 4 | Yaksha | Greta Garbo | 53.3 | Marilyn Monroe | -113.2 |
-| Sahajanya | 4 | Apsara | Groucho Marx | 46.2 | Thomas Paine | -104.2 |
+| Chitrasvana | 4 | Rakshasa | Arnold Schwarzenegger | 34.8 | Venus Williams | -108.4 |
+| Vasishtha | 4 | Rishi | Car Accident and Electrocution | 84.5 | Amitabh Bachchan | -174.4 |
+| Rathacitra | 4 | Yaksha | Greta Garbo | 53.3 | Omar Sharif | -92.6 |
+| Sahajanya | 4 | Apsara | Groucho Marx | 46.2 | Armani Shephard | -166.3 |
 | Vishvavasu | 5 | Gandharva | Bridge Problems | 22.9 | George McClellan | -88.9 |
-| Varya | 5 | Rakshasa | Charles Filiger | 37.0 | Jackie Gleason | -121.8 |
+| Varya | 5 | Rakshasa | Spyk, Papa | 36.0 | Jackie Gleason | -121.8 |
 | Angiras | 5 | Rishi | Lee Van Cleef | 39.5 | Étienne Carjat | -161.2 |
 | Shrota | 5 | Yaksha | Amitabh Bachchan | 12.7 | Streep, Meryl | -142.8 |
-| Pramlocha | 5 | Apsara | Paul Dunne | 15.1 | Jennifer Capriati | -160.3 |
+| Pramlocha | 5 | Apsara | Robin Williams | 60.9 | Sylvester Stallone | -129.7 |
 | Ugrasena | 6 | Gandharva | Venus Williams | 19.8 | Ashton Kutcher | -94.9 |
 | Vyaghra | 6 | Rakshasa | David Hasselhoff | 43.9 | Gus Arriola | -90.0 |
 | Bhrigu | 6 | Rishi | Beau Bridges | 28.4 | Charles Chaplin | -103.8 |
-| Asarana | 6 | Yaksha | Ronaldo | 41.7 | Robert Deniro | -169.9 |
-| Anumlocha | 6 | Apsara | Monica Bellucci | 15.6 | Griffin, Merv | -141.6 |
+| Asarana | 6 | Yaksha | Sylvester Stallone | 55.4 | Arnold Schwarzenegger | -104.1 |
+| Anumlocha | 6 | Apsara | Pistorius | 27.0 | Griffin, Merv | -141.6 |
 | Dhritarashtra | 7 | Gandharva | Jodie Foster | 5.5 | John Belushi | -79.6 |
 | Brahmapeta | 7 | Rakshasa | Robert Redford | 24.5 | Arthur Godfrey | -84.3 |
-| Jamadagni | 7 | Rishi | Charlize Theron | 52.6 | Jay Leno | -41.1 |
-| Shatajit | 7 | Yaksha | Tiffany Trump | 0.0 | Bridge Problems | -64.6 |
+| Jamadagni | 7 | Rishi | Charlize Theron | 52.6 | Robin Williams | -201.7 |
+| Shatajit | 7 | Yaksha | Don Johnson | 9.2 | Bridge Problems | -64.6 |
 | Tilottama | 7 | Apsara | Roy Rogers | 32.8 | Greta Garbo | -83.2 |
-| Suryavarcas | 8 | Gandharva | Robert Rauschenberg | 32.4 | Jack Benny | -90.9 |
-| Makhapeta | 8 | Rakshasa | Tiffany Trump | 0.0 | Bach, Barbara | -33.3 |
-| Vishvamitra | 8 | Rishi | Anna Nicole Smith | 0.0 | Charles Filiger | -103.0 |
+| Suryavarcas | 8 | Gandharva | Armani Shephard | 26.2 | Car Accident and Electrocution | -92.2 |
+| Makhapeta | 8 | Rakshasa | Richard Chamberlin | 38.3 | Bach, Barbara | -33.3 |
+| Vishvamitra | 8 | Rishi | Ted Turner | 58.3 | Charlton Heston | -173.5 |
 | Satyajit | 8 | Yaksha | Bach, Barbara | 34.3 | David Hasselhoff | -125.3 |
 | Rambha | 8 | Apsara | Frederic Bazille | 1.6 | Groucho Marx | -56.9 |
-| Ritasena | 9 | Gandharva | Darby Crash | 49.6 | Maureen | -51.1 |
-| Vidyucchatru | 9 | Rakshasa | Charles Chaplin | 25.8 | Robert Rauschenberg | -45.0 |
+| Ritasena | 9 | Gandharva | Sorbo, Kevin | 43.1 | Maureen | -51.1 |
+| Vidyucchatru | 9 | Rakshasa | Charles Chaplin | 25.8 | Pistorius | -115.2 |
 | Kashyapa | 9 | Rishi | Arthur Godfrey | 30.6 | Lee Van Cleef | -100.0 |
-| Tarkshya | 9 | Yaksha | Anna Nicole Smith | 0.0 | Roy Rogers | -154.7 |
-| Urvashi | 9 | Apsara | Humphrey Bogart | 32.4 | Ronaldo | -73.3 |
+| Tarkshya | 9 | Yaksha | Charlton Heston | 34.9 | Roy Rogers | -154.7 |
+| Urvashi | 9 | Apsara | Humphrey Bogart | 32.4 | Ted Turner | -185.7 |
 | Urna | 10 | Gandharva | Étienne Carjat | 51.7 | Frederic Bazille | -127.5 |
-| Sphurja | 10 | Rakshasa | Val Kilmer | 15.0 | Darby Crash | -77.6 |
+| Sphurja | 10 | Rakshasa | Val Kilmer | 15.0 | Don Johnson | -81.7 |
 | Ayu | 10 | Rishi | Cary Grant | 15.0 | Beau Bridges | -75.1 |
 | Arishtanemi | 10 | Yaksha | Walter Cronkhite | 57.1 | Humphrey Bogart | -185.3 |
 | Purvacitti | 10 | Apsara | John Travolta | 51.6 | Arsenio Hall | -150.0 |
@@ -144,10 +147,10 @@ Score is the virupa health of the activating planet in the witness chart (higher
 | Vata | 11 | Rakshasa | George McClellan | 44.3 | Val Kilmer | -94.2 |
 | Gautama | 11 | Rishi | John Belushi | 34.9 | Brad Pitt | -150.0 |
 | Sushena | 11 | Yaksha | Griffin, Merv | 38.0 | Peter Max | -151.6 |
-| Ghritachi | 11 | Apsara | Tom Morello | 15.4 | George Clooney | -109.8 |
-| Vishvavasu | 12 | Gandharva | Marilyn Monroe | 29.5 | Monica Bellucci | -156.3 |
-| Varca | 12 | Rakshasa | Thomas Paine | 0.0 | Tiffany Trump | -94.3 |
-| Bharadvaja | 12 | Rishi | Brad Pitt | -23.9 | Paul Dunne | -123.7 |
+| Ghritachi | 11 | Apsara | Tom Snyder | 15.6 | George Clooney | -109.8 |
+| Vishvavasu | 12 | Gandharva | Coach John Wooden | 6.6 | Richard Chamberlin | -222.4 |
+| Varca | 12 | Rakshasa | Sandra Bullock | 24.4 | Spyk, Papa | -74.2 |
+| Bharadvaja | 12 | Rishi | Brad Pitt | -23.9 | Hank Aaron | -296.2 |
 | Senajit | 12 | Yaksha | Clark Gable | 26.9 | Jodie Foster | -84.8 |
 | Vishvaci | 12 | Apsara | Anthony Hopkins | 30.3 | Cary Grant | -225.0 |
 

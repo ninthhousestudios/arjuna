@@ -21,6 +21,7 @@ What changed from v2, and why:
 |---|----|----|-----|
 | 1 | Rank by Strong subtotal; Aspect subtotal only breaks ties | Rank by **Strong + Aspect** — aspects prorated by strength, no further discount | Strict precedence ignored aspects in >90% of rankings; aspect strength already grades an aspect against a sign cause |
 | 2 | Aspect agitation fires alongside aspect starvation | Unchanged — **confirmed** | A malefic enemy's aspect should cost more than a benefic enemy's |
+| 3 | Tied totals share a rank | Ties break by **dignity**, then a fixed planet order | Laura's rule; every planet gets a distinct rank |
 
 ------------------------------------------------------------------------
 
@@ -68,7 +69,7 @@ scale:
 - **Aspect** → the Parashara aspect strength, and nothing else.
 
 **Score = Σ (avastha virupas × strength / 60)**, summed over every cause.
-Planets rank by score.
+Planets rank by score; ties break as in [Breaking ties](#breaking-ties).
 
 So a full-strength (60/60) aspect that starves costs −45 — exactly the same
 as starvation by sign or by conjunction. A half-strength (30/60) aspect that
@@ -102,6 +103,26 @@ aspect is as strong as the sign. Aspects now count at full prorated weight.
 Consequence worth knowing: a single full-strength aspect can now outweigh a
 sign dignity. A full Mars aspect on an exalted Saturn costs −75 (starved
 + agitated) against exaltation's +45.
+
+### Breaking ties
+
+When two planets have the same total, the planet in **better dignity**
+ranks higher — exalted, moolatrikona, own sign, great friend, friend,
+neutral, enemy, great enemy, debilitated, best to worst.
+
+If they are also in the same dignity, this planet order decides:
+
+1. Jupiter
+2. Venus
+3. Mercury
+4. Moon
+5. Sun
+6. Mars
+7. Saturn
+
+So every planet gets its own rank, 1 through 7; ranks are never shared.
+Example: in Stephen Colbert's chart Mars and Jupiter both score −90.0 in
+the same dignity, and rank 6. Jupiter, 7. Mars.
 
 ### Grading shame
 

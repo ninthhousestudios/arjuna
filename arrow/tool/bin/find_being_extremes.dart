@@ -21,9 +21,9 @@ import 'package:charts_dart/charts_dart.dart';
 ///   - its Trimsamsa being (one of Gandharva/Rakshasa/Rishi/Yaksha/Apsara,
 ///     picked by degree).
 ///
-/// So the beings activated by a chart's **rank-1** planet(s) are "the
+/// So the beings activated by a chart's **rank-1** planet are "the
 /// healthiest" in that chart, and those activated by its **last-rank**
-/// planet(s) are "the unhealthiest". A single chart can therefore witness
+/// planet are "the unhealthiest". A single chart can therefore witness
 /// several beings at once. This tool ranks every chart, then greedily
 /// set-covers the 168 slots (84 beings × {healthiest, unhealthiest}) with the
 /// fewest charts.
@@ -182,24 +182,14 @@ _ChartWitness? _rankChart(
     final ranked = PlanetHealth.rank(chart.rashi);
     if (ranked.isEmpty) return null;
 
-    final topRank = ranked.first.rank;
-    final bottomRank = ranked.last.rank;
-
-    final healthiest = <BeingKey, double>{};
-    final unhealthiest = <BeingKey, double>{};
-    for (final r in ranked) {
-      if (r.rank == topRank) {
-        for (final b in _activated(r, trimsamsaOnly)) {
-          // Keep the strongest score seen for this being in this chart.
-          healthiest[b] = _max(healthiest[b], r.virupas);
-        }
-      }
-      if (r.rank == bottomRank) {
-        for (final b in _activated(r, trimsamsaOnly)) {
-          unhealthiest[b] = _min(unhealthiest[b], r.virupas);
-        }
-      }
-    }
+    final top = ranked.first;
+    final bottom = ranked.last;
+    final healthiest = {
+      for (final b in _activated(top, trimsamsaOnly)) b: top.virupas,
+    };
+    final unhealthiest = {
+      for (final b in _activated(bottom, trimsamsaOnly)) b: bottom.virupas,
+    };
 
     return _ChartWitness(
       name: data.name,
@@ -232,9 +222,6 @@ Set<BeingKey> _activated(BeingHealth r, bool trimsamsaOnly) => {
     BeingKey(r.horaBeing.signNumber, r.horaBeing.type),
   ],
 };
-
-double _max(double? a, double b) => a == null ? b : (b > a ? b : a);
-double _min(double? a, double b) => a == null ? b : (b < a ? b : a);
 
 // ---------------------------------------------------------------------------
 // Greedy set cover

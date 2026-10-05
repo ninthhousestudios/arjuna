@@ -186,17 +186,35 @@ void main() {
       expect(ranked.first.rank, 1);
     });
 
-    test('ties share a rank', () {
+    test('ranks are distinct, 1 through 7', () {
       final ranked = PlanetHealth.rank(_scattered());
-      for (var i = 1; i < ranked.length; i++) {
-        final prev = ranked[i - 1].score;
-        final cur = ranked[i].score;
-        if (prev.virupas == cur.virupas) {
-          expect(ranked[i].rank, ranked[i - 1].rank);
-        } else {
-          expect(ranked[i].rank, greaterThan(ranked[i - 1].rank));
-        }
-      }
+      expect(ranked.map((r) => r.rank), [1, 2, 3, 4, 5, 6, 7]);
+    });
+
+    test('a tie goes to the planet in better dignity', () {
+      // Mercury (neutral) and Jupiter (debilitated) tie at -1.25v. Planet
+      // order alone would put Jupiter first.
+      final v = _scattered(override: {Body.mars: 5.0, Body.jupiter: 275.0});
+      expect(v.karaka(Body.mercury).dignity, DignityType.neutral);
+      expect(v.karaka(Body.jupiter).dignity, DignityType.debilitated);
+      final ranked = PlanetHealth.rank(v);
+      final mercury = ranked.indexWhere((r) => r.body == Body.mercury);
+      final jupiter = ranked.indexWhere((r) => r.body == Body.jupiter);
+      expect(ranked[mercury].virupas, ranked[jupiter].virupas);
+      expect(jupiter, mercury + 1);
+    });
+
+    test('a tie in the same dignity goes by planet order', () {
+      // Jupiter and Mars conjunct, both neutral, tie — as in Stephen
+      // Colbert's chart. Jupiter outranks Mars.
+      final v = _scattered(override: {Body.mars: 155.0, Body.jupiter: 155.0});
+      expect(v.karaka(Body.mars).dignity, v.karaka(Body.jupiter).dignity);
+      final ranked = PlanetHealth.rank(v);
+      final jupiter = ranked.indexWhere((r) => r.body == Body.jupiter);
+      final mars = ranked.indexWhere((r) => r.body == Body.mars);
+      expect(ranked[jupiter].virupas, ranked[mars].virupas);
+      expect(mars, jupiter + 1);
+      expect(ranked[mars].rank, ranked[jupiter].rank + 1);
     });
 
     test('each ranked planet carries its hora and trimsamsa beings', () {

@@ -126,7 +126,7 @@ class PlanetHealthScore {
   final Body body;
 
   /// Sum of every [ScoredFactor.virupas]. Positive = net healthy. This is
-  /// the ranking key (see [PlanetHealth.rank]).
+  /// the primary ranking key (see [PlanetHealth.rank]).
   final double virupas;
 
   /// Sum of the non-aspect factors: dignity, sign placement, sign lord,
@@ -173,7 +173,8 @@ class PlanetHealthScore {
 /// sits in, which side of the mountain ([hora]), and which of the 84 beings
 /// the Trimsamsa segment hands it.
 class BeingHealth {
-  /// 1 = healthiest. Ties share a rank (competition ranking).
+  /// 1 = healthiest. Always distinct — equal totals are broken by dignity,
+  /// then [PlanetHealth.tieBreakOrder].
   final int rank;
 
   final PlanetHealthScore score;
@@ -228,6 +229,8 @@ class BeingHealth {
 ///    so conjunction/sign/dignity factors land at full weight and aspect
 ///    factors are prorated by Parashara aspect strength.
 /// 4. Sum every factor into the planet's total, and rank by that total.
+/// 5. Break ties by dignity (better [DignityType] ranks higher), then by
+///    [tieBreakOrder]. Every planet gets a distinct rank.
 ///
 /// Aspects are not discounted beyond their Parashara strength: a full (60/60)
 /// aspect that starves costs −45, the same as starvation by sign or
@@ -241,6 +244,18 @@ class BeingHealth {
 /// preserved in [PlanetHealthScore.byState] and [PlanetHealthScore.factors].
 class PlanetHealth {
   const PlanetHealth._();
+
+  /// Final tie-break when two planets have the same total *and* the same
+  /// dignity: earlier in this list ranks higher (Laura's order).
+  static const tieBreakOrder = [
+    Body.jupiter,
+    Body.venus,
+    Body.mercury,
+    Body.moon,
+    Body.sun,
+    Body.mars,
+    Body.saturn,
+  ];
 
   /// Score every karaka in [varga]. Karakas Lajjitaadi omits (no factors in
   /// any state) score 0.
@@ -268,30 +283,26 @@ class PlanetHealth {
           scores[a.body]!.virupas,
         );
         if (byTotal != 0) return byTotal;
-        // Dart's sort is not stable — fall back to karaka order for ties.
-        return a.body.index.compareTo(b.body.index);
+        // DignityType is declared best-first, so a lower index is better.
+        final byDignity = a.dignity.index.compareTo(b.dignity.index);
+        if (byDignity != 0) return byDignity;
+        return tieBreakOrder
+            .indexOf(a.body)
+            .compareTo(tieBreakOrder.indexOf(b.body));
       });
 
-    final ranked = <BeingHealth>[];
-    for (var i = 0; i < ordered.length; i++) {
-      final karaka = ordered[i];
-      final score = scores[karaka.body]!;
-      final previous = i > 0 ? scores[ordered[i - 1].body]! : null;
-      final tiedWithPrevious =
-          previous != null && previous.virupas == score.virupas;
-      ranked.add(
+    return [
+      for (var i = 0; i < ordered.length; i++)
         BeingHealth(
-          rank: tiedWithPrevious ? ranked[i - 1].rank : i + 1,
-          score: score,
-          sign: karaka.sign,
-          hora: karaka.hora,
-          trimsamsaBeing: karaka.trimsamsaBeing,
-          horaBeing: karaka.horaBeing,
-          aditya: BeingData.forSign(karaka.sign, BeingType.aditya),
+          rank: i + 1,
+          score: scores[ordered[i].body]!,
+          sign: ordered[i].sign,
+          hora: ordered[i].hora,
+          trimsamsaBeing: ordered[i].trimsamsaBeing,
+          horaBeing: ordered[i].horaBeing,
+          aditya: BeingData.forSign(ordered[i].sign, BeingType.aditya),
         ),
-      );
-    }
-    return ranked;
+    ];
   }
 
   static PlanetHealthScore _scoreOne(

@@ -11,7 +11,8 @@ import "quiver/types.proto";
 //
 // Ranking is by the virupa total, `virupas` = `strong_virupas` (dignity / sign
 // / conjunction / shame) + `aspect_virupas`. The split is for display.
-// Consumers should still read `rank`, which carries tie handling.
+// Equal totals break by dignity, then a fixed planet order, so `rank` is
+// always distinct (1..7).
 //
 // Selection is delivered as the full ranked list (7 entries), not a pre-cut
 // top-N; the consumer takes top-N for thriving and bottom-N for pathology.
@@ -50,7 +51,7 @@ message BeingRanking {
 
 // One ranked karaka together with the beings it activates.
 message BeingHealth {
-  // 1 = healthiest. Ties share a rank (competition ranking).
+  // 1 = healthiest. Always distinct — ties break by dignity, then planet order.
   int32 rank = 1;
 
   // The activating planet (one of the seven karakas).
